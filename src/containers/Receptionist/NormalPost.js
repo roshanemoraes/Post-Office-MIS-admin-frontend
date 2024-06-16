@@ -1,12 +1,10 @@
-import { Box, Button } from "@mui/material";
-import React, { useRef } from "react";
+import { Box } from "@mui/material";
+import React from "react";
 import PostForm from "../../components/Forms/PostForm";
-import { Navigate, useNavigate } from "react-router-dom";
 import { mailFormField } from "../../data/formFields";
+import CostForm from "../../components/Forms/CostForm";
 
 const NormalPost = () => {
-  const Navigate = useNavigate();
-
   const recipientFields = [
     mailFormField.recipientName,
     mailFormField.recipientCity,
@@ -19,17 +17,29 @@ const NormalPost = () => {
   };
 
   return (
-    <Box display="flex" flexDirection="row" justifyContent="space-around" p={2}>
-      <PostForm
-        formTitle={"Normal Post"}
-        fieldsGroups={[
-          { label: "Recipient:", fields: recipientFields },
-          { label: "Transaction:", fields: transactionFields },
-        ]}
-        selectionGroups={[]}
-        onFormSubmit={handleSubmit}
-      />
-    </Box>
+    <div className="grid sm:grid-cols-12 grid-cols-1">
+      <div className="rounded-lg sm:col-span-4 min-h-[100px] bg-white-500 items-center justify-center">
+        <CostForm />
+      </div>
+      <div className="rounded-lg sm:col-span-8 min-h-[100px] bg-white-500  items-center justify-center">
+        <Box
+          display="flex"
+          paddingTop={2}
+          flexDirection="row"
+          justifyContent="space-around"
+        >
+          <PostForm
+            formTitle={"Normal Post"}
+            fieldsGroups={[
+              { label: "Recipient:", fields: recipientFields },
+              { label: "Transaction:", fields: transactionFields },
+            ]}
+            selectionGroups={[]}
+            onFormSubmit={handleSubmit}
+          />
+        </Box>
+      </div>
+    </div>
   );
 };
 

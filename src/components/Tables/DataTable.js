@@ -1,7 +1,6 @@
 import * as React from "react";
 import { DataGrid } from "@mui/x-data-grid";
-import { useState, useEffect } from "react";
-import { Email } from "@mui/icons-material";
+import { useEffect } from "react";
 import axios from "axios";
 
 // const columns = [

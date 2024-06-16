@@ -2,9 +2,6 @@ import {
   Box,
   Button,
   GlobalStyles,
-  List,
-  ListItem,
-  Paper,
   Typography,
   useTheme,
 } from "@mui/material";
@@ -80,7 +77,7 @@ const PostForm = ({
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        height: "100vh",
+        height: "100%",
       }}
     >
       <Box

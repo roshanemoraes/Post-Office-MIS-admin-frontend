@@ -2,11 +2,8 @@ import React from "react";
 import { addEmployeeField } from "../../data/formFields";
 import { Box } from "@mui/material";
 import PostForm from "../../components/Forms/PostForm";
-import { useNavigate } from "react-router-dom";
 
 const AddEmployee = () => {
-  const Navigate = useNavigate();
-
   const allRoles = [
     { label: "Postmaster", value: "Postmaster" },
     { label: "Supervisor", value: "Supervisor" },

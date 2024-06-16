@@ -1,13 +1,14 @@
 import React from "react";
 import { useState } from "react";
 import "./style.css";
+import { Link } from "react-router-dom";
 
 const SideBar = ({ onSidebarToggle }) => {
-  const [isSideBarOpen, setSideBarOpen] = useState(window.innerWidth >= 1024);
+  const [isSideBarOpen, setSideBarOpen] = useState(window.innerWidth >= 1150);
   const [isSubMenuOpen, setSubMenuOpen] = useState(Array(2).fill(true));
 
   const handleSidebarToggle = () => {
-    if (window.innerWidth < 1024) {
+    if (window.innerWidth < 1150) {
       setSideBarOpen(false);
       onSidebarToggle(false);
     } else {
@@ -33,24 +34,24 @@ const SideBar = ({ onSidebarToggle }) => {
         </div>
         <ul className="nav-links">
           <li>
-            <a href="/receptionist">
+            <Link to="/receptionist">
               <i className="bx bxs-dashboard"></i>
               <span className="link_name">Dashboard</span>
-            </a>
+            </Link>
             <ul className="sub-menu blank">
               <li>
-                <a className="link_name" href="#">
+                <Link className="link_name" to="#">
                   Dashboard
-                </a>
+                </Link>
               </li>
             </ul>
           </li>
           <li className={isSubMenuOpen[0] ? "showMenu" : ""}>
             <div className="iocn-link">
-              <a href="#">
+              <Link to="#">
                 <i className="bx bx-envelope"></i>
                 <span className="link_name">New Post</span>
-              </a>
+              </Link>
               <i
                 className="bx bxs-chevron-down arrow"
                 onClick={() => handleSubMenuToggle(0)}
@@ -58,53 +59,53 @@ const SideBar = ({ onSidebarToggle }) => {
             </div>
             <ul className="sub-menu">
               <li>
-                <a className="link_name" href="#">
+                <Link className="link_name" to="#">
                   New Post
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="/receptionist/normal-post">Normal Post</a>
+                <Link to="/receptionist/normal-post">Normal Post</Link>
               </li>
               <li>
-                <a href="/receptionist/registered-post">Registered Post</a>
+                <Link to="/receptionist/registered-post">Registered Post</Link>
               </li>
               <li>
-                <a href="/receptionist/logi-post">Logi Post</a>
+                <Link to="/receptionist/logi-post">Logi Post</Link>
               </li>
             </ul>
           </li>
           <li>
-            <a href="/receptionist/fast-courier">
+            <Link to="/receptionist/fast-courier">
               <i className="bx bx-package"></i>
               <span className="link_name">Fast Courier</span>
-            </a>
+            </Link>
             <ul className="sub-menu blank">
               <li>
-                <a className="link_name" href="#">
+                <Link className="link_name" to="#">
                   Fast Courier
-                </a>
+                </Link>
               </li>
             </ul>
           </li>
           <li>
-            <a href="#">
+            <Link to="#">
               <i className="bx bx-credit-card"></i>
               <span className="link_name">Money Orders</span>
-            </a>
+            </Link>
             <ul className="sub-menu blank">
               <li>
-                <a className="link_name" href="#">
+                <Link className="link_name" to="#">
                   Money Orders
-                </a>
+                </Link>
               </li>
             </ul>
           </li>
           <li className={isSubMenuOpen[1] ? "showMenu" : ""}>
             <div className="iocn-link">
-              <a href="#">
+              <Link to="#">
                 <i className="bx bx-note"></i>
                 <span className="link_name">Utility Bills</span>
-              </a>
+              </Link>
               <i
                 className="bx bxs-chevron-down arrow"
                 onClick={() => handleSubMenuToggle(1)}
@@ -112,31 +113,31 @@ const SideBar = ({ onSidebarToggle }) => {
             </div>
             <ul className="sub-menu">
               <li>
-                <a className="link_name" href="#">
+                <Link className="link_name" to="#">
                   Utility Bills
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#">Water</a>
+                <Link to="#">Water</Link>
               </li>
               <li>
-                <a href="#">Electricity</a>
+                <Link to="#">Electricity</Link>
               </li>
               <li>
-                <a href="#">Mobile</a>
+                <Link to="#">Mobile</Link>
               </li>
             </ul>
           </li>
           <li>
-            <a href="#">
+            <Link to="#">
               <i className="bx bx-cog"></i>
               <span className="link_name">Settings</span>
-            </a>
+            </Link>
             <ul className="sub-menu blank">
               <li>
-                <a className="link_name" href="#">
+                <Link className="link_name" to="#">
                   Settings
-                </a>
+                </Link>
               </li>
             </ul>
           </li>
