@@ -4,6 +4,7 @@ import { Route, Routes } from "react-router-dom";
 import Dashboard from "../containers/Postmaster/Dashboard";
 import AddEmployee from "../containers/Postmaster/AddEmployee";
 import ListEmployee from "../containers/Postmaster/ListEmployee";
+import { TestPrint } from "../containers/Postmaster/TestPrint";
 
 function PostmasterInterface() {
   return (
@@ -14,6 +15,7 @@ function PostmasterInterface() {
           <Route path="/" element={<Dashboard />} />
           <Route path="/add-employee" element={<AddEmployee />} />
           <Route path="/list-employee" element={<ListEmployee />} />
+          <Route path="/test" element={<TestPrint />} />
         </Routes>
       </main>
     </div>
