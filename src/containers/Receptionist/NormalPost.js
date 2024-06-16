@@ -1,5 +1,5 @@
-import { Box } from "@mui/material";
-import React from "react";
+import { Box, Button } from "@mui/material";
+import React, { useRef } from "react";
 import PostForm from "../../components/Forms/PostForm";
 import { Navigate, useNavigate } from "react-router-dom";
 import { mailFormField } from "../../data/formFields";
@@ -19,24 +19,17 @@ const NormalPost = () => {
   };
 
   return (
-    <div>
-      <Box
-        display="flex"
-        flexDirection="row"
-        justifyContent="space-around"
-        p={2}
-      >
-        <PostForm
-          formTitle={"Normal Post"}
-          fieldsGroups={[
-            { label: "Recipient:", fields: recipientFields },
-            { label: "Transaction:", fields: transactionFields },
-          ]}
-          selectionGroups={[]}
-          onFormSubmit={handleSubmit}
-        />
-      </Box>
-    </div>
+    <Box display="flex" flexDirection="row" justifyContent="space-around" p={2}>
+      <PostForm
+        formTitle={"Normal Post"}
+        fieldsGroups={[
+          { label: "Recipient:", fields: recipientFields },
+          { label: "Transaction:", fields: transactionFields },
+        ]}
+        selectionGroups={[]}
+        onFormSubmit={handleSubmit}
+      />
+    </Box>
   );
 };
 
