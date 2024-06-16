@@ -30,7 +30,7 @@ body{
 }
 .sidebar .logo-details i{
   font-size: 30px;
-  color: #fff;
+  color: #ffffff;
   height: 50px;
   min-width: 78px;
   text-align: center;
@@ -213,9 +213,9 @@ body{
 }
 .home-section{
   position: relative;
-  background: #E4E9F7;
+  background: #ff9595;
   height: 100vh;
-  left: 260px;
+  left: 20px;
   width: calc(100% - 260px);
   transition: all 0.5s ease;
   padding: 12px;
@@ -245,26 +245,26 @@ body{
 
 @media screen and (max-width: 400px){
   .sidebar{
-    width: 240px;
+    width: 180px;
   }
   .sidebar.close{
-    width: 78px;
+    width: 50px;
   }
   .sidebar .profile-details{
-    width: 240px;
+    width: 180px;
   }
   .sidebar.close .profile-details{
     background: none;
   }
   .sidebar.close .profile-details{
-    width: 78px;
+    width: 50px;
   }
   .home-section{
-    left: 240px;
-    width: calc(100% - 240px);
+    left: 180px;
+      width: calc(100% - 180px);
   }
   .sidebar.close ~ .home-section{
-    left: 78px;
-    width: calc(100% - 78px);
+    left: 50px;
+      width: calc(100% - 50px);
   }
 }

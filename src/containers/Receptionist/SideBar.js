@@ -2,12 +2,18 @@ import React from "react";
 import { useState } from "react";
 import "./style.css";
 
-const SideBar = () => {
-  const [isSideBarOpen, setSideBarOpen] = useState(true);
+const SideBar = ({ onSidebarToggle }) => {
+  const [isSideBarOpen, setSideBarOpen] = useState(window.innerWidth >= 1024);
   const [isSubMenuOpen, setSubMenuOpen] = useState(Array(2).fill(true));
 
   const handleSidebarToggle = () => {
-    setSideBarOpen(!isSideBarOpen);
+    if (window.innerWidth < 1024) {
+      setSideBarOpen(false);
+      onSidebarToggle(false);
+    } else {
+      setSideBarOpen(!isSideBarOpen);
+      onSidebarToggle(!isSideBarOpen);
+    }
   };
 
   const handleSubMenuToggle = (index) => {
@@ -22,7 +28,7 @@ const SideBar = () => {
     <div>
       <div className={`sidebar ${isSideBarOpen ? "" : "close"}`}>
         <div className="logo-details">
-          <i className="bx bxl-c-plus-plus"></i>
+          <i className="bx bx-menu" onClick={handleSidebarToggle}></i>
           <span className="logo_name">Sri Lanka Post</span>
         </div>
         <ul className="nav-links">
@@ -148,12 +154,6 @@ const SideBar = () => {
           </li>
         </ul>
       </div>
-      <section className="home-section">
-        <div className="home-content">
-          <i className="bx bx-menu" onClick={handleSidebarToggle}></i>
-          <span className="text"></span>
-        </div>
-      </section>
     </div>
   );
 };
