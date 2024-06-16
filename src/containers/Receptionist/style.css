@@ -80,7 +80,7 @@ body{
   min-width: 78px;
   text-align: center;
   line-height: 50px;
-  color: #fff;
+  color: #ffffff;
   font-size: 20px;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -116,7 +116,7 @@ body{
   display: block;
 }
 .sidebar .nav-links li .sub-menu a{
-  color: #fff;
+  color: #ffffff;
   font-size: 15px;
   padding: 5px 0;
   white-space: nowrap;
@@ -190,7 +190,7 @@ body{
   object-fit: cover;
   border-radius: 16px;
   margin: 0 14px 0 12px;
-  background: #1d1b31;
+  background: #232047;
   transition: all 0.5s ease;
 }
 .sidebar.close .profile-details img{
@@ -198,7 +198,7 @@ body{
 }
 .sidebar .profile-details .profile_name,
 .sidebar .profile-details .job{
-  color: #fff;
+  color: #ffffff;
   font-size: 18px;
   font-weight: 500;
   white-space: nowrap;
@@ -213,7 +213,7 @@ body{
 }
 .home-section{
   position: relative;
-  background: #E4E9F7;
+  background: #bc4848;
   height: 100vh;
   left: 260px;
   width: calc(100% - 260px);
@@ -245,26 +245,26 @@ body{
 
 @media screen and (max-width: 400px){
   .sidebar{
-    width: 240px;
+    width: 180px;
   }
   .sidebar.close{
-    width: 78px;
+    width: 50px;
   }
   .sidebar .profile-details{
-    width: 240px;
+    width: 180px;
   }
   .sidebar.close .profile-details{
     background: none;
   }
   .sidebar.close .profile-details{
-    width: 78px;
+    width: 50px;
   }
   .home-section{
-    left: 240px;
-    width: calc(100% - 240px);
+    left: 180px;
+      width: calc(100% - 180px);
   }
   .sidebar.close ~ .home-section{
-    left: 78px;
-    width: calc(100% - 78px);
+    left: 50px;
+      width: calc(100% - 50px);
   }
 }
