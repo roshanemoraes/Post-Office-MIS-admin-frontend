@@ -13,10 +13,10 @@ const CostForm = ({ PostType }) => {
   const calculateCost = async () => {
     try {
       const response = await axios.get(
-        "https://ba9d2d5c-36e8-4f99-aec0-b415a564d718.mock.pstmn.io/postage"
+        `http://localhost:8081/postage/getPostage?weight=${weight}`
       );
-      console.log("request came!");
-      setCost(response.data.maxWeight);
+      console.log("request came:", response.data);
+      setCost(response.data.price);
     } catch (error) {
       console.error("Error fetching postage", error);
     }
@@ -45,9 +45,11 @@ const CostForm = ({ PostType }) => {
         sx={{
           marginTop: "20px",
           marginBottom: "10px",
+          fontSize: "22px",
+          marginBottom: "10px",
+          fontFamily: "Helvetica Neue",
           //   color: theme.palette.text.typography,
           fontWeight: "bold",
-          fontSize: "25px",
         }}
       >
         Postage:

@@ -21,8 +21,10 @@ const CustomTextField = ({ label, id, required = false, value, onChange }) => {
         value={value}
         onChange={onChange}
         style={{
-          m: 1,
-          minWidth: 550,
+          marginRight: "0px",
+          fontFamily: "Helvetica Neue",
+          // m: 1,
+          minWidth: 450,
           backgroundColor: theme.palette.background.inputField,
           "& .MuiOutlinedInputRoot": {
             "&.Mui-focused fieldset": {
@@ -30,9 +32,9 @@ const CustomTextField = ({ label, id, required = false, value, onChange }) => {
             },
           },
         }}
-        inputProps={{ style: { fontSize: 16 } }}
+        inputProps={{ style: { fontSize: 15 } }}
         InputLabelProps={{
-          style: { fontSize: 17 },
+          style: { fontSize: 13 },
         }}
       />
     </div>

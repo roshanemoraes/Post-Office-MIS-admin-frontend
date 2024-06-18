@@ -5,6 +5,7 @@ import Dashboard from "../containers/Postmaster/Dashboard";
 import AddEmployee from "../containers/Postmaster/AddEmployee";
 import ListEmployee from "../containers/Postmaster/ListEmployee";
 import { TestPrint } from "../containers/Postmaster/TestPrint";
+import LiveMap from "../containers/Postmaster/LiveMap";
 
 function PostmasterInterface() {
   const [isSideBarOpen, setSideBarOpen] = useState(window.innerWidth >= 1024);
@@ -26,6 +27,7 @@ function PostmasterInterface() {
           <Route path="/" element={<Dashboard />} />
           <Route path="/add-employee" element={<AddEmployee />} />
           <Route path="/list-employee" element={<ListEmployee />} />
+          <Route path="/live-map" element={<LiveMap />} />
           <Route path="/test" element={<TestPrint />} />
         </Routes>
       </main>

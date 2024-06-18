@@ -75,7 +75,7 @@ const SideBar = ({ onSidebarToggle }) => {
             </ul>
           </li>
           <li>
-            <Link to="#">
+            <Link to="/postmaster/live-map">
               <i className="bx bx-pie-chart-alt-2"></i>
               <span className="link_name">Live Map</span>
             </Link>
