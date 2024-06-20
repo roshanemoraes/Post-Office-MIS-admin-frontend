@@ -29,14 +29,13 @@ import axios from "axios";
 //   },
 // ];
 const columns = [
-  { field: "id", headerName: "ID", width: 100 },
-  { field: "roles", headerName: "Role", width: 140 },
-  { field: "fullName", headerName: "Full Name", width: 200 },
-  { field: "nic", headerName: "NIC", width: 150 },
-  { field: "email", headerName: "Email", type: "string", width: 250 },
+  { field: "id", headerName: " Employee ID", width: 130 },
+  { field: "roles", headerName: "Role", width: 150 },
+  { field: "fullName", headerName: "Full Name", width: 230 },
+  { field: "nic", headerName: "NIC", width: 160 },
+  { field: "email", headerName: "Email", type: "string", width: 280 },
   { field: "contactNumber", headerName: "Contact", width: 130 },
 ];
-
 
 export default function DataTable() {
   const [rows, setRows] = React.useState([]);
@@ -68,7 +67,6 @@ export default function DataTable() {
           },
         }}
         pageSizeOptions={[5, 10]}
-        checkboxSelection
       />
     </div>
   );

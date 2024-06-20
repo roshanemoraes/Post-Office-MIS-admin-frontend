@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import markerIcon from "./user.png";
 import {
   useJsApiLoader,
   GoogleMap,
@@ -6,11 +7,16 @@ import {
   InfoWindowF,
 } from "@react-google-maps/api";
 import axios from "axios";
-import { Box } from "@mui/material";
 
 const Map = () => {
+  const center = {
+    lat: 7.2008,
+    lng: 79.8737,
+  };
   const [locations, setLocations] = useState([]);
   const [activeMarker, setActiveMarker] = useState(null);
+  const [mapCenter, setMapCenter] = useState(center);
+  const [map, setMap] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -51,11 +57,6 @@ const Map = () => {
     };
   }, []);
 
-  const center = {
-    lat: 7.2008,
-    lng: 79.8737,
-  };
-
   const { isLoaded } = useJsApiLoader({
     id: "google-map-script",
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
@@ -69,14 +70,28 @@ const Map = () => {
   };
 
   return (
-    <div>
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        height: "100vh",
+      }}
+    >
       {isLoaded && (
         <GoogleMap
-          center={center}
-          zoom={13}
-          mapContainerStyle={{ width: "100%", height: "100vh" }}
+          center={mapCenter}
+          zoom={14}
+          mapContainerStyle={{ width: "90%", height: "90vh" }}
           //   mapTypeId="ec1432108f3d8893"
           onClick={() => setActiveMarker(null)}
+          onDragEnd={() => {
+            setMapCenter(map.getCenter().toJSON());
+          }}
+          onLoad={(map) => {
+            // Save the map reference
+            setMap(map);
+          }}
           options={{
             zoomControl: true,
             streetViewControl: false,
@@ -91,9 +106,16 @@ const Map = () => {
               onClick={() => handleActiveMarker(index)}
               onMouseOver={() => handleActiveMarker(index)}
               onMouseOut={() => setActiveMarker(null)}
+              icon={{
+                url: markerIcon,
+                scaledSize: new window.google.maps.Size(20, 20),
+              }}
             >
               {activeMarker === index ? (
-                <InfoWindowF onCloseClick={() => setActiveMarker(null)}>
+                <InfoWindowF
+                  onCloseClick={() => setActiveMarker(null)}
+                  options={{ pixelOffset: new window.google.maps.Size(0, 1) }}
+                >
                   <div
                     style={{
                       display: "flex",
@@ -101,11 +123,9 @@ const Map = () => {
                       alignItems: "center",
                       justifyContent: "center",
                       fontFamily: "serif",
-                      fontSize: "16px",
-                      marginLeft: "5px",
-                      marginTop: "5px",
-                      width: "250px",
-                      height: "105px",
+                      fontSize: "13px",
+                      margin: "1px",
+                      //   height: "75px",
                       fontWeight: "bolder",
                       backgroundColor: "rgba(255, 255, 255, 0.9)",
                     }}
@@ -113,6 +133,9 @@ const Map = () => {
                     <div>Name: {location.name}</div>
                     <div>Delivered: {location.deliveredCount}</div>
                     <div>Pending: {location.pendingCount}</div>
+                    <div>
+                      {/* {location.pendingCount} / {location.deliveredCount} */}
+                    </div>
                   </div>
                 </InfoWindowF>
               ) : null}

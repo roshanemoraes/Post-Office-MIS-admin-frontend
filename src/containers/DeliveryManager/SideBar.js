@@ -2,6 +2,7 @@ import React from "react";
 import { useState } from "react";
 import "./style.css";
 import { Link } from "react-router-dom";
+import Postmaster from "./../../Navigation/Postmaster";
 
 const SideBar = ({ onSidebarToggle }) => {
   const [isSideBarOpen, setSideBarOpen] = useState(window.innerWidth >= 1024);
@@ -34,7 +35,7 @@ const SideBar = ({ onSidebarToggle }) => {
         </div>
         <ul className="nav-links">
           <li>
-            <Link to="/postmaster/">
+            <Link to="/delivery-manager">
               <i className="bx bx-grid-alt"></i>
               <span className="link_name">Dashboard</span>
             </Link>
@@ -46,43 +47,16 @@ const SideBar = ({ onSidebarToggle }) => {
               </li>
             </ul>
           </li>
-          <li className={isSubMenuOpen[0] ? "showMenu" : ""}>
-            <div className="iocn-link">
-              <Link to="#">
-                <i className="bx bx-collection"></i>
-                <span className="link_name">Statistics</span>
-              </Link>
-              <i
-                className="bx bxs-chevron-down arrow"
-                onClick={() => handleSubMenuToggle(0)}
-              ></i>
-            </div>
-            <ul className="sub-menu">
-              <li>
-                <Link className="link_name" to="#">
-                  Statistics
-                </Link>
-              </li>
-              <li>
-                <Link to="#">Chart 1</Link>
-              </li>
-              <li>
-                <Link to="#">Chart 2</Link>
-              </li>
-              <li>
-                <Link to="#">Chart 3</Link>
-              </li>
-            </ul>
-          </li>
+
           <li>
-            <Link to="/postmaster/live-map">
+            <Link to="/delivery-manager/route-allocation">
               <i className="bx bx-pie-chart-alt-2"></i>
-              <span className="link_name">Live Map</span>
+              <span className="link_name">Assign Route</span>
             </Link>
             <ul className="sub-menu blank">
               <li>
                 <Link className="link_name" to="#">
-                  Live Map
+                  Assign Route
                 </Link>
               </li>
             </ul>
@@ -100,15 +74,16 @@ const SideBar = ({ onSidebarToggle }) => {
               </li>
             </ul>
           </li>
+
           <li>
-            <Link to="/postmaster/add-employee">
-              <i className="bx bx-compass"></i>
-              <span className="link_name">Add Employee</span>
+            <Link to="/postmaster">
+              <i className="bx bx-cog"></i>
+              <span className="link_name">Postmaster</span>
             </Link>
             <ul className="sub-menu blank">
               <li>
                 <Link className="link_name" to="#">
-                  Add Employee
+                  Postmaster
                 </Link>
               </li>
             </ul>
@@ -122,19 +97,6 @@ const SideBar = ({ onSidebarToggle }) => {
               <li>
                 <Link className="link_name" to="#">
                   Receptionist
-                </Link>
-              </li>
-            </ul>
-          </li>
-          <li>
-            <Link to="/delivery-manager">
-              <i className="bx bx-cog"></i>
-              <span className="link_name">Delivery Manager</span>
-            </Link>
-            <ul className="sub-menu blank">
-              <li>
-                <Link className="link_name" to="#">
-                  Delivery Manager
                 </Link>
               </li>
             </ul>
