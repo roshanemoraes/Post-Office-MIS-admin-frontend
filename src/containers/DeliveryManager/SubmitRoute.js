@@ -2,7 +2,7 @@ import { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import { Button as MuiButton } from "@mui/material";
-import Test1 from "../Postmaster/Test1";
+import DistanceMatrix from "../../components/Maps/DistanceMatrix";
 
 function SubmitRoute({ rowData, destinations }) {
   const [show, setShow] = useState(false);
@@ -70,7 +70,7 @@ function SubmitRoute({ rowData, destinations }) {
           <br /> To verify locations, click on the "Cancel" button.
           {isGenerated && (
             <div>
-              <Test1
+              <DistanceMatrix
                 destinations={destinationList}
                 onResponse={handleSetOptimumRoute}
               />

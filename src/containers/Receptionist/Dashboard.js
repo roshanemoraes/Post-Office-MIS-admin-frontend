@@ -1,11 +1,11 @@
 import React from "react";
-import Test1 from "../Postmaster/Test";
+import DistanceMatrix from "../Postmaster/Test";
 
 const Dashboard = () => {
   return (
     <div>
       <div>This is Receptionist's dashboard...</div>
-      <Test1
+      <DistanceMatrix
         destinations={[
           { lat: 7.210686, lng: 79.835901 }, //postofc
           { lat: 7.213954, lng: 79.847701 }, //msc main

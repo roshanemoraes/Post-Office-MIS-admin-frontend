@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { DistanceMatrixService } from "@react-google-maps/api";
 import axios from "axios";
 
-class Test1 extends Component {
+class DistanceMatrix extends Component {
   render = () => {
     return (
       <DistanceMatrixService
@@ -59,4 +59,4 @@ class Test1 extends Component {
       });
   };
 }
-export default Test1;
+export default DistanceMatrix;
