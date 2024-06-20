@@ -116,6 +116,13 @@ export default function AssignRoute() {
           columnVisibilityModel={{
             destinations: false,
           }}
+          disableColumnMenu={{
+            postman_id: true,
+            zone: false,
+            destinations: true,
+            status: false,
+            action: true,
+          }}
           // pageSizeOptions={[5, 10]}
         />
       )}

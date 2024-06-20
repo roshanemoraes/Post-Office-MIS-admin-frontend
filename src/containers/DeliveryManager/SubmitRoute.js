@@ -82,7 +82,11 @@ function SubmitRoute({ rowData, destinations }) {
           )}
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
+          <Button
+            variant="secondary"
+            onClick={handleClose}
+            disabled={isGenerated}
+          >
             Cancel
           </Button>
           <Button
