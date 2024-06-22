@@ -64,13 +64,21 @@ const SideBar = ({ onSidebarToggle }) => {
                 </Link>
               </li>
               <li>
-                <Link to="/receptionist/normal-post">Normal Post</Link>
+                <Link to="/receptionist/normal-post">Personal Mail</Link>
+              </li>
+              <li>
+                <Link to="/receptionist/normal-post">
+                  Personal Courier Mail
+                </Link>
+              </li>
+              <li>
+                <Link to="/receptionist/normal-post">Personal Parcel Mail</Link>
               </li>
               <li>
                 <Link to="/receptionist/registered-post">Registered Post</Link>
               </li>
               <li>
-                <Link to="/receptionist/logi-post">Logi Post</Link>
+                <Link to="/receptionist/logi-post">Official Parcel Mail</Link>
               </li>
             </ul>
           </li>

@@ -27,7 +27,7 @@ export const mailFormField = {
   senderPhone: {
     label: "Sender Phone",
     id: "senderPhone",
-    type: "text",
+    type: "number",
   },
   recipientName: {
     label: "Recipient Name",
@@ -49,25 +49,35 @@ export const mailFormField = {
     id: "recipientCity",
     type: "text",
   },
+  recipientPostalZone: {
+    label: "Recipient Postal Zone",
+    id: "recipientPostalZone",
+    type: "text",
+  },
   recipientAddress: {
     label: "Recipient Address",
-    id: "RecipientAddress",
+    id: "recipientAddress",
+    type: "text",
+  },
+  recipientHouseNumber: {
+    label: "House #",
+    id: "recipientHouseNumber",
     type: "text",
   },
   accountNumber: {
     label: "Account Number",
     id: "accountNumber",
-    type: "text",
+    type: "number",
   },
   cost: {
     label: "Cost",
     id: "cost",
-    type: "text",
+    type: "number",
   },
   transferAmount: {
     label: "Transfer Amount",
     id: "transferAmount",
-    type: "text",
+    type: "number",
   },
 };
 
@@ -95,12 +105,12 @@ export const addEmployeeField = {
   employeeContactNumber: {
     label: "Employee Contact Number",
     id: "employeeContactNumber",
-    type: "text",
+    type: "number",
   },
   accountPassword: {
     label: "Password",
     id: "password",
-    type: "text",
+    type: "password",
   },
   employeeRole: {
     label: "Employee Role",

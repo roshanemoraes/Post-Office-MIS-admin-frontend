@@ -18,10 +18,7 @@ const NormalPost = () => {
 
   return (
     <div className="grid sm:grid-cols-12 grid-cols-1">
-      <div className="rounded-lg sm:col-span-4 min-h-[100px] bg-white-500 items-center justify-center">
-        <CostForm />
-      </div>
-      <div className="rounded-lg sm:col-span-8 min-h-[100px] bg-white-500  items-center justify-center">
+      <div className="rounded-lg sm:col-span-7 min-h-[100px] bg-white-500  items-center justify-center">
         <Box
           display="flex"
           paddingTop={2}
@@ -38,6 +35,9 @@ const NormalPost = () => {
             onFormSubmit={handleSubmit}
           />
         </Box>
+      </div>
+      <div className="rounded-lg sm:col-span-5 min-h-[100px] m-4 bg-white-500 items-center justify-center">
+        <CostForm />
       </div>
     </div>
   );
