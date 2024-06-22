@@ -85,12 +85,25 @@ const SideBar = ({ onSidebarToggle }) => {
           <li>
             <Link to="/receptionist/fast-courier">
               <i className="bx bx-package"></i>
-              <span className="link_name">Fast Courier</span>
+              <span className="link_name">Bulk Mailing</span>
             </Link>
             <ul className="sub-menu blank">
               <li>
                 <Link className="link_name" to="#">
-                  Fast Courier
+                  Bulk Mailing
+                </Link>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <Link to="/receptionist/fast-courier">
+              <i className="bx bx-package"></i>
+              <span className="link_name">Customer Management</span>
+            </Link>
+            <ul className="sub-menu blank">
+              <li>
+                <Link className="link_name" to="#">
+                  Customer Management
                 </Link>
               </li>
             </ul>
@@ -98,17 +111,17 @@ const SideBar = ({ onSidebarToggle }) => {
           <li>
             <Link to="#">
               <i className="bx bx-credit-card"></i>
-              <span className="link_name">Money Orders</span>
+              <span className="link_name">Return Mail Management</span>
             </Link>
             <ul className="sub-menu blank">
               <li>
                 <Link className="link_name" to="#">
-                  Money Orders
+                  Return Mail Management
                 </Link>
               </li>
             </ul>
           </li>
-          <li className={isSubMenuOpen[1] ? "showMenu" : ""}>
+          {/* <li className={isSubMenuOpen[1] ? "showMenu" : ""}>
             <div className="iocn-link">
               <Link to="#">
                 <i className="bx bx-note"></i>
@@ -135,7 +148,7 @@ const SideBar = ({ onSidebarToggle }) => {
                 <Link to="#">Mobile</Link>
               </li>
             </ul>
-          </li>
+          </li> */}
           <li>
             <Link to="#">
               <i className="bx bx-cog"></i>

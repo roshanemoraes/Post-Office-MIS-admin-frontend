@@ -6,6 +6,7 @@ import NormalPost from "../containers/Receptionist/NormalPost";
 import RegisteredPost from "../containers/Receptionist/RegisteredPost";
 import LogiPost from "../containers/Receptionist/LogiPost";
 import FastCourier from "../containers/Receptionist/FastCourier";
+import PersonalMail from "../containers/Receptionist/PersonalMail";
 
 function ReceptionistInterface() {
   const [isSideBarOpen, setSideBarOpen] = useState(window.innerWidth >= 1150);
@@ -25,7 +26,7 @@ function ReceptionistInterface() {
       <main className="content" style={{ overflowY: "auto", height: "100vh" }}>
         <Routes>
           <Route path="/" element={<Dashboard />} />
-          <Route path="/normal-post" element={<NormalPost />} />
+          <Route path="/normal-post" element={<PersonalMail />} />
           <Route path="/registered-post" element={<RegisteredPost />} />
           <Route path="/logi-post" element={<LogiPost />} />
           <Route path="/fast-courier" element={<FastCourier />} />

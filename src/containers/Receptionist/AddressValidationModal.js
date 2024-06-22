@@ -2,8 +2,9 @@ import React, { useEffect, useState } from "react";
 import { Button as MuiButton } from "@mui/material";
 import { Button, Modal, ModalHeader } from "react-bootstrap";
 import axios from "axios";
+import { latLng2Tile } from "google-map-react";
 
-function AddressValidationModal({ formState }) {
+function AddressValidationModal({ formState, onValidationResult }) {
   const [show, setShow] = useState(false);
   const [validatedResponse, setValidatedResponse] = useState({});
   const [isValid, setIsValid] = useState(false);
@@ -12,6 +13,10 @@ function AddressValidationModal({ formState }) {
     setShow(false);
     setValidatedResponse({});
     setIsValid(false);
+  };
+  const handleAccept = () => {
+    onValidationResult(validatedResponse);
+    handleClose();
   };
 
   const validationResult = () => {
@@ -27,6 +32,7 @@ function AddressValidationModal({ formState }) {
       .post("http://localhost:8081/api/receptionist/address/validate", data)
       .then((response) => {
         console.log("validation result came, success!");
+        // console.log(response.data);
         setValidatedResponse(response.data);
         setIsValid(true);
         setShow(true);
@@ -130,7 +136,7 @@ function AddressValidationModal({ formState }) {
           <Button variant="secondary" onClick={handleClose}>
             Reject
           </Button>
-          <Button disabled={!isValid} variant="primary">
+          <Button disabled={!isValid} variant="primary" onClick={handleAccept}>
             Accept
           </Button>
         </Modal.Footer>

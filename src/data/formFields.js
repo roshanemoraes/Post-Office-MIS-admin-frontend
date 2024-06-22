@@ -19,6 +19,16 @@ export const mailFormField = {
     id: "senderAddress",
     type: "text",
   },
+  senderHouseNumber: {
+    label: "House #",
+    id: "senderHouseNumber",
+    type: "text",
+  },
+  senderPostalZone: {
+    label: "Sender Postal Zone",
+    id: "senderPostalZone",
+    type: "text",
+  },
   senderNIC: {
     label: "Sender NIC",
     id: "senderNic",
