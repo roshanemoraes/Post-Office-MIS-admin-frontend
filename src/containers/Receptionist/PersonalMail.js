@@ -14,6 +14,8 @@ import CustomTextField from "../../components/Custom/CustomTextField";
 import { mailFormField } from "../../data/formFields";
 import CostForm from "../../components/Forms/CostForm";
 import AddressValidationModal from "./AddressValidationModal";
+import SenderAddressValidationModel from "./modals/SenderAddressValidationModel";
+import axios from "axios";
 
 const PersonalMail = () => {
   const initialFormState = {
@@ -26,6 +28,8 @@ const PersonalMail = () => {
     senderName: "",
     senderCity: "",
     senderAddress: "",
+    senderPostalZone: "",
+    senderHouseNumber: "",
   };
 
   const theme = useTheme();
@@ -44,6 +48,17 @@ const PersonalMail = () => {
   const [verifiedAddressCoordinate_Lng, setVerifiedAddressCoordinate_Lng] =
     useState();
 
+  const [verifiedSenderAddressText, setVerifiedSenderAddressText] = useState();
+  const [verifiedSenderAddressId, setVerifiedSenderAddressId] = useState();
+  const [
+    verifiedSenderAddressCoordinate_Lat,
+    setVerifiedSenderAddressCoordinate_Lat,
+  ] = useState();
+  const [
+    verifiedSenderAddressCoordinate_Lng,
+    setVerifiedSenderAddressCoordinate_Lng,
+  ] = useState();
+
   const cityList = ["Negombo", "Colombo", "Kochchikade", "Katunayaka"];
   const zoneList = [
     "Daluwakotuwa",
@@ -51,6 +66,7 @@ const PersonalMail = () => {
     "Pallansena South",
     "Pallansena North",
   ];
+
   const handleOnValidationResult = (data) => {
     setVerifiedAddressText(data.textForm);
     setVerifiedAddressId(data.addressId);
@@ -61,6 +77,18 @@ const PersonalMail = () => {
       recipientAddress: data.textForm,
     }));
   };
+
+  const handleSenderOnValidationResult = (data) => {
+    setVerifiedAddressText(data.textForm);
+    setVerifiedAddressId(data.addressId);
+    setVerifiedAddressCoordinate_Lat(data.lat);
+    setVerifiedAddressCoordinate_Lng(data.lng);
+    setFormState((prevState) => ({
+      ...prevState,
+      senderAddress: data.textForm,
+    }));
+  };
+
   useEffect(() => {
     if (
       verifiedAddressText ||
@@ -87,7 +115,6 @@ const PersonalMail = () => {
   ]);
 
   const handleChange = (id) => (event) => {
-    const value = event.target.value;
     setFormState({
       ...formState,
       [id]: event.target.value,
@@ -99,12 +126,24 @@ const PersonalMail = () => {
       formState.senderName = "";
       formState.senderCity = "";
       formState.senderAddress = "";
+      formState.senderPostalZone = "";
+      formState.senderHouseNumber = "";
     }
   };
 
   const handleSubmit = () => {
     console.log(formState);
-    setIsSubmitted(true);
+    axios
+      .post(
+        "http://localhost:8081/api/receptionist/post/add/normal-post",
+        formState
+      )
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   return (
@@ -151,7 +190,6 @@ const PersonalMail = () => {
                 flexDirection: "column", //changed
                 alignItems: "center",
                 "& .MuiTextField-root": {
-                  // minWidth: 80,
                   fontSize: "15px",
                   marginTop: "10px",
                 },
@@ -203,20 +241,20 @@ const PersonalMail = () => {
                     }}
                     sx={{
                       "& .MuiAutocomplete-option": {
-                        color: "blue", // changes the color of the options text
+                        color: "blue",
                       },
                       '& .MuiAutocomplete-option[data-focus="true"]': {
-                        backgroundColor: "lightgray", // changes the background color of the focused option
+                        backgroundColor: "lightgray",
                       },
                       '& .MuiAutocomplete-option[data-focus="true"][aria-selected="true"]':
                         {
-                          backgroundColor: "lightblue", // changes the background color of the selected option
+                          backgroundColor: "lightblue",
                         },
                       "& .MuiAutocomplete-popupIndicator": {
-                        color: "green", // changes the color of the popup indicator
+                        color: "green",
                       },
                       "& .MuiAutocomplete-clearIndicator": {
-                        color: "purple", // changes the color of the clear indicator
+                        color: "purple",
                       },
                     }}
                     renderInput={(params) => (
@@ -251,17 +289,17 @@ const PersonalMail = () => {
                     }}
                     sx={{
                       "& .MuiAutocomplete-option": {
-                        color: "blue", // changes the color of the options text
+                        color: "blue",
                       },
                       '& .MuiAutocomplete-option[data-focus="true"]': {
-                        backgroundColor: "lightgray", // changes the background color of the focused option
+                        backgroundColor: "lightgray",
                       },
                       '& .MuiAutocomplete-option[data-focus="true"][aria-selected="true"]':
                         {
-                          backgroundColor: "lightblue", // changes the background color of the selected option
+                          backgroundColor: "lightblue",
                         },
                       "& .MuiAutocomplete-clearIndicator": {
-                        color: "red", // changes the color of the clear indicator
+                        color: "red",
                       },
                     }}
                     renderInput={(params) => (
@@ -289,7 +327,6 @@ const PersonalMail = () => {
                 read
                 InputLabelProps={{
                   style: { fontSize: 13 },
-                  // shrink: true,
                 }}
                 style={{ minWidth: 480 }}
                 required
@@ -313,8 +350,7 @@ const PersonalMail = () => {
                   marginTop: "10px",
                   alignSelf: "flex-start",
                   "& .MuiFormControlLabel-label": {
-                    // Target the label
-                    fontSize: "13px", // Change this to your desired font size
+                    fontSize: "13px",
                   },
                 }}
               />
@@ -368,20 +404,20 @@ const PersonalMail = () => {
                           }}
                           sx={{
                             "& .MuiAutocomplete-option": {
-                              color: "blue", // changes the color of the options text
+                              color: "blue",
                             },
                             '& .MuiAutocomplete-option[data-focus="true"]': {
-                              backgroundColor: "lightgray", // changes the background color of the focused option
+                              backgroundColor: "lightgray",
                             },
                             '& .MuiAutocomplete-option[data-focus="true"][aria-selected="true"]':
                               {
-                                backgroundColor: "lightblue", // changes the background color of the selected option
+                                backgroundColor: "lightblue",
                               },
                             "& .MuiAutocomplete-popupIndicator": {
-                              color: "green", // changes the color of the popup indicator
+                              color: "green",
                             },
                             "& .MuiAutocomplete-clearIndicator": {
-                              color: "purple", // changes the color of the clear indicator
+                              color: "purple",
                             },
                           }}
                           renderInput={(params) => (
@@ -417,17 +453,17 @@ const PersonalMail = () => {
                           }}
                           sx={{
                             "& .MuiAutocomplete-option": {
-                              color: "blue", // changes the color of the options text
+                              color: "blue",
                             },
                             '& .MuiAutocomplete-option[data-focus="true"]': {
-                              backgroundColor: "lightgray", // changes the background color of the focused option
+                              backgroundColor: "lightgray",
                             },
                             '& .MuiAutocomplete-option[data-focus="true"][aria-selected="true"]':
                               {
-                                backgroundColor: "lightblue", // changes the background color of the selected option
+                                backgroundColor: "lightblue",
                               },
                             "& .MuiAutocomplete-clearIndicator": {
-                              color: "red", // changes the color of the clear indicator
+                              color: "red",
                             },
                           }}
                           renderInput={(params) => (
@@ -451,10 +487,24 @@ const PersonalMail = () => {
                       </div>
                     </div>
                   </div>
-                  <AddressValidationModal
+                  <SenderAddressValidationModel
                     formState={formState}
-                    onValidationResult={handleOnValidationResult}
+                    onValidationSenderResult={handleSenderOnValidationResult}
                   />
+                  <TextField
+                    inputProps={{ readOnly: true }}
+                    read
+                    InputLabelProps={{
+                      style: { fontSize: 13 },
+                    }}
+                    style={{ minWidth: 480, marginLeft: "32px" }}
+                    required
+                    type={mailFormField.senderAddress.type}
+                    id={mailFormField.senderAddress.id}
+                    label={mailFormField.senderAddress.label}
+                    onChange={handleChange(mailFormField.senderAddress.id)}
+                    value={formState.senderAddress}
+                  ></TextField>
                 </div>
               )}
 

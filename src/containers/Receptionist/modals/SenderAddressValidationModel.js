@@ -3,7 +3,7 @@ import { Button as MuiButton } from "@mui/material";
 import { Button, Modal, ModalHeader } from "react-bootstrap";
 import axios from "axios";
 
-function AddressValidationModal({ formState, onValidationResult }) {
+function SenderAddressValidationModel({ formState, onValidationSenderResult }) {
   const [show, setShow] = useState(false);
   const [validatedResponse, setValidatedResponse] = useState({});
   const [isValid, setIsValid] = useState(false);
@@ -14,7 +14,7 @@ function AddressValidationModal({ formState, onValidationResult }) {
     setIsValid(false);
   };
   const handleAccept = () => {
-    onValidationResult(validatedResponse);
+    onValidationSenderResult(validatedResponse);
     handleClose();
   };
 
@@ -23,15 +23,14 @@ function AddressValidationModal({ formState, onValidationResult }) {
     setValidatedResponse({});
     setIsValid(false);
     const data = {
-      houseNumber: formState.recipientHouseNumber,
-      city: formState.recipientCity,
-      zone: formState.recipientPostalZone,
+      houseNumber: formState.senderHouseNumber,
+      city: formState.senderCity,
+      zone: formState.senderPostalZone,
     };
     axios
       .post("http://localhost:8081/api/receptionist/address/validate", data)
       .then((response) => {
-        console.log("validation result came, success!");
-        // console.log(response.data);
+        console.log("Sender address validation result came, success!");
         setValidatedResponse(response.data);
         setIsValid(true);
         setShow(true);
@@ -43,7 +42,7 @@ function AddressValidationModal({ formState, onValidationResult }) {
 
   const handleShow = () => {
     setShow(true);
-    console.log(formState.recipientHouseNumber);
+    console.log(formState.senderHouseNumber);
     console.log("Show");
   };
 
@@ -144,4 +143,4 @@ function AddressValidationModal({ formState, onValidationResult }) {
   );
 }
 
-export default AddressValidationModal;
+export default SenderAddressValidationModel;
