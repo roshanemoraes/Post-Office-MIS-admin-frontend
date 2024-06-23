@@ -528,9 +528,12 @@ const PersonalMail = () => {
           </Box>
         </Box>
       </div>
-      {/* <div className="rounded-lg sm:col-span-5 min-h-[100px] m-4 bg-white-500 items-center justify-center">
-        <CostForm />
-      </div> */}
+      <div className="rounded-lg sm:col-span-5 min-h-[100px] m-4 bg-white-500 items-center justify-center">
+        <CostForm
+          postType={"Personal Mail"}
+          description={"Maximum Weight: 2Kg"}
+        />
+      </div>
     </div>
   );
 };
