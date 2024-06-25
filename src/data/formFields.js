@@ -93,18 +93,18 @@ export const mailFormField = {
 
 export const addEmployeeField = {
   employeeFullName: {
-    label: "Employee Full Name",
-    id: "employeeFullName",
+    label: "Full Name",
+    id: "fullName",
     type: "text",
   },
   employeeNIC: {
-    label: "Employee NIC",
-    id: "employeeNic",
+    label: "NIC",
+    id: "nic",
     type: "text",
   },
   employeeEmail: {
-    label: "Employee Email",
-    id: "employeeEmail",
+    label: "Email",
+    id: "email",
     type: "text",
   },
   employeeDateOfBirth: {
@@ -113,14 +113,14 @@ export const addEmployeeField = {
     type: "text",
   },
   employeeContactNumber: {
-    label: "Employee Contact Number",
-    id: "employeeContactNumber",
-    type: "number",
+    label: "Contact Number",
+    id: "contactNumber",
+    type: "text",
   },
   accountPassword: {
     label: "Password",
     id: "password",
-    type: "password",
+    type: "text",
   },
   employeeRole: {
     label: "Employee Role",

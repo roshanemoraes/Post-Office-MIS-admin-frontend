@@ -11,12 +11,14 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const Login = () => {
-  const Navigate = useNavigate();
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [error, setError] = useState("");
 
   const paperStyle = {
     padding: 20,
@@ -32,33 +34,35 @@ const Login = () => {
   };
 
   const handleSignIn = async (e) => {
-    const response = await fetch("http://localhost:8081/authenticate/", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        email: email,
-        password: password,
-      }),
-    });
-    if (!response.ok) {
-      console.error("Login failed");
-      return;
-    }
-
-    const data = await response.json();
-    console.log(data);
-    if (data.roles) {
-      if (data.roles === "ROLE_ADMIN") {
-        Navigate("/postmaster");
-      } else if (data.roles === "ROLE_USER") {
-        Navigate("/user");
+    e.preventDefault();
+    console.log(email);
+    console.log(password);
+    try {
+      const response = await axios.post(
+        "http://localhost:8080/products/authenticate",
+        {
+          username: email,
+          password: password,
+        },
+        { withCredentials: true }
+      );
+      console.log(response.data);
+      setError("");
+      if (response.data.role) {
+        if (response.data.role.includes("ROLE_ADMIN")) {
+          navigate("/postmaster");
+        } else if (response.data.role.includes("ROLE_MANAGER")) {
+          navigate("/delivery-manager");
+        } else if (response.data.role.includes("ROLE_USER")) {
+          navigate("/receptionist");
+        } else {
+          navigate("/login");
+        }
       } else {
-        Navigate("/login");
+        console.error("No roles found in response data");
       }
-    } else {
-      console.error("No roles found in response data");
+    } catch (error) {
+      setError("Login failed. Please check your credentials.");
     }
   };
 
@@ -71,7 +75,7 @@ const Login = () => {
         style={{ minHeight: "100vh" }}
       >
         <Paper elevation={10} style={paperStyle}>
-          <div style={{ marginBottom: "15px", fontSize: "20px" }}>Login</div>
+          <div style={{ marginBottom: "15px", fontSize: "20px" }}>Loogin</div>
           <TextField
             label="Email"
             value={email}

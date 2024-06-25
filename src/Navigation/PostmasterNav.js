@@ -6,6 +6,7 @@ import AddEmployee from "../containers/Postmaster/AddEmployee";
 import ListEmployee from "../containers/Postmaster/ListEmployee";
 import { TestPrint } from "../containers/Postmaster/TestPrint";
 import LiveMap from "../containers/Postmaster/LiveMap";
+import BlurBackground from "../components/Custom/Background/BlurBackground";
 
 function PostmasterInterface() {
   const [isSideBarOpen, setSideBarOpen] = useState(window.innerWidth >= 1024);
@@ -22,6 +23,7 @@ function PostmasterInterface() {
       }}
     >
       <SideBar onSidebarToggle={handleSidebarToggle} />
+      <BlurBackground />
       <main className="content" style={{ overflowY: "auto", height: "100vh" }}>
         <Routes>
           <Route path="/" element={<Dashboard />} />
