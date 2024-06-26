@@ -108,19 +108,19 @@ const SideBar = ({ onSidebarToggle }) => {
               </li>
             </ul>
           </li>
-          <li>
-            <Link to="#">
+          {/* <li>
+            <Link to="/receptionist/return-mail">
               <i className="bx bx-credit-card"></i>
               <span className="link_name">Return Mail Management</span>
             </Link>
             <ul className="sub-menu blank">
               <li>
-                <Link className="link_name" to="#">
+                <Link className="link_name" to="/receptionist/return-mail">
                   Return Mail Management
                 </Link>
               </li>
             </ul>
-          </li>
+          </li> */}
           {/* <li className={isSubMenuOpen[1] ? "showMenu" : ""}>
             <div className="iocn-link">
               <Link to="#">

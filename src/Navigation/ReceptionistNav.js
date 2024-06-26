@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import SideBar from "../containers/Receptionist/SideBar";
 import { Route, Routes } from "react-router-dom";
 import Dashboard from "../containers/Receptionist/Dashboard";
-import NormalPost from "../containers/Receptionist/NormalPost";
 import RegisteredPost from "../containers/Receptionist/RegisteredPost";
 import LogiPost from "../containers/Receptionist/LogiPost";
 import FastCourier from "../containers/Receptionist/FastCourier";

@@ -8,32 +8,18 @@ import {
 } from "@react-google-maps/api";
 import axios from "axios";
 
-const Map = () => {
+const ViewRouteMap = ({ destinations }) => {
   const center = {
-    lat: 7.2008,
-    lng: 79.8737,
+    lat: destinations[0].lat,
+    lng: destinations[0].lng,
   };
-  const [locations, setLocations] = useState([]);
+  const [locations, setLocations] = useState(destinations || []);
   const [activeMarker, setActiveMarker] = useState(null);
   const [mapCenter, setMapCenter] = useState(center);
   const [map, setMap] = useState(null);
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(
-          "http://localhost:8081/api/postmaster/employee/live-map"
-        );
-        setLocations(response.data);
-        console.log(response.data);
-      } catch (err) {
-        console.error("Error fetching postman locations!", err);
-      }
-    };
-    fetchData();
-  }, []);
-
-  useEffect(() => {
+    console.log("Locations: ", destinations);
     const observer = new MutationObserver((mutations) => {
       mutations.forEach(({ addedNodes }) => {
         addedNodes.forEach((node) => {
@@ -75,14 +61,14 @@ const Map = () => {
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        height: "100vh",
+        height: "70vh",
       }}
     >
       {isLoaded && (
         <GoogleMap
           center={mapCenter}
-          zoom={14}
-          mapContainerStyle={{ width: "90%", height: "90vh" }}
+          zoom={15}
+          mapContainerStyle={{ width: "100%", height: "100%" }}
           //   mapTypeId="ec1432108f3d8893"
           onClick={() => setActiveMarker(null)}
           onDragEnd={() => {
@@ -130,9 +116,9 @@ const Map = () => {
                       backgroundColor: "rgba(255, 255, 255, 0.9)",
                     }}
                   >
-                    <div>Name: {location.name}</div>
-                    <div>Delivered: {location.deliveredCount}</div>
-                    <div>Pending: {location.pendingCount}</div>
+                    {/* <div>Name: </div> */}
+                    {/* <div>Delivered: {location.deliveredCount}</div>
+                    <div>Pending: {location.pendingCount}</div> */}
                     <div>
                       {/* {location.pendingCount} / {location.deliveredCount} */}
                     </div>
@@ -147,4 +133,4 @@ const Map = () => {
   );
 };
 
-export default Map;
+export default ViewRouteMap;

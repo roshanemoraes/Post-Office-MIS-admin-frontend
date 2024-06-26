@@ -227,13 +227,14 @@ const AddEmployee = () => {
               variant="contained"
               sx={{
                 my: "40px",
-                mb: "20px",
-                mr: "60px",
+                mb: "5px",
+                // mr: "60px",
                 backgroundColor: "#852318",
                 color: "white",
                 px: 5,
                 fontSize: "14px",
                 borderRadius: "6px",
+                // alignSelf: "center",
               }}
               onClick={handleSubmit}
             >

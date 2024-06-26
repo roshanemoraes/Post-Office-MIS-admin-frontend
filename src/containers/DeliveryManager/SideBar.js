@@ -62,19 +62,18 @@ const SideBar = ({ onSidebarToggle }) => {
             </ul>
           </li>
           <li>
-            <Link to="/postmaster/list-employee">
-              <i className="bx bx-line-chart"></i>
-              <span className="link_name">List Employees</span>
+            <Link to="/delivery-manager/return-mail">
+              <i className="bx bx-credit-card"></i>
+              <span className="link_name">Return Mail Management</span>
             </Link>
             <ul className="sub-menu blank">
               <li>
-                <Link className="link_name" to="#">
-                  List Employees
+                <Link className="link_name" to="/delivery-manager/return-mail">
+                  Return Mail Management
                 </Link>
               </li>
             </ul>
           </li>
-
           <li>
             <Link to="/postmaster">
               <i className="bx bx-cog"></i>

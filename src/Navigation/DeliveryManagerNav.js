@@ -3,6 +3,7 @@ import Dashboard from "../containers/DeliveryManager/Dashboard";
 import SideBar from "../containers/DeliveryManager/SideBar";
 import { Route, Routes } from "react-router-dom";
 import RouteAllocation from "../containers/DeliveryManager/AssignRoute";
+import ReturnMailMgmt from "./../containers/DeliveryManager/ReturnMailMgmt";
 
 const DeliveryManagerInterface = () => {
   const [isSideBarOpen, setSideBarOpen] = useState(window.innerWidth >= 1024);
@@ -22,6 +23,7 @@ const DeliveryManagerInterface = () => {
         <Routes>
           <Route path="/" element={<Dashboard />} />
           <Route path="/route-allocation" element={<RouteAllocation />} />
+          <Route path="/return-mail" element={<ReturnMailMgmt />} />
         </Routes>
       </main>
     </div>

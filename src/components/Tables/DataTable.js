@@ -57,10 +57,11 @@ export default function DataTable() {
   }, []);
 
   return (
-    <div style={{ height: 680, width: "100%" }}>
+    <div style={{ height: 680, width: "100%", backgroundColor: "white" }}>
       <DataGrid
         rows={rows}
         columns={columns}
+        style={{ backgroundColor: "white" }}
         initialState={{
           pagination: {
             paginationModel: { page: 0, pageSize: 5 },

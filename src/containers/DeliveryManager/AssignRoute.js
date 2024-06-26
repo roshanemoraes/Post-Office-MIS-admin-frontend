@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import axios from "axios";
 import { Button, CircularProgress } from "@mui/material";
 import SubmitRoute from "./SubmitRoute";
+import ViewRouteModal from "./Modals/ViewRouteModal";
 
 export default function AssignRoute() {
   const [rows, setRows] = React.useState([]);
@@ -20,29 +21,13 @@ export default function AssignRoute() {
     },
     { field: "status", headerName: "Status", width: 150 },
     {
-      field: "action",
-      headerName: "Action",
+      field: "route",
+      headerName: "Route",
       width: 180,
       headerAlign: "center",
       renderCell: (params) => (
         <div>
-          <Button
-            variant="contained"
-            sx={{
-              width: "40px",
-              my: "0px",
-              mb: "0px",
-              mr: "10px",
-              backgroundColor: "#000000",
-              color: "white",
-              px: 5,
-              fontSize: "11px",
-              borderRadius: "8px",
-            }}
-            onClick={() => handleButtonClick(params.row)}
-          >
-            View
-          </Button>
+          <ViewRouteModal destinations={params.row.destinations} />
 
           <SubmitRoute
             rowData={params.row}
@@ -62,9 +47,10 @@ export default function AssignRoute() {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          "https://353ee19a-594e-46f9-9042-7f8470aa8dae.mock.pstmn.io/new-route-alloc"
+          "http://localhost:8081/api/delivery-manager/route/list-all"
         );
         setRows(response.data);
+        console.log(response.data);
       } catch (error) {
         console.error("Error fetching users", error);
       }
