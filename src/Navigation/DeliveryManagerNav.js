@@ -4,6 +4,7 @@ import SideBar from "../containers/DeliveryManager/SideBar";
 import { Route, Routes } from "react-router-dom";
 import RouteAllocation from "../containers/DeliveryManager/AssignRoute";
 import ReturnMailMgmt from "./../containers/DeliveryManager/ReturnMailMgmt";
+import NavBar from "../components/NavBar";
 
 const DeliveryManagerInterface = () => {
   const [isSideBarOpen, setSideBarOpen] = useState(window.innerWidth >= 1024);
@@ -16,10 +17,22 @@ const DeliveryManagerInterface = () => {
       style={{
         display: "grid",
         gridTemplateColumns: isSideBarOpen ? "260px auto" : "80px auto",
+        gridTemplateRows: "auto 1fr",
       }}
     >
       <SideBar onSidebarToggle={handleSidebarToggle} />
-      <main className="content" style={{ overflowY: "auto", height: "100vh" }}>
+      <div style={{ gridColumn: "2", gridRow: "1" }}>
+        <NavBar />
+      </div>
+      <main
+        className="content"
+        style={{
+          overflowY: "auto",
+          height: "100vh",
+          gridColumn: "2",
+          gridRow: "2",
+        }}
+      >
         <Routes>
           <Route path="/" element={<Dashboard />} />
           <Route path="/route-allocation" element={<RouteAllocation />} />

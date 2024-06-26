@@ -23,6 +23,7 @@ body {
     z-index: 1;
     /* Ensure the content stays above the background */
     color: rgb(0, 0, 0);
-    padding: 20px;
+        padding: 8px;
+            padding-right: 0px;
     /* text-align: center; */
 }

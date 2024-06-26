@@ -19,7 +19,6 @@ function ViewRouteModal({ destinations }) {
     `;
     document.head.appendChild(style);
 
-    // Cleanup function to remove the style tag when the component unmounts
     return () => {
       document.head.removeChild(style);
     };
@@ -59,7 +58,6 @@ function ViewRouteModal({ destinations }) {
         backdrop="static"
         keyboard={false}
         dialogClassName="modal-90w"
-        // style={{ maxWidth: "90%", width: "auto", height: "auto" }}
       >
         <Modal.Header closeButton>
           <Modal.Title style={{ color: "blue" }}>

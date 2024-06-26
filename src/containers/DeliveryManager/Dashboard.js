@@ -1,8 +1,10 @@
 import React from "react";
+import NavBar from "../../components/NavBar";
 
 const Dashboard = () => {
   return (
-    <div>
+    <div style={{ marginTop: "0px" }}>
+      {/* <NavBar /> */}
       <div>This is DeliveryManager Dashboard...</div>
     </div>
   );
