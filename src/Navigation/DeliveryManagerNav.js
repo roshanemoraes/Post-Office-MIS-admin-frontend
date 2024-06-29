@@ -5,6 +5,8 @@ import { Route, Routes } from "react-router-dom";
 import RouteAllocation from "../containers/DeliveryManager/AssignRoute";
 import ReturnMailMgmt from "./../containers/DeliveryManager/ReturnMailMgmt";
 import NavBar from "../components/NavBar";
+import ReturnToSender from "../containers/DeliveryManager/ReturnToSender";
+import AddressUpdate from "../containers/DeliveryManager/AddressUpdate";
 
 const DeliveryManagerInterface = () => {
   const [isSideBarOpen, setSideBarOpen] = useState(window.innerWidth >= 1024);
@@ -37,6 +39,14 @@ const DeliveryManagerInterface = () => {
           <Route path="/" element={<Dashboard />} />
           <Route path="/route-allocation" element={<RouteAllocation />} />
           <Route path="/return-mail" element={<ReturnMailMgmt />} />
+          <Route
+            path="/return-mail/return-to-sender"
+            element={<ReturnToSender />}
+          />
+          <Route
+            path="/return-mail/address-update"
+            element={<AddressUpdate />}
+          />
         </Routes>
       </main>
     </div>

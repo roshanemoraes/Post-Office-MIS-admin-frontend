@@ -61,7 +61,44 @@ const SideBar = ({ onSidebarToggle }) => {
               </li>
             </ul>
           </li>
-          <li>
+          <li className={isSubMenuOpen[0] ? "showMenu" : ""}>
+            <div className="iocn-link">
+              <Link to="#">
+                <i className="bx bx-envelope"></i>
+                <span className="link_name">Return Mail Management</span>
+              </Link>
+              <i
+                className="bx bxs-chevron-down arrow"
+                onClick={() => handleSubMenuToggle(0)}
+              ></i>
+            </div>
+            <ul className="sub-menu">
+              <li>
+                <Link className="link_name" to="#">
+                  Return Mail Mgmt
+                </Link>
+              </li>
+              <li>
+                <Link to="/delivery-manager/return-mail">
+                  All Undeliverable Mails
+                </Link>
+              </li>
+              <li>
+                <Link to="/delivery-manager/return-mail/return-to-sender">
+                  Return-to-Sender List
+                </Link>
+              </li>
+              <li>
+                <Link to="/delivery-manager/return-mail/address-update">
+                  Address Update List
+                </Link>
+              </li>
+              <li>
+                <Link to="/delivery-manager">Resend-ready List</Link>
+              </li>
+            </ul>
+          </li>
+          {/* <li>
             <Link to="/delivery-manager/return-mail">
               <i className="bx bx-credit-card"></i>
               <span className="link_name">Return Mail Management</span>
@@ -73,7 +110,7 @@ const SideBar = ({ onSidebarToggle }) => {
                 </Link>
               </li>
             </ul>
-          </li>
+          </li> */}
           <li>
             <Link to="/postmaster">
               <i className="bx bx-cog"></i>
