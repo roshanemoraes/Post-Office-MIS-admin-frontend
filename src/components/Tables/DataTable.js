@@ -29,30 +29,30 @@ import axios from "axios";
 //   },
 // ];
 const columns = [
-  { field: "id", headerName: " Employee ID", width: 130 },
-  { field: "roles", headerName: "Role", width: 150 },
-  { field: "fullName", headerName: "Full Name", width: 230 },
-  { field: "nic", headerName: "NIC", width: 160 },
-  { field: "email", headerName: "Email", type: "string", width: 280 },
+  { field: "id", headerName: " Emp ID", width: 80 },
+  { field: "roles", headerName: "Role", width: 120 },
+  { field: "fullName", headerName: "Full Name", width: 210 },
+  { field: "nic", headerName: "NIC", width: 130 },
+  { field: "email", headerName: "Email", type: "string", width: 240 },
   { field: "contactNumber", headerName: "Contact", width: 130 },
 ];
 
 export default function DataTable() {
   const [rows, setRows] = React.useState([]);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(
-          "https://22a1e293-45bf-4bba-9b50-bb054156b76b.mock.pstmn.io/list-employee"
-        );
-        console.log("request came!");
-        setRows(response.data);
-      } catch (error) {
-        console.error("Error fetching users", error);
-      }
-    };
+  const fetchData = async () => {
+    try {
+      const response = await axios.get(
+        "http://localhost:8081/api/postmaster/employee/list-employee"
+      );
+      console.log("request came!");
+      setRows(response.data);
+    } catch (error) {
+      console.error("Error fetching users", error);
+    }
+  };
 
+  useEffect(() => {
     fetchData();
   }, []);
 

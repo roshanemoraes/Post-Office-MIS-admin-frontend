@@ -1,11 +1,6 @@
 import React, { useEffect } from "react";
-import { Button } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import axios from "axios";
-import UpdateIcon from "../../assets/update.svg";
-import ReturnToSenderIcon from "../../assets/arrow-repeat.svg";
-import InfoIcon from "../../assets/info-circle.svg";
-import InfoReturnMailModal from "./Modals/InfoReturnMailModal";
 
 export default function DiscardedMails() {
   const [rows, setRows] = React.useState([]);

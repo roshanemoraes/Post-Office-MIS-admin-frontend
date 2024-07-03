@@ -97,6 +97,11 @@ export const addEmployeeField = {
     id: "fullName",
     type: "text",
   },
+  employeeUserName: {
+    label: "User Name",
+    id: "userName",
+    type: "text",
+  },
   employeeNIC: {
     label: "NIC",
     id: "nic",
@@ -107,9 +112,9 @@ export const addEmployeeField = {
     id: "email",
     type: "text",
   },
-  employeeDateOfBirth: {
-    label: "Date Of Birth",
-    id: "dateOfBirth",
+  employeeDateJoined: {
+    label: "Date Joined",
+    id: "dateJoined",
     type: "text",
   },
   employeeContactNumber: {
@@ -122,10 +127,10 @@ export const addEmployeeField = {
     id: "password",
     type: "text",
   },
-  employeeRole: {
-    label: "Employee Role",
-    id: "employeeRole",
-    type: "formControl",
-    options: [],
-  },
+  // employeeRole: {
+  //   label: "Employee Role",
+  //   id: "employeeRole",
+  //   type: "formControl",
+  //   options: [],
+  // },
 };
