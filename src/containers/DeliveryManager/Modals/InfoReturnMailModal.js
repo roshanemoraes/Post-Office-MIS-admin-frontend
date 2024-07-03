@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Button as MuiButton } from "@mui/material";
 import { Button, Modal } from "react-bootstrap";
-import InfoIcon from "../../../assets/info-circle.svg";
+import InfoIcon from "../../../assets/info-circle-fill.svg";
 
 function InfoReturnMailModal({ data }) {
   const [show, setShow] = useState(false);
@@ -20,7 +20,7 @@ function InfoReturnMailModal({ data }) {
         title="Info"
         style={{
           border: "none",
-          background: "#4ade80",
+          background: "#6ee7b7",
           minWidth: "35px",
           marginRight: "10px",
           outline: "none",
@@ -38,11 +38,18 @@ function InfoReturnMailModal({ data }) {
         dialogClassName="modal-90w"
       >
         <Modal.Header closeButton>
-          <Modal.Title style={{ color: "blue" }}>Mail Details</Modal.Title>
+          <Modal.Title style={{ color: "black" }}>Mail Details</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <div>
-            <div>Details are under construction...</div>
+            <div style={{ marginBottom: "5px" }}>
+              Customer ID: {data.customer_id}
+            </div>
+            <div style={{ marginBottom: "5px" }}>
+              Delivered By: {data.deliveredBy}
+            </div>
+            <div style={{ marginBottom: "5px" }}>City: {data.city}</div>
+            <div>Zone: {data.zone}</div>
           </div>
         </Modal.Body>
         <Modal.Footer

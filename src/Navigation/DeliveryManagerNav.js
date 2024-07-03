@@ -7,6 +7,7 @@ import ReturnMailMgmt from "./../containers/DeliveryManager/ReturnMailMgmt";
 import NavBar from "../components/NavBar";
 import ReturnToSender from "../containers/DeliveryManager/ReturnToSender";
 import AddressUpdate from "../containers/DeliveryManager/AddressUpdate";
+import DiscardedMails from "../containers/DeliveryManager/DiscardedMails";
 
 const DeliveryManagerInterface = () => {
   const [isSideBarOpen, setSideBarOpen] = useState(window.innerWidth >= 1024);
@@ -46,6 +47,10 @@ const DeliveryManagerInterface = () => {
           <Route
             path="/return-mail/address-update"
             element={<AddressUpdate />}
+          />
+          <Route
+            path="/return-mail/discarded-mail"
+            element={<DiscardedMails />}
           />
         </Routes>
       </main>

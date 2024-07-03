@@ -7,13 +7,13 @@ import ReturnToSenderIcon from "../../assets/arrow-repeat.svg";
 import InfoIcon from "../../assets/info-circle.svg";
 import InfoReturnMailModal from "./Modals/InfoReturnMailModal";
 
-export default function AddressUpdate() {
+export default function DiscardedMails() {
   const [rows, setRows] = React.useState([]);
 
   const columns = [
     { field: "undeliverableId", headerName: "Return ID", width: 90 },
     { field: "mailId", headerName: "Mail ID", width: 90 },
-    // { field: "customer_id", headerName: "Cus ID", width: 90 },
+    { field: "customer_id", headerName: "Cus ID", width: 90 },
     { field: "type", headerName: "Mail Type", width: 160 },
     {
       field: "reason",
@@ -22,23 +22,23 @@ export default function AddressUpdate() {
     },
     { field: "status", headerName: "Status", width: 220 },
     { field: "deliverDate", headerName: "Return Date", width: 180 },
-    {
-      field: "action",
-      headerName: "Action",
-      width: 70,
-      headerAlign: "center",
-      renderCell: (params) => (
-        <div>
-          <InfoReturnMailModal data={params.row} />
-        </div>
-      ),
-    },
+    // {
+    //   field: "action",
+    //   headerName: "Action",
+    //   width: 150,
+    //   headerAlign: "center",
+    //   renderCell: (params) => (
+    //     <div>
+    //       <InfoReturnMailModal data={params.row}/>
+    //     </div>
+    //   ),
+    // },
   ];
 
   const fetchData = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:8081/api/delivery-manager/return-mail/address-update"
+        "http://localhost:8081/api/delivery-manager/return-mail/discarded-mail"
       );
       setRows(response.data);
       console.log(response.data);
@@ -83,12 +83,7 @@ export default function AddressUpdate() {
           }}
         />
       </div>
-      <div style={{ marginLeft: "50px" }}>
-        <Button variant="contained">
-          Send notice <br />
-          to all customers
-        </Button>
-      </div>
+      <div style={{ marginLeft: "50px" }}></div>
     </div>
   );
 }

@@ -11,8 +11,8 @@ export default function AssignRoute() {
   const [loading, setLoading] = React.useState(false);
 
   const columns = [
-    { field: "id", headerName: "Delivery ID", width: 105 },
-    { field: "postman_id", headerName: "Postman ID", width: 105 },
+    { field: "deliveryId", headerName: "Delivery ID", width: 105 },
+    { field: "postmanId", headerName: "Postman ID", width: 105 },
     { field: "zone", headerName: "Zone", width: 90 },
     {
       field: "destinations",
@@ -86,6 +86,7 @@ export default function AssignRoute() {
           rows={rows}
           columns={columns}
           rowHeight={50}
+          getRowId={(row) => row.deliveryId}
           sx={{
             ".MuiDataGrid-columnSeparator": {
               display: "none",

@@ -94,7 +94,9 @@ const SideBar = ({ onSidebarToggle }) => {
                 </Link>
               </li>
               <li>
-                <Link to="/delivery-manager">Resend-ready List</Link>
+                <Link to="/delivery-manager/return-mail/discarded-mail">
+                  Discarded Mail List
+                </Link>
               </li>
             </ul>
           </li>
