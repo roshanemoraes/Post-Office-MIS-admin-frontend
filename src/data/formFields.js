@@ -19,6 +19,16 @@ export const mailFormField = {
     id: "senderAddress",
     type: "text",
   },
+  senderHouseNumber: {
+    label: "House #",
+    id: "senderHouseNumber",
+    type: "text",
+  },
+  senderPostalZone: {
+    label: "Sender Postal Zone",
+    id: "senderPostalZone",
+    type: "text",
+  },
   senderNIC: {
     label: "Sender NIC",
     id: "senderNic",
@@ -27,7 +37,7 @@ export const mailFormField = {
   senderPhone: {
     label: "Sender Phone",
     id: "senderPhone",
-    type: "text",
+    type: "number",
   },
   recipientName: {
     label: "Recipient Name",
@@ -49,52 +59,67 @@ export const mailFormField = {
     id: "recipientCity",
     type: "text",
   },
+  recipientPostalZone: {
+    label: "Recipient Postal Zone",
+    id: "recipientPostalZone",
+    type: "text",
+  },
   recipientAddress: {
     label: "Recipient Address",
-    id: "RecipientAddress",
+    id: "recipientAddress",
+    type: "text",
+  },
+  recipientHouseNumber: {
+    label: "House #",
+    id: "recipientHouseNumber",
     type: "text",
   },
   accountNumber: {
     label: "Account Number",
     id: "accountNumber",
-    type: "text",
+    type: "number",
   },
   cost: {
     label: "Cost",
     id: "cost",
-    type: "text",
+    type: "number",
   },
   transferAmount: {
     label: "Transfer Amount",
     id: "transferAmount",
-    type: "text",
+    type: "number",
   },
 };
 
 export const addEmployeeField = {
   employeeFullName: {
-    label: "Employee Full Name",
-    id: "employeeFullName",
+    label: "Full Name",
+    id: "fullName",
+    type: "text",
+  },
+  employeeUserName: {
+    label: "User Name",
+    id: "userName",
     type: "text",
   },
   employeeNIC: {
-    label: "Employee NIC",
-    id: "employeeNic",
+    label: "NIC",
+    id: "nic",
     type: "text",
   },
   employeeEmail: {
-    label: "Employee Email",
-    id: "employeeEmail",
+    label: "Email",
+    id: "email",
     type: "text",
   },
-  employeeDateOfBirth: {
-    label: "Date Of Birth",
-    id: "dateOfBirth",
+  employeeDateJoined: {
+    label: "Date Joined",
+    id: "dateJoined",
     type: "text",
   },
   employeeContactNumber: {
-    label: "Employee Contact Number",
-    id: "employeeContactNumber",
+    label: "Contact Number",
+    id: "contactNumber",
     type: "text",
   },
   accountPassword: {
@@ -102,10 +127,10 @@ export const addEmployeeField = {
     id: "password",
     type: "text",
   },
-  employeeRole: {
-    label: "Employee Role",
-    id: "employeeRole",
-    type: "formControl",
-    options: [],
-  },
+  // employeeRole: {
+  //   label: "Employee Role",
+  //   id: "employeeRole",
+  //   type: "formControl",
+  //   options: [],
+  // },
 };

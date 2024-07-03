@@ -2,9 +2,6 @@ import {
   Box,
   Button,
   GlobalStyles,
-  List,
-  ListItem,
-  Paper,
   Typography,
   useTheme,
 } from "@mui/material";
@@ -80,7 +77,7 @@ const PostForm = ({
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        height: "100vh",
+        height: "100%",
       }}
     >
       <Box
@@ -90,8 +87,8 @@ const PostForm = ({
           alignItems: "center",
           justifyContent: "center",
           width: "45%",
-          minWidth: "650px",
-          // backgroundColor: theme.palette.background.applicationForm,
+          minWidth: "550px",
+          backgroundColor: "#f5f5f5",
           borderRadius: "10px",
           padding: "30px 2px 30px 2px",
           boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.1)",
@@ -102,8 +99,9 @@ const PostForm = ({
           sx={{
             // color: theme.palette.text.typography,
             fontWeight: "bold",
-            fontSize: "30px",
+            fontSize: "22px",
             marginBottom: "10px",
+            fontFamily: "Helvetica Neue",
           }}
         >
           {formTitle}
@@ -115,7 +113,11 @@ const PostForm = ({
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
-            // "& .MuiTextField-root": { m: 1, minWidth: 500, fontSize: "20px" },
+            "& .MuiTextField-root": {
+              minWidth: 500,
+              fontSize: "15px",
+              marginTop: "10px",
+            },
           }}
         >
           <GlobalStyles
@@ -134,6 +136,7 @@ const PostForm = ({
                   fontSize: "18px",
                   fontWeight: "bold",
                   marginBottom: "5px",
+                  fontFamily: "Helvetica Neue",
                   textAlign: "left",
                   width: "98%",
                   marginTop: index !== 0 ? "10px" : "0px",

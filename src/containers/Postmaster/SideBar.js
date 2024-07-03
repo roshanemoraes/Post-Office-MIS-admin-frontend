@@ -1,6 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import "./style.css";
+import { Link } from "react-router-dom";
 
 const SideBar = ({ onSidebarToggle }) => {
   const [isSideBarOpen, setSideBarOpen] = useState(window.innerWidth >= 1024);
@@ -33,24 +34,24 @@ const SideBar = ({ onSidebarToggle }) => {
         </div>
         <ul className="nav-links">
           <li>
-            <a href="/postmaster/">
+            <Link to="/postmaster/">
               <i className="bx bx-grid-alt"></i>
               <span className="link_name">Dashboard</span>
-            </a>
+            </Link>
             <ul className="sub-menu blank">
               <li>
-                <a className="link_name" href="#">
+                <Link className="link_name" to="#">
                   Category
-                </a>
+                </Link>
               </li>
             </ul>
           </li>
           <li className={isSubMenuOpen[0] ? "showMenu" : ""}>
             <div className="iocn-link">
-              <a href="#">
+              <Link to="#">
                 <i className="bx bx-collection"></i>
                 <span className="link_name">Statistics</span>
-              </a>
+              </Link>
               <i
                 className="bx bxs-chevron-down arrow"
                 onClick={() => handleSubMenuToggle(0)}
@@ -58,70 +59,83 @@ const SideBar = ({ onSidebarToggle }) => {
             </div>
             <ul className="sub-menu">
               <li>
-                <a className="link_name" href="#">
+                <Link className="link_name" to="#">
                   Statistics
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#">Chart 1</a>
+                <Link to="#">Chart 1</Link>
               </li>
               <li>
-                <a href="#">Chart 2</a>
+                <Link to="#">Chart 2</Link>
               </li>
               <li>
-                <a href="#">Chart 3</a>
+                <Link to="#">Chart 3</Link>
               </li>
             </ul>
           </li>
           <li>
-            <a href="#">
+            <Link to="/postmaster/live-map">
               <i className="bx bx-pie-chart-alt-2"></i>
               <span className="link_name">Live Map</span>
-            </a>
+            </Link>
             <ul className="sub-menu blank">
               <li>
-                <a className="link_name" href="#">
+                <Link className="link_name" to="#">
                   Live Map
-                </a>
+                </Link>
               </li>
             </ul>
           </li>
           <li>
-            <a href="/postmaster/list-employee">
+            <Link to="/postmaster/list-employee">
               <i className="bx bx-line-chart"></i>
               <span className="link_name">List Employees</span>
-            </a>
+            </Link>
             <ul className="sub-menu blank">
               <li>
-                <a className="link_name" href="#">
+                <Link className="link_name" to="#">
                   List Employees
-                </a>
+                </Link>
               </li>
             </ul>
           </li>
           <li>
-            <a href="/postmaster/add-employee">
+            <Link to="/postmaster/add-employee">
               <i className="bx bx-compass"></i>
               <span className="link_name">Add Employee</span>
-            </a>
+            </Link>
             <ul className="sub-menu blank">
               <li>
-                <a className="link_name" href="#">
+                <Link className="link_name" to="#">
                   Add Employee
-                </a>
+                </Link>
               </li>
             </ul>
           </li>
           <li>
-            <a href="#">
+            <Link to="/receptionist">
               <i className="bx bx-cog"></i>
-              <span className="link_name">Settings</span>
-            </a>
+              <span className="link_name">Receptionist</span>
+            </Link>
             <ul className="sub-menu blank">
               <li>
-                <a className="link_name" href="#">
-                  Settings
-                </a>
+                <Link className="link_name" to="#">
+                  Receptionist
+                </Link>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <Link to="/delivery-manager">
+              <i className="bx bx-cog"></i>
+              <span className="link_name">Delivery Manager</span>
+            </Link>
+            <ul className="sub-menu blank">
+              <li>
+                <Link className="link_name" to="#">
+                  Delivery Manager
+                </Link>
               </li>
             </ul>
           </li>

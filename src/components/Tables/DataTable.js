@@ -1,7 +1,6 @@
 import * as React from "react";
 import { DataGrid } from "@mui/x-data-grid";
-import { useState, useEffect } from "react";
-import { Email } from "@mui/icons-material";
+import { useEffect } from "react";
 import axios from "axios";
 
 // const columns = [
@@ -30,46 +29,45 @@ import axios from "axios";
 //   },
 // ];
 const columns = [
-  { field: "id", headerName: "ID", width: 100 },
-  { field: "roles", headerName: "Role", width: 140 },
-  { field: "fullName", headerName: "Full Name", width: 200 },
-  { field: "nic", headerName: "NIC", width: 150 },
-  { field: "email", headerName: "Email", type: "string", width: 250 },
+  { field: "id", headerName: " Emp ID", width: 80 },
+  { field: "roles", headerName: "Role", width: 120 },
+  { field: "fullName", headerName: "Full Name", width: 210 },
+  { field: "nic", headerName: "NIC", width: 130 },
+  { field: "email", headerName: "Email", type: "string", width: 240 },
   { field: "contactNumber", headerName: "Contact", width: 130 },
 ];
-
 
 export default function DataTable() {
   const [rows, setRows] = React.useState([]);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(
-          "https://22a1e293-45bf-4bba-9b50-bb054156b76b.mock.pstmn.io/list-employee"
-        );
-        console.log("request came!");
-        setRows(response.data);
-      } catch (error) {
-        console.error("Error fetching users", error);
-      }
-    };
+  const fetchData = async () => {
+    try {
+      const response = await axios.get(
+        "http://localhost:8081/api/postmaster/employee/list-employee"
+      );
+      console.log("request came!");
+      setRows(response.data);
+    } catch (error) {
+      console.error("Error fetching users", error);
+    }
+  };
 
+  useEffect(() => {
     fetchData();
   }, []);
 
   return (
-    <div style={{ height: 680, width: "100%" }}>
+    <div style={{ height: 680, width: "100%", backgroundColor: "white" }}>
       <DataGrid
         rows={rows}
         columns={columns}
+        style={{ backgroundColor: "white" }}
         initialState={{
           pagination: {
             paginationModel: { page: 0, pageSize: 5 },
           },
         }}
         pageSizeOptions={[5, 10]}
-        checkboxSelection
       />
     </div>
   );

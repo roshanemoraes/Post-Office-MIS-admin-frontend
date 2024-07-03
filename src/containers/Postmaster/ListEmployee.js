@@ -1,26 +1,67 @@
-import React from "react";
-import DataTable from "../../components/Tables/DataTable";
-import { Box } from "@mui/material";
+import React, { useEffect } from "react";
+import { DataGrid } from "@mui/x-data-grid";
+import axios from "axios";
 
-const ListEmployee = () => {
+export default function ListEmployee() {
+  const [rows, setRows] = React.useState([]);
+
+  const columns = [
+    { field: "id", headerName: " Emp ID", width: 80 },
+    { field: "roles", headerName: "Role", width: 120 },
+    { field: "fullName", headerName: "Full Name", width: 210 },
+    { field: "nic", headerName: "NIC", width: 130 },
+    { field: "email", headerName: "Email", type: "string", width: 240 },
+    { field: "contactNumber", headerName: "Contact", width: 130 },
+  ];
+
+  const fetchData = async () => {
+    try {
+      const response = await axios.get(
+        "http://localhost:8081/api/postmaster/employee/list-employee"
+      );
+      console.log("request came!");
+      setRows(response.data);
+    } catch (error) {
+      console.error("Error fetching users", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
   return (
-    <Box
-      sx={{
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center",
-        width: "95%",
-        // backgroundColor: theme.palette.background.applicationForm,
-        borderRadius: "10px",
-        padding: "19px 19px 19px 19px",
-        marginLeft: "20px",
-        boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.1)",
-      }}
-    >
-      <DataTable />
-    </Box>
+    <div>
+      <div
+        style={{
+          height: 550,
+          paddingTop: "5px",
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <DataGrid
+          rows={rows}
+          columns={columns}
+          rowHeight={50}
+          sx={{
+            ".MuiDataGrid-columnSeparator": {
+              display: "none",
+            },
+            "&.MuiDataGrid-root": {
+              border: "none",
+            },
+          }}
+          initialState={{
+            pagination: {
+              paginationModel: { page: 0, pageSize: 10 },
+            },
+          }}
+        />
+      </div>
+      <div style={{ marginLeft: "50px" }}></div>
+    </div>
   );
-};
-
-export default ListEmployee;
+}
