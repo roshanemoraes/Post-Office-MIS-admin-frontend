@@ -6,7 +6,7 @@ import Postmaster from "./../../Navigation/Postmaster";
 
 const SideBar = ({ onSidebarToggle }) => {
   const [isSideBarOpen, setSideBarOpen] = useState(window.innerWidth >= 1024);
-  const [isSubMenuOpen, setSubMenuOpen] = useState(Array(1).fill(true));
+  const [isSubMenuOpen, setSubMenuOpen] = useState(Array(2).fill(true));
 
   const handleSidebarToggle = () => {
     if (window.innerWidth < 1024) {
@@ -47,7 +47,45 @@ const SideBar = ({ onSidebarToggle }) => {
               </li>
             </ul>
           </li>
-
+          <li className={isSubMenuOpen[1] ? "showMenu" : ""}>
+            <div className="iocn-link">
+              <Link to="#">
+                <i className="bx bx-envelope"></i>
+                <span className="link_name">Sort Mails</span>
+              </Link>
+              <i
+                className="bx bxs-chevron-down arrow"
+                onClick={() => handleSubMenuToggle(1)}
+              ></i>
+            </div>
+            <ul className="sub-menu">
+              <li>
+                <Link className="link_name" to="#">
+                  Sort Mails
+                </Link>
+              </li>
+              <li>
+                <Link to="/delivery-manager/mail-sort">
+                  All Mails To Deliver
+                </Link>
+              </li>
+              <li>
+                <Link to="/delivery-manager/mail-sort/in-area">
+                  In-Area Mail Mgmt
+                </Link>
+              </li>
+              <li>
+                <Link to="/delivery-manager/mail-sort/out-area">
+                  Out-Area Mail Mgmt
+                </Link>
+              </li>
+              <li>
+                <Link to="/delivery-manager/return-mail/discarded-mail">
+                  Discarded Mail List
+                </Link>
+              </li>
+            </ul>
+          </li>
           <li>
             <Link to="/delivery-manager/route-allocation">
               <i className="bx bx-pie-chart-alt-2"></i>
@@ -61,6 +99,7 @@ const SideBar = ({ onSidebarToggle }) => {
               </li>
             </ul>
           </li>
+
           <li className={isSubMenuOpen[0] ? "showMenu" : ""}>
             <div className="iocn-link">
               <Link to="#">

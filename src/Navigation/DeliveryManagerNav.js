@@ -8,6 +8,9 @@ import NavBar from "../components/NavBar";
 import ReturnToSender from "../containers/DeliveryManager/ReturnToSender";
 import AddressUpdate from "../containers/DeliveryManager/AddressUpdate";
 import DiscardedMails from "../containers/DeliveryManager/DiscardedMails";
+import MailsToSort from "../containers/DeliveryManager/MailSortMgmt/MailsToSort";
+import InArea from "../containers/DeliveryManager/MailSortMgmt/InArea";
+import OutArea from "../containers/DeliveryManager/MailSortMgmt/OutArea";
 
 const DeliveryManagerInterface = () => {
   const [isSideBarOpen, setSideBarOpen] = useState(window.innerWidth >= 1024);
@@ -52,6 +55,9 @@ const DeliveryManagerInterface = () => {
             path="/return-mail/discarded-mail"
             element={<DiscardedMails />}
           />
+          <Route path="/mail-sort" element={<MailsToSort />} />
+          <Route path="/mail-sort/in-area" element={<InArea />} />
+          <Route path="/mail-sort/out-area" element={<OutArea />} />
         </Routes>
       </main>
     </div>
