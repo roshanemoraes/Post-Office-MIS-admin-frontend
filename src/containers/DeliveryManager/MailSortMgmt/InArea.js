@@ -26,14 +26,27 @@ export default function InArea() {
     // { field: "deliverDate", headerName: "Return Date", width: 180 },
   ];
 
-  const handleAssign = () => {
-    console.log("Assign button is pressed.");
+  const handleAssign = async (data) => {
+    try {
+      const response = await axios.post(
+        "http://localhost:8081/api/delivery-manager/sort/assign/add",
+        {
+          zone: data.zone,
+          postmanId: data.postmanId,
+        }
+      );
+      fetchAssignments();
+    } catch (error) {
+      console.error("Error in handling assign:", error);
+    }
   };
 
   const columnsPostman = [
     { field: "id", headerName: "Assignment ID", width: 120 },
+    { field: "deliveryId", headerName: "Delivery ID", width: 120 },
     { field: "postmanId", headerName: "Postman ID", width: 120 },
     { field: "zone", headerName: "Assigned Zone", width: 200 },
+    { field: "status", headerName: "Status", width: 200 },
     {
       field: "action",
       headerName: "Assign Mails",
@@ -43,6 +56,7 @@ export default function InArea() {
         <div>
           {/* <InfoReturnMailModal data={params.row} /> */}
           <Button
+            disabled={params.row.status === "Assigned"}
             title="Assign Mails"
             style={{
               border: "none",
@@ -50,7 +64,7 @@ export default function InArea() {
               minWidth: "35px",
               marginRight: "10px",
             }}
-            onClick={handleAssign}
+            onClick={() => handleAssign(params.row)}
           >
             <img src={AssignIcon} alt="updateIcon" />
           </Button>
@@ -70,6 +84,10 @@ export default function InArea() {
     }
   };
 
+  useEffect(() => {
+    fetchData();
+  }, []);
+
   const fetchAssignments = async () => {
     try {
       const response = await axios.get(
@@ -82,11 +100,7 @@ export default function InArea() {
     }
   };
 
-  useEffect(() => {
-    fetchData();
-  }, []);
-
-  const handleLoadAssignments = () => {
+  const handleLoadUsualAssignments = () => {
     setLoadPressed(true);
     fetchAssignments();
   };
@@ -128,9 +142,22 @@ export default function InArea() {
           <Button
             variant="primary"
             style={{ backgroundColor: "black", padding: "15px" }}
-            onClick={handleLoadAssignments}
+            onClick={handleLoadUsualAssignments}
           >
-            Load Assignments
+            Load Usual Assignment
+          </Button>
+          <Button
+            disabled
+            variant="primary"
+            style={{
+              backgroundColor: "#7f1d1d",
+              padding: "15px",
+              marginLeft: "20px",
+              borderColor: "#7f1d1d",
+            }}
+            // onClick={handleLoadAssignments}
+          >
+            Load Custom Assignment
           </Button>
         </div>
       </div>
@@ -161,6 +188,9 @@ export default function InArea() {
               pagination: {
                 paginationModel: { page: 0, pageSize: 10 },
               },
+            }}
+            columnVisibilityModel={{
+              id: false,
             }}
           />
         </div>
