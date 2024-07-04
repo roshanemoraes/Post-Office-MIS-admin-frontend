@@ -13,7 +13,7 @@ export default function AssignRoute() {
   const columns = [
     { field: "deliveryId", headerName: "Delivery ID", width: 105 },
     { field: "postmanId", headerName: "Postman ID", width: 105 },
-    { field: "zone", headerName: "Zone", width: 90 },
+    { field: "zone", headerName: "Zone", width: 180 },
     {
       field: "destinations",
       headerName: "Destinations",

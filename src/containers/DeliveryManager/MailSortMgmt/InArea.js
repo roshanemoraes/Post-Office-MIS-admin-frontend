@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { DataGrid } from "@mui/x-data-grid";
 import axios from "axios";
 import { Button } from "react-bootstrap";
+import AssignIcon from "../../../assets/check-square-fill.svg";
 
 export default function InArea() {
   const [rows, setRows] = React.useState([]);
@@ -24,10 +25,38 @@ export default function InArea() {
     // { field: "status", headerName: "Status", width: 220 },
     // { field: "deliverDate", headerName: "Return Date", width: 180 },
   ];
+
+  const handleAssign = () => {
+    console.log("Assign button is pressed.");
+  };
+
   const columnsPostman = [
     { field: "id", headerName: "Assignment ID", width: 120 },
     { field: "postmanId", headerName: "Postman ID", width: 120 },
     { field: "zone", headerName: "Assigned Zone", width: 200 },
+    {
+      field: "action",
+      headerName: "Assign Mails",
+      width: 120,
+      headerAlign: "center",
+      renderCell: (params) => (
+        <div>
+          {/* <InfoReturnMailModal data={params.row} /> */}
+          <Button
+            title="Assign Mails"
+            style={{
+              border: "none",
+              background: "#fcd34d",
+              minWidth: "35px",
+              marginRight: "10px",
+            }}
+            onClick={handleAssign}
+          >
+            <img src={AssignIcon} alt="updateIcon" />
+          </Button>
+        </div>
+      ),
+    },
   ];
   const fetchData = async () => {
     try {
