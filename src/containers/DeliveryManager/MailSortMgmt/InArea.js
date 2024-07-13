@@ -3,6 +3,7 @@ import { DataGrid } from "@mui/x-data-grid";
 import axios from "axios";
 import { Button } from "react-bootstrap";
 import AssignIcon from "../../../assets/check-square-fill.svg";
+import DownArrowIcon from "../../../assets/arrow-down-square-fill.svg";
 
 export default function InArea() {
   const [rows, setRows] = React.useState([]);
@@ -107,36 +108,6 @@ export default function InArea() {
 
   return (
     <div>
-      <div
-        style={{
-          height: 550,
-          paddingTop: "5px",
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        <DataGrid
-          rows={rows}
-          columns={columns}
-          rowHeight={50}
-          getRowId={(row) => row.mailId}
-          sx={{
-            ".MuiDataGrid-columnSeparator": {
-              display: "none",
-            },
-            "&.MuiDataGrid-root": {
-              border: "none",
-            },
-          }}
-          initialState={{
-            pagination: {
-              paginationModel: { page: 0, pageSize: 10 },
-            },
-          }}
-        />
-      </div>
       <div style={{ marginLeft: "50px" }}>
         <div>
           <Button
@@ -161,6 +132,7 @@ export default function InArea() {
           </Button>
         </div>
       </div>
+      {!isLoadPressed && <div style={{ marginTop: "15px" }}></div>}
       {isLoadPressed && (
         <div
           style={{
@@ -195,6 +167,59 @@ export default function InArea() {
           />
         </div>
       )}
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          padding: "10px",
+          // fontWeight: "bold",
+          marginBottom: "10px",
+          backgroundColor: "#a3a3a3",
+        }}
+      >
+        All In-Area Mails
+        <img
+          src={DownArrowIcon}
+          alt="All In-Area Mails"
+          style={{
+            marginRight: "10px",
+            marginLeft: "20px",
+            width: "30px",
+            height: "30px",
+          }}
+        />
+      </div>
+      <div
+        style={{
+          height: 550,
+          paddingTop: "5px",
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <DataGrid
+          rows={rows}
+          columns={columns}
+          rowHeight={50}
+          getRowId={(row) => row.mailId}
+          sx={{
+            ".MuiDataGrid-columnSeparator": {
+              display: "none",
+            },
+            "&.MuiDataGrid-root": {
+              border: "none",
+            },
+          }}
+          initialState={{
+            pagination: {
+              paginationModel: { page: 0, pageSize: 10 },
+            },
+          }}
+        />
+      </div>
     </div>
   );
 }
