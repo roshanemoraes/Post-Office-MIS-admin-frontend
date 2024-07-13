@@ -11,8 +11,13 @@ export default function AssignRoute() {
   const [loading, setLoading] = React.useState(false);
 
   const columns = [
-    { field: "deliveryId", headerName: "Delivery ID", width: 105 },
-    { field: "postmanId", headerName: "Postman ID", width: 105 },
+    { field: "deliveryId", headerName: "Delivery ID", width: 78 },
+    {
+      field: "postmanId",
+      headerName: "Postman ID",
+      width: 85,
+      headerClassName: "multiline-header",
+    },
     { field: "zone", headerName: "Zone", width: 180 },
     {
       field: "destinations",
@@ -62,8 +67,8 @@ export default function AssignRoute() {
   return (
     <div
       style={{
-        height: 700,
-        paddingTop: "25px",
+        height: 410,
+        // paddingTop: "25px",
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",
@@ -93,6 +98,16 @@ export default function AssignRoute() {
             },
             "&.MuiDataGrid-root": {
               border: "none",
+            },
+            "& .MuiDataGrid-columnHeaderTitle": {
+              whiteSpace: "normal",
+              lineHeight: "normal",
+            },
+            "& .MuiDataGrid-columnHeader": {
+              height: "unset !important",
+            },
+            "& .MuiDataGrid-columnHeaders": {
+              maxHeight: "168px !important",
             },
           }}
           initialState={{
