@@ -4,6 +4,7 @@ import axios from "axios";
 import { Button } from "react-bootstrap";
 import PrintIcon from "../../../assets/printer-fill.svg";
 import SentIcon from "../../../assets/send-check-fill.svg";
+import DeliveredIcon from "../../../assets/check-square-fill.svg";
 import DownArrowIcon from "../../../assets/arrow-down-square-fill.svg";
 import QRCode from "react-qr-code";
 import ReactDOMServer from "react-dom/server";
@@ -65,7 +66,7 @@ export default function OutArea() {
     {
       field: "action",
       headerName: "Action",
-      width: 140,
+      width: 180,
       headerAlign: "center",
       renderCell: (params) => (
         <div>
@@ -92,6 +93,7 @@ export default function OutArea() {
           <div style={{ display: "none" }}>
             <div ref={qrCodeRef}></div>
           </div>
+
           <Button
             disabled={params.row.status === "Assigned"}
             title="Shipped"
@@ -101,16 +103,20 @@ export default function OutArea() {
               minWidth: "35px",
               marginRight: "10px",
             }}
-            // onClick={() =>
-            //   handlePrintQR(
-            //     params.row.city,
-            //     params.row.date,
-            //     params.row.distributionId,
-            //     params.row.vehicleId
-            //   )
-            // }
           >
             <img src={SentIcon} alt="sentIcon" />
+          </Button>
+          <Button
+            disabled={params.row.status === "Assigned"}
+            title="Delivered"
+            style={{
+              border: "none",
+              background: "#f43f5e",
+              minWidth: "35px",
+              marginRight: "10px",
+            }}
+          >
+            <img src={DeliveredIcon} alt="deliveredIcon" />
           </Button>
         </div>
       ),

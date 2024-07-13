@@ -7,6 +7,8 @@ import LogiPost from "../containers/Receptionist/LogiPost";
 import FastCourier from "../containers/Receptionist/FastCourier";
 import PersonalMail from "../containers/Receptionist/PersonalMail";
 import NavBar from "../components/NavBar";
+import BulkMailHome from "../containers/Receptionist/BulkMailMgmt/BulkMailHome";
+import CustomerMgmt from "../containers/Receptionist/CustomerMgmt";
 
 function ReceptionistInterface() {
   const [isSideBarOpen, setSideBarOpen] = useState(window.innerWidth >= 1150);
@@ -42,6 +44,8 @@ function ReceptionistInterface() {
           <Route path="/registered-post" element={<RegisteredPost />} />
           <Route path="/logi-post" element={<LogiPost />} />
           <Route path="/fast-courier" element={<FastCourier />} />
+          <Route path="/bulk-mail" element={<BulkMailHome />} />
+          <Route path="/customer-mgmt" element={<CustomerMgmt />} />
         </Routes>
       </main>
     </div>

@@ -83,26 +83,26 @@ const SideBar = ({ onSidebarToggle }) => {
             </ul>
           </li>
           <li>
-            <Link to="/receptionist/fast-courier">
+            <Link to="/receptionist/bulk-mail">
               <i className="bx bx-package"></i>
               <span className="link_name">Bulk Mailing</span>
             </Link>
             <ul className="sub-menu blank">
               <li>
-                <Link className="link_name" to="#">
+                <Link className="link_name" to="/receptionist/bulk-mail">
                   Bulk Mailing
                 </Link>
               </li>
             </ul>
           </li>
           <li>
-            <Link to="/receptionist/fast-courier">
+            <Link to="/receptionist/customer-mgmt">
               <i className="bx bx-package"></i>
-              <span className="link_name">Customer Management</span>
+              <span className="link_name">Customer Mgmt</span>
             </Link>
             <ul className="sub-menu blank">
               <li>
-                <Link className="link_name" to="#">
+                <Link className="link_name" to="/receptionist/customer-mgmt">
                   Customer Management
                 </Link>
               </li>
