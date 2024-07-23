@@ -31,18 +31,18 @@ const SideBar = ({ onSidebarToggle }) => {
       <div className={`sidebar ${isSideBarOpen ? "" : "close"}`}>
         <div className="logo-details">
           <i className="bx bx-menu" onClick={handleSidebarToggle}></i>
-          <span className="logo_name">Sri Lanka Post</span>
+          <span className="logo_name">SL POST</span>
         </div>
         <ul className="nav-links">
           <li>
             <Link to="/delivery-manager">
               <i className="bx bx-grid-alt"></i>
-              <span className="link_name">Dashboard</span>
+              <span className="link_name">DASHBOARD</span>
             </Link>
             <ul className="sub-menu blank">
               <li>
                 <Link className="link_name" to="#">
-                  Category
+                  DASHBOARD
                 </Link>
               </li>
             </ul>
@@ -51,7 +51,7 @@ const SideBar = ({ onSidebarToggle }) => {
             <div className="iocn-link">
               <Link to="#">
                 <i className="bx bx-envelope"></i>
-                <span className="link_name">Sort Mails</span>
+                <span className="link_name">SORT MAILS</span>
               </Link>
               <i
                 className="bx bxs-chevron-down arrow"
@@ -61,7 +61,7 @@ const SideBar = ({ onSidebarToggle }) => {
             <ul className="sub-menu">
               <li>
                 <Link className="link_name" to="#">
-                  Sort Mails
+                  SORT MAILS
                 </Link>
               </li>
               <li>
@@ -89,12 +89,12 @@ const SideBar = ({ onSidebarToggle }) => {
           <li>
             <Link to="/delivery-manager/route-allocation">
               <i className="bx bx-pie-chart-alt-2"></i>
-              <span className="link_name">Assign Route</span>
+              <span className="link_name">ASSIGN ROUTE</span>
             </Link>
             <ul className="sub-menu blank">
               <li>
                 <Link className="link_name" to="#">
-                  Assign Route
+                  ASSIGN ROUTE
                 </Link>
               </li>
             </ul>
@@ -104,7 +104,7 @@ const SideBar = ({ onSidebarToggle }) => {
             <div className="iocn-link">
               <Link to="#">
                 <i className="bx bx-envelope"></i>
-                <span className="link_name">Return Mail Management</span>
+                <span className="link_name">RETURN MAILS</span>
               </Link>
               <i
                 className="bx bxs-chevron-down arrow"
@@ -114,7 +114,7 @@ const SideBar = ({ onSidebarToggle }) => {
             <ul className="sub-menu">
               <li>
                 <Link className="link_name" to="#">
-                  Return Mail Mgmt
+                  RETURN MAILS
                 </Link>
               </li>
               <li>
@@ -181,7 +181,7 @@ const SideBar = ({ onSidebarToggle }) => {
           <li>
             <div className="profile-details">
               <div className="profile-content">
-                <img src="image/profile.jpg" alt="profileImg" />
+                {/* <img src="image/profile.jpg" alt="profileImg" /> */}
               </div>
               <div className="name-job">
                 <div className="profile_name">SEP</div>

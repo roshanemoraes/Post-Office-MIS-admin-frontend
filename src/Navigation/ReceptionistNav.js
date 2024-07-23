@@ -21,7 +21,7 @@ function ReceptionistInterface() {
     <div
       style={{
         display: "grid",
-        gridTemplateColumns: isSideBarOpen ? "260px auto" : "80px auto",
+        gridTemplateColumns: isSideBarOpen ? "220px auto" : "80px auto",
         gridTemplateRows: "auto 1fr",
       }}
     >

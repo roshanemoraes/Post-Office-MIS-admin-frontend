@@ -243,7 +243,7 @@ body{
   font-weight: 600;
 }
 
-@media screen and (max-width: 400px){
+/* @media screen and (max-width: 400px){
   .sidebar{
     width: 180px;
   }
@@ -268,3 +268,5 @@ body{
       width: calc(100% - 50px);
   }
 }
+
+*/

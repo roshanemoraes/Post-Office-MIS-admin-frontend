@@ -5,7 +5,7 @@ import DashboardCard from "../../components/Layout/DashboardCard";
 const Dashboard = () => {
   return (
     <>
-      <div style={{ backgroundColor: "white", marginRight: "8px" }}>
+      <div style={{ marginRight: "8px" }}>
         <div className="grid sm:grid-cols-5 xs:grid-cols-2 gap-2 xs:gap-2">
           <div className="sm:col-span-1">
             <DashboardCard

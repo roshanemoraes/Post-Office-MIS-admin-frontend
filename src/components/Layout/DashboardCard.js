@@ -4,10 +4,12 @@ import { Card, CardBody } from "react-bootstrap";
 const DashboardCard = ({ backgroundColor, title, value, iconSrc }) => {
   return (
     <Card
-      border="light"
-      sx={{
+      // border="light"
+      style={{
         boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.1)",
-        borderRadius: "50px",
+        borderColor: "transparent",
+        backgroundColor: "transparent",
+        "--bs-card-bg": "transparent",
       }}
     >
       <CardBody
@@ -16,6 +18,7 @@ const DashboardCard = ({ backgroundColor, title, value, iconSrc }) => {
           fontFamily: "sans-serif",
           backgroundColor: backgroundColor,
           padding: "10px",
+          borderRadius: "10px",
         }}
       >
         <div

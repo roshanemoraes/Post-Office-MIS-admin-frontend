@@ -11,6 +11,7 @@ import DiscardedMails from "../containers/DeliveryManager/DiscardedMails";
 import MailsToSort from "../containers/DeliveryManager/MailSortMgmt/MailsToSort";
 import InArea from "../containers/DeliveryManager/MailSortMgmt/InArea";
 import OutArea from "../containers/DeliveryManager/MailSortMgmt/OutArea";
+import BlurBackground from "../components/Custom/Background/BlurBackground";
 
 const DeliveryManagerInterface = () => {
   const [isSideBarOpen, setSideBarOpen] = useState(window.innerWidth >= 1024);
@@ -22,7 +23,7 @@ const DeliveryManagerInterface = () => {
     <div
       style={{
         display: "grid",
-        gridTemplateColumns: isSideBarOpen ? "260px auto" : "80px auto",
+        gridTemplateColumns: isSideBarOpen ? "220px auto" : "80px auto",
         gridTemplateRows: "auto 1fr",
       }}
     >
@@ -30,6 +31,7 @@ const DeliveryManagerInterface = () => {
       <div style={{ gridColumn: "2", gridRow: "1" }}>
         <NavBar />
       </div>
+      <BlurBackground />
       <main
         className="content"
         style={{
