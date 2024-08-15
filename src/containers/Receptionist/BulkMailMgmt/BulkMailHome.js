@@ -1,12 +1,15 @@
 import axios from "axios";
 import React, { useState, useRef } from "react";
 import { Button, Table } from "react-bootstrap";
+import { useReactToPrint } from "react-to-print";
 import { Button as MuiButton } from "@mui/material";
 import checkIcon from "../../../assets/check-circle-fill.svg";
 import crossIcon from "../../../assets/x-circle-fill.svg";
 import { Autocomplete, Box, TextField, Typography } from "@mui/material";
 import SenderAddressValidationModel from "../modals/SenderAddressValidationModel";
 import { mailFormField } from "../../../data/formFields";
+import DownArrowIcon from "../../../assets/arrow-down-square-fill.svg";
+import Invoice from "./../../../components/Forms/Invoice/Invoice";
 
 const BulkMailHome = () => {
   const initialFormState = {
@@ -37,6 +40,8 @@ const BulkMailHome = () => {
     useState();
   const [mailCount, setMailCount] = useState(0);
   const [isUploaded, setIsUploaded] = useState(false);
+  const [isUploadSuccess, setIsUploadSuccess] = useState(false);
+  const [isRegistrationConfirm, setIsRegistrationConfirm] = useState(false);
 
   const fileInputRef = useRef();
 
@@ -45,6 +50,9 @@ const BulkMailHome = () => {
       ...formState,
       [id]: event.target.value,
     });
+  };
+  const handleRegistrationConfirm = () => {
+    setIsRegistrationConfirm(true);
   };
 
   const handleSenderOnValidationResult = (data) => {
@@ -103,18 +111,34 @@ const BulkMailHome = () => {
           });
         },
         headers: {
-          "Custom-Header": "value",
+          "Content-Type": "multipart/form-data",
         },
       })
       .then((res) => {
-        setIsUploaded(true);
-        setMsg("Upload Successful");
+        if (res.status === 200) {
+          setIsUploaded(true);
+          setMsg("Upload Successful");
+        }
         setMailCount(res.data);
-        console.log(res.data);
       })
       .catch((err) => {
-        setMsg("Upload Failed");
-        console.error(err);
+        if (err.response?.status === 417) {
+          setIsUploaded(false);
+          setMsg(
+            "Upload Failed: Mail Count is inadquate: " +
+              err.response.data +
+              " mails"
+          );
+        } else if (err.response?.status === 400) {
+          setIsUploaded(false);
+          setMsg("Upload Failed: Unacceptable File Format");
+        } else if (err.response?.status === 500) {
+          setIsUploaded(false);
+          setMsg("Upload Failed: Internal Server Error");
+        } else {
+          setIsUploaded(false);
+          setMsg("Upload Failed: Unknown Error");
+        }
       });
   }
 
@@ -134,373 +158,531 @@ const BulkMailHome = () => {
     verticalAlign: "middle",
   };
 
+  const customerInfo = {
+    name: "John Doe",
+    address: "123, Main Street, Colombo 05",
+    contact: "077-1234567",
+  };
+  const invoiceInfo = {
+    invoiceNumber: 1882,
+    date: "14/7/2024",
+    subtotal: 249.2,
+    discount: 24.92,
+    total: 224.28,
+  };
+
+  const componentRef = useRef();
+  const handlePrint = useReactToPrint({
+    content: () => componentRef.current,
+  });
+
   return (
-    <div className="grid sm:grid-cols-12 grid-cols-1">
-      <div className="rounded-lg sm:col-span-6 min-h-[100px] bg-white-500  items-center justify-center">
-        <Box
-          display="flex"
-          paddingTop={2}
-          flexDirection="row"
-          justifyContent="space-around"
-        >
+    <>
+      <div className="grid sm:grid-cols-12 grid-cols-1">
+        <div className="rounded-lg sm:col-span-6 min-h-[100px] bg-white-500  items-center justify-center">
           <Box
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              justifyContent: "center",
-              width: "45%",
-              minWidth: "550px",
-              backgroundColor: "#f5f5f5",
-              borderRadius: "10px",
-              padding: "30px 2px 30px 2px",
-              boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.1)",
-            }}
+            display="flex"
+            paddingTop={2}
+            flexDirection="row"
+            justifyContent="space-around"
           >
-            <Typography
-              variant="subtitle2"
+            <Box
               sx={{
-                fontWeight: "bold",
-                fontSize: "22px",
-                marginBottom: "10px",
-                fontFamily: "Helvetica Neue",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                justifyContent: "center",
+                width: "45%",
+                minWidth: "550px",
+                backgroundColor: "#f5f5f5",
+                borderRadius: "10px",
+                padding: "30px 2px 30px 2px",
+                boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.1)",
               }}
             >
-              {"Bulk Mail Registration"}
-            </Typography>
-            <div>
-              <div>
-                <div className="grid sm:grid-cols-12 sm:ml-8 xs:ml-8 sm:mr-8 xs:mr-8">
-                  <div className="sm:col-span-3 sm:mr-5 min-w-[150px] min-h-[60px]">
-                    <TextField
-                      inputProps={{ style: { fontSize: 15 } }}
-                      InputLabelProps={{
-                        style: { fontSize: 13 },
-                      }}
-                      required
-                      type={mailFormField.senderHouseNumber.type}
-                      id={mailFormField.senderHouseNumber.id}
-                      label={mailFormField.senderHouseNumber.label}
-                      onChange={handleChange(
-                        mailFormField.senderHouseNumber.id
-                      )}
-                    ></TextField>
-                  </div>
-                  <div className="sm:col-span-7 sm:ml-9 sm:mr-2 sm:min-w-[300px] sm:min-h-[60px]">
-                    <TextField
-                      inputProps={{ style: { fontSize: 15 } }}
-                      InputLabelProps={{
-                        style: { fontSize: 13, width: "500px" },
-                      }}
-                      style={{ minWidth: 324 }}
-                      required
-                      type={mailFormField.senderName.type}
-                      id={mailFormField.senderName.id}
-                      label={mailFormField.senderName.label}
-                      onChange={handleChange(mailFormField.senderName.id)}
-                    ></TextField>
-                  </div>
-                </div>
-
-                <div className="grid sm:ml-8 xs:ml-8 sm:mr-8 xs:mr-8 sm:grid-cols-12 xs:grid-cols-12">
-                  <div className="sm:col-span-6 xs:col-span-6 sm:mr-3 xs:mr-3 sm:ml-0 xs:ml-0 min-w-[235px] min-h-[60px] bg-white-500 ">
-                    <Autocomplete
-                      id={mailFormField.senderPostalZone.id}
-                      options={zoneList}
-                      freeSolo
-                      onChange={(event, newValue) => {
-                        setFormState((oldState) => ({
-                          ...oldState,
-                          [mailFormField.senderPostalZone.id]: newValue,
-                        }));
-                      }}
-                      sx={{
-                        "& .MuiAutocomplete-option": {
-                          color: "blue",
-                        },
-                        '& .MuiAutocomplete-option[data-focus="true"]': {
-                          backgroundColor: "lightgray",
-                        },
-                        '& .MuiAutocomplete-option[data-focus="true"][aria-selected="true"]':
-                          {
-                            backgroundColor: "lightblue",
-                          },
-                        "& .MuiAutocomplete-popupIndicator": {
-                          color: "green",
-                        },
-                        "& .MuiAutocomplete-clearIndicator": {
-                          color: "purple",
-                        },
-                      }}
-                      renderInput={(params) => (
-                        <TextField
-                          {...params}
-                          label={mailFormField.senderPostalZone.label}
-                          InputLabelProps={{
-                            style: { fontSize: 13 },
-                          }}
-                          style={{ minWidth: 160 }}
-                          required
-                          value={
-                            formState[mailFormField.senderPostalZone.id] || ""
-                          }
-                          onChange={handleChange(
-                            mailFormField.senderPostalZone.id
-                          )}
-                        />
-                      )}
-                    />
-                  </div>
-                  <div className="sm:col-span-6 xs:col-span-4 sm:ml-0 xs:ml-0 min-h-[60px] min-w-[235px] bg-white-500 ">
-                    <Autocomplete
-                      id={mailFormField.senderCity.id}
-                      options={cityList}
-                      freeSolo
-                      onChange={(event, newValue) => {
-                        setFormState((oldState) => ({
-                          ...oldState,
-                          [mailFormField.senderCity.id]: newValue,
-                        }));
-                      }}
-                      sx={{
-                        "& .MuiAutocomplete-option": {
-                          color: "blue",
-                        },
-                        '& .MuiAutocomplete-option[data-focus="true"]': {
-                          backgroundColor: "lightgray",
-                        },
-                        '& .MuiAutocomplete-option[data-focus="true"][aria-selected="true"]':
-                          {
-                            backgroundColor: "lightblue",
-                          },
-                        "& .MuiAutocomplete-clearIndicator": {
-                          color: "red",
-                        },
-                      }}
-                      renderInput={(params) => (
-                        <TextField
-                          {...params}
-                          label={mailFormField.senderCity.label}
-                          InputLabelProps={{
-                            style: { fontSize: 13 },
-                          }}
-                          style={{ minWidth: 160 }}
-                          required
-                          value={formState[mailFormField.senderCity.id] || ""}
-                          onChange={handleChange(mailFormField.senderCity.id)}
-                        />
-                      )}
-                    />
-                  </div>
-                </div>
-              </div>
-              <SenderAddressValidationModel
-                formState={formState}
-                onValidationSenderResult={handleSenderOnValidationResult}
-              />
-              <TextField
-                inputProps={{ readOnly: true }}
-                read
-                InputLabelProps={{
-                  style: { fontSize: 13 },
+              <Typography
+                variant="subtitle2"
+                sx={{
+                  fontWeight: "bold",
+                  fontSize: "22px",
+                  marginBottom: "10px",
+                  fontFamily: "Helvetica Neue",
                 }}
-                style={{ minWidth: 480, marginLeft: "32px" }}
-                required
-                type={mailFormField.senderAddress.type}
-                id={mailFormField.senderAddress.id}
-                label={mailFormField.senderAddress.label}
-                onChange={handleChange(mailFormField.senderAddress.id)}
-                value={formState.senderAddress}
-              ></TextField>
-            </div>
-            <div>
-              <div style={{ marginTop: "20px" }}>
-                <input
-                  onChange={handleFileChange}
-                  type="file"
-                  ref={fileInputRef}
+              >
+                {"Bulk Mail Registration"}
+              </Typography>
+              <div>
+                <div>
+                  <div className="grid sm:grid-cols-12 sm:ml-8 xs:ml-8 sm:mr-8 xs:mr-8">
+                    <div className="sm:col-span-3 sm:mr-5 min-w-[150px] min-h-[60px]">
+                      <TextField
+                        inputProps={{ style: { fontSize: 15 } }}
+                        InputLabelProps={{
+                          style: { fontSize: 13 },
+                        }}
+                        required
+                        type={mailFormField.senderHouseNumber.type}
+                        id={mailFormField.senderHouseNumber.id}
+                        label={mailFormField.senderHouseNumber.label}
+                        onChange={handleChange(
+                          mailFormField.senderHouseNumber.id
+                        )}
+                      ></TextField>
+                    </div>
+                    <div className="sm:col-span-7 sm:ml-9 sm:mr-2 sm:min-w-[300px] sm:min-h-[60px]">
+                      <TextField
+                        inputProps={{ style: { fontSize: 15 } }}
+                        InputLabelProps={{
+                          style: { fontSize: 13, width: "500px" },
+                        }}
+                        style={{ minWidth: 324 }}
+                        required
+                        type={mailFormField.senderName.type}
+                        id={mailFormField.senderName.id}
+                        label={mailFormField.senderName.label}
+                        onChange={handleChange(mailFormField.senderName.id)}
+                      ></TextField>
+                    </div>
+                  </div>
+
+                  <div className="grid sm:ml-8 xs:ml-8 sm:mr-8 xs:mr-8 sm:grid-cols-12 xs:grid-cols-12">
+                    <div className="sm:col-span-6 xs:col-span-6 sm:mr-3 xs:mr-3 sm:ml-0 xs:ml-0 min-w-[235px] min-h-[60px] bg-white-500 ">
+                      <Autocomplete
+                        id={mailFormField.senderPostalZone.id}
+                        options={zoneList}
+                        freeSolo
+                        onChange={(event, newValue) => {
+                          setFormState((oldState) => ({
+                            ...oldState,
+                            [mailFormField.senderPostalZone.id]: newValue,
+                          }));
+                        }}
+                        sx={{
+                          "& .MuiAutocomplete-option": {
+                            color: "blue",
+                          },
+                          '& .MuiAutocomplete-option[data-focus="true"]': {
+                            backgroundColor: "lightgray",
+                          },
+                          '& .MuiAutocomplete-option[data-focus="true"][aria-selected="true"]':
+                            {
+                              backgroundColor: "lightblue",
+                            },
+                          "& .MuiAutocomplete-popupIndicator": {
+                            color: "green",
+                          },
+                          "& .MuiAutocomplete-clearIndicator": {
+                            color: "purple",
+                          },
+                        }}
+                        renderInput={(params) => (
+                          <TextField
+                            {...params}
+                            label={mailFormField.senderPostalZone.label}
+                            InputLabelProps={{
+                              style: { fontSize: 13 },
+                            }}
+                            style={{ minWidth: 160 }}
+                            required
+                            value={
+                              formState[mailFormField.senderPostalZone.id] || ""
+                            }
+                            onChange={handleChange(
+                              mailFormField.senderPostalZone.id
+                            )}
+                          />
+                        )}
+                      />
+                    </div>
+                    <div className="sm:col-span-6 xs:col-span-4 sm:ml-0 xs:ml-0 min-h-[60px] min-w-[235px] bg-white-500 ">
+                      <Autocomplete
+                        id={mailFormField.senderCity.id}
+                        options={cityList}
+                        freeSolo
+                        onChange={(event, newValue) => {
+                          setFormState((oldState) => ({
+                            ...oldState,
+                            [mailFormField.senderCity.id]: newValue,
+                          }));
+                        }}
+                        sx={{
+                          "& .MuiAutocomplete-option": {
+                            color: "blue",
+                          },
+                          '& .MuiAutocomplete-option[data-focus="true"]': {
+                            backgroundColor: "lightgray",
+                          },
+                          '& .MuiAutocomplete-option[data-focus="true"][aria-selected="true"]':
+                            {
+                              backgroundColor: "lightblue",
+                            },
+                          "& .MuiAutocomplete-clearIndicator": {
+                            color: "red",
+                          },
+                        }}
+                        renderInput={(params) => (
+                          <TextField
+                            {...params}
+                            label={mailFormField.senderCity.label}
+                            InputLabelProps={{
+                              style: { fontSize: 13 },
+                            }}
+                            style={{ minWidth: 160 }}
+                            required
+                            value={formState[mailFormField.senderCity.id] || ""}
+                            onChange={handleChange(mailFormField.senderCity.id)}
+                          />
+                        )}
+                      />
+                    </div>
+                  </div>
+                </div>
+                <SenderAddressValidationModel
+                  formState={formState}
+                  onValidationSenderResult={handleSenderOnValidationResult}
                 />
-                {!isUploaded && (
-                  <Button
-                    variant="primary"
-                    style={{
-                      backgroundColor: "#7f1d1d",
-                      padding: "8px",
-                      marginLeft: "20px",
-                      borderColor: "#7f1d1d",
-                      fontSize: "11px",
-                      fontFamily: "arial",
-                    }}
-                    onClick={handleUpload}
-                  >
-                    UPLOAD FILE
-                  </Button>
-                )}
-                {isUploaded && (
-                  <Button
-                    variant="primary"
-                    style={{
-                      backgroundColor: "#7f1d1d",
-                      padding: "8px",
-                      marginLeft: "20px",
-                      borderColor: "#7f1d1d",
-                      fontSize: "11px",
-                      fontFamily: "arial",
-                    }}
-                    onClick={handleFileRemove}
-                  >
-                    REMOVE FILE
-                  </Button>
-                )}
+                <TextField
+                  inputProps={{ readOnly: true }}
+                  read
+                  InputLabelProps={{
+                    style: { fontSize: 13 },
+                  }}
+                  style={{ minWidth: 480, marginLeft: "32px" }}
+                  required
+                  type={mailFormField.senderAddress.type}
+                  id={mailFormField.senderAddress.id}
+                  label={mailFormField.senderAddress.label}
+                  onChange={handleChange(mailFormField.senderAddress.id)}
+                  value={formState.senderAddress}
+                ></TextField>
               </div>
               <div>
-                {msg && (
-                  <div
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "left",
-                      fontSize: "13px",
-                      color: "gray",
-                    }}
-                  >
-                    <span>{msg}</span>
-                    {msg === "Upload Successful" && (
-                      <img
-                        src={checkIcon}
-                        alt="checkIcon"
-                        style={{
-                          marginRight: "10px",
-                          marginLeft: "5px",
-                          width: "13px",
-                          height: "13px",
-                          filter:
-                            "invert(34%) sepia(100%) saturate(746%) hue-rotate(88deg) brightness(119%) contrast(119%)",
-                        }}
-                      />
-                    )}
-                    {msg === "Upload Failed" && (
-                      <img
-                        src={crossIcon}
-                        alt="crossIcon"
-                        style={{
-                          marginRight: "10px",
-                          marginLeft: "5px",
-                          width: "13px",
-                          height: "13px",
-                        }}
-                      />
-                    )}
-                  </div>
-                )}
+                <div style={{ marginTop: "20px" }}>
+                  <input
+                    onChange={handleFileChange}
+                    type="file"
+                    ref={fileInputRef}
+                  />
+                  {!isUploaded && (
+                    <Button
+                      variant="primary"
+                      style={{
+                        backgroundColor: "#0891b2",
+                        padding: "8px",
+                        marginLeft: "20px",
+                        borderColor: "#0891b2",
+                        fontSize: "11px",
+                        fontFamily: "arial",
+                      }}
+                      onClick={handleUpload}
+                    >
+                      UPLOAD FILE
+                    </Button>
+                  )}
+                  {isUploaded && (
+                    <Button
+                      variant="primary"
+                      style={{
+                        backgroundColor: "#7f1d1d",
+                        padding: "8px",
+                        marginLeft: "20px",
+                        borderColor: "#7f1d1d",
+                        fontSize: "11px",
+                        fontFamily: "arial",
+                      }}
+                      onClick={handleFileRemove}
+                    >
+                      REMOVE FILE
+                    </Button>
+                  )}
+                </div>
+                <div>
+                  {msg && (
+                    <div
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "left",
+                        fontSize: "13px",
+                        color: "gray",
+                      }}
+                    >
+                      <span>{msg}</span>
+                      {msg === "Upload Successful" && (
+                        <img
+                          src={checkIcon}
+                          alt="checkIcon"
+                          style={{
+                            marginRight: "10px",
+                            marginLeft: "5px",
+                            width: "13px",
+                            height: "13px",
+                            filter:
+                              "invert(34%) sepia(100%) saturate(746%) hue-rotate(88deg) brightness(119%) contrast(119%)",
+                          }}
+                        />
+                      )}
+                      {msg === "Upload Failed" && (
+                        <img
+                          src={crossIcon}
+                          alt="crossIcon"
+                          style={{
+                            marginRight: "10px",
+                            marginLeft: "5px",
+                            width: "13px",
+                            height: "13px",
+                          }}
+                        />
+                      )}
+                    </div>
+                  )}
+                </div>
               </div>
-            </div>
-            {isUploaded && (
+
+              <div
+                className="min-h-[1px] mt-5 bg-black"
+                style={{ display: "flex", minWidth: "500px" }}
+              ></div>
+
+              <div className="justify-center align-items-center">
+                <Button
+                  className="mt-10"
+                  variant="primary"
+                  style={{
+                    backgroundColor: "#7f1d1d",
+                    borderColor: "#7f1d1d",
+                    fontSize: "14px",
+                    fontFamily: "arial",
+                  }}
+                  onClick={handleRegistrationConfirm}
+                >
+                  CONFIRM REGISTRATION
+                </Button>
+              </div>
+              <div>
+                <Button
+                  className="mt-3"
+                  variant="primary"
+                  style={{
+                    backgroundColor: "#0891b2",
+                    padding: "8px",
+                    borderColor: "#0891b2",
+                    fontSize: "11px",
+                    fontFamily: "arial",
+                  }}
+                  onClick={handlePrint}
+                >
+                  PRINT INVOICE
+                </Button>
+              </div>
+            </Box>
+          </Box>
+        </div>
+        <div className="rounded-lg sm:col-span-6 min-h-[100px] bg-white-500 items-center justify-center">
+          <Box
+            display="flex"
+            paddingTop={2}
+            flexDirection="row"
+            justifyContent="space-around"
+          >
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                justifyContent: "center",
+                width: "45%",
+                minWidth: "550px",
+                backgroundColor: "#f5f5f5",
+                borderRadius: "10px",
+                padding: "30px 2px 30px 2px",
+                boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.1)",
+              }}
+            >
+              <Typography
+                variant="subtitle2"
+                sx={{
+                  fontWeight: "bold",
+                  fontSize: "22px",
+                  marginBottom: "10px",
+                  fontFamily: "Helvetica Neue",
+                }}
+              >
+                General Standards
+              </Typography>
+              <div className="grid sm:grid-cols-6 xs:grid-cols-6">
+                <div
+                  className="sm:col-span-3 xs:col-span-3"
+                  style={centerStyle}
+                >
+                  Minimum Mails Required
+                </div>
+                <div className="sm:col-span-3 xs:col-span-3" style={leftStyle}>
+                  200
+                </div>
+                <div className="sm:col-span-3 xs:col-span-3" style={leftStyle}>
+                  Minimum Discount Rate
+                </div>
+                <div className="sm:col-span-3 xs:col-span-3" style={leftStyle}>
+                  5%
+                </div>
+              </div>
               <div
                 style={{
                   alignSelf: "flex-start",
-                  paddingLeft: "32px",
+                  marginLeft: "20px",
                   marginTop: "20px",
+                  marginBottom: "15px",
                 }}
               >
-                <div>Mail Count: {mailCount}</div>
-                <div></div>
+                {" "}
+                Accepted Excel File Format:
               </div>
-            )}
+              <div style={{ width: "80%" }}>
+                <Table
+                  bordered
+                  hover
+                  variant="light"
+                  className="white-border-table"
+                >
+                  <thead>
+                    <tr>
+                      <th style={centeredHeaderStyle}>Name</th>
+                      <th style={centeredHeaderStyle}>House No.</th>
+                      <th style={centeredHeaderStyle}>Zone</th>
+                      <th style={centeredHeaderStyle}>Town</th>
+                      <th style={centeredHeaderStyle}>
+                        Mail <br />
+                        Type
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td style={centeredHeaderStyle}>-</td>
+                      <td style={centeredHeaderStyle}>-</td>
+                      <td style={centeredHeaderStyle}>-</td>
+                      <td style={centeredHeaderStyle}>-</td>
+                      <td style={centeredHeaderStyle}>-</td>
+                    </tr>
+                  </tbody>
+                </Table>
+              </div>
+            </Box>
           </Box>
-        </Box>
+          {isUploaded && (
+            <div className="mt-5">
+              <Box
+                display="flex"
+                paddingTop={2}
+                flexDirection="row"
+                justifyContent="space-around"
+              >
+                <Box
+                  sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    width: "45%",
+                    minWidth: "550px",
+                    backgroundColor: "#f5f5f5",
+                    borderRadius: "10px",
+
+                    padding: "30px 2px 30px 2px",
+                    boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.1)",
+                  }}
+                >
+                  <Typography
+                    variant="subtitle2"
+                    sx={{
+                      fontWeight: "bold",
+                      fontSize: "22px",
+                      marginBottom: "10px",
+                      fontFamily: "Helvetica Neue",
+                    }}
+                  >
+                    Upload Statistics
+                  </Typography>
+                  <div className="grid sm:grid-cols-6 xs:grid-cols-6">
+                    <div
+                      className="sm:col-span-3 xs:col-span-3"
+                      style={centerStyle}
+                    >
+                      Mail Count
+                    </div>
+                    <div
+                      className="sm:col-span-3 xs:col-span-3"
+                      style={leftStyle}
+                    >
+                      {mailCount}
+                    </div>
+                    <div
+                      className="sm:col-span-3 xs:col-span-3"
+                      style={leftStyle}
+                    >
+                      Discount Rate
+                    </div>
+                    <div
+                      className="sm:col-span-3 xs:col-span-3"
+                      style={leftStyle}
+                    >
+                      5%
+                    </div>
+                  </div>
+                </Box>
+              </Box>
+            </div>
+          )}
+        </div>
       </div>
-      <div className="rounded-lg sm:col-span-6 min-h-[100px] bg-white-500 items-center justify-center">
-        <Box
-          display="flex"
-          paddingTop={2}
-          flexDirection="row"
-          justifyContent="space-around"
-        >
-          <Box
-            sx={{
+      <div style={{ minHeight: "40px" }}></div>
+
+      {isRegistrationConfirm && (
+        <div>
+          <div
+            // className="mt-30"
+            style={{
               display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
               justifyContent: "center",
-              width: "45%",
-              minWidth: "550px",
-              backgroundColor: "#f5f5f5",
-              borderRadius: "10px",
-              padding: "30px 2px 30px 2px",
-              boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.1)",
+              alignItems: "center",
+              padding: "10px",
+              // fontWeight: "bold",
+              marginBottom: "10px",
+              backgroundColor: "#a3a3a3",
             }}
           >
-            <Typography
-              variant="subtitle2"
-              sx={{
-                fontWeight: "bold",
-                fontSize: "22px",
-                marginBottom: "10px",
-                fontFamily: "Helvetica Neue",
-              }}
-            >
-              General Standards
-            </Typography>
-            <div className="grid sm:grid-cols-6 xs:grid-cols-6">
-              <div className="sm:col-span-3 xs:col-span-3" style={centerStyle}>
-                Minimum Mails Required
-              </div>
-              <div className="sm:col-span-3 xs:col-span-3" style={leftStyle}>
-                200
-              </div>
-              <div className="sm:col-span-3 xs:col-span-3" style={leftStyle}>
-                Discount Rate
-              </div>
-              <div className="sm:col-span-3 xs:col-span-3" style={leftStyle}>
-                5%
-              </div>
-            </div>
-            <div
+            INVOICE
+            <img
+              src={DownArrowIcon}
+              alt="All Out-Area Mails"
               style={{
-                alignSelf: "flex-start",
+                marginRight: "10px",
                 marginLeft: "20px",
-                marginTop: "20px",
-                marginBottom: "15px",
+                width: "30px",
+                height: "30px",
               }}
-            >
-              {" "}
-              Accepted Excel File Format:
-            </div>
-            <div style={{ width: "80%" }}>
-              <Table
-                bordered
-                hover
-                variant="light"
-                className="white-border-table"
-              >
-                <thead>
-                  <tr>
-                    <th style={centeredHeaderStyle}>Name</th>
-                    <th style={centeredHeaderStyle}>House No.</th>
-                    <th style={centeredHeaderStyle}>Zone</th>
-                    <th style={centeredHeaderStyle}>Town</th>
-                    <th style={centeredHeaderStyle}>
-                      Mail <br />
-                      Type
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td style={centeredHeaderStyle}>-</td>
-                    <td style={centeredHeaderStyle}>-</td>
-                    <td style={centeredHeaderStyle}>-</td>
-                    <td style={centeredHeaderStyle}>-</td>
-                    <td style={centeredHeaderStyle}>-</td>
-                  </tr>
-                </tbody>
-              </Table>
-            </div>
-          </Box>
-        </Box>
-      </div>
-    </div>
+            />
+          </div>
+          <div
+            ref={componentRef}
+            style={{
+              borderColor: "black",
+              borderWidth: "1px",
+              borderStyle: "solid",
+              display: "flex",
+              justifyItems: "center",
+            }}
+          >
+            <Invoice
+              discount={10}
+              customerInfo={customerInfo}
+              invoiceInfo={invoiceInfo}
+            />
+          </div>
+        </div>
+      )}
+    </>
   );
 };
 

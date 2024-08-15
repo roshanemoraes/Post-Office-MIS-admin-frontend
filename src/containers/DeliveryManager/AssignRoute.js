@@ -11,33 +11,33 @@ export default function AssignRoute() {
   const [loading, setLoading] = React.useState(false);
 
   const columns = [
-    { field: "deliveryId", headerName: "Delivery ID", width: 78 },
+    { field: "deliveryId", headerName: "DID", width: 85 },
     {
       field: "postmanId",
-      headerName: "Postman ID",
+      headerName: "PID",
       width: 85,
       headerClassName: "multiline-header",
     },
-    { field: "zone", headerName: "Zone", width: 180 },
+    { field: "zone", headerName: "Zone", width: 160 },
     {
       field: "destinations",
       headerName: "Destinations",
       width: 200,
     },
-    { field: "status", headerName: "Status", width: 150 },
+    { field: "status", headerName: "Status", width: 120 },
     {
       field: "route",
       headerName: "Route",
-      width: 180,
+      width: 110,
       headerAlign: "center",
       renderCell: (params) => (
         <div>
           <ViewRouteModal destinations={params.row.destinations} />
 
-          <SubmitRoute
+          {/* <SubmitRoute
             rowData={params.row}
             destinations={params.row.destinations}
-          />
+          /> */}
         </div>
       ),
     },
@@ -67,7 +67,8 @@ export default function AssignRoute() {
   return (
     <div
       style={{
-        height: 410,
+        height: 285,
+        // width: 660,
         // paddingTop: "25px",
         display: "flex",
         flexDirection: "column",
@@ -90,7 +91,7 @@ export default function AssignRoute() {
         <DataGrid
           rows={rows}
           columns={columns}
-          rowHeight={50}
+          rowHeight={40}
           getRowId={(row) => row.deliveryId}
           sx={{
             ".MuiDataGrid-columnSeparator": {
@@ -102,17 +103,25 @@ export default function AssignRoute() {
             "& .MuiDataGrid-columnHeaderTitle": {
               whiteSpace: "normal",
               lineHeight: "normal",
+              fontSize: "14px", // Adjusts font size for header titles
             },
             "& .MuiDataGrid-columnHeader": {
               height: "unset !important",
             },
             "& .MuiDataGrid-columnHeaders": {
               maxHeight: "168px !important",
+              fontSize: "12px", // Adjusts font size for the column headers
+            },
+            "& .MuiDataGrid-cell": {
+              fontSize: "12px", // Adjusts font size for the cell content
+            },
+            "& .MuiDataGrid-footerContainer": {
+              fontSize: "12px", // Adjusts font size for the footer (if pagination is enabled)
             },
           }}
           initialState={{
             pagination: {
-              paginationModel: { page: 0, pageSize: 10 },
+              paginationModel: { page: 0, pageSize: 5 },
             },
           }}
           columnVisibilityModel={{
@@ -125,7 +134,7 @@ export default function AssignRoute() {
             status: false,
             action: true,
           }}
-          // pageSizeOptions={[5, 10]}
+          // pageSizeOptions={[5, 5]}
         />
       )}
     </div>

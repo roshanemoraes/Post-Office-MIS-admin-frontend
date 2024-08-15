@@ -29,24 +29,16 @@ export default function ListEmployee() {
   useEffect(() => {
     fetchData();
   }, []);
-
   return (
-    <div>
-      <div
-        style={{
-          height: 550,
-          paddingTop: "5px",
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
+    <>
+      <div className="h-[550px] pt-1 flex flex-col justify-center items-center">
         <DataGrid
           rows={rows}
           columns={columns}
           rowHeight={50}
           sx={{
+            backgroundColor: "#f5f5f5",
+            boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.1)",
             ".MuiDataGrid-columnSeparator": {
               display: "none",
             },
@@ -61,7 +53,7 @@ export default function ListEmployee() {
           }}
         />
       </div>
-      <div style={{ marginLeft: "50px" }}></div>
-    </div>
+      <div className="ml-[50px]"></div>
+    </>
   );
 }

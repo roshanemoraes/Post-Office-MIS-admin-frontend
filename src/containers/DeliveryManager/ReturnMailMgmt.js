@@ -7,6 +7,7 @@ import ReturnToSenderIcon from "../../assets/arrow-up-square-fill.svg";
 import TrashIcon from "../../assets/trash3-fill.svg";
 import InfoReturnMailModal from "./Modals/InfoReturnMailModal";
 import CustomizedSnackbars from "../../components/Custom/CustomizedSnackbars";
+import DownArrowIcon from "../../assets/arrow-down-square-fill.svg";
 
 export default function ReturnMailMgmt() {
   const [rows, setRows] = React.useState([]);
@@ -164,6 +165,30 @@ export default function ReturnMailMgmt() {
     <div>
       <div
         style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          padding: "10px",
+          // fontWeight: "bold",
+          marginBottom: "10px",
+          marginTop: "10px",
+          backgroundColor: "#a3a3a3",
+        }}
+      >
+        All Undelivered Mails
+        <img
+          src={DownArrowIcon}
+          alt="All In-Area Mails"
+          style={{
+            marginRight: "10px",
+            marginLeft: "20px",
+            width: "30px",
+            height: "30px",
+          }}
+        />
+      </div>
+      <div
+        style={{
           height: 550,
           paddingTop: "5px",
           display: "flex",
@@ -178,6 +203,8 @@ export default function ReturnMailMgmt() {
           rowHeight={50}
           getRowId={(row) => row.undeliverableId}
           sx={{
+            backgroundColor: "#f5f5f5",
+            boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.1)",
             ".MuiDataGrid-columnSeparator": {
               display: "none",
             },

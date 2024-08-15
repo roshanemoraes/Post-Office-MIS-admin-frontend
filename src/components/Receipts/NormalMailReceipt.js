@@ -21,7 +21,6 @@ const NormalMailReceipt = () => {
 
   return (
     <div>
-      <p>Receipt is under construction...</p>
       <Box
         p={2}
         sx={{
@@ -34,11 +33,11 @@ const NormalMailReceipt = () => {
           marginTop: "16px",
           marginLeft: "16px",
           width: "300px",
-          height: "400px",
+          minHeight: "400px",
           backgroundColor: "#ffffff",
           borderRadius: "10px",
           padding: "0 0 5px 0",
-          boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.1)",
+          // boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.1)",
         }}
         width={"300px"}
       >

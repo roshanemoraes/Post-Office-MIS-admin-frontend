@@ -150,9 +150,16 @@ export default function OutArea() {
     fetchDistributions();
   }, []);
 
+  // const scrollToElement = () => {
+  //   const element = document.getElementById("targetElement");
+  //   if (element) {
+  //     element.scrollIntoView({ behavior: "smooth", block: "start" });
+  //   }
+  // };
+
   return (
     <div>
-      <div style={{ marginLeft: "50px" }}>
+      <div style={{ marginLeft: "50px", marginBottom: "10px" }}>
         <div>
           <Button
             disabled
@@ -169,6 +176,7 @@ export default function OutArea() {
           height: 550,
           paddingTop: "5px",
           display: "flex",
+          marginBottom: "10px",
           flexDirection: "column",
           justifyContent: "center",
           alignItems: "center",
@@ -180,6 +188,8 @@ export default function OutArea() {
           rowHeight={50}
           getRowId={(row) => row.distributionId}
           sx={{
+            backgroundColor: "#f5f5f5",
+            boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.1)",
             ".MuiDataGrid-columnSeparator": {
               display: "none",
             },
@@ -206,6 +216,8 @@ export default function OutArea() {
         }}
       >
         All Out-Area Mails
+        {/* <button onClick={scrollToElement}>
+        </button> */}
         <img
           src={DownArrowIcon}
           alt="All Out-Area Mails"
@@ -233,6 +245,8 @@ export default function OutArea() {
           rowHeight={50}
           getRowId={(row) => row.mailId}
           sx={{
+            backgroundColor: "#f5f5f5",
+            boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.1)",
             ".MuiDataGrid-columnSeparator": {
               display: "none",
             },
@@ -247,6 +261,8 @@ export default function OutArea() {
           }}
         />
       </div>
+      <div style={{ minHeight: "70px" }}></div>
+      {/* <div id="targetElement"></div> */}
     </div>
   );
 }

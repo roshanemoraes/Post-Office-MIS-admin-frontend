@@ -9,7 +9,7 @@ const Dashboard = () => {
         <div className="grid sm:grid-cols-5 xs:grid-cols-2 gap-2 xs:gap-2">
           <div className="sm:col-span-1">
             <DashboardCard
-              backgroundColor={"#ffedd5"}
+              backgroundColor={"#ffffff"}
               title={"ALL MAILS TODAY"}
               value={"9756"}
               iconSrc={MailIcon}
@@ -17,7 +17,7 @@ const Dashboard = () => {
           </div>
           <div className="sm:col-span-1">
             <DashboardCard
-              backgroundColor={"#ecfccb"}
+              backgroundColor={"#ffffff"}
               title={"UNDELIVERED MAILS"}
               value={"112"}
               iconSrc={MailIcon}
@@ -25,7 +25,7 @@ const Dashboard = () => {
           </div>
           <div className="sm:col-span-1">
             <DashboardCard
-              backgroundColor={"#cffafe"}
+              backgroundColor={"#ffffff"}
               title={"TOTAL REVENUE"}
               value={"Rs. 21,760"}
               iconSrc={MailIcon}
@@ -33,7 +33,7 @@ const Dashboard = () => {
           </div>
           <div className="sm:col-span-1">
             <DashboardCard
-              backgroundColor={"#fae8ff"}
+              backgroundColor={"#ffffff"}
               title={"IN-AREA STATUS"}
               value={"2/6 Done"}
               iconSrc={MailIcon}
@@ -41,7 +41,7 @@ const Dashboard = () => {
           </div>
           <div className="sm:col-span-1">
             <DashboardCard
-              backgroundColor={"#ffe4e6"}
+              backgroundColor={"#ffffff"}
               title={"OUT-AREA STATUS"}
               value={"1/8 Done"}
               iconSrc={MailIcon}

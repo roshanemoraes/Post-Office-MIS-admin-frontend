@@ -79,11 +79,6 @@ const SideBar = ({ onSidebarToggle }) => {
                   Out-Area Mail Mgmt
                 </Link>
               </li>
-              <li>
-                <Link to="/delivery-manager/return-mail/discarded-mail">
-                  Discarded Mail List
-                </Link>
-              </li>
             </ul>
           </li>
           <li>

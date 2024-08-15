@@ -108,7 +108,7 @@ export default function InArea() {
 
   return (
     <div>
-      <div style={{ marginLeft: "50px" }}>
+      <div style={{ marginLeft: "50px", marginBottom: "10px" }}>
         <div>
           <Button
             variant="primary"
@@ -149,6 +149,8 @@ export default function InArea() {
             columns={columnsPostman}
             rowHeight={50}
             sx={{
+              backgroundColor: "#f5f5f5",
+              boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.1)",
               ".MuiDataGrid-columnSeparator": {
                 display: "none",
               },
@@ -175,6 +177,7 @@ export default function InArea() {
           padding: "10px",
           // fontWeight: "bold",
           marginBottom: "10px",
+          marginTop: "10px",
           backgroundColor: "#a3a3a3",
         }}
       >
@@ -206,6 +209,8 @@ export default function InArea() {
           rowHeight={50}
           getRowId={(row) => row.mailId}
           sx={{
+            backgroundColor: "#f5f5f5",
+            boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.1)",
             ".MuiDataGrid-columnSeparator": {
               display: "none",
             },
@@ -220,6 +225,7 @@ export default function InArea() {
           }}
         />
       </div>
+      <div style={{ minHeight: "70px" }}></div>
     </div>
   );
 }

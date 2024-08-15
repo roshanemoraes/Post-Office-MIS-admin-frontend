@@ -81,8 +81,13 @@ function AddressValidationModal({ formState, onValidationResult }) {
         keyboard={false}
       >
         <Modal.Header closeButton>
-          <Modal.Title style={{ color: "blue", alignItems: "center" }}>
-            Address Verification
+          <Modal.Title
+            style={{
+              color: "blue",
+              alignItems: "center",
+            }}
+          >
+            <div style={{ color: "#0369a1" }}>Address Verification</div>
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>

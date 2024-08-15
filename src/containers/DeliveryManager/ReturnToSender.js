@@ -5,6 +5,7 @@ import axios from "axios";
 import InfoReturnMailModal from "./Modals/InfoReturnMailModal";
 import checkIcon from "../../assets/check-circle-fill.svg";
 import CustomizedSnackbars from "../../components/Custom/CustomizedSnackbars";
+import DownArrowIcon from "../../assets/arrow-down-square-fill.svg";
 
 export default function ReturnToSender() {
   const [rows, setRows] = React.useState([]);
@@ -94,42 +95,70 @@ export default function ReturnToSender() {
   }, []);
 
   return (
-    <div
-      style={{
-        height: 550,
-        paddingTop: "5px",
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
-      <DataGrid
-        rows={rows}
-        columns={columns}
-        rowHeight={50}
-        getRowId={(row) => row.mailId}
-        sx={{
-          ".MuiDataGrid-columnSeparator": {
-            display: "none",
-          },
-          "&.MuiDataGrid-root": {
-            border: "none",
-          },
+    <>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          padding: "10px",
+          // fontWeight: "bold",
+          marginBottom: "10px",
+          marginTop: "10px",
+          backgroundColor: "#a3a3a3",
         }}
-        initialState={{
-          pagination: {
-            paginationModel: { page: 0, pageSize: 10 },
-          },
+      >
+        All Return-To-Sender Mails
+        <img
+          src={DownArrowIcon}
+          alt="All In-Area Mails"
+          style={{
+            marginRight: "10px",
+            marginLeft: "20px",
+            width: "30px",
+            height: "30px",
+          }}
+        />
+      </div>
+      <div
+        style={{
+          height: 550,
+          paddingTop: "5px",
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center",
         }}
-      />
-      <CustomizedSnackbars
-        open={snackbarOpen}
-        autoHideDuration={3000}
-        severity={snackbarSeverity}
-        message={snackbarMessage}
-        onClose={() => setSnackbarOpen(false)}
-      />
-    </div>
+      >
+        <DataGrid
+          rows={rows}
+          columns={columns}
+          rowHeight={50}
+          getRowId={(row) => row.mailId}
+          sx={{
+            backgroundColor: "#f5f5f5",
+            boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.1)",
+            ".MuiDataGrid-columnSeparator": {
+              display: "none",
+            },
+            "&.MuiDataGrid-root": {
+              border: "none",
+            },
+          }}
+          initialState={{
+            pagination: {
+              paginationModel: { page: 0, pageSize: 10 },
+            },
+          }}
+        />
+        <CustomizedSnackbars
+          open={snackbarOpen}
+          autoHideDuration={3000}
+          severity={snackbarSeverity}
+          message={snackbarMessage}
+          onClose={() => setSnackbarOpen(false)}
+        />
+      </div>
+    </>
   );
 }

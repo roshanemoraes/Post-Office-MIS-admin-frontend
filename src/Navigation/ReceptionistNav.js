@@ -9,6 +9,7 @@ import PersonalMail from "../containers/Receptionist/PersonalMail";
 import NavBar from "../components/NavBar";
 import BulkMailHome from "../containers/Receptionist/BulkMailMgmt/BulkMailHome";
 import CustomerMgmt from "../containers/Receptionist/CustomerMgmt";
+import BlurBackground from "../components/Custom/Background/BlurBackground";
 
 function ReceptionistInterface() {
   const [isSideBarOpen, setSideBarOpen] = useState(window.innerWidth >= 1150);
@@ -29,6 +30,7 @@ function ReceptionistInterface() {
       <div style={{ gridColumn: "2", gridRow: "1" }}>
         <NavBar />
       </div>
+      <BlurBackground />
       <main
         className="content"
         style={{
