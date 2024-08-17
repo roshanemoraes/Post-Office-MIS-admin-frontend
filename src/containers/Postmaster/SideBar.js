@@ -30,23 +30,36 @@ const SideBar = ({ onSidebarToggle }) => {
       <div className={`sidebar ${isSideBarOpen ? "" : "close"}`}>
         <div className="logo-details">
           <i className="bx bx-menu" onClick={handleSidebarToggle}></i>
-          <span className="logo_name">Sri Lanka Post</span>
+          <span className="logo_name">SL POST</span>
         </div>
         <ul className="nav-links">
           <li>
             <Link to="/postmaster/">
               <i className="bx bx-grid-alt"></i>
-              <span className="link_name">Dashboard</span>
+              <span className="link_name">DASHBOARD</span>
             </Link>
             <ul className="sub-menu blank">
               <li>
                 <Link className="link_name" to="#">
-                  Category
+                  Dashboard
                 </Link>
               </li>
             </ul>
           </li>
-          <li className={isSubMenuOpen[0] ? "showMenu" : ""}>
+          <li>
+            <Link to="/postmaster/statistics">
+              <i className="bx bx-grid-alt"></i>
+              <span className="link_name">STATISTICS</span>
+            </Link>
+            <ul className="sub-menu blank">
+              <li>
+                <Link className="link_name" to="/postmaster/statistics">
+                  STATISTICS
+                </Link>
+              </li>
+            </ul>
+          </li>
+          {/* <li className={isSubMenuOpen[0] ? "showMenu" : ""}>
             <div className="iocn-link">
               <Link to="#">
                 <i className="bx bx-collection"></i>
@@ -73,16 +86,16 @@ const SideBar = ({ onSidebarToggle }) => {
                 <Link to="#">Chart 3</Link>
               </li>
             </ul>
-          </li>
+          </li> */}
           <li>
             <Link to="/postmaster/live-map">
               <i className="bx bx-pie-chart-alt-2"></i>
-              <span className="link_name">Live Map</span>
+              <span className="link_name">LIVE MAP</span>
             </Link>
             <ul className="sub-menu blank">
               <li>
                 <Link className="link_name" to="#">
-                  Live Map
+                  LIVE MAP
                 </Link>
               </li>
             </ul>
@@ -90,12 +103,12 @@ const SideBar = ({ onSidebarToggle }) => {
           <li>
             <Link to="/postmaster/list-employee">
               <i className="bx bx-line-chart"></i>
-              <span className="link_name">List Employees</span>
+              <span className="link_name">LIST EMPLOYEES</span>
             </Link>
             <ul className="sub-menu blank">
               <li>
                 <Link className="link_name" to="#">
-                  List Employees
+                  LIST EMPLOYEES
                 </Link>
               </li>
             </ul>
@@ -103,12 +116,12 @@ const SideBar = ({ onSidebarToggle }) => {
           <li>
             <Link to="/postmaster/add-employee">
               <i className="bx bx-compass"></i>
-              <span className="link_name">Add Employee</span>
+              <span className="link_name">ADD EMPLOYEE</span>
             </Link>
             <ul className="sub-menu blank">
               <li>
                 <Link className="link_name" to="#">
-                  Add Employee
+                  ADD EMPLOYEE
                 </Link>
               </li>
             </ul>
@@ -141,9 +154,7 @@ const SideBar = ({ onSidebarToggle }) => {
           </li>
           <li>
             <div className="profile-details">
-              <div className="profile-content">
-                <img src="image/profile.jpg" alt="profileImg" />
-              </div>
+              <div className="profile-content"></div>
               <div className="name-job">
                 <div className="profile_name">SEP</div>
                 <div className="job">2024</div>

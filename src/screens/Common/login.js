@@ -11,12 +11,14 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const Login = () => {
-  const Navigate = useNavigate();
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [error, setError] = useState("");
 
   const paperStyle = {
     padding: 20,
@@ -32,91 +34,241 @@ const Login = () => {
   };
 
   const handleSignIn = async (e) => {
-    const response = await fetch("http://localhost:8081/authenticate/", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        email: email,
-        password: password,
-      }),
-    });
-    if (!response.ok) {
-      console.error("Login failed");
-      return;
-    }
-
-    const data = await response.json();
-    console.log(data);
-    if (data.roles) {
-      if (data.roles === "ROLE_ADMIN") {
-        Navigate("/postmaster");
-      } else if (data.roles === "ROLE_USER") {
-        Navigate("/user");
+    e.preventDefault();
+    console.log(email);
+    console.log(password);
+    try {
+      const response = await axios.post(
+        "http://localhost:8080/products/authenticate",
+        {
+          username: email,
+          password: password,
+        },
+        { withCredentials: true }
+      );
+      console.log(response.data);
+      setError("");
+      if (response.data.role) {
+        if (response.data.role.includes("ROLE_ADMIN")) {
+          navigate("/postmaster");
+        } else if (response.data.role.includes("ROLE_MANAGER")) {
+          navigate("/delivery-manager");
+        } else if (response.data.role.includes("ROLE_USER")) {
+          navigate("/receptionist");
+        } else {
+          navigate("/login");
+        }
       } else {
-        Navigate("/login");
+        console.error("No roles found in response data");
       }
-    } else {
-      console.error("No roles found in response data");
+    } catch (error) {
+      setError("Login failed. Please check your credentials.");
     }
   };
 
   return (
-    <div className="main-container">
-      <Grid
-        container
-        justifyContent={"center"}
-        alignItems={"center"}
-        style={{ minHeight: "100vh" }}
-      >
-        <Paper elevation={10} style={paperStyle}>
-          <div style={{ marginBottom: "15px", fontSize: "20px" }}>Login</div>
-          <TextField
-            label="Email"
-            value={email}
-            placeholder="Enter your email"
-            fullWidth
-            required
-            onChange={(e) => setEmail(e.target.value)}
-            InputLabelProps={{
-              style: {
-                color: "#696969",
-              },
-            }}
-          />
-          <Box mt={1} />
-          <TextField
-            label="Password"
-            // id="outlined-required"
-            value={password}
-            placeholder="Enter your password"
-            type={showPassword ? "text" : "password"}
-            fullWidth
-            required
-            onChange={(e) => setPassword(e.target.value)}
-            InputProps={{
-              endAdornment: (
-                <InputAdornment position="end">
-                  <IconButton onClick={() => setShowPassword(!showPassword)}>
-                    {showPassword ? <VisibilityOffIcon /> : <VisibilityIcon />}
-                  </IconButton>
-                </InputAdornment>
-              ),
-            }}
-          />
-          <Box mt={1} />
-          <Button
-            type="submit"
-            color="primary"
-            variant="contained"
-            style={btnstyle}
-            onClick={handleSignIn}
+    <div>
+      <div className="container-fluid bg-primary px-5 d-none d-lg-block">
+        <div className="row gx-0 align-items-center">
+          <div className="col-lg-5 text-center text-lg-start mb-lg-0">
+            <div className="d-flex">
+              <a href="#" className="text-muted me-4">
+                <i className="fas fa-envelope text-secondary me-2"></i>
+                postoffice@gmail.com
+              </a>
+              <a href="#" className="text-muted me-0">
+                <i className="fas fa-phone-alt text-secondary me-2"></i>
+                +01234567890
+              </a>
+            </div>
+          </div>
+          <div className="col-lg-3 row-cols-1 text-center mb-2 mb-lg-0">
+            <div
+              className="d-inline-flex align-items-center"
+              style={{ height: "45px" }}
+            >
+              <a
+                className="btn btn-sm btn-outline-light btn-square rounded-circle me-2"
+                href=""
+              >
+                <i className="fab fa-twitter fw-normal text-secondary"></i>
+              </a>
+              <a
+                className="btn btn-sm btn-outline-light btn-square rounded-circle me-2"
+                href=""
+              >
+                <i className="fab fa-facebook-f fw-normal text-secondary"></i>
+              </a>
+              <a
+                className="btn btn-sm btn-outline-light btn-square rounded-circle me-2"
+                href=""
+              >
+                <i className="fab fa-linkedin-in fw-normal text-secondary"></i>
+              </a>
+              <a
+                className="btn btn-sm btn-outline-light btn-square rounded-circle me-2"
+                href=""
+              >
+                <i className="fab fa-instagram fw-normal text-secondary"></i>
+              </a>
+              <a
+                className="btn btn-sm btn-outline-light btn-square rounded-circle"
+                href=""
+              >
+                <i className="fab fa-youtube fw-normal text-secondary"></i>
+              </a>
+            </div>
+          </div>
+          <div className="col-lg-4 text-center text-lg-end">
+            <div
+              className="d-inline-flex align-items-center"
+              style={{ height: "45px" }}
+            >
+              <a href="#" className="text-muted me-2">
+                {" "}
+                Help
+              </a>
+              <small> / </small>
+              <a href="#" className="text-muted mx-2">
+                {" "}
+                Support
+              </a>
+              <small> / </small>
+              <a href="#" className="text-muted ms-2">
+                {" "}
+                Contact
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="container-fluid nav-bar p-0">
+        <nav className="navbar navbar-expand-lg navbar-light bg-white px-4 px-lg-5 py-3 py-lg-0">
+          <a href="" className="navbar-brand p-0">
+            <h2 className="display-5 text-secondary m-0">
+              <img src="img/brand-logo.png" className="img-fluid" alt="" />
+              Post Office MIS
+            </h2>
+          </a>
+          <button
+            className="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarCollapse"
           >
-            Sign In
-          </Button>
-        </Paper>
-      </Grid>
+            <span className="fa fa-bars"></span>
+          </button>
+          <div className="collapse navbar-collapse" id="navbarCollapse">
+            <div className="navbar-nav ms-auto py-0">
+              <a href="index.html" className="nav-item nav-link active">
+                Home
+              </a>
+              <a href="about.html" className="nav-item nav-link">
+                About
+              </a>
+              <a href="service.html" className="nav-item nav-link">
+                Service
+              </a>
+              <div className="nav-item dropdown">
+                <a href="#" className="nav-link" data-bs-toggle="dropdown">
+                  <span className="dropdown-toggle">Pages</span>
+                </a>
+                <div className="dropdown-menu m-0">
+                  <a href="feature.html" className="dropdown-item">
+                    Feature
+                  </a>
+                  <a href="countries.html" className="dropdown-item">
+                    Countries
+                  </a>
+                  <a href="testimonial.html" className="dropdown-item">
+                    Testimonial
+                  </a>
+                  <a href="training.html" className="dropdown-item">
+                    Training
+                  </a>
+                  <a href="404.html" className="dropdown-item">
+                    404 Page
+                  </a>
+                </div>
+              </div>
+              <a href="contact.html" className="nav-item nav-link">
+                Contact
+              </a>
+            </div>
+            <button
+              className="btn btn-primary btn-md-square border-secondary mb-3 mb-md-3 mb-lg-0 me-3"
+              data-bs-toggle="modal"
+              data-bs-target="#searchModal"
+            >
+              <i className="fas fa-search"></i>
+            </button>
+            <a
+              href=""
+              className="btn btn-primary border-secondary rounded-pill py-2 px-4 px-lg-3 mb-3 mb-md-3 mb-lg-0"
+            >
+              Get A Quote
+            </a>
+          </div>
+        </nav>
+      </div>
+      <div className="main-container">
+        <Grid
+          container
+          justifyContent={"center"}
+          alignItems={"center"}
+          style={{ minHeight: "100vh" }}
+        >
+          <Paper elevation={10} style={paperStyle}>
+            <div style={{ marginBottom: "15px", fontSize: "20px" }}>Login</div>
+            <TextField
+              label="Email"
+              value={email}
+              placeholder="Enter your email"
+              fullWidth
+              required
+              onChange={(e) => setEmail(e.target.value)}
+              InputLabelProps={{
+                style: {
+                  color: "#696969",
+                },
+              }}
+            />
+            <Box mt={1} />
+            <TextField
+              label="Password"
+              value={password}
+              placeholder="Enter your password"
+              type={showPassword ? "text" : "password"}
+              fullWidth
+              required
+              onChange={(e) => setPassword(e.target.value)}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton onClick={() => setShowPassword(!showPassword)}>
+                      {showPassword ? (
+                        <VisibilityOffIcon />
+                      ) : (
+                        <VisibilityIcon />
+                      )}
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
+            />
+            <Box mt={1} />
+            <Button
+              type="submit"
+              color="primary"
+              variant="contained"
+              style={btnstyle}
+              onClick={handleSignIn}
+            >
+              Sign In
+            </Button>
+          </Paper>
+        </Grid>
+      </div>
     </div>
   );
 };

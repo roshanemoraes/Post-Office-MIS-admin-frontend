@@ -93,39 +93,44 @@ export const mailFormField = {
 
 export const addEmployeeField = {
   employeeFullName: {
-    label: "Employee Full Name",
-    id: "employeeFullName",
+    label: "Full Name",
+    id: "fullName",
+    type: "text",
+  },
+  employeeUserName: {
+    label: "User Name",
+    id: "userName",
     type: "text",
   },
   employeeNIC: {
-    label: "Employee NIC",
-    id: "employeeNic",
+    label: "NIC",
+    id: "nic",
     type: "text",
   },
   employeeEmail: {
-    label: "Employee Email",
-    id: "employeeEmail",
+    label: "Email",
+    id: "email",
     type: "text",
   },
-  employeeDateOfBirth: {
-    label: "Date Of Birth",
-    id: "dateOfBirth",
+  employeeDateJoined: {
+    label: "Date Joined",
+    id: "dateJoined",
     type: "text",
   },
   employeeContactNumber: {
-    label: "Employee Contact Number",
-    id: "employeeContactNumber",
-    type: "number",
+    label: "Contact Number",
+    id: "contactNumber",
+    type: "text",
   },
   accountPassword: {
     label: "Password",
     id: "password",
-    type: "password",
+    type: "text",
   },
-  employeeRole: {
-    label: "Employee Role",
-    id: "employeeRole",
-    type: "formControl",
-    options: [],
-  },
+  // employeeRole: {
+  //   label: "Employee Role",
+  //   id: "employeeRole",
+  //   type: "formControl",
+  //   options: [],
+  // },
 };

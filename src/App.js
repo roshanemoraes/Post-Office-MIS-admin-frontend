@@ -5,6 +5,7 @@ import Login from "./screens/Common/login";
 import ReceptionistInterface from "./Navigation/ReceptionistNav";
 import PostmasterInterface from "./Navigation/PostmasterNav";
 import DeliveryManagerInterface from "./Navigation/DeliveryManagerNav";
+import OutArea from "./containers/DeliveryManager/MailSortMgmt/OutArea";
 
 function App() {
   return (

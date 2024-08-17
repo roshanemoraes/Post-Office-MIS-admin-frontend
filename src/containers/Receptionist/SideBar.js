@@ -30,18 +30,18 @@ const SideBar = ({ onSidebarToggle }) => {
       <div className={`sidebar ${isSideBarOpen ? "" : "close"}`}>
         <div className="logo-details">
           <i className="bx bx-menu" onClick={handleSidebarToggle}></i>
-          <span className="logo_name">Sri Lanka Post</span>
+          <span className="logo_name">SL POST</span>
         </div>
         <ul className="nav-links">
           <li>
             <Link to="/receptionist">
               <i className="bx bxs-dashboard"></i>
-              <span className="link_name">Dashboard</span>
+              <span className="link_name">DASHBOARD</span>
             </Link>
             <ul className="sub-menu blank">
               <li>
                 <Link className="link_name" to="#">
-                  Dashboard
+                  DASHBOARD
                 </Link>
               </li>
             </ul>
@@ -50,7 +50,7 @@ const SideBar = ({ onSidebarToggle }) => {
             <div className="iocn-link">
               <Link to="#">
                 <i className="bx bx-envelope"></i>
-                <span className="link_name">New Post</span>
+                <span className="link_name">NEW MAIL</span>
               </Link>
               <i
                 className="bx bxs-chevron-down arrow"
@@ -60,7 +60,7 @@ const SideBar = ({ onSidebarToggle }) => {
             <ul className="sub-menu">
               <li>
                 <Link className="link_name" to="#">
-                  New Post
+                  NEW MAIL
                 </Link>
               </li>
               <li>
@@ -83,44 +83,44 @@ const SideBar = ({ onSidebarToggle }) => {
             </ul>
           </li>
           <li>
-            <Link to="/receptionist/fast-courier">
+            <Link to="/receptionist/bulk-mail">
               <i className="bx bx-package"></i>
-              <span className="link_name">Bulk Mailing</span>
+              <span className="link_name">BULK MAILS</span>
             </Link>
             <ul className="sub-menu blank">
               <li>
-                <Link className="link_name" to="#">
-                  Bulk Mailing
+                <Link className="link_name" to="/receptionist/bulk-mail">
+                  BULK MAILS
                 </Link>
               </li>
             </ul>
           </li>
           <li>
-            <Link to="/receptionist/fast-courier">
+            <Link to="/receptionist/customer-mgmt">
               <i className="bx bx-package"></i>
-              <span className="link_name">Customer Management</span>
+              <span className="link_name">CUSTOMER INFO</span>
             </Link>
             <ul className="sub-menu blank">
               <li>
-                <Link className="link_name" to="#">
-                  Customer Management
+                <Link className="link_name" to="/receptionist/customer-mgmt">
+                  CUSTOMER INFO
                 </Link>
               </li>
             </ul>
           </li>
-          <li>
-            <Link to="#">
+          {/* <li>
+            <Link to="/receptionist/return-mail">
               <i className="bx bx-credit-card"></i>
               <span className="link_name">Return Mail Management</span>
             </Link>
             <ul className="sub-menu blank">
               <li>
-                <Link className="link_name" to="#">
+                <Link className="link_name" to="/receptionist/return-mail">
                   Return Mail Management
                 </Link>
               </li>
             </ul>
-          </li>
+          </li> */}
           {/* <li className={isSubMenuOpen[1] ? "showMenu" : ""}>
             <div className="iocn-link">
               <Link to="#">
@@ -152,12 +152,12 @@ const SideBar = ({ onSidebarToggle }) => {
           <li>
             <Link to="#">
               <i className="bx bx-cog"></i>
-              <span className="link_name">Settings</span>
+              <span className="link_name">SETTINGS</span>
             </Link>
             <ul className="sub-menu blank">
               <li>
                 <Link className="link_name" to="#">
-                  Settings
+                  SETTINGS
                 </Link>
               </li>
             </ul>
@@ -165,7 +165,7 @@ const SideBar = ({ onSidebarToggle }) => {
           <li>
             <div className="profile-details">
               <div className="profile-content">
-                <img src="" alt="" />
+                {/* <img src="" alt="" /> */}
               </div>
               <div className="name-job">
                 <div className="profile_name">S E P</div>

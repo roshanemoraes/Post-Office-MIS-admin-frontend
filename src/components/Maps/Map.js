@@ -22,10 +22,10 @@ const Map = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          "https://5741da49-95d1-43fa-beb5-b3b02a53e825.mock.pstmn.io/postman/locations"
+          "http://localhost:8081/api/postmaster/employee/live-map"
         );
         setLocations(response.data);
-        console.log("request came!");
+        console.log(response.data);
       } catch (err) {
         console.error("Error fetching postman locations!", err);
       }
@@ -75,7 +75,7 @@ const Map = () => {
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        height: "100vh",
+        height: "90vh",
       }}
     >
       {isLoaded && (
