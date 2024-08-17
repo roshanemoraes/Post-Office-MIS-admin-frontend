@@ -1,5 +1,5 @@
 import { Box } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 import ItemTable from "./ItemTable";
 import DiscardedMails from "./../../../containers/DeliveryManager/DiscardedMails";
 
@@ -17,10 +17,23 @@ const Invoice = ({ discount, customerInfo, invoiceInfo }) => {
     second: "2-digit",
     hourCycle: "h23",
   });
-  const data = [
-    { item: "Registered Mail", quantity: 1, rate: 200, tax: 5, amount: 210 },
-    { item: "Envelop", quantity: 2, rate: 20, tax: 2, amount: 39.2 },
-  ];
+
+  const [data, setData] = useState([
+    {
+      item: "Bulk Mail",
+      quantity: CustomerInfo.mailCount,
+      rate: 50,
+      tax: 5,
+      amount: (CustomerInfo.mailCount * 50 * 95) / 100,
+    },
+    {
+      item: "Bulk Mail Tracking Fee",
+      quantity: 1,
+      rate: 1000,
+      tax: 5,
+      amount: 950,
+    },
+  ]);
 
   return (
     <div className="flex flex-col mt-4 ml-4 w-[210mm] h-[200mm] bg-white rounded-lg p-4 print:w-[210mm] print:h-[297mm] print:m-0 print:p-0 print:box-border">
@@ -31,7 +44,7 @@ const Invoice = ({ discount, customerInfo, invoiceInfo }) => {
           </div>
           <div>
             <div>Invoice Number: {InvoiceInfo.invoiceNumber}</div>
-            <div>Date: {InvoiceInfo.date}</div>
+            <div>Date: {dateString}</div>
           </div>
         </div>
         <div className="col-span-1 flex items-center justify-end text-[40px]">
@@ -50,9 +63,9 @@ const Invoice = ({ discount, customerInfo, invoiceInfo }) => {
         </div>
         <div className="col-span-1">
           <div className="font-bold font-times text-[21px] pb-1">Bill To:</div>
-          <div>{customerInfo.name}</div>
-          <div>{customerInfo.address}</div>
-          <div>{customerInfo.contact}</div>
+          <div>{customerInfo.senderName}</div>
+          <div>{customerInfo.senderAddress}</div>
+          {/* <div>{customerInfo.contact}</div> */}
         </div>
       </div>
       <div className="min-h-[2px] bg-black"></div>

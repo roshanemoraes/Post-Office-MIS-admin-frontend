@@ -18,6 +18,8 @@ const BulkMailHome = () => {
     senderAddress: "",
     senderPostalZone: "",
     senderHouseNumber: "",
+    discount: 0,
+    mailCount: 0,
   };
 
   const cityList = ["Negombo", "Colombo", "Kochchikade", "Katunayaka"];
@@ -42,6 +44,13 @@ const BulkMailHome = () => {
   const [isUploaded, setIsUploaded] = useState(false);
   const [isUploadSuccess, setIsUploadSuccess] = useState(false);
   const [isRegistrationConfirm, setIsRegistrationConfirm] = useState(false);
+  const [postage, setPostage] = useState(0);
+  const [discount, setDiscount] = useState(0);
+  const [customerFormInfo, setCustomerFormInfo] = useState({
+    name: "",
+    address: "",
+    contact: "",
+  });
 
   const fileInputRef = useRef();
 
@@ -117,16 +126,24 @@ const BulkMailHome = () => {
       .then((res) => {
         if (res.status === 200) {
           setIsUploaded(true);
+          setMailCount(res.data.mailCount);
+
+          setFormState((prevState) => ({
+            ...prevState,
+            discount: res.data.discount,
+            mailCount: res.data.mailCount,
+          }));
+
+          setDiscount(res.data.discount);
           setMsg("Upload Successful");
         }
-        setMailCount(res.data);
       })
       .catch((err) => {
         if (err.response?.status === 417) {
           setIsUploaded(false);
           setMsg(
             "Upload Failed: Mail Count is inadquate: " +
-              err.response.data +
+              err.response.data.mailCount +
               " mails"
           );
         } else if (err.response?.status === 400) {
@@ -158,11 +175,6 @@ const BulkMailHome = () => {
     verticalAlign: "middle",
   };
 
-  const customerInfo = {
-    name: "John Doe",
-    address: "123, Main Street, Colombo 05",
-    contact: "077-1234567",
-  };
   const invoiceInfo = {
     invoiceNumber: 1882,
     date: "14/7/2024",
@@ -471,6 +483,7 @@ const BulkMailHome = () => {
                     fontFamily: "arial",
                   }}
                   onClick={handlePrint}
+                  // onClick={() => getPostage(mailCount)}
                 >
                   PRINT INVOICE
                 </Button>
@@ -508,7 +521,7 @@ const BulkMailHome = () => {
                   fontFamily: "Helvetica Neue",
                 }}
               >
-                General Standards
+                General Standard
               </Typography>
               <div className="grid sm:grid-cols-6 xs:grid-cols-6">
                 <div
@@ -627,7 +640,7 @@ const BulkMailHome = () => {
                       className="sm:col-span-3 xs:col-span-3"
                       style={leftStyle}
                     >
-                      5%
+                      {discount}%
                     </div>
                   </div>
                 </Box>
@@ -675,8 +688,8 @@ const BulkMailHome = () => {
             }}
           >
             <Invoice
-              discount={10}
-              customerInfo={customerInfo}
+              discount={formState.discount}
+              customerInfo={formState}
               invoiceInfo={invoiceInfo}
             />
           </div>
