@@ -1,12 +1,18 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { DataGrid } from "@mui/x-data-grid";
 import DownArrowIcon from "../../assets/arrow-down-square-fill.svg";
 import { Button, ButtonGroup } from "react-bootstrap";
 import axios from "axios";
 import ReturnToSenderNotification from "../../components/Notification/ReturnToSenderNotification";
+import { Client } from "@stomp/stompjs";
+import SockJS from "sockjs-client";
 
 const Notifications = () => {
   const [rows, setRows] = React.useState([]);
+  const [notifications, setNotifications] = useState([]);
+  const [client, setClient] = useState(null);
+  const [IsClicked, setIsClicked] = useState(false);
+
   const columns = [
     { field: "notificationId", headerName: "ID", width: 100 },
     { field: "message", headerName: "Message", width: 800 },
@@ -15,9 +21,10 @@ const Notifications = () => {
   ];
 
   const fetchData = async () => {
+    setIsClicked(true);
     try {
       const response = await axios.get(
-        "http://localhost:8081/api/notifications/3"
+        "http://localhost:8081/api/notifications/2"
       );
       setRows(response.data);
       console.log(response.data);
@@ -26,9 +33,10 @@ const Notifications = () => {
     }
   };
   const fetchUnreadData = async () => {
+    setIsClicked(false);
     try {
       const response = await axios.get(
-        "http://localhost:8081/api/notifications/unread/3"
+        "http://localhost:8081/api/notifications/unread/2"
       );
       setRows(response.data);
       console.log(response.data);
@@ -39,6 +47,24 @@ const Notifications = () => {
 
   useEffect(() => {
     fetchData();
+    const stompClient = new Client({
+      brokerURL: "ws://localhost:8081/ws",
+      connectHeaders: {},
+      webSocketFactory: () => new SockJS("http://localhost:8081/ws"),
+      onConnect: () => {
+        console.log("Connected to WebSocket");
+        stompClient.subscribe(`/topic/notifications`, (message) => {
+          fetchData();
+          console.log("Received message:", message);
+          const notification = JSON.parse(message.body);
+          setNotifications((prev) => [notification, ...prev]);
+        });
+      },
+    });
+    stompClient.activate();
+    setClient(stompClient);
+
+    return () => stompClient.deactivate();
   }, []);
 
   return (
@@ -83,9 +109,9 @@ const Notifications = () => {
                 fetchData();
               }}
               style={{
-                backgroundColor: "#f0f0f0",
-                borderColor: "#d1d1d1",
-                color: "#333",
+                backgroundColor: IsClicked ? "#852318" : "#f0f0f0",
+                borderColor: IsClicked ? "#d1d1d1" : "black",
+                color: IsClicked ? "white" : "#333",
                 padding: "8px 16px",
                 margin: "2px",
                 borderRadius: "4px",
@@ -98,9 +124,9 @@ const Notifications = () => {
               variant="secondary"
               onClick={() => fetchUnreadData()}
               style={{
-                backgroundColor: "#f0f0f0",
-                borderColor: "#d1d1d1",
-                color: "#333",
+                backgroundColor: IsClicked ? "#f0f0f0" : "#852318",
+                borderColor: IsClicked ? "black" : "#d1d1d1",
+                color: IsClicked ? "#333" : "white",
                 padding: "8px 16px",
                 margin: "2px",
                 borderRadius: "4px",

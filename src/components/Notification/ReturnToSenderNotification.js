@@ -25,7 +25,7 @@ const ReturnToSenderNotification = () => {
 
   return (
     <>
-      <MuiButton
+      {/* <MuiButton
         variant="contained"
         sx={{
           my: "10px",
@@ -42,7 +42,7 @@ const ReturnToSenderNotification = () => {
         onClick={validationResult}
       >
         Send Notification
-      </MuiButton>
+      </MuiButton> */}
     </>
   );
 };
