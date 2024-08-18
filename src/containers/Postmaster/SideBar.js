@@ -127,6 +127,19 @@ const SideBar = ({ onSidebarToggle }) => {
             </ul>
           </li>
           <li>
+            <Link to="/postmaster/test">
+              <i className="bx bx-compass"></i>
+              <span className="link_name">TEST PORTAL</span>
+            </Link>
+            <ul className="sub-menu blank">
+              <li>
+                <Link className="link_name" to="#">
+                  TEST PORTAL
+                </Link>
+              </li>
+            </ul>
+          </li>
+          <li>
             <Link to="/receptionist">
               <i className="bx bx-cog"></i>
               <span className="link_name">Receptionist</span>

@@ -34,10 +34,10 @@ export default function AssignRoute() {
         <div>
           <ViewRouteModal destinations={params.row.destinations} />
 
-          {/* <SubmitRoute
+          <SubmitRoute
             rowData={params.row}
             destinations={params.row.destinations}
-          /> */}
+          />
         </div>
       ),
     },

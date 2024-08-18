@@ -134,19 +134,22 @@ const SideBar = ({ onSidebarToggle }) => {
               </li>
             </ul>
           </li>
-          {/* <li>
-            <Link to="/delivery-manager/return-mail">
+          <li>
+            <Link to="/delivery-manager/notifications">
               <i className="bx bx-credit-card"></i>
-              <span className="link_name">Return Mail Management</span>
+              <span className="link_name">Nofitications</span>
             </Link>
             <ul className="sub-menu blank">
               <li>
-                <Link className="link_name" to="/delivery-manager/return-mail">
-                  Return Mail Management
+                <Link
+                  className="link_name"
+                  to="/delivery-manager/notifications"
+                >
+                  Notifications
                 </Link>
               </li>
             </ul>
-          </li> */}
+          </li>
           <li>
             <Link to="/postmaster">
               <i className="bx bx-cog"></i>
