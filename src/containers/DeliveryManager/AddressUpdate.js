@@ -60,16 +60,16 @@ export default function AddressUpdate() {
   ];
 
   const handleOneReturnToSender = async (row) => {
-    console.log("Mail ID: ", row.undeliverableId);
     try {
       const response = await axios.post(
-        `http://localhost:8081/api/delivery-manager/return-mail/address-update/add/${row.undeliverableId}`
+        `http://localhost:8081/api/delivery-manager/return-mail/address-update/add/${row.mailId}`
       );
       if (response.status === 200) {
         fetchData();
         sendNotification(
           `Mail needs an address update due to ${row.reason}.`,
-          row.customer_id
+          row.customer_id,
+          row.mailId
         );
         setSnackbarMessage("Started Address-Update Process.");
         setSnackbarSeverity("success");
@@ -116,11 +116,13 @@ export default function AddressUpdate() {
     return () => stompClient.deactivate();
   }, []);
 
-  const sendNotification = (message, customerId) => {
+  const sendNotification = (message, customerId, mailId) => {
     if (client) {
       const notification = {
         customerId: customerId,
         message: message,
+        type: "Address-update",
+        mailId: mailId,
       };
       client.publish({
         destination: "/app/notify",

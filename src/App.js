@@ -6,18 +6,54 @@ import ReceptionistInterface from "./Navigation/ReceptionistNav";
 import PostmasterInterface from "./Navigation/PostmasterNav";
 import DeliveryManagerInterface from "./Navigation/DeliveryManagerNav";
 import OutArea from "./containers/DeliveryManager/MailSortMgmt/OutArea";
+import LoginNew from "./screens/Common/loginNew";
+import ProtectedRoute from "./Navigation/ProtectedRoutes";
+import UnauthorizedPage from "./screens/Common/UnauthorizedPage";
 
 function App() {
   return (
     <Routes>
       <Route path="/" element={<Navigate to="/login" />} />
+      <Route path="/sign" element={<LoginNew />} />
+
       <Route path="/login" element={<Login />} />
-      <Route path="/postmaster/*" element={<PostmasterInterface />} />
-      <Route path="/receptionist/*" element={<ReceptionistInterface />} />
+      <Route path="/unauthorized" element={<UnauthorizedPage />} />
+
+      {/* <Route path="/postmaster/*" element={<PostmasterInterface />} /> */}
+      {/* <Route path="/receptionist/*" element={<ReceptionistInterface />} />
       <Route
         path="/delivery-manager/*"
         element={<DeliveryManagerInterface />}
+      /> */}
+      <Route
+        path="/postmaster/*"
+        element={
+          <ProtectedRoute
+            element={PostmasterInterface}
+            allowedRoles={["ROLE_ADMIN"]}
+          />
+        }
       />
+
+      <Route
+        path="/receptionist/*"
+        element={
+          <ProtectedRoute
+            element={ReceptionistInterface}
+            allowedRoles={["ROLE_USER"]}
+          />
+        }
+      />
+      <Route
+        path="/delivery-manager/*"
+        element={
+          <ProtectedRoute
+            element={DeliveryManagerInterface}
+            allowedRoles={["ROLE_MANAGER"]}
+          />
+        }
+      />
+      <Route path="*" element={<Navigate to="/unauthorized" />} />
     </Routes>
   );
 }

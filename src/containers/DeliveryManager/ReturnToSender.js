@@ -28,7 +28,8 @@ export default function ReturnToSender() {
         fetchData();
         sendNotification(
           `Mail is returned to sender due to ${row.reason}.`,
-          row.customer_id
+          row.customer_id,
+          row.mailId
         );
         setSnackbarMessage("Started Return-to-Sender Process.");
         setSnackbarSeverity("success");
@@ -120,11 +121,13 @@ export default function ReturnToSender() {
     return () => stompClient.deactivate();
   }, []);
 
-  const sendNotification = (message, customerId) => {
+  const sendNotification = (message, customerId, mailId) => {
     if (client) {
       const notification = {
         customerId: customerId,
         message: message,
+        type: "Return-to-sender",
+        mailId: mailId,
       };
       client.publish({
         destination: "/app/notify",

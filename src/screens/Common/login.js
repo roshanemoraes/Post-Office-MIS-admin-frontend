@@ -12,6 +12,8 @@ import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import BlurBackground from "../../components/Custom/Background/BlurBackground";
+import LoginNavBar from "../../components/LoginNavBar";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -22,21 +24,18 @@ const Login = () => {
 
   const paperStyle = {
     padding: 20,
-    height: 250,
+    height: 350,
     width: 450,
     position: "fixed",
     top: "40%",
     left: "50%",
     transform: "translate(-50%, -50%)",
   };
-  const btnstyle = {
-    margin: "10px 0px",
-  };
 
   const handleSignIn = async (e) => {
     e.preventDefault();
-    console.log(email);
-    console.log(password);
+    // console.log(email);
+    // console.log(password);
     try {
       const response = await axios.post(
         "http://localhost:8080/products/authenticate",
@@ -49,6 +48,12 @@ const Login = () => {
       console.log(response.data);
       setError("");
       if (response.data.role) {
+        localStorage.setItem("userRoles", JSON.stringify(response.data.role));
+        localStorage.setItem(
+          "userName",
+          JSON.stringify(response.data.username)
+        );
+
         if (response.data.role.includes("ROLE_ADMIN")) {
           navigate("/postmaster");
         } else if (response.data.role.includes("ROLE_MANAGER")) {
@@ -68,17 +73,19 @@ const Login = () => {
 
   return (
     <div>
-      <div className="container-fluid bg-primary px-5 d-none d-lg-block">
+      <LoginNavBar />
+      <BlurBackground />
+      {/* <div className="container-fluid bg-slate-200 px-5 d-none d-lg-block">
         <div className="row gx-0 align-items-center">
           <div className="col-lg-5 text-center text-lg-start mb-lg-0">
             <div className="d-flex">
               <a href="#" className="text-muted me-4">
                 <i className="fas fa-envelope text-secondary me-2"></i>
-                postoffice@gmail.com
+                POST OFFICE MIS
               </a>
               <a href="#" className="text-muted me-0">
                 <i className="fas fa-phone-alt text-secondary me-2"></i>
-                +01234567890
+                NEGOMBO BRANCH
               </a>
             </div>
           </div>
@@ -141,8 +148,8 @@ const Login = () => {
             </div>
           </div>
         </div>
-      </div>
-      <div className="container-fluid nav-bar p-0">
+      </div> */}
+      {/* <div className="container-fluid nav-bar p-0">
         <nav className="navbar navbar-expand-lg navbar-light bg-white px-4 px-lg-5 py-3 py-lg-0">
           <a href="" className="navbar-brand p-0">
             <h2 className="display-5 text-secondary m-0">
@@ -210,62 +217,82 @@ const Login = () => {
             </a>
           </div>
         </nav>
-      </div>
+      </div> */}
       <div className="main-container">
         <Grid
           container
           justifyContent={"center"}
           alignItems={"center"}
-          style={{ minHeight: "100vh" }}
+          style={{ minHeight: "120px" }}
         >
           <Paper elevation={10} style={paperStyle}>
-            <div style={{ marginBottom: "15px", fontSize: "20px" }}>Login</div>
-            <TextField
-              label="Email"
-              value={email}
-              placeholder="Enter your email"
-              fullWidth
-              required
-              onChange={(e) => setEmail(e.target.value)}
-              InputLabelProps={{
-                style: {
-                  color: "#696969",
-                },
-              }}
-            />
-            <Box mt={1} />
-            <TextField
-              label="Password"
-              value={password}
-              placeholder="Enter your password"
-              type={showPassword ? "text" : "password"}
-              fullWidth
-              required
-              onChange={(e) => setPassword(e.target.value)}
-              InputProps={{
-                endAdornment: (
-                  <InputAdornment position="end">
-                    <IconButton onClick={() => setShowPassword(!showPassword)}>
-                      {showPassword ? (
-                        <VisibilityOffIcon />
-                      ) : (
-                        <VisibilityIcon />
-                      )}
-                    </IconButton>
-                  </InputAdornment>
-                ),
-              }}
-            />
-            <Box mt={1} />
-            <Button
-              type="submit"
-              color="primary"
-              variant="contained"
-              style={btnstyle}
-              onClick={handleSignIn}
+            <div
+              className="mt-[10px] mb-[25px] text-center font-bold"
+              style={{ fontSize: "27px" }}
             >
-              Sign In
-            </Button>
+              ADMIN PORTAL
+            </div>
+            <div className="mx-[15px]">
+              <TextField
+                label="Email"
+                value={email}
+                placeholder="Enter your email"
+                fullWidth
+                required
+                onChange={(e) => setEmail(e.target.value)}
+                InputLabelProps={{
+                  style: {
+                    color: "#696969",
+                  },
+                }}
+              />
+              <Box mt={3} />
+              <TextField
+                label="Password"
+                value={password}
+                placeholder="Enter your password"
+                type={showPassword ? "text" : "password"}
+                fullWidth
+                required
+                onChange={(e) => setPassword(e.target.value)}
+                onKeyPress={(e) => {
+                  if (e.key === "Enter") {
+                    handleSignIn(e);
+                  }
+                }}
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton
+                        onClick={() => setShowPassword(!showPassword)}
+                      >
+                        {showPassword ? (
+                          <VisibilityOffIcon />
+                        ) : (
+                          <VisibilityIcon />
+                        )}
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                }}
+              />
+              <Box mt={2} />
+              <div style={{ alignItems: "right", alignSelf: "right" }}>
+                <Button
+                  type="submit"
+                  variant="contained"
+                  // style={btnstyle}
+                  style={{
+                    backgroundColor: "#2E3B55",
+                    color: "white",
+                    margin: "10px 0px",
+                  }}
+                  onClick={handleSignIn}
+                >
+                  Sign In
+                </Button>
+              </div>
+            </div>
           </Paper>
         </Grid>
       </div>

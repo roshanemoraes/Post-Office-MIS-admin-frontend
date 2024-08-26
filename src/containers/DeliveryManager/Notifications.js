@@ -6,6 +6,8 @@ import axios from "axios";
 import ReturnToSenderNotification from "../../components/Notification/ReturnToSenderNotification";
 import { Client } from "@stomp/stompjs";
 import SockJS from "sockjs-client";
+import UpdateIcon from "../../assets/pencil-fill.svg";
+import AddressUpdateNotificationModal from "./Modals/AddressUpdateNotificationModal";
 
 const Notifications = () => {
   const [rows, setRows] = React.useState([]);
@@ -14,10 +16,31 @@ const Notifications = () => {
   const [IsClicked, setIsClicked] = useState(false);
 
   const columns = [
+    { field: "date", headerName: "Date", width: 150 },
+    { field: "message", headerName: "Message", width: 500 },
     { field: "notificationId", headerName: "ID", width: 100 },
-    { field: "message", headerName: "Message", width: 800 },
-    { field: "read", headerName: "Action", width: 120 },
-    { field: "date", headerName: "Date", width: 130 },
+    { field: "type", headerName: "Type", width: 180 },
+    { field: "read", headerName: "Read", width: 120 },
+    { field: "mailId", headerName: "Mail Id", width: 120 },
+    {
+      field: "action",
+      headerName: "Action",
+      width: 70,
+      headerAlign: "center",
+      renderCell: (params) => {
+        if (params.row.type === "Address-update") {
+          return (
+            <div>
+              <AddressUpdateNotificationModal data={params.row} />
+            </div>
+          );
+        } else if (params.row.type === "Return-to-sender") {
+          return <div>-</div>;
+        } else {
+          return null;
+        }
+      },
+    },
   ];
 
   const fetchData = async () => {
@@ -70,6 +93,7 @@ const Notifications = () => {
   return (
     <>
       <ReturnToSenderNotification />
+      {/* <AddressUpdateNotificationModal /> */}
       <div>
         <div
           style={{
@@ -167,6 +191,18 @@ const Notifications = () => {
               "& .MuiDataGrid-columnHeader[data-field='notificationId']": {
                 display: "none",
               },
+              "& .MuiDataGrid-cell[data-field='read']": {
+                display: "none",
+              },
+              "& .MuiDataGrid-columnHeader[data-field='read']": {
+                display: "none",
+              },
+              // "& .MuiDataGrid-cell[data-field='mailId']": {
+              //   display: "none",
+              // },
+              // "& .MuiDataGrid-columnHeader[data-field='mailId']": {
+              //   display: "none",
+              // },
             }}
             initialState={{
               pagination: {
