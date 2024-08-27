@@ -2,6 +2,7 @@ import React from "react";
 import DashboardCard from "../../components/Layout/DashboardCard";
 import MailIcon from "../../assets/icons8-mail-50.png";
 import DoughnutChart from "./Charts/DoughnutChart";
+import DashboardCard1 from "./../../components/Layout/DashboardCard1";
 
 // const Dashboard = () => {
 //   const customerInfo = {
@@ -43,7 +44,7 @@ const Dashboard = () => {
       <div className="mr-2">
         <div className="grid sm:grid-cols-4 xs:grid-cols-2 gap-2">
           <div className="sm:col-span-1">
-            <DashboardCard
+            <DashboardCard1
               backgroundColor={"#ffffff"}
               title={"ALL MAILS TODAY"}
               value={"9756"}
@@ -51,7 +52,7 @@ const Dashboard = () => {
             />
           </div>
           <div className="sm:col-span-1">
-            <DashboardCard
+            <DashboardCard1
               backgroundColor={"#ffffff"}
               title={"INDIVIDUAL MAILS"}
               value={"112"}
@@ -59,7 +60,7 @@ const Dashboard = () => {
             />
           </div>
           <div className="sm:col-span-1">
-            <DashboardCard
+            <DashboardCard1
               backgroundColor={"#ffffff"}
               title={"BULK MAILS"}
               value={"3000"}
@@ -67,7 +68,7 @@ const Dashboard = () => {
             />
           </div>
           <div className="sm:col-span-1">
-            <DashboardCard
+            <DashboardCard1
               backgroundColor={"#ffffff"}
               title={"CUSTOMER INQUIRIES"}
               value={"21"}

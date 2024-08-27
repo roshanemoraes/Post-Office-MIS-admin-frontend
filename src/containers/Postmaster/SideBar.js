@@ -139,32 +139,7 @@ const SideBar = ({ onSidebarToggle }) => {
               </li>
             </ul>
           </li>
-          <li>
-            <Link to="/receptionist">
-              <i className="bx bx-cog"></i>
-              <span className="link_name">Receptionist</span>
-            </Link>
-            <ul className="sub-menu blank">
-              <li>
-                <Link className="link_name" to="#">
-                  Receptionist
-                </Link>
-              </li>
-            </ul>
-          </li>
-          <li>
-            <Link to="/delivery-manager">
-              <i className="bx bx-cog"></i>
-              <span className="link_name">Delivery Manager</span>
-            </Link>
-            <ul className="sub-menu blank">
-              <li>
-                <Link className="link_name" to="#">
-                  Delivery Manager
-                </Link>
-              </li>
-            </ul>
-          </li>
+
           <li>
             <div className="profile-details">
               <div className="profile-content"></div>
