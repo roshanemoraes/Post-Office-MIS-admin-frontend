@@ -69,4 +69,6 @@ Frontend Setup
   npm install
 3.Start the React development server:
   npm start
-![Screenshot 2024-08-28 091637](https://github.com/user-attachments/assets/f043f1e9-06af-48bb-851c-d57cf1844b62)
+
+These are partialy completed User Interfaces...
+![image1!](https://firebasestorage.googleapis.com/v0/b/postofficemis.appspot.com/o/Screenshot%202024-08-28%20103838.png?alt=media&token=45c4ab91-1d42-456f-add4-de90e0cc5ce7)
