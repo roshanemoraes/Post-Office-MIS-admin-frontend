@@ -72,3 +72,4 @@ Frontend Setup
 
 These are partialy completed User Interfaces...
 ![Description of image](https://firebasestorage.googleapis.com/v0/b/postofficemis.appspot.com/o/Screenshot%202024-08-28%20103838.png?alt=media&token=45c4ab91-1d42-456f-add4-de90e0cc5ce7)
+![Screenshot 2024-08-28 104101](https://github.com/user-attachments/assets/f8cd226c-745b-44ea-90ce-1b9ed19046fc)
