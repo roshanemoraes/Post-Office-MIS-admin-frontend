@@ -69,3 +69,4 @@ Frontend Setup
   npm install
 3.Start the React development server:
   npm start
+![Screenshot 2024-08-28 091637](https://github.com/user-attachments/assets/f043f1e9-06af-48bb-851c-d57cf1844b62)
