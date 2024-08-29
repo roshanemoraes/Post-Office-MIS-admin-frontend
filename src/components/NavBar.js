@@ -41,7 +41,7 @@ export default function NavBar() {
   return (
     <Disclosure
       as="nav"
-      className="bg-slate-100"
+      className="bg-slate-100 "
       style={{ marginTop: "5px", marginBottom: "5px" }}
     >
       {({ open }) => (
