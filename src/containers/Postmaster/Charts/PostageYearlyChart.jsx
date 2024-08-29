@@ -21,7 +21,7 @@ ChartJS.register(
   Legend
 );
 
-const LineChart = () => {
+const PostageYearlyChart = () => {
   const data = {
     labels: [
       "January",
@@ -62,8 +62,8 @@ const LineChart = () => {
         position: "top",
       },
       title: {
-        display: false,
-        text: "Monthly Postage Income",
+        display: true,
+        text: "Yearly Postage Income",
         font: {
           weight: "100",
           size: 14,
@@ -111,4 +111,4 @@ const LineChart = () => {
   );
 };
 
-export default LineChart;
+export default PostageYearlyChart;
