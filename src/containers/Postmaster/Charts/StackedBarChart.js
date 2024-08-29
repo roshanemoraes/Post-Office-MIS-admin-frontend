@@ -42,7 +42,7 @@ const StackedBarChart = () => {
         backgroundColor: "#61DBFB",
       },
       {
-        label: "Undelivered Count",
+        label: "On-Route Count",
         data: [30, 40, 15, 10, 10, 20, 12, 16, 10, 20],
         backgroundColor: "darkblue",
       },
@@ -72,7 +72,7 @@ const StackedBarChart = () => {
         position: "top",
       },
       title: {
-        display: true,
+        display: false,
         text: "Delivered Mails vs Undelivered Mails",
         font: {
           weight: "100",
