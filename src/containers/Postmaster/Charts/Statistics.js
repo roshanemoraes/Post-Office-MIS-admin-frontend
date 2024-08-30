@@ -3,6 +3,8 @@ import BarChart from "./BarChart";
 import { Box } from "@mui/material";
 import StatisticCard from "./StatisticCard";
 import LineChart from "./PostageYearlyChart";
+import DeliveredUndeliveredMonthlyChart from "./DeliveredUndeliveredMonthlyChart";
+import UndeliveredTypesChart from "./UndeliveredTypesChart";
 
 const Statistics = () => {
   return (
@@ -23,7 +25,13 @@ const Statistics = () => {
           </div>
           <div className="mb-2">
             <StatisticCard
-              title="Postage Rate Analysis"
+              title="Monthly Delivered & Undelivered"
+              backgroundColor="white"
+            />
+          </div>
+          <div className="mb-2">
+            <StatisticCard
+              title="Undelivered Mail Types"
               backgroundColor="white"
             />
           </div>
@@ -100,12 +108,35 @@ const Statistics = () => {
                 boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.1)",
               }}
             >
-              <div className="mb-2 pt-2 ml-5 text-sm text-center text-gray-500">
-                TODAY POSTAGE INCOME
-              </div>
-              <LineChart />
+              <DeliveredUndeliveredMonthlyChart />
             </Box>
           </Box>
+          <div className="mt-2"></div>
+          <Box
+            display="flex"
+            flexDirection="row"
+            justifyContent="space-around"
+            paddingTop={2}
+          >
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                justifyContent: "center",
+                width: "90%",
+                minWidth: "550px",
+                height: "460px",
+                backgroundColor: "#ffffff",
+                borderRadius: "10px",
+                padding: "30px 2px 30px 2px",
+                boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.1)",
+              }}
+            >
+              <UndeliveredTypesChart />
+            </Box>
+          </Box>
+          <div className="min-h-[100px]"></div>
         </div>
       </div>
     </>

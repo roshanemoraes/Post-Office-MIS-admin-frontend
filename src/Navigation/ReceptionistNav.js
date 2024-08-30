@@ -10,6 +10,10 @@ import NavBar from "../components/NavBar";
 import BulkMailHome from "../containers/Receptionist/BulkMailMgmt/BulkMailHome";
 import CustomerMgmt from "../containers/Receptionist/CustomerMgmt";
 import BlurBackground from "../components/Custom/Background/BlurBackground";
+import NormalCourier from "../containers/Receptionist/NormalCourier";
+import NormalParcelPost from "../containers/Receptionist/NormalParcelPost";
+import GovParcelPost from "../containers/Receptionist/GovParcelPost";
+import MoneyOrders from "../containers/Receptionist/MoneyOrders";
 
 function ReceptionistInterface() {
   const [isSideBarOpen, setSideBarOpen] = useState(window.innerWidth >= 1150);
@@ -43,6 +47,10 @@ function ReceptionistInterface() {
         <Routes>
           <Route path="/" element={<Dashboard />} />
           <Route path="/normal-post" element={<PersonalMail />} />
+          <Route path="/normal-courier" element={<NormalCourier />} />
+          <Route path="/normal-parcel" element={<NormalParcelPost />} />
+          <Route path="/gov-parcel" element={<GovParcelPost />} />
+          <Route path="/money-orders" element={<MoneyOrders />} />
           <Route path="/registered-post" element={<RegisteredPost />} />
           <Route path="/logi-post" element={<LogiPost />} />
           <Route path="/fast-courier" element={<FastCourier />} />

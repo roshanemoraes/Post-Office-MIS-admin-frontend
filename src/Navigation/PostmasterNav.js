@@ -10,6 +10,7 @@ import BlurBackground from "../components/Custom/Background/BlurBackground";
 import NavBar from "../components/NavBar";
 import Statistics from "../containers/Postmaster/Charts/Statistics";
 import TestPortal from "../containers/Postmaster/TestPortal";
+import FinancialMgmt from "../containers/Postmaster/FinancialMgmt";
 
 function PostmasterInterface() {
   const [isSideBarOpen, setSideBarOpen] = useState(window.innerWidth >= 1024);
@@ -47,6 +48,7 @@ function PostmasterInterface() {
           <Route path="/live-map" element={<LiveMap />} />
           <Route path="/test" element={<TestPortal />} />
           <Route path="/statistics" element={<Statistics />} />
+          <Route path="/financial-mgmt" element={<FinancialMgmt />} />
         </Routes>
       </main>
     </div>

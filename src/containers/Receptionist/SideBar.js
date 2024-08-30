@@ -64,21 +64,24 @@ const SideBar = ({ onSidebarToggle }) => {
                 </Link>
               </li>
               <li>
-                <Link to="/receptionist/normal-post">Personal Mail</Link>
+                <Link to="/receptionist/normal-post">Normal Post</Link>
               </li>
               <li>
-                <Link to="/receptionist/normal-post">
-                  Personal Courier Mail
+                <Link to="/receptionist/normal-courier">
+                  Normal Courier Post
                 </Link>
               </li>
               <li>
-                <Link to="/receptionist/normal-post">Personal Parcel Mail</Link>
+                <Link to="/receptionist/normal-parcel">Normal Parcel Post</Link>
               </li>
               <li>
-                <Link to="/receptionist/registered-post">Registered Post</Link>
+                <Link to="/receptionist/gov-parcel">
+                  Government Parcel Post
+                </Link>
               </li>
+
               <li>
-                <Link to="/receptionist/logi-post">Official Parcel Mail</Link>
+                <Link to="/receptionist/money-orders">Money Orders</Link>
               </li>
             </ul>
           </li>
@@ -149,19 +152,7 @@ const SideBar = ({ onSidebarToggle }) => {
               </li>
             </ul>
           </li> */}
-          <li>
-            <Link to="#">
-              <i className="bx bx-cog"></i>
-              <span className="link_name">SETTINGS</span>
-            </Link>
-            <ul className="sub-menu blank">
-              <li>
-                <Link className="link_name" to="#">
-                  SETTINGS
-                </Link>
-              </li>
-            </ul>
-          </li>
+
           <li>
             <div className="profile-details">
               <div className="profile-content">

@@ -7,6 +7,7 @@ import RegistrationSummary from "../../components/Layout/RegistrationSummary";
 import PostageTable from "../../components/Layout/PostageTable";
 import PostageYearlyChart from "./Charts/PostageYearlyChart";
 import PostageDailyChart from "./Charts/PostageDailyChart";
+import UndeliveredTypesTodayChart from "./Charts/UndeliveredTypesTodayChart";
 
 const Dashboard = () => {
   return (
@@ -68,6 +69,12 @@ const Dashboard = () => {
               DELIVERY SUMMARY
             </div>
             <AssignRoute />
+          </div>
+          <div className="sm:col-span-6 bg-white rounded-lg">
+            <div className="mb-2 pt-2 ml-5 text-sm text-center text-gray-500">
+              TODAY UNDELIVERED sTATUS
+            </div>
+            <UndeliveredTypesTodayChart />
           </div>
         </div>
         <div className="mt-2"></div>
