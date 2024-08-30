@@ -34,7 +34,7 @@ const SideBar = ({ onSidebarToggle }) => {
         </div>
         <ul className="nav-links">
           <li>
-            <Link to="/postmaster/">
+            <Link to="/admin/postmaster/">
               <i className="bx bx-grid-alt"></i>
               <span className="link_name">DASHBOARD</span>
             </Link>
@@ -47,26 +47,29 @@ const SideBar = ({ onSidebarToggle }) => {
             </ul>
           </li>
           <li>
-            <Link to="/postmaster/statistics">
+            <Link to="/admin/postmaster/statistics">
               <i className="bx bx-grid-alt"></i>
               <span className="link_name">STATISTICS</span>
             </Link>
             <ul className="sub-menu blank">
               <li>
-                <Link className="link_name" to="/postmaster/statistics">
+                <Link className="link_name" to="/admin/postmaster/statistics">
                   STATISTICS
                 </Link>
               </li>
             </ul>
           </li>
           <li>
-            <Link to="/postmaster/financial-mgmt">
+            <Link to="/admin/postmaster/financial-mgmt">
               <i className="bx bx-grid-alt"></i>
               <span className="link_name">FINANCIAL MGMT</span>
             </Link>
             <ul className="sub-menu blank">
               <li>
-                <Link className="link_name" to="/postmaster/financial-mgmt">
+                <Link
+                  className="link_name"
+                  to="/admin/postmaster/financial-mgmt"
+                >
                   FINANCIAL MGMT
                 </Link>
               </li>
@@ -101,7 +104,7 @@ const SideBar = ({ onSidebarToggle }) => {
             </ul>
           </li> */}
           <li>
-            <Link to="/postmaster/live-map">
+            <Link to="/admin/postmaster/live-map">
               <i className="bx bx-pie-chart-alt-2"></i>
               <span className="link_name">LIVE MAP</span>
             </Link>
@@ -115,7 +118,7 @@ const SideBar = ({ onSidebarToggle }) => {
           </li>
 
           <li>
-            <Link to="/postmaster/add-employee">
+            <Link to="/admin/postmaster/add-employee">
               <i className="bx bx-compass"></i>
               <span className="link_name">ADD EMPLOYEE</span>
             </Link>
@@ -128,7 +131,7 @@ const SideBar = ({ onSidebarToggle }) => {
             </ul>
           </li>
           <li>
-            <Link to="/postmaster/list-employee">
+            <Link to="/admin/postmaster/list-employee">
               <i className="bx bx-line-chart"></i>
               <span className="link_name">LIST EMPLOYEES</span>
             </Link>
@@ -141,7 +144,7 @@ const SideBar = ({ onSidebarToggle }) => {
             </ul>
           </li>
           {/* <li>
-            <Link to="/postmaster/test">
+            <Link to="/admin/postmaster/test">
               <i className="bx bx-compass"></i>
               <span className="link_name">TEST PORTAL</span>
             </Link>

@@ -13,10 +13,10 @@ import UnauthorizedPage from "./screens/Common/UnauthorizedPage";
 function App() {
   return (
     <Routes>
-      <Route path="/" element={<Navigate to="/login" />} />
-      <Route path="/sign" element={<LoginNew />} />
+      <Route path="/admin/" element={<Navigate to="/admin/login" />} />
+      <Route path="/admin/sign" element={<LoginNew />} />
 
-      <Route path="/login" element={<Login />} />
+      <Route path="/admin/login" element={<Login />} />
       <Route path="/unauthorized" element={<UnauthorizedPage />} />
 
       {/* <Route path="/postmaster/*" element={<PostmasterInterface />} /> */}
@@ -26,7 +26,7 @@ function App() {
         element={<DeliveryManagerInterface />}
       /> */}
       <Route
-        path="/postmaster/*"
+        path="/admin/postmaster/*"
         element={
           <ProtectedRoute
             element={PostmasterInterface}
@@ -36,7 +36,7 @@ function App() {
       />
 
       <Route
-        path="/receptionist/*"
+        path="/admin/receptionist/*"
         element={
           <ProtectedRoute
             element={ReceptionistInterface}
@@ -45,7 +45,7 @@ function App() {
         }
       />
       <Route
-        path="/delivery-manager/*"
+        path="/admin/delivery-manager/*"
         element={
           <ProtectedRoute
             element={DeliveryManagerInterface}

@@ -13,7 +13,7 @@ const UnauthorizedPage = () => {
 
   const handleRefresh = () => {
     localStorage.clear();
-    navigate("/login");
+    navigate("/admin/login");
   };
 
   return (

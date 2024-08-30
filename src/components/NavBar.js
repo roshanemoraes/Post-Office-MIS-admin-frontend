@@ -35,7 +35,7 @@ export default function NavBar() {
 
   const handleSignOut = () => {
     localStorage.clear();
-    navigate("/login");
+    navigate("/admin/login");
   };
 
   return (
@@ -114,7 +114,7 @@ export default function NavBar() {
                     <MenuItem>
                       {({ focus }) => (
                         <Link
-                          to="/login"
+                          to="/admin/login"
                           onClick={handleSignOut}
                           className={classNames(
                             focus ? "bg-gray-100" : "",

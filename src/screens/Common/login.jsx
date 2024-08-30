@@ -54,13 +54,13 @@ const Login = () => {
         );
 
         if (response.data.role.includes("ROLE_ADMIN")) {
-          navigate("/postmaster");
+          navigate("/admin/postmaster");
         } else if (response.data.role.includes("ROLE_MANAGER")) {
-          navigate("/delivery-manager");
+          navigate("/admin/delivery-manager");
         } else if (response.data.role.includes("ROLE_USER")) {
-          navigate("/receptionist");
+          navigate("/admin/receptionist");
         } else {
-          navigate("/login");
+          navigate("/admin/login");
         }
       } else {
         console.error("No roles found in response data");
