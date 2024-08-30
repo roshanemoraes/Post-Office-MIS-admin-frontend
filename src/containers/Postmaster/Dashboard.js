@@ -1,12 +1,13 @@
 import React from "react";
 import MailIcon from "../../assets/icons8-mail-50.png";
-import DashboardCard from "../../components/Layout/DashboardCard";
 import DashboardCard1 from "../../components/Layout/DashboardCard1";
-import LineChart from "./Charts/LineChart";
 import StackedBarChart from "./Charts/StackedBarChart";
 import AssignRoute from "../DeliveryManager/AssignRoute";
 import RegistrationSummary from "../../components/Layout/RegistrationSummary";
 import PostageTable from "../../components/Layout/PostageTable";
+import PostageYearlyChart from "./Charts/PostageYearlyChart";
+import PostageDailyChart from "./Charts/PostageDailyChart";
+import UndeliveredTypesTodayChart from "./Charts/UndeliveredTypesTodayChart";
 
 const Dashboard = () => {
   return (
@@ -52,7 +53,7 @@ const Dashboard = () => {
             <div className="mb-2 pt-2 ml-5 text-sm text-center text-gray-500">
               TODAY POSTAGE INCOME
             </div>
-            <LineChart />
+            <PostageDailyChart />
           </div>
           <div className="col-span-1 bg-white rounded-lg ml-2">
             <div className="mb-2 pt-2 ml-5 text-sm text-center text-gray-500">
@@ -68,6 +69,12 @@ const Dashboard = () => {
               DELIVERY SUMMARY
             </div>
             <AssignRoute />
+          </div>
+          <div className="sm:col-span-6 bg-white rounded-lg">
+            <div className="mb-2 pt-2 ml-5 text-sm text-center text-gray-500">
+              TODAY UNDELIVERED sTATUS
+            </div>
+            <UndeliveredTypesTodayChart />
           </div>
         </div>
         <div className="mt-2"></div>

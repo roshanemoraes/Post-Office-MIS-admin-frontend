@@ -59,6 +59,19 @@ const SideBar = ({ onSidebarToggle }) => {
               </li>
             </ul>
           </li>
+          <li>
+            <Link to="/postmaster/financial-mgmt">
+              <i className="bx bx-grid-alt"></i>
+              <span className="link_name">FINANCIAL MGMT</span>
+            </Link>
+            <ul className="sub-menu blank">
+              <li>
+                <Link className="link_name" to="/postmaster/financial-mgmt">
+                  FINANCIAL MGMT
+                </Link>
+              </li>
+            </ul>
+          </li>
           {/* <li className={isSubMenuOpen[0] ? "showMenu" : ""}>
             <div className="iocn-link">
               <Link to="#">
@@ -100,19 +113,7 @@ const SideBar = ({ onSidebarToggle }) => {
               </li>
             </ul>
           </li>
-          <li>
-            <Link to="/postmaster/list-employee">
-              <i className="bx bx-line-chart"></i>
-              <span className="link_name">LIST EMPLOYEES</span>
-            </Link>
-            <ul className="sub-menu blank">
-              <li>
-                <Link className="link_name" to="#">
-                  LIST EMPLOYEES
-                </Link>
-              </li>
-            </ul>
-          </li>
+
           <li>
             <Link to="/postmaster/add-employee">
               <i className="bx bx-compass"></i>
@@ -127,6 +128,19 @@ const SideBar = ({ onSidebarToggle }) => {
             </ul>
           </li>
           <li>
+            <Link to="/postmaster/list-employee">
+              <i className="bx bx-line-chart"></i>
+              <span className="link_name">LIST EMPLOYEES</span>
+            </Link>
+            <ul className="sub-menu blank">
+              <li>
+                <Link className="link_name" to="#">
+                  LIST EMPLOYEES
+                </Link>
+              </li>
+            </ul>
+          </li>
+          {/* <li>
             <Link to="/postmaster/test">
               <i className="bx bx-compass"></i>
               <span className="link_name">TEST PORTAL</span>
@@ -138,7 +152,7 @@ const SideBar = ({ onSidebarToggle }) => {
                 </Link>
               </li>
             </ul>
-          </li>
+          </li> */}
 
           <li>
             <div className="profile-details">

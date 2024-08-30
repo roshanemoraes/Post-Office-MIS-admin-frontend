@@ -20,7 +20,7 @@ import DownArrowIcon from "./../../assets/arrow-down-square-fill.svg";
 import NormalMailReceipt from "./../../components/Receipts/NormalMailReceipt";
 import { useReactToPrint } from "react-to-print";
 
-const PersonalMail = () => {
+const MoneyOrders = () => {
   const initialFormState = {
     recipientName: "",
     recipientCity: "",
@@ -186,7 +186,7 @@ const PersonalMail = () => {
                   fontFamily: "Helvetica Neue",
                 }}
               >
-                Normal Post
+                Money Orders
               </Typography>
               <Box
                 component="form"
@@ -350,180 +350,161 @@ const PersonalMail = () => {
                   value={formState.recipientAddress}
                 ></TextField>
 
-                <FormControlLabel
-                  value="start"
-                  control={
-                    <Checkbox
-                      checked={checked}
-                      onChange={handleSenderCheckBox}
-                    />
-                  }
-                  label="Enable Sender Detail ?"
-                  labelPlacement="start"
-                  sx={{
-                    justifyContent: "flex-start",
-                    marginLeft: "32px",
-                    marginTop: "10px",
-                    alignSelf: "flex-start",
-                    "& .MuiFormControlLabel-label": {
-                      fontSize: "13px",
-                    },
-                  }}
-                />
+                <div
+                  className="bg-[#caced4] mt-[20px] mb-[10px] h-[1px]"
+                  style={{ width: "88%" }}
+                ></div>
 
-                {checked && (
+                <div>
                   <div>
-                    <div>
-                      <div className="grid sm:grid-cols-12 sm:ml-8 xs:ml-8 sm:mr-8 xs:mr-8">
-                        <div className="sm:col-span-3 sm:mr-5 min-w-[150px] min-h-[60px]">
-                          <TextField
-                            inputProps={{ style: { fontSize: 15 } }}
-                            InputLabelProps={{
-                              style: { fontSize: 13 },
-                            }}
-                            required
-                            type={mailFormField.senderHouseNumber.type}
-                            id={mailFormField.senderHouseNumber.id}
-                            label={mailFormField.senderHouseNumber.label}
-                            onChange={handleChange(
-                              mailFormField.senderHouseNumber.id
-                            )}
-                          ></TextField>
-                        </div>
-                        <div className="sm:col-span-7 sm:ml-9 sm:mr-2 sm:min-w-[300px] sm:min-h-[60px]">
-                          <TextField
-                            inputProps={{ style: { fontSize: 15 } }}
-                            InputLabelProps={{
-                              style: { fontSize: 13, width: "500px" },
-                            }}
-                            style={{ minWidth: 324 }}
-                            required
-                            type={mailFormField.senderName.type}
-                            id={mailFormField.senderName.id}
-                            label={mailFormField.senderName.label}
-                            onChange={handleChange(mailFormField.senderName.id)}
-                          ></TextField>
-                        </div>
+                    <div className="grid sm:grid-cols-12 sm:ml-8 xs:ml-8 sm:mr-8 xs:mr-8">
+                      <div className="sm:col-span-3 sm:mr-5 min-w-[150px] min-h-[60px]">
+                        <TextField
+                          inputProps={{ style: { fontSize: 15 } }}
+                          InputLabelProps={{
+                            style: { fontSize: 13 },
+                          }}
+                          required
+                          type={mailFormField.senderHouseNumber.type}
+                          id={mailFormField.senderHouseNumber.id}
+                          label={mailFormField.senderHouseNumber.label}
+                          onChange={handleChange(
+                            mailFormField.senderHouseNumber.id
+                          )}
+                        ></TextField>
                       </div>
-
-                      <div className="grid sm:ml-8 xs:ml-8 sm:mr-8 xs:mr-8 sm:grid-cols-12 xs:grid-cols-12">
-                        <div className="sm:col-span-6 xs:col-span-6 sm:mr-3 xs:mr-3 sm:ml-0 xs:ml-0 min-w-[235px] min-h-[60px] bg-white-500 ">
-                          <Autocomplete
-                            id={mailFormField.senderPostalZone.id}
-                            options={zoneList}
-                            freeSolo
-                            onChange={(event, newValue) => {
-                              setFormState((oldState) => ({
-                                ...oldState,
-                                [mailFormField.senderPostalZone.id]: newValue,
-                              }));
-                            }}
-                            sx={{
-                              "& .MuiAutocomplete-option": {
-                                color: "blue",
-                              },
-                              '& .MuiAutocomplete-option[data-focus="true"]': {
-                                backgroundColor: "lightgray",
-                              },
-                              '& .MuiAutocomplete-option[data-focus="true"][aria-selected="true"]':
-                                {
-                                  backgroundColor: "lightblue",
-                                },
-                              "& .MuiAutocomplete-popupIndicator": {
-                                color: "green",
-                              },
-                              "& .MuiAutocomplete-clearIndicator": {
-                                color: "purple",
-                              },
-                            }}
-                            renderInput={(params) => (
-                              <TextField
-                                {...params}
-                                label={mailFormField.senderPostalZone.label}
-                                InputLabelProps={{
-                                  style: { fontSize: 13 },
-                                }}
-                                style={{ minWidth: 160 }}
-                                required
-                                value={
-                                  formState[
-                                    mailFormField.senderPostalZone.id
-                                  ] || ""
-                                }
-                                onChange={handleChange(
-                                  mailFormField.senderPostalZone.id
-                                )}
-                              />
-                            )}
-                          />
-                        </div>
-                        <div className="sm:col-span-6 xs:col-span-4 sm:ml-0 xs:ml-0 min-h-[60px] min-w-[235px] bg-white-500 ">
-                          <Autocomplete
-                            id={mailFormField.senderCity.id}
-                            options={cityList}
-                            freeSolo
-                            onChange={(event, newValue) => {
-                              setFormState((oldState) => ({
-                                ...oldState,
-                                [mailFormField.senderCity.id]: newValue,
-                              }));
-                            }}
-                            sx={{
-                              "& .MuiAutocomplete-option": {
-                                color: "blue",
-                              },
-                              '& .MuiAutocomplete-option[data-focus="true"]': {
-                                backgroundColor: "lightgray",
-                              },
-                              '& .MuiAutocomplete-option[data-focus="true"][aria-selected="true"]':
-                                {
-                                  backgroundColor: "lightblue",
-                                },
-                              "& .MuiAutocomplete-clearIndicator": {
-                                color: "red",
-                              },
-                            }}
-                            renderInput={(params) => (
-                              <TextField
-                                {...params}
-                                label={mailFormField.senderCity.label}
-                                InputLabelProps={{
-                                  style: { fontSize: 13 },
-                                }}
-                                style={{ minWidth: 160 }}
-                                required
-                                value={
-                                  formState[mailFormField.senderCity.id] || ""
-                                }
-                                onChange={handleChange(
-                                  mailFormField.senderCity.id
-                                )}
-                              />
-                            )}
-                          />
-                        </div>
+                      <div className="sm:col-span-7 sm:ml-9 sm:mr-2 sm:min-w-[300px] sm:min-h-[60px]">
+                        <TextField
+                          inputProps={{ style: { fontSize: 15 } }}
+                          InputLabelProps={{
+                            style: { fontSize: 13, width: "500px" },
+                          }}
+                          style={{ minWidth: 324 }}
+                          required
+                          type={mailFormField.senderName.type}
+                          id={mailFormField.senderName.id}
+                          label={mailFormField.senderName.label}
+                          onChange={handleChange(mailFormField.senderName.id)}
+                        ></TextField>
                       </div>
                     </div>
-                    <SenderAddressValidationModel
-                      formState={formState}
-                      onValidationSenderResult={handleSenderOnValidationResult}
-                    />
-                    <TextField
-                      inputProps={{ readOnly: true }}
-                      read
-                      InputLabelProps={{
-                        style: { fontSize: 13 },
-                      }}
-                      style={{ minWidth: 480, marginLeft: "32px" }}
-                      required
-                      type={mailFormField.senderAddress.type}
-                      id={mailFormField.senderAddress.id}
-                      label={mailFormField.senderAddress.label}
-                      onChange={handleChange(mailFormField.senderAddress.id)}
-                      value={formState.senderAddress}
-                    ></TextField>
+
+                    <div className="grid sm:ml-8 xs:ml-8 sm:mr-8 xs:mr-8 sm:grid-cols-12 xs:grid-cols-12">
+                      <div className="sm:col-span-6 xs:col-span-6 sm:mr-3 xs:mr-3 sm:ml-0 xs:ml-0 min-w-[235px] min-h-[60px] bg-white-500 ">
+                        <Autocomplete
+                          id={mailFormField.senderPostalZone.id}
+                          options={zoneList}
+                          freeSolo
+                          onChange={(event, newValue) => {
+                            setFormState((oldState) => ({
+                              ...oldState,
+                              [mailFormField.senderPostalZone.id]: newValue,
+                            }));
+                          }}
+                          sx={{
+                            "& .MuiAutocomplete-option": {
+                              color: "blue",
+                            },
+                            '& .MuiAutocomplete-option[data-focus="true"]': {
+                              backgroundColor: "lightgray",
+                            },
+                            '& .MuiAutocomplete-option[data-focus="true"][aria-selected="true"]':
+                              {
+                                backgroundColor: "lightblue",
+                              },
+                            "& .MuiAutocomplete-popupIndicator": {
+                              color: "green",
+                            },
+                            "& .MuiAutocomplete-clearIndicator": {
+                              color: "purple",
+                            },
+                          }}
+                          renderInput={(params) => (
+                            <TextField
+                              {...params}
+                              label={mailFormField.senderPostalZone.label}
+                              InputLabelProps={{
+                                style: { fontSize: 13 },
+                              }}
+                              style={{ minWidth: 160 }}
+                              required
+                              value={
+                                formState[mailFormField.senderPostalZone.id] ||
+                                ""
+                              }
+                              onChange={handleChange(
+                                mailFormField.senderPostalZone.id
+                              )}
+                            />
+                          )}
+                        />
+                      </div>
+                      <div className="sm:col-span-6 xs:col-span-4 sm:ml-0 xs:ml-0 min-h-[60px] min-w-[235px] bg-white-500 ">
+                        <Autocomplete
+                          id={mailFormField.senderCity.id}
+                          options={cityList}
+                          freeSolo
+                          onChange={(event, newValue) => {
+                            setFormState((oldState) => ({
+                              ...oldState,
+                              [mailFormField.senderCity.id]: newValue,
+                            }));
+                          }}
+                          sx={{
+                            "& .MuiAutocomplete-option": {
+                              color: "blue",
+                            },
+                            '& .MuiAutocomplete-option[data-focus="true"]': {
+                              backgroundColor: "lightgray",
+                            },
+                            '& .MuiAutocomplete-option[data-focus="true"][aria-selected="true"]':
+                              {
+                                backgroundColor: "lightblue",
+                              },
+                            "& .MuiAutocomplete-clearIndicator": {
+                              color: "red",
+                            },
+                          }}
+                          renderInput={(params) => (
+                            <TextField
+                              {...params}
+                              label={mailFormField.senderCity.label}
+                              InputLabelProps={{
+                                style: { fontSize: 13 },
+                              }}
+                              style={{ minWidth: 160 }}
+                              required
+                              value={
+                                formState[mailFormField.senderCity.id] || ""
+                              }
+                              onChange={handleChange(
+                                mailFormField.senderCity.id
+                              )}
+                            />
+                          )}
+                        />
+                      </div>
+                    </div>
                   </div>
-                )}
+                  <SenderAddressValidationModel
+                    formState={formState}
+                    onValidationSenderResult={handleSenderOnValidationResult}
+                  />
+                  <TextField
+                    inputProps={{ readOnly: true }}
+                    read
+                    InputLabelProps={{
+                      style: { fontSize: 13 },
+                    }}
+                    style={{ minWidth: 480, marginLeft: "32px" }}
+                    required
+                    type={mailFormField.senderAddress.type}
+                    id={mailFormField.senderAddress.id}
+                    label={mailFormField.senderAddress.label}
+                    onChange={handleChange(mailFormField.senderAddress.id)}
+                    value={formState.senderAddress}
+                  ></TextField>
+                </div>
 
                 <Button
                   variant="contained"
@@ -556,7 +537,7 @@ const PersonalMail = () => {
                     }}
                     onClick={handlePrint}
                   >
-                    PRINT RECEIPT
+                    PRINT INVOICE
                   </Button>
                 </div>
               </Box>
@@ -603,4 +584,4 @@ const PersonalMail = () => {
   );
 };
 
-export default PersonalMail;
+export default MoneyOrders;

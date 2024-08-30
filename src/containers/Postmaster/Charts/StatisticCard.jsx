@@ -18,6 +18,8 @@ const StatisticCard = ({ title, backgroundColor }) => {
             backgroundColor: backgroundColor,
             padding: "10px",
             borderRadius: "10px",
+            justifyContent: "center",
+            display: "flex",
           }}
         >
           {title}
