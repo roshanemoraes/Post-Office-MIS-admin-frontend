@@ -1,21 +1,24 @@
 import React from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import "./App.css";
-import Login from "./screens/Common/login";
+import Login from "./screens/Common/AdminLogin";
 import ReceptionistInterface from "./Navigation/ReceptionistNav";
 import PostmasterInterface from "./Navigation/PostmasterNav";
 import DeliveryManagerInterface from "./Navigation/DeliveryManagerNav";
 import OutArea from "./containers/DeliveryManager/MailSortMgmt/OutArea";
-import LoginNew from "./screens/Common/loginNew";
-import ProtectedRoute from "./Navigation/ProtectedRoutes";
+import ProtectedRouteAdmin from "./Navigation/ProtectedRouteAdmin";
 import UnauthorizedPage from "./screens/Common/UnauthorizedPage";
+import CustomerLogin from "./screens/Common/CustomerLogin";
+import CustomerInterface from "./Navigation/CustomerNav";
 
 function App() {
   return (
     <Routes>
-      <Route path="/admin/" element={<Navigate to="/admin/login" />} />
-      <Route path="/admin/sign" element={<LoginNew />} />
+      <Route path="/" element={<Navigate to="/login" />} />
+      <Route path="/login" element={<CustomerLogin />} />
+      <Route path="/customer/*" element={<CustomerInterface />} />
 
+      <Route path="/admin/" element={<Navigate to="/admin/login" />} />
       <Route path="/admin/login" element={<Login />} />
       <Route path="/unauthorized" element={<UnauthorizedPage />} />
 
@@ -28,7 +31,7 @@ function App() {
       <Route
         path="/admin/postmaster/*"
         element={
-          <ProtectedRoute
+          <ProtectedRouteAdmin
             element={PostmasterInterface}
             allowedRoles={["ROLE_ADMIN"]}
           />
@@ -38,7 +41,7 @@ function App() {
       <Route
         path="/admin/receptionist/*"
         element={
-          <ProtectedRoute
+          <ProtectedRouteAdmin
             element={ReceptionistInterface}
             allowedRoles={["ROLE_USER"]}
           />
@@ -47,7 +50,7 @@ function App() {
       <Route
         path="/admin/delivery-manager/*"
         element={
-          <ProtectedRoute
+          <ProtectedRouteAdmin
             element={DeliveryManagerInterface}
             allowedRoles={["ROLE_MANAGER"]}
           />
