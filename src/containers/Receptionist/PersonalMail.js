@@ -186,7 +186,7 @@ const PersonalMail = () => {
                   fontFamily: "Helvetica Neue",
                 }}
               >
-                {"Personal Mail"}
+                Normal Post
               </Typography>
               <Box
                 component="form"
@@ -556,7 +556,7 @@ const PersonalMail = () => {
                     }}
                     onClick={handlePrint}
                   >
-                    PRINT INVOICE
+                    PRINT RECEIPT
                   </Button>
                 </div>
               </Box>

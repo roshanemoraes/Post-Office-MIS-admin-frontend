@@ -35,7 +35,7 @@ const SideBar = ({ onSidebarToggle }) => {
         </div>
         <ul className="nav-links">
           <li>
-            <Link to="/delivery-manager">
+            <Link to="/admin/delivery-manager">
               <i className="bx bx-grid-alt"></i>
               <span className="link_name">DASHBOARD</span>
             </Link>
@@ -65,24 +65,24 @@ const SideBar = ({ onSidebarToggle }) => {
                 </Link>
               </li>
               <li>
-                <Link to="/delivery-manager/mail-sort">
+                <Link to="/admin/delivery-manager/mail-sort">
                   All Mails To Deliver
                 </Link>
               </li>
               <li>
-                <Link to="/delivery-manager/mail-sort/in-area">
+                <Link to="/admin/delivery-manager/mail-sort/in-area">
                   In-Area Mail Mgmt
                 </Link>
               </li>
               <li>
-                <Link to="/delivery-manager/mail-sort/out-area">
+                <Link to="/admin/delivery-manager/mail-sort/out-area">
                   Out-Area Mail Mgmt
                 </Link>
               </li>
             </ul>
           </li>
           <li>
-            <Link to="/delivery-manager/route-allocation">
+            <Link to="/admin/delivery-manager/route-allocation">
               <i className="bx bx-pie-chart-alt-2"></i>
               <span className="link_name">ASSIGN ROUTE</span>
             </Link>
@@ -113,62 +113,39 @@ const SideBar = ({ onSidebarToggle }) => {
                 </Link>
               </li>
               <li>
-                <Link to="/delivery-manager/return-mail">
+                <Link to="/admin/delivery-manager/return-mail">
                   All Undeliverable Mails
                 </Link>
               </li>
               <li>
-                <Link to="/delivery-manager/return-mail/return-to-sender">
+                <Link to="/admin/delivery-manager/return-mail/return-to-sender">
                   Return-to-Sender List
                 </Link>
               </li>
               <li>
-                <Link to="/delivery-manager/return-mail/address-update">
+                <Link to="/admin/delivery-manager/return-mail/address-update">
                   Address Update List
                 </Link>
               </li>
               <li>
-                <Link to="/delivery-manager/return-mail/discarded-mail">
+                <Link to="/admin/delivery-manager/return-mail/discarded-mail">
                   Discarded Mail List
                 </Link>
               </li>
             </ul>
           </li>
-          {/* <li>
-            <Link to="/delivery-manager/return-mail">
+          <li>
+            <Link to="/admin/delivery-manager/notifications">
               <i className="bx bx-credit-card"></i>
-              <span className="link_name">Return Mail Management</span>
+              <span className="link_name">Nofitications</span>
             </Link>
             <ul className="sub-menu blank">
               <li>
-                <Link className="link_name" to="/delivery-manager/return-mail">
-                  Return Mail Management
-                </Link>
-              </li>
-            </ul>
-          </li> */}
-          <li>
-            <Link to="/postmaster">
-              <i className="bx bx-cog"></i>
-              <span className="link_name">Postmaster</span>
-            </Link>
-            <ul className="sub-menu blank">
-              <li>
-                <Link className="link_name" to="#">
-                  Postmaster
-                </Link>
-              </li>
-            </ul>
-          </li>
-          <li>
-            <Link to="/receptionist">
-              <i className="bx bx-cog"></i>
-              <span className="link_name">Receptionist</span>
-            </Link>
-            <ul className="sub-menu blank">
-              <li>
-                <Link className="link_name" to="#">
-                  Receptionist
+                <Link
+                  className="link_name"
+                  to="/admin/delivery-manager/notifications"
+                >
+                  Notifications
                 </Link>
               </li>
             </ul>

@@ -1,11 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 
 const ItemTable = ({ items, discount, invoiceInfo }) => {
-  const { InvoiceInfo, setInvoiceInfo } = React.useState(invoiceInfo);
+  const [InvoiceInfo, setInvoiceInfo] = useState(invoiceInfo);
+  const [data, setData] = useState(items);
+  const [subtotal, setSubtotal] = useState(items[0].amount + items[1].amount);
+
   return (
     <>
       <div className="grid grid-cols-6 gap-0 mt-3 mb-4 pb-1 bg-[#e2e8f0]">
-        <div className="col-span-2 p-1 bg-[#0369a1] text-white">Item</div>
+        <div className="col-span-2 p-1 bg-[#0369a1] text-white">
+          {data.item}
+        </div>
         <div className="col-span-1 p-1 bg-[#0369a1] text-white">Qty</div>
         <div className="col-span-1 p-1 bg-[#0369a1] text-white">Rate(Rs.)</div>
         <div className="col-span-1 p-1 bg-[#0369a1] text-white">Tax</div>
@@ -35,7 +40,7 @@ const ItemTable = ({ items, discount, invoiceInfo }) => {
       >
         <div className="col-span-3"></div>
         <div className="col-span-2">Subtotal</div>
-        <div className="col-span-1">{invoiceInfo.subtotal}</div>
+        <div className="col-span-1">{subtotal}</div>
         <div className="col-span-3"></div>
         <div className="col-span-2">
           <div>Discount({discount}%)</div>
@@ -48,7 +53,7 @@ const ItemTable = ({ items, discount, invoiceInfo }) => {
           ></div>
         </div>
         <div className="col-span-1">
-          <div>{invoiceInfo.discount}</div>
+          <div>{(subtotal * discount) / 100}</div>
           <div
             style={{
               minHeight: "2px",
@@ -59,7 +64,7 @@ const ItemTable = ({ items, discount, invoiceInfo }) => {
         </div>
         <div className="col-span-3"></div>
         <div className="col-span-2 font-bold">Total</div>
-        <div className="col-span-1">{invoiceInfo.total}</div>
+        <div className="col-span-1">{(subtotal * (100 - discount)) / 100}</div>
       </div>
     </>
   );

@@ -1,0 +1,168 @@
+import {
+  Grid,
+  Paper,
+  TextField,
+  Box,
+  IconButton,
+  InputAdornment,
+  Button,
+  Typography,
+} from "@mui/material";
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import BlurBackground from "../../components/Custom/Background/BlurBackground";
+import LoginNavBar from "../../components/LoginNavBar";
+
+const Login = () => {
+  const navigate = useNavigate();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [error, setError] = useState("");
+
+  const paperStyle = {
+    padding: 20,
+    height: 350,
+    width: 450,
+    position: "fixed",
+    top: "40%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+  };
+
+  const handleSignIn = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post(
+        "http://localhost:8080/products/authenticate",
+        {
+          username: email,
+          password: password,
+        },
+        { withCredentials: true }
+      );
+      console.log(response.data);
+      setError("");
+      if (response.data.role) {
+        localStorage.setItem("userRoles", JSON.stringify(response.data.role));
+        localStorage.setItem(
+          "userName",
+          JSON.stringify(response.data.username)
+        );
+
+        if (response.data.role.includes("ROLE_ADMIN")) {
+          navigate("/admin/postmaster");
+        } else if (response.data.role.includes("ROLE_MANAGER")) {
+          navigate("/admin/delivery-manager");
+        } else if (response.data.role.includes("ROLE_USER")) {
+          navigate("/admin/receptionist");
+        } else {
+          navigate("/admin/login");
+        }
+      } else {
+        console.error("No roles found in response data");
+      }
+    } catch (error) {
+      setError("Login failed. Please check your credentials.");
+    }
+  };
+
+  return (
+    <div>
+      <LoginNavBar />
+      <BlurBackground />
+      <div className="main-container">
+        <Grid
+          container
+          justifyContent={"center"}
+          alignItems={"center"}
+          style={{ minHeight: "120px" }}
+        >
+          <Paper elevation={10} style={paperStyle}>
+            <div
+              className="mt-[10px] mb-[25px] text-center font-bold"
+              style={{ fontSize: "27px" }}
+            >
+              ADMIN PORTAL
+            </div>
+            <div className="mx-[15px]">
+              <TextField
+                label="Email"
+                value={email}
+                placeholder="Enter your email"
+                fullWidth
+                required
+                onChange={(e) => setEmail(e.target.value)}
+                InputLabelProps={{
+                  style: {
+                    color: "#696969",
+                  },
+                }}
+              />
+              <Box mt={3} />
+              <TextField
+                label="Password"
+                value={password}
+                placeholder="Enter your password"
+                type={showPassword ? "text" : "password"}
+                fullWidth
+                required
+                onChange={(e) => setPassword(e.target.value)}
+                onKeyPress={(e) => {
+                  if (e.key === "Enter") {
+                    handleSignIn(e);
+                  }
+                }}
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton
+                        onClick={() => setShowPassword(!showPassword)}
+                      >
+                        {showPassword ? (
+                          <VisibilityOffIcon />
+                        ) : (
+                          <VisibilityIcon />
+                        )}
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                }}
+              />
+              <Box mt={2} />
+              <div style={{ alignItems: "right", alignSelf: "right" }}>
+                <Button
+                  type="submit"
+                  variant="contained"
+                  style={{
+                    backgroundColor: "#2E3B55",
+                    color: "white",
+                    margin: "10px 0px",
+                  }}
+                  onClick={handleSignIn}
+                >
+                  Sign In
+                </Button>
+              </div>
+              {/* Error Message */}
+              {error && (
+                <Typography
+                  color="error"
+                  variant="body2"
+                  style={{ marginTop: "10px" }}
+                >
+                  {error}
+                </Typography>
+              )}
+            </div>
+          </Paper>
+        </Grid>
+      </div>
+    </div>
+  );
+};
+
+export default Login;

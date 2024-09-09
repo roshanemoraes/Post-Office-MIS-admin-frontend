@@ -12,6 +12,7 @@ import MailsToSort from "../containers/DeliveryManager/MailSortMgmt/MailsToSort"
 import InArea from "../containers/DeliveryManager/MailSortMgmt/InArea";
 import OutArea from "../containers/DeliveryManager/MailSortMgmt/OutArea";
 import BlurBackground from "../components/Custom/Background/BlurBackground";
+import Notifications from "../containers/DeliveryManager/Notifications";
 
 const DeliveryManagerInterface = () => {
   const [isSideBarOpen, setSideBarOpen] = useState(window.innerWidth >= 1024);
@@ -60,6 +61,7 @@ const DeliveryManagerInterface = () => {
           <Route path="/mail-sort" element={<MailsToSort />} />
           <Route path="/mail-sort/in-area" element={<InArea />} />
           <Route path="/mail-sort/out-area" element={<OutArea />} />
+          <Route path="/notifications" element={<Notifications />} />
         </Routes>
       </main>
     </div>

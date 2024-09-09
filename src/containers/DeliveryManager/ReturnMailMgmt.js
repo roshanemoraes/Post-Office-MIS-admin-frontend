@@ -8,6 +8,7 @@ import TrashIcon from "../../assets/trash3-fill.svg";
 import InfoReturnMailModal from "./Modals/InfoReturnMailModal";
 import CustomizedSnackbars from "../../components/Custom/CustomizedSnackbars";
 import DownArrowIcon from "../../assets/arrow-down-square-fill.svg";
+import InfoCard from "../../components/Layout/InfoCard";
 
 export default function ReturnMailMgmt() {
   const [rows, setRows] = React.useState([]);
@@ -162,82 +163,90 @@ export default function ReturnMailMgmt() {
   }, []);
 
   return (
-    <div>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          padding: "10px",
-          // fontWeight: "bold",
-          marginBottom: "10px",
-          marginTop: "10px",
-          backgroundColor: "#a3a3a3",
-        }}
-      >
-        All Undelivered Mails
-        <img
-          src={DownArrowIcon}
-          alt="All In-Area Mails"
-          style={{
-            marginRight: "10px",
-            marginLeft: "20px",
-            width: "30px",
-            height: "30px",
-          }}
-        />
+    <>
+      <div>
+        <div className="flex justify-center items-center p-2 mb-2 mt-2 bg-gray-400">
+          All Undelivered Mails
+          <img
+            src={DownArrowIcon}
+            alt="All In-Area Mails"
+            className="mr-2 ml-5 w-7 h-7"
+          />
+        </div>
+        <div className="grid grid-cols-12">
+          <div className="col-span-3 flex flex-col pt-[4.5px] ml-6">
+            <InfoCard
+              backgroundColor={"#ffffff"}
+              title={"ALL UNDELIVERED MAILS"}
+              value={"16"}
+            />
+            <InfoCard
+              backgroundColor={"#ffffff"}
+              title={"ALL RETURN-TO-SENDER MAILS"}
+              value={"6"}
+            />
+            <InfoCard
+              backgroundColor={"#ffffff"}
+              title={"ALL ADDRESS-CHANGE-REQUEST MAILS"}
+              value={"8"}
+            />
+            <div className="flex justify-center mt-[200px] ">
+              <div className="mr-3">
+                <Button
+                  style={{ backgroundColor: "#852318", fontSize: "13px" }}
+                  variant="contained"
+                >
+                  Process All
+                  <br />
+                  Return To Sender
+                </Button>
+              </div>
+              <div>
+                <Button
+                  style={{ backgroundColor: "#852318", fontSize: "13px" }}
+                  variant="contained"
+                >
+                  Process All
+                  <br />
+                  Address Update
+                </Button>
+              </div>
+            </div>
+          </div>
+          <div className="col-span-9">
+            <div className="h-[550px] pt-1 flex flex-col justify-center items-center">
+              <DataGrid
+                rows={rows}
+                columns={columns}
+                rowHeight={50}
+                getRowId={(row) => row.undeliverableId}
+                sx={{
+                  backgroundColor: "#f5f5f5",
+                  boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.1)",
+                  ".MuiDataGrid-columnSeparator": {
+                    display: "none",
+                  },
+                  "&.MuiDataGrid-root": {
+                    border: "none",
+                  },
+                }}
+                initialState={{
+                  pagination: {
+                    paginationModel: { page: 0, pageSize: 10 },
+                  },
+                }}
+              />
+              <CustomizedSnackbars
+                open={snackbarOpen}
+                autoHideDuration={3000}
+                severity={snackbarSeverity}
+                message={snackbarMessage}
+                onClose={() => setSnackbarOpen(false)}
+              />
+            </div>
+          </div>
+        </div>
       </div>
-      <div
-        style={{
-          height: 550,
-          paddingTop: "5px",
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        <DataGrid
-          rows={rows}
-          columns={columns}
-          rowHeight={50}
-          getRowId={(row) => row.undeliverableId}
-          sx={{
-            backgroundColor: "#f5f5f5",
-            boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.1)",
-            ".MuiDataGrid-columnSeparator": {
-              display: "none",
-            },
-            "&.MuiDataGrid-root": {
-              border: "none",
-            },
-          }}
-          initialState={{
-            pagination: {
-              paginationModel: { page: 0, pageSize: 10 },
-            },
-          }}
-        />
-        <CustomizedSnackbars
-          open={snackbarOpen}
-          autoHideDuration={3000}
-          severity={snackbarSeverity}
-          message={snackbarMessage}
-          onClose={() => setSnackbarOpen(false)}
-        />
-      </div>
-      <div style={{ marginLeft: "50px" }}>
-        <Button variant="contained" style={{ marginRight: "50px" }}>
-          Process All
-          <br />
-          Return To Sender
-        </Button>
-        <Button variant="contained">
-          Process All
-          <br />
-          Address Update
-        </Button>
-      </div>
-    </div>
+    </>
   );
 }

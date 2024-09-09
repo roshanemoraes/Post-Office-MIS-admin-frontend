@@ -2,6 +2,9 @@ import React from "react";
 import DashboardCard from "../../components/Layout/DashboardCard";
 import MailIcon from "../../assets/icons8-mail-50.png";
 import DoughnutChart from "./Charts/DoughnutChart";
+import DashboardCard1 from "./../../components/Layout/DashboardCard1";
+import PostageTable from "../../components/Layout/PostageTable";
+import RegistrationSummary from "../../components/Layout/RegistrationSummary";
 
 // const Dashboard = () => {
 //   const customerInfo = {
@@ -43,7 +46,7 @@ const Dashboard = () => {
       <div className="mr-2">
         <div className="grid sm:grid-cols-4 xs:grid-cols-2 gap-2">
           <div className="sm:col-span-1">
-            <DashboardCard
+            <DashboardCard1
               backgroundColor={"#ffffff"}
               title={"ALL MAILS TODAY"}
               value={"9756"}
@@ -51,7 +54,7 @@ const Dashboard = () => {
             />
           </div>
           <div className="sm:col-span-1">
-            <DashboardCard
+            <DashboardCard1
               backgroundColor={"#ffffff"}
               title={"INDIVIDUAL MAILS"}
               value={"112"}
@@ -59,7 +62,7 @@ const Dashboard = () => {
             />
           </div>
           <div className="sm:col-span-1">
-            <DashboardCard
+            <DashboardCard1
               backgroundColor={"#ffffff"}
               title={"BULK MAILS"}
               value={"3000"}
@@ -67,7 +70,7 @@ const Dashboard = () => {
             />
           </div>
           <div className="sm:col-span-1">
-            <DashboardCard
+            <DashboardCard1
               backgroundColor={"#ffffff"}
               title={"CUSTOMER INQUIRIES"}
               value={"21"}
@@ -76,14 +79,34 @@ const Dashboard = () => {
           </div>
         </div>
       </div>
-      <div className="grid grid-cols-2">
-        <div
-          className="col-span-1 mt-[10px]"
+      <div className="mt-2"></div>
+      <div className="grid grid-cols-12 mr-2">
+        {/* <div
+          className="col-span-4 mt-[10px]"
           style={{ width: "560px", height: "560px" }}
         >
           <DoughnutChart />
+        </div> */}
+        <div className="col-span-8 bg-white rounded-lg mr-2">
+          <div className="mb-2 pt-2 text-sm text-center text-gray-500">
+            TODAY REGISTRATION SUMMARY
+          </div>
+          <RegistrationSummary />
+          {/* <PostageTable /> */}
         </div>
-        <div className="col-span-1"></div>
+        {/* <div className="col-span-6 bg-black rounded-lg">
+          <div className="mb-2 pt-2 mx-2 text-sm text-center text-gray-500">
+            UPDATED POSTAGE RATES
+          </div>
+          <PostageTable />
+        </div> */}
+
+        <div className="col-span-4 bg-white rounded-lg">
+          <div className="mb-2 pt-2 ml-5 text-sm text-center text-gray-500">
+            UPDATED POSTAGE RATES
+          </div>
+          <PostageTable />
+        </div>
       </div>
     </>
   );

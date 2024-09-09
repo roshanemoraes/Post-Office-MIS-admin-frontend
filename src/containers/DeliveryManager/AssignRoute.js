@@ -67,8 +67,7 @@ export default function AssignRoute() {
   return (
     <div
       style={{
-        height: 285,
-        // width: 660,
+        width: "100%",
         // paddingTop: "25px",
         display: "flex",
         flexDirection: "column",
@@ -121,7 +120,7 @@ export default function AssignRoute() {
           }}
           initialState={{
             pagination: {
-              paginationModel: { page: 0, pageSize: 5 },
+              paginationModel: { page: 0, pageSize: 10 },
             },
           }}
           columnVisibilityModel={{

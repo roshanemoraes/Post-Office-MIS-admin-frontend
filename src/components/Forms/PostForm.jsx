@@ -1,13 +1,7 @@
-import {
-  Box,
-  Button,
-  GlobalStyles,
-  Typography,
-  useTheme,
-} from "@mui/material";
+import { Box, Button, GlobalStyles, Typography, useTheme } from "@mui/material";
 import React, { useState, useRef } from "react";
-import CustomFormControl from "./../Custom/CustomFormControl";
-import CustomTextField from "./../Custom/CustomTextField";
+import CustomFormControl from "../Custom/CustomFormControl";
+import CustomTextField from "../Custom/CustomTextField";
 import { useReactToPrint } from "react-to-print";
 
 const PostForm = ({
