@@ -62,7 +62,8 @@ export default function AddressUpdate() {
   const handleOneReturnToSender = async (row) => {
     try {
       const response = await axios.post(
-        `http://localhost:8081/api/delivery-manager/return-mail/address-update/add/${row.mailId}`
+        `http://localhost:8081/api/delivery-manager/return-mail/address-update/add/${row.mailId}`,
+        { withCredentials: true }
       );
       if (response.status === 200) {
         fetchData();
@@ -86,7 +87,8 @@ export default function AddressUpdate() {
   const fetchData = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:8081/api/delivery-manager/return-mail/address-update"
+        "http://localhost:8081/api/delivery-manager/return-mail/address-update",
+        { withCredentials: true }
       );
       setRows(response.data);
       console.log(response.data);

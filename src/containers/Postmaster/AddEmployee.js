@@ -46,7 +46,8 @@ const AddEmployee = () => {
     try {
       const response = await axios.post(
         `http://localhost:8081/api/postmaster/employee/add-employee`,
-        values
+        values,
+        { withCredentials: true }
       );
       if (response.status === 200) {
         console.log("Employee Added Successfully");

@@ -47,7 +47,8 @@ const Notifications = () => {
     setIsClicked(true);
     try {
       const response = await axios.get(
-        "http://localhost:8081/api/notifications/2"
+        "http://localhost:8081/api/notifications/2",
+        { withCredentials: true }
       );
       setRows(response.data);
       console.log(response.data);
@@ -59,7 +60,8 @@ const Notifications = () => {
     setIsClicked(false);
     try {
       const response = await axios.get(
-        "http://localhost:8081/api/notifications/unread/2"
+        "http://localhost:8081/api/notifications/unread/2",
+        { withCredentials: true }
       );
       setRows(response.data);
       console.log(response.data);

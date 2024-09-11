@@ -37,7 +37,7 @@ const Login = () => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "http://localhost:8080/products/authenticate",
+        "http://localhost:8081/admin/authenticate",
         {
           username: email,
           password: password,

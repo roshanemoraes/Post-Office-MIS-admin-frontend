@@ -32,7 +32,8 @@ const CostForm = ({ postType, description }) => {
   const calculateCost = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:8081/postage/getPostage?weight=${weight}`
+        `http://localhost:8081/postage/getPostage?weight=${weight}`,
+        { withCredentials: true }
       );
       console.log("response came:", response.data.price);
       setCost(response.data.price);
