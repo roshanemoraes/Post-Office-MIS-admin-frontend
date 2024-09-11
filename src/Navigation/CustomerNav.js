@@ -9,6 +9,7 @@ import Settings from "../containers/Customer/Settings";
 import UpdateProfile from "../containers/Customer/UpdateProfile";
 import SignOut from "./../components/Customer/SignOut";
 import BlurBackground from "../components/Custom/Background/BlurBackground";
+import Notification from "../containers/Customer/Notification";
 
 function CustomerInterface() {
   return (
@@ -29,6 +30,7 @@ function CustomerInterface() {
           <Route path="/Signout" element={<SignOut />} />
           <Route path="/profile/updateprofile" element={<UpdateProfile />} />
           <Route path="/PendingPost/SignOut" element={<SignOut />} />
+          <Route path="/notification" element={<Notification />} />
         </Routes>
       </main>
     </div>
