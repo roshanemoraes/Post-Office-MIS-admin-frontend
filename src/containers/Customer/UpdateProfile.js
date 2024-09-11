@@ -1,137 +1,242 @@
-import * as React from "react";
+import React from "react";
+import { useFormik } from "formik";
+import * as yup from "yup";
+
+// Yup validation schema
+export const basicSchema = yup.object().shape({
+  firstName: yup.string().required("First Name is required"),
+  lastName: yup.string().required("Last Name is required"),
+  email: yup.string().email("Please enter a valid email").required("Required"),
+  address: yup.string().required("Address is required"),
+  contact: yup
+    .string()
+    .matches(/^0\d{9}$/, "Contact number must be 10 digits and start with 0")
+    .required("Contact number is required"),
+  city: yup.string().required("City is required"),
+  state: yup.string().required("District is required"),
+});
+
+const onSubmit = async (values, actions) => {
+  console.log(values);
+  await new Promise((resolve) => setTimeout(resolve, 1000));
+  actions.resetForm();
+};
 
 export default function UpdateProfile() {
-  const [firstName, setFirstName] = React.useState("Sarath");
-  const [lastName, setLastName] = React.useState("Alwis");
-  const [email, setEmail] = React.useState("sarathalwis@gmail.com");
-  const [address, setAddress] = React.useState("12/34, Galle Road, Weligama");
-  const [contact, setContact] = React.useState("0767777768");
-  const [city, setCity] = React.useState("Weligama");
-  const [state, setState] = React.useState("Matara");
+  const formik = useFormik({
+    initialValues: {
+      /*firstName: "Pahan",
+      lastName: "Andararachchige",
+      email: "pahanan99@gmail.com",
+      address: "12/34, Jinna Road, Matara",
+      contact: "076 7777768",
+      city: "Weligama",
+      state: "Matara",*/
+      firstName: "",
+      lastName: "",
+      email: "",
+      address: "",
+      contact: "",
+      city: "",
+      state: "",
+    },
+    validationSchema: basicSchema,
+    onSubmit,
+  });
 
-  const handleSubmit = () => {
-    // Submit updated profile data to the API
-    console.log({ firstName, lastName, email, address, contact, city, state });
+  const handleCancel = () => {
+    formik.resetForm(); // This will reset the form fields to the initial values
   };
 
   return (
     <>
-      <div className="flex flex-center justify-center bg-#a3a3a3">
-        <div className="max-w-full w-[885px]">
-          <div className="text-[20px] font-semibold text-black max-md:max-w-full items-center">
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                padding: "10px",
-                fontWeight: "bold",
-                marginBottom: "10px",
-                marginTop: "10px",
-                backgroundColor: "#a3a3a3",
-                width: "100%",
-              }}
-            >
-              Update profile
-            </div>
-            {/*<div className="mt-6">Update profile</div>*/}
+      <div className="flex justify-center bg-#a3a3a3 py-10">
+        <div className="w-full max-w-[600px] bg-white p-8 rounded-md border-2 border-gray-300">
+          <div className="text-2xl font-semibold text-center text-black mb-6">
+            Update Profile
           </div>
 
-          {/* First Name and Last Name */}
-          <div className="text-[20px] mt-9 max-md:max-w-full">
-            <div className="flex gap-5 max-md:flex-col">
-              <div className="flex flex-col w-6/12 mt-6">
-                <label className="font-semibold text-zinc-900 text-[15px]">
-                  First Name
-                </label>
-                <input
-                  value={firstName}
-                  onChange={(e) => setFirstName(e.target.value)}
-                  className="mt-2.5 px-4 py-3 border-2 rounded-md text-[22px]"
-                />
+          <form onSubmit={formik.handleSubmit}>
+            <div className="mb-6">
+              <div className="flex gap-4">
+                <div className="flex flex-col w-1/2">
+                  <label className="font-semibold text-gray-700 text-sm">
+                    First Name
+                  </label>
+                  <input
+                    name="firstName"
+                    value={formik.values.firstName}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    className={`mt-2 px-3 py-2 border-2 rounded-md text-lg ${
+                      formik.errors.firstName && formik.touched.firstName
+                        ? "border-red-500"
+                        : "border-gray-300"
+                    }`}
+                  />
+                  {formik.errors.firstName && formik.touched.firstName ? (
+                    <div className="text-red-500 text-sm">
+                      {formik.errors.firstName}
+                    </div>
+                  ) : null}
+                </div>
+                <div className="flex flex-col w-1/2">
+                  <label className="font-semibold text-gray-700 text-sm">
+                    Last Name
+                  </label>
+                  <input
+                    name="lastName"
+                    value={formik.values.lastName}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    className={`mt-2 px-3 py-2 border-2 rounded-md text-lg ${
+                      formik.errors.lastName && formik.touched.lastName
+                        ? "border-red-500"
+                        : "border-gray-300"
+                    }`}
+                  />
+                  {formik.errors.lastName && formik.touched.lastName ? (
+                    <div className="text-red-500 text-sm">
+                      {formik.errors.lastName}
+                    </div>
+                  ) : null}
+                </div>
               </div>
-              <div className="flex flex-col w-6/12 mt-6">
-                <label className="font-semibold text-zinc-900 text-[15px]">
-                  Last Name
-                </label>
-                <input
-                  value={lastName}
-                  onChange={(e) => setLastName(e.target.value)}
-                  className="mt-2.5 px-4 py-3 border-2 rounded-md text-[22px]"
-                />
-              </div>
             </div>
-          </div>
 
-          {/* Email */}
-          <div className="flex flex-col w-6/12 mt-6">
-            <label className="font-semibold text-zinc-900">Email</label>
-            <input
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="mt-2.5 px-4 py-3 border-2 rounded-md text-[22px] w-full"
-            />
-          </div>
-
-          {/* Address */}
-          <div className="flex flex-col w-6/12 mt-6">
-            <label className="font-semibold text-zinc-900">Address</label>
-            <input
-              value={address}
-              onChange={(e) => setAddress(e.target.value)}
-              className="mt-2.5 px-4 py-3 border-2 rounded-md text-[22px] w-full"
-            />
-          </div>
-
-          {/* Contact Number */}
-          <div className="mt-6">
-            <label className="font-semibold text-zinc-900">
-              Contact Number
-            </label>
-            <input
-              value={contact}
-              onChange={(e) => setContact(e.target.value)}
-              className="mt-2.5 px-4 py-3 border-2 rounded-md text-[22px] w-full"
-            />
-          </div>
-
-          {/* City and State */}
-          <div className="flex gap-5 mt-6 max-md:flex-col">
-            <div className="flex flex-col w-6/12">
-              <label className="font-semibold text-zinc-900 text-[20px]">
-                City
+            <div className="mb-6">
+              <label className="font-semibold text-gray-700 text-sm">
+                Email
               </label>
               <input
-                value={city}
-                onChange={(e) => setCity(e.target.value)}
-                className="mt-2.5 px-4 py-3 border-2 rounded-md text-[22px]"
+                name="email"
+                value={formik.values.email}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                className={`mt-2 px-3 py-2 border-2 rounded-md text-lg w-full ${
+                  formik.errors.email && formik.touched.email
+                    ? "border-red-500"
+                    : "border-gray-300"
+                }`}
               />
+              {formik.errors.email && formik.touched.email ? (
+                <div className="text-red-500 text-sm">
+                  {formik.errors.email}
+                </div>
+              ) : null}
             </div>
-            <div className="flex flex-col w-6/12">
-              <label className="font-semibold text-zinc-900">District</label>
+
+            <div className="mb-6">
+              <label className="font-semibold text-gray-700 text-sm">
+                Address
+              </label>
               <input
-                value={state}
-                onChange={(e) => setState(e.target.value)}
-                className="mt-2.5 px-4 py-3 border-2 rounded-md text-[22px]"
+                name="address"
+                value={formik.values.address}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                className={`mt-2 px-3 py-2 border-2 rounded-md text-lg w-full ${
+                  formik.errors.address && formik.touched.address
+                    ? "border-red-500"
+                    : "border-gray-300"
+                }`}
               />
+              {formik.errors.address && formik.touched.address ? (
+                <div className="text-red-500 text-sm">
+                  {formik.errors.address}
+                </div>
+              ) : null}
             </div>
-          </div>
-          {/* Save and Cancel Buttons with Hover Effects */}
-          <div className="flex gap-10 self-start mt-12 text-3xl whitespace-nowrap max-md:mt-10">
-            <button className="px-12 py-3 text-blue-900 bg-white rounded-md border-2 border-blue-900 hover:bg-red-900 hover:text-white transition-colors duration-300">
-              Cancel
-            </button>
-            <button
-              onClick={handleSubmit}
-              className="px-16 py-3 font-semibold text-white bg-blue-900 rounded-md hover:bg-red-900 transition-colors duration-300"
-            >
-              Save
-            </button>
-          </div>
+
+            <div className="mb-6">
+              <label className="font-semibold text-gray-700 text-sm">
+                Contact Number
+              </label>
+              <input
+                name="contact"
+                value={formik.values.contact}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                className={`mt-2 px-3 py-2 border-2 rounded-md text-lg w-full ${
+                  formik.errors.contact && formik.touched.contact
+                    ? "border-red-500"
+                    : "border-gray-300"
+                }`}
+              />
+              {formik.errors.contact && formik.touched.contact ? (
+                <div className="text-red-500 text-sm">
+                  {formik.errors.contact}
+                </div>
+              ) : null}
+            </div>
+
+            <div className="mb-6">
+              <div className="flex gap-4">
+                <div className="flex flex-col w-1/2">
+                  <label className="font-semibold text-gray-700 text-sm">
+                    City
+                  </label>
+                  <input
+                    name="city"
+                    value={formik.values.city}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    className={`mt-2 px-3 py-2 border-2 rounded-md text-lg ${
+                      formik.errors.city && formik.touched.city
+                        ? "border-red-500"
+                        : "border-gray-300"
+                    }`}
+                  />
+                  {formik.errors.city && formik.touched.city ? (
+                    <div className="text-red-500 text-sm">
+                      {formik.errors.city}
+                    </div>
+                  ) : null}
+                </div>
+                <div className="flex flex-col w-1/2">
+                  <label className="font-semibold text-gray-700 text-sm">
+                    District
+                  </label>
+                  <input
+                    name="state"
+                    value={formik.values.state}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    className={`mt-2 px-3 py-2 border-2 rounded-md text-lg ${
+                      formik.errors.state && formik.touched.state
+                        ? "border-red-500"
+                        : "border-gray-300"
+                    }`}
+                  />
+                  {formik.errors.state && formik.touched.state ? (
+                    <div className="text-red-500 text-sm">
+                      {formik.errors.state}
+                    </div>
+                  ) : null}
+                </div>
+              </div>
+            </div>
+
+            <div className="flex justify-between mt-8 text-xl">
+              <button
+                type="button"
+                onClick={handleCancel}
+                className="px-6 py-2 text-gray-700 bg-white rounded-md border-2 border-gray-700 hover:bg-red-900 hover:text-red transition-colors duration-300"
+              >
+                Cancel
+              </button>
+              <button
+                type="submit"
+                className="px-8 py-2 font-semibold text-white bg-blue-900 rounded-md hover:bg-red-900 transition-colors duration-300"
+                disabled={formik.isSubmitting}
+              >
+                Save
+              </button>
+            </div>
+          </form>
         </div>
       </div>
-
-      <div style={{ minHeight: "90px" }}></div>
+      <div className="min-h-[90px]"></div>
     </>
   );
 }

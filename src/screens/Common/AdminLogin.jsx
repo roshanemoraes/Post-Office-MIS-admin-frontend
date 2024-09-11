@@ -32,7 +32,6 @@ const Login = () => {
     left: "50%",
     transform: "translate(-50%, -50%)",
   };
-
   const handleSignIn = async (e) => {
     e.preventDefault();
     try {
@@ -67,8 +66,6 @@ const Login = () => {
       }
     } catch (error) {
       setError("Login failed. Please check your credentials.");
-    }
-  };
 
   return (
     <div>
