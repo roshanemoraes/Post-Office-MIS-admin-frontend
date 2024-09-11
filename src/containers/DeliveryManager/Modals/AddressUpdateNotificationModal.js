@@ -25,7 +25,8 @@ const AddressUpdateNotificationModal = ({ data }) => {
   const fetchData = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:8081/api/delivery-manager/return-mail/get-undeliverable-mail/${data.mailId}`
+        `http://localhost:8081/api/delivery-manager/return-mail/get-undeliverable-mail/${data.mailId}`,
+        { withCredentials: true }
       );
       setMailInfo(response.data);
       console.log("This is data", response.data);

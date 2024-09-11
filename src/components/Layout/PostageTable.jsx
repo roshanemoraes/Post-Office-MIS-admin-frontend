@@ -46,7 +46,8 @@ export default function PostageTable() {
     setLoading(true);
     try {
       const response = await axios.get(
-        `http://localhost:8081/postage/list/${type}`
+        `http://localhost:8081/postage/list/${type}`,
+        { withCredentials: true }
       );
       setRows(response.data);
       console.log(response.data);

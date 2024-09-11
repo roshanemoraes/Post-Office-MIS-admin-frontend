@@ -32,7 +32,10 @@ function AddressValidationModal({ formState, onValidationResult }) {
       zone: formState.recipientPostalZone,
     };
     axios
-      .post("http://localhost:8081/api/receptionist/address/validate", data)
+      .post("http://localhost:8081/api/receptionist/address/validate", data, {
+        withCredentials: true,
+      })
+
       .then((response) => {
         console.log("validation result came, success!");
         setValidatedResponse(response.data);

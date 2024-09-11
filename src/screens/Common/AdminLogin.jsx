@@ -32,52 +32,40 @@ const Login = () => {
     left: "50%",
     transform: "translate(-50%, -50%)",
   };
+  const handleSignIn = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post(
+        "http://localhost:8081/admin/authenticate",
+        {
+          username: email,
+          password: password,
+        },
+        { withCredentials: true }
+      );
+      console.log(response.data);
+      setError("");
+      if (response.data.role) {
+        localStorage.setItem("userRoles", JSON.stringify(response.data.role));
+        localStorage.setItem(
+          "userName",
+          JSON.stringify(response.data.username)
+        );
 
-  const handleSignIn = async (e)=>{
-    try{
-      localStorage.setItem("userRoles", JSON.stringify(["ROLE_ADMIN"]));
-      navigate("/admin/postmaster");
-    }catch(error){
-      console.log(error);
-    }
-  };
-
-  // const handleSignIn = async (e) => {
-  //   e.preventDefault();
-  //   try {
-  //     const response = await axios.post(
-  //       "http://localhost:8080/products/authenticate",
-  //       {
-  //         username: email,
-  //         password: password,
-  //       },
-  //       { withCredentials: true }
-  //     );
-  //     console.log(response.data);
-  //     setError("");
-  //     if (response.data.role) {
-  //       localStorage.setItem("userRoles", JSON.stringify(response.data.role));
-  //       localStorage.setItem(
-  //         "userName",
-  //         JSON.stringify(response.data.username)
-  //       );
-
-  //       if (response.data.role.includes("ROLE_ADMIN")) {
-  //         navigate("/admin/postmaster");
-  //       } else if (response.data.role.includes("ROLE_MANAGER")) {
-  //         navigate("/admin/delivery-manager");
-  //       } else if (response.data.role.includes("ROLE_USER")) {
-  //         navigate("/admin/receptionist");
-  //       } else {
-  //         navigate("/admin/login");
-  //       }
-  //     } else {
-  //       console.error("No roles found in response data");
-  //     }
-  //   } catch (error) {
-  //     setError("Login failed. Please check your credentials.");
-  //   }
-  // };
+        if (response.data.role.includes("ROLE_ADMIN")) {
+          navigate("/admin/postmaster");
+        } else if (response.data.role.includes("ROLE_MANAGER")) {
+          navigate("/admin/delivery-manager");
+        } else if (response.data.role.includes("ROLE_USER")) {
+          navigate("/admin/receptionist");
+        } else {
+          navigate("/admin/login");
+        }
+      } else {
+        console.error("No roles found in response data");
+      }
+    } catch (error) {
+      setError("Login failed. Please check your credentials.");
 
   return (
     <div>

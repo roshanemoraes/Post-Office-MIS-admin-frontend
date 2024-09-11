@@ -9,7 +9,8 @@ const TestPortal = () => {
       try {
         const customerId = "2";
         const response = await axios.get(
-          `http://localhost:8081/api/notifications/${customerId}`
+          `http://localhost:8081/api/notifications/${customerId}`,
+          { withCredentials: true }
         );
         setNotifications(response.data);
       } catch (error) {

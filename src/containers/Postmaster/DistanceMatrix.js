@@ -32,10 +32,14 @@ class DistanceMatrix extends Component {
             matrix.push(data);
           }
           axios
-            .post("http://localhost:8081/matrix/post-matrix", {
-              matrix,
-              addresses,
-            })
+            .post(
+              "http://localhost:8081/matrix/post-matrix",
+              {
+                matrix,
+                addresses,
+              },
+              { withCredentials: true }
+            )
             .then((response) => console.log(response.data))
             .catch((error) => console.log("Backend was not reached!", error));
         }}

@@ -34,7 +34,8 @@ export default function DiscardedMails() {
   const fetchData = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:8081/api/delivery-manager/return-mail/discarded-mail"
+        "http://localhost:8081/api/delivery-manager/return-mail/discarded-mail",
+        { withCredentials: true }
       );
       setRows(response.data);
       console.log(response.data);

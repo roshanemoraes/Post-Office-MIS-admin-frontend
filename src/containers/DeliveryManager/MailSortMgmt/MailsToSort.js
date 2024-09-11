@@ -26,7 +26,8 @@ export default function MailsToSort() {
   const fetchData = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:8081/api/delivery-manager/sort/all-pending"
+        "http://localhost:8081/api/delivery-manager/sort/all-pending",
+        { withCredentials: true }
       );
       setRows(response.data);
       console.log(response.data);

@@ -17,7 +17,8 @@ export default function ListEmployee() {
   const fetchData = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:8081/api/postmaster/employee/list-employee"
+        "http://localhost:8081/api/postmaster/employee/list-employee",
+        { withCredentials: true }
       );
       console.log("request came!");
       setRows(response.data);

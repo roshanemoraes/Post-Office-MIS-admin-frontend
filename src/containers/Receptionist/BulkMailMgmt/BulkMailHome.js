@@ -119,12 +119,14 @@ const BulkMailHome = () => {
             };
           });
         },
+        withCredentials: true,
         headers: {
           "Content-Type": "multipart/form-data",
         },
       })
       .then((res) => {
         if (res.status === 200) {
+          console.log(res.data.mailCount);
           setIsUploaded(true);
           setMailCount(res.data.mailCount);
 

@@ -72,7 +72,7 @@ const Dashboard = () => {
           </div>
           <div className="sm:col-span-6 bg-white rounded-lg">
             <div className="mb-2 pt-2 ml-5 text-sm text-center text-gray-500">
-              TODAY UNDELIVERED sTATUS
+              TODAY UNDELIVERED STATUS
             </div>
             <UndeliveredTypesTodayChart />
           </div>

@@ -139,7 +139,8 @@ const MoneyOrders = () => {
     axios
       .post(
         "http://localhost:8081/api/receptionist/post/add/normal-post",
-        formState
+        formState,
+        { withCredentials: true }
       )
       .then((response) => {
         console.log(response);
