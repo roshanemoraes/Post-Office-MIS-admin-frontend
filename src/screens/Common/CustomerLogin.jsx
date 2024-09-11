@@ -1,85 +1,13 @@
-/*import React from "react";
-import { Box } from "@mui/material";
-import NewBackgnd from "../../assets/Customer/NewBackgnd.jpg";
-import LoginForm from "../../components/Forms/Customer/LoginForm";
-import ImageCarousel from "../../components/Layout/Customer/ImageCarousel";
-
-const CustomerLogin = () => {
-  return (
-    <div className="absolute w-full h-[100vh]">
-      <img
-        src={NewBackgnd}
-        alt="Background"
-        className="absolute inset-0 w-full h-full object-cover"
-      />
-
-      <div className="absolute inset-0 bg-black opacity-50"></div>
-
-      <div className="relative z-10 flex mt-[15vh] items-center justify-center w-full min-h-[50vh]">
-        <div className="grid grid-cols-2 w-11/12 max-w-4xl">
-          <div className="col-span-1 flex items-center justify-center">
-            <Box
-              sx={{
-                display: "flex",
-                justifyContent: "center",
-                width: "100%",
-                minHeight: "70vh",
-                backgroundColor: "#fff",
-                padding: "5%",
-                borderTopLeftRadius: "10px",
-                borderBottomLeftRadius: "10px",
-                boxShadow: "0px 0px 15px rgba(0, 0, 0, 0.2)",
-              }}
-            >
-              <div className="w-full flex flex-col items-center">
-                <div className="text-2xl text-[#060606] font-semibold my-4">
-                  POST OFFICE MIS
-                </div>
-                <div>
-                  <LoginForm />
-                </div>
-              </div>
-            </Box>
-          </div>
-          <div className="col-span-1 flex items-center justify-center">
-            <Box
-              sx={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                justifyContent: "center",
-                width: "100%",
-                minHeight: "70vh",
-                backgroundColor: "#e5e7eb",
-                padding: "5%",
-                boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.1)",
-                borderTopRightRadius: "10px",
-                borderBottomRightRadius: "10px",
-              }}
-            >
-              <div style={{ width: "100%", height: "100%" }}>
-                <ImageCarousel />
-              </div>
-            </Box>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-};
-
-export default CustomerLogin;*/
-
 import React from "react";
 import { Box } from "@mui/material";
-//import PostForm from "../../components/Forms/PostForm";
 import ImageCarousel from "../../components/Customer/ImageCarousel";
-import NewBackgnd from "../../assets/Customer/NewBackgnd.jpg";
+// import NewBackgnd from "../../assets/Customer/NewBackgnd.jpg";
+import NewBackgnd from "../../assets/Customer/back1.jpg";
 import LoginForm from "../../components/Forms/Customer/LoginForm";
 
 const CustomerLogin = () => {
   return (
-    <div className="absolute w-full h-[100vh]">
+    <div className="absolute w-full h-[120vh]">
       {/* Background Image */}
       <img
         src={NewBackgnd}
@@ -91,18 +19,15 @@ const CustomerLogin = () => {
       <div className="absolute inset-0 bg-black opacity-50"></div>
 
       {/* Content Box */}
-      <div className="relative z-10 flex mt-[15vh] items-center justify-center w-full min-h-[50vh]">
-        <div className="grid grid-cols-2 w-11/12 max-w-4xl">
-          {/* Left Grid (Post Form) */}
+      <div className="relative z-10 flex mt-[10vh] items-center justify-center w-full min-h-[50vh]">
+        <div className="grid grid-cols-2 w-[1000px]">
           <div className="col-span-1 flex items-center justify-center">
             <Box
               sx={{
                 display: "flex",
-                //flexDirection: "column", //removing top space POST MIS
-                //alignItems: "center",
                 justifyContent: "center",
                 width: "100%",
-                minHeight: "70vh",
+                minHeight: "80vh",
                 backgroundColor: "#fff",
                 padding: "5%",
                 //backgroundColor: "#94a3b8",
@@ -112,8 +37,11 @@ const CustomerLogin = () => {
               }}
             >
               <div className="w-full flex flex-col items-center">
-                <div className="text-2xl text-[#060606] font-semibold my-4">
+                <div className="text-[18px] text-[#58585898] font-bold mb-4 mt-3">
                   POST OFFICE MIS
+                </div>
+                <div className="text-[28px] text-[#060606] font-bold mb-2 mt-0">
+                  CUSTOMER PORTAL
                 </div>
                 <div>
                   <LoginForm />
@@ -131,7 +59,7 @@ const CustomerLogin = () => {
                 alignItems: "center",
                 justifyContent: "center",
                 width: "100%",
-                minHeight: "70vh",
+                minHeight: "80vh",
                 backgroundColor: "#e5e7eb",
                 padding: "5%",
                 boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.1)",

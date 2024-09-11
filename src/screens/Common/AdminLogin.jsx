@@ -52,11 +52,11 @@ const Login = () => {
           JSON.stringify(response.data.username)
         );
 
-        if (response.data.role.includes("ROLE_ADMIN")) {
+        if (response.data.role.includes("ROLE_POSTMASTER")) {
           navigate("/admin/postmaster");
         } else if (response.data.role.includes("ROLE_MANAGER")) {
           navigate("/admin/delivery-manager");
-        } else if (response.data.role.includes("ROLE_USER")) {
+        } else if (response.data.role.includes("ROLE_RECEPTIONIST")) {
           navigate("/admin/receptionist");
         } else {
           navigate("/admin/login");
@@ -66,7 +66,8 @@ const Login = () => {
       }
     } catch (error) {
       setError("Login failed. Please check your credentials.");
-
+    }
+  };
   return (
     <div>
       <LoginNavBar />
