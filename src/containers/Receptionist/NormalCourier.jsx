@@ -24,6 +24,7 @@ import DownArrowIcon from "./../../assets/arrow-down-square-fill.svg";
 import NormalMailReceipt from "./../../components/Receipts/NormalMailReceipt";
 import { useReactToPrint } from "react-to-print";
 import { ErrorMessage } from "formik";
+import CourierNormalReceipt from "../../components/Receipts/CourierNormalReceipt";
 
 const NormalCourier = () => {
   const initialFormState = {
@@ -38,6 +39,8 @@ const NormalCourier = () => {
     senderAddress: "",
     senderPostalZone: "",
     senderHouseNumber: "",
+
+    courierProvider: "",
   };
 
   const theme = useTheme();
@@ -531,32 +534,36 @@ const NormalCourier = () => {
                     onChange={handleChange(mailFormField.senderAddress.id)}
                     value={formState.senderAddress}
                   ></TextField>
-                  {/* <FormControl sx={{ minWidth: 200, maxWidth: 300 }}>
-                    <InputLabel id="roleSelector" sx={{ fontSize: "14px" }}>
-                      Role
-                    </InputLabel>
-                    <Select
-                      labelId="roleSelector"
-                      id="role"
-                      name="role"
-                      value={values.role}
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                      error={Boolean(errors.role)}
-                    >
-                      <MenuItem value={"Postmaster"}>Postmaster</MenuItem>
-                      <MenuItem value={"Delivery Manager"}>
-                        Delivery Manager
-                      </MenuItem>
-                      <MenuItem value={"Receptionist"}>Receptionist</MenuItem>
-                      <MenuItem value={"Postman"}>Postman</MenuItem>
-                    </Select>
-                    <ErrorMessage
-                      name="role"
-                      component="div"
-                      style={{ color: "red" }}
-                    />
-                  </FormControl> */}
+                  <div style={{ display: "flex" }} className="ml-8 mt-[15px]">
+                    <FormControl sx={{ minWidth: 200, maxWidth: 300 }}>
+                      <InputLabel
+                        id="courierProviderSelector"
+                        sx={{ fontSize: "14px" }}
+                      >
+                        Courier Provider
+                      </InputLabel>
+                      <Select
+                        sx={{ fontSize: "13px" }}
+                        labelId="courierProviderSelector"
+                        id="courierProvider"
+                        value={formState.courierProvider}
+                        onChange={handleChange("courierProvider")}
+                      >
+                        <MenuItem sx={{ fontSize: "14px" }} value={"FedEx"}>
+                          FedEx
+                        </MenuItem>
+                        <MenuItem sx={{ fontSize: "14px" }} value={"Domex"}>
+                          Domex
+                        </MenuItem>
+                        <MenuItem sx={{ fontSize: "14px" }} value={"DHL"}>
+                          DHL
+                        </MenuItem>
+                        <MenuItem sx={{ fontSize: "14px" }} value={"UPS"}>
+                          UPS
+                        </MenuItem>
+                      </Select>
+                    </FormControl>
+                  </div>
                 </div>
 
                 <Button
@@ -630,7 +637,16 @@ const NormalCourier = () => {
         />
       </div>
       <div ref={componentRef}>
-        <NormalMailReceipt />
+        <CourierNormalReceipt
+          mailType={"Courier Normal"}
+          postage={"300"}
+          recipientName={formState.recipientName}
+          SenderName={formState.senderName}
+          recipientAddress={formState.recipientAddress}
+          mailId={"300"}
+          receiptId={"450"}
+          courierProvider={formState.courierProvider}
+        />
       </div>
       <div className="min-h-[70px]"></div>
     </>

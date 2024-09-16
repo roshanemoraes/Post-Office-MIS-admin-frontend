@@ -4,13 +4,11 @@ import {
   Button,
   Checkbox,
   FormControlLabel,
-  FormGroup,
   TextField,
   Typography,
   useTheme,
 } from "@mui/material";
 import React, { useEffect, useState, useRef } from "react";
-import CustomTextField from "../../components/Custom/CustomTextField";
 import { mailFormField } from "../../data/formFields";
 import CostForm from "../../components/Forms/CostForm";
 import AddressValidationModal from "./AddressValidationModal";
@@ -33,6 +31,8 @@ const PersonalMail = () => {
     senderAddress: "",
     senderPostalZone: "",
     senderHouseNumber: "",
+
+    postage: "",
   };
 
   const theme = useTheme();
@@ -69,6 +69,12 @@ const PersonalMail = () => {
     "Pallansena South",
     "Pallansena North",
   ];
+  const handleCostUpdate = (cost) => {
+    setFormState((prevState) => ({
+      ...prevState,
+      postage: cost,
+    }));
+  };
 
   const handleOnValidationResult = (data) => {
     setVerifiedAddressText(data.textForm);
@@ -568,6 +574,7 @@ const PersonalMail = () => {
           <CostForm
             postType={"Personal Mail"}
             description={"Maximum Weight: 2Kg"}
+            onCostUpdate={handleCostUpdate}
           />
         </div>
       </div>
@@ -597,7 +604,15 @@ const PersonalMail = () => {
         />
       </div>
       <div ref={componentRef}>
-        <NormalMailReceipt />
+        <NormalMailReceipt
+          mailType={"Normal Post"}
+          postage={formState.postage}
+          recipientName={formState.recipientName}
+          SenderName={formState.senderName}
+          recipientAddress={formState.recipientAddress}
+          mailId={"300"}
+          receiptId={"450"}
+        />
       </div>
       <div className="min-h-[70px]"></div>
     </>

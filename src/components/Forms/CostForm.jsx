@@ -19,7 +19,7 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-const CostForm = ({ postType, description }) => {
+const CostForm = ({ postType, description, onCostUpdate }) => {
   const theme = useTheme();
   const [weight, setWeight] = useState(null);
   const [cost, setCost] = useState(null);
@@ -37,6 +37,7 @@ const CostForm = ({ postType, description }) => {
       );
       console.log("response came:", response.data.price);
       setCost(response.data.price);
+      onCostUpdate(response.data.price);
     } catch (error) {
       console.error("Error fetching postage", error);
     }
@@ -54,7 +55,7 @@ const CostForm = ({ postType, description }) => {
         // marginLeft: "16px",
         // width: "260px",
         // height: "230px",
-        backgroundColor: "#fff7ed",
+        backgroundColor: "#fff",
         borderRadius: "10px",
         padding: "0 0 5px 0",
         boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.1)",

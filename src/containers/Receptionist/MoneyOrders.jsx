@@ -19,23 +19,21 @@ import axios from "axios";
 import DownArrowIcon from "./../../assets/arrow-down-square-fill.svg";
 import NormalMailReceipt from "./../../components/Receipts/NormalMailReceipt";
 import { useReactToPrint } from "react-to-print";
+import { Button as MuiButton } from "@mui/material";
+import MoneyOrderReceipt from "../../components/Receipts/MoneyOrderReceipt";
 
 const MoneyOrders = () => {
   const initialFormState = {
     recipientName: "",
-    recipientCity: "",
-    recipientAddress: "",
-    recipientPostalZone: "",
-    recipientHouseNumber: "",
+    recipientNIC: "",
 
     senderName: "",
-    senderCity: "",
-    senderAddress: "",
-    senderPostalZone: "",
-    senderHouseNumber: "",
+    senderNIC: "",
+
+    transferAmount: "",
+    charge: "",
   };
 
-  const theme = useTheme();
   const [formState, setFormState] = useState(initialFormState);
   const [checked, setChecked] = useState(false);
   const [recipientName, setRecipientName] = useState("");
@@ -134,6 +132,32 @@ const MoneyOrders = () => {
     }
   };
 
+  const handlePayment = () => {
+    // fetch("/api/payment", {
+    //   // Your backend endpoint
+    //   method: "POST",
+    //   body: JSON.stringify(orderDetails),
+    //   headers: { "Content-Type": "application/json" },
+    // })
+    //   .then((response) => response.json())
+    //   .then((data) => {
+    //     if (data.paymentUrl) {
+    //       window.location.href = data.paymentUrl; // Redirect the user to the Stripe Checkout page
+    //     }
+    //   })
+    //   .catch((error) => console.error("Payment creation failed", error));
+
+    axios
+      .post("http://localhost:8080/api/create")
+      .then((response) => {
+        const data = response.data;
+        if (data.paymentUrl) {
+          window.location.href = data.paymentUrl; // Redirect the user to the Stripe Checkout page
+        }
+      })
+      .catch((error) => console.error("Payment creation failed", error));
+  };
+
   const handleSubmit = () => {
     console.log(formState);
     axios
@@ -156,401 +180,238 @@ const MoneyOrders = () => {
 
   return (
     <>
-      <div className="grid sm:grid-cols-12 grid-cols-1">
-        <div className="rounded-lg sm:col-span-7 min-h-[100px] bg-white-500  items-center justify-center">
+      <div>
+        <Box
+          display="flex"
+          paddingTop={2}
+          flexDirection="row"
+          justifyContent="space-around"
+        >
           <Box
-            display="flex"
-            paddingTop={2}
-            flexDirection="row"
-            justifyContent="space-around"
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+              width: "45%",
+              minWidth: "550px",
+              backgroundColor: "#f5f5f5",
+              borderRadius: "10px",
+              padding: "30px 2px 30px 2px",
+              boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.1)",
+            }}
           >
-            <Box
+            <Typography
+              variant="subtitle2"
               sx={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                justifyContent: "center",
-                width: "45%",
-                minWidth: "550px",
-                backgroundColor: "#f5f5f5",
-                borderRadius: "10px",
-                padding: "30px 2px 30px 2px",
-                boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.1)",
+                fontWeight: "bold",
+                fontSize: "22px",
+                marginBottom: "10px",
+                fontFamily: "Helvetica Neue",
               }}
             >
-              <Typography
-                variant="subtitle2"
-                sx={{
-                  fontWeight: "bold",
-                  fontSize: "22px",
-                  marginBottom: "10px",
-                  fontFamily: "Helvetica Neue",
-                }}
-              >
-                Money Orders
-              </Typography>
-              <Box
-                component="form"
-                display="flex"
-                alignItems="flex-start"
-                sx={{
+              Money Orders
+            </Typography>
+            <Box
+              component="form"
+              display="flex"
+              alignItems="flex-start"
+              sx={{
+                marginTop: "10px",
+                display: "flex",
+                flexDirection: "column", //changed
+                alignItems: "center",
+                "& .MuiTextField-root": {
+                  fontSize: "15px",
                   marginTop: "10px",
-                  display: "flex",
-                  flexDirection: "column", //changed
-                  alignItems: "center",
-                  "& .MuiTextField-root": {
-                    fontSize: "15px",
-                    marginTop: "10px",
-                  },
-                }}
-              >
-                <div className="grid sm:grid-cols-12 xs:grid-cols-12 sm:ml-8 xs:ml-8 sm:mr-8 xs:mr-8">
-                  <div className="sm:col-span-3 xs:col-span-3 sm:mr-5 xs:mr-5 sm:min-w-[150px] xs:min-w-[150px] sm:min-h-[60px] xs:min-h-[60px]">
-                    <TextField
-                      inputProps={{ style: { fontSize: 15 } }}
-                      InputLabelProps={{
-                        style: { fontSize: 13 },
-                      }}
-                      required
-                      type={mailFormField.recipientHouseNumber.type}
-                      id={mailFormField.recipientHouseNumber.id}
-                      label={mailFormField.recipientHouseNumber.label}
-                      onChange={handleChange(
-                        mailFormField.recipientHouseNumber.id
-                      )}
-                    ></TextField>
-                  </div>
-                  <div className="sm:col-span-7 xs:col-span-7 sm:ml-9 xs:ml-9 sm:mr-2 xs:mr-2 sm:min-w-[300px] xs:min-w-[300px] sm:min-h-[60px] xs:min-h-[60px]">
-                    <TextField
-                      inputProps={{ style: { fontSize: 15 } }}
-                      InputLabelProps={{
-                        style: { fontSize: 13, width: "500px" },
-                      }}
-                      style={{ minWidth: 324 }}
-                      required
-                      type={mailFormField.recipientName.type}
-                      id={mailFormField.recipientName.id}
-                      label={mailFormField.recipientName.label}
-                      onChange={handleChange(mailFormField.recipientName.id)}
-                    ></TextField>
-                  </div>
+                },
+              }}
+            >
+              <div className="grid sm:grid-cols-12 xs:grid-cols-12 sm:ml-8 xs:ml-8 sm:mr-8 xs:mr-8">
+                <div className="sm:col-span-3 xs:col-span-3 sm:mr-5 xs:mr-5 sm:min-w-[150px] xs:min-w-[150px] sm:min-h-[60px] xs:min-h-[60px]">
+                  <TextField
+                    inputProps={{ style: { fontSize: 15 } }}
+                    InputLabelProps={{
+                      style: { fontSize: 13 },
+                    }}
+                    required
+                    type={mailFormField.senderNIC.type}
+                    id={mailFormField.senderNIC.id}
+                    label={mailFormField.senderNIC.label}
+                    onChange={handleChange(mailFormField.senderNIC.id)}
+                  ></TextField>
                 </div>
-
-                <div className="grid sm:ml-8 xs:ml-8 sm:mr-8 xs:mr-8 sm:grid-cols-12 xs:grid-cols-12">
-                  <div className="sm:col-span-6 xs:col-span-6 sm:mr-3 xs:mr-3 sm:ml-0 xs:ml-0 min-w-[235px] min-h-[60px] bg-white-500 ">
-                    <Autocomplete
-                      id={mailFormField.recipientPostalZone.id}
-                      options={zoneList}
-                      freeSolo
-                      onChange={(event, newValue) => {
-                        setFormState((oldState) => ({
-                          ...oldState,
-                          [mailFormField.recipientPostalZone.id]: newValue,
-                        }));
-                      }}
-                      sx={{
-                        "& .MuiAutocomplete-option": {
-                          color: "blue",
-                        },
-                        '& .MuiAutocomplete-option[data-focus="true"]': {
-                          backgroundColor: "lightgray",
-                        },
-                        '& .MuiAutocomplete-option[data-focus="true"][aria-selected="true"]':
-                          {
-                            backgroundColor: "lightblue",
-                          },
-                        "& .MuiAutocomplete-popupIndicator": {
-                          color: "green",
-                        },
-                        "& .MuiAutocomplete-clearIndicator": {
-                          color: "purple",
-                        },
-                      }}
-                      renderInput={(params) => (
-                        <TextField
-                          {...params}
-                          label={mailFormField.recipientPostalZone.label}
-                          InputLabelProps={{
-                            style: { fontSize: 13 },
-                          }}
-                          style={{ minWidth: 160 }}
-                          required
-                          value={
-                            formState[mailFormField.recipientPostalZone.id] ||
-                            ""
-                          }
-                          onChange={handleChange(
-                            mailFormField.recipientPostalZone.id
-                          )}
-                        />
-                      )}
-                    />
-                  </div>
-                  <div className="sm:col-span-6 xs:col-span-4 sm:ml-0 xs:ml-0 min-h-[60px] min-w-[235px] bg-white-500 ">
-                    <Autocomplete
-                      id={mailFormField.recipientCity.id}
-                      options={cityList}
-                      freeSolo
-                      onChange={(event, newValue) => {
-                        setFormState((oldState) => ({
-                          ...oldState,
-                          [mailFormField.recipientCity.id]: newValue,
-                        }));
-                      }}
-                      sx={{
-                        "& .MuiAutocomplete-option": {
-                          color: "blue",
-                        },
-                        '& .MuiAutocomplete-option[data-focus="true"]': {
-                          backgroundColor: "lightgray",
-                        },
-                        '& .MuiAutocomplete-option[data-focus="true"][aria-selected="true"]':
-                          {
-                            backgroundColor: "lightblue",
-                          },
-                        "& .MuiAutocomplete-clearIndicator": {
-                          color: "red",
-                        },
-                      }}
-                      renderInput={(params) => (
-                        <TextField
-                          {...params}
-                          label={mailFormField.recipientCity.label}
-                          InputLabelProps={{
-                            style: { fontSize: 13 },
-                          }}
-                          style={{ minWidth: 160 }}
-                          required
-                          value={
-                            formState[mailFormField.recipientCity.id] || ""
-                          }
-                          onChange={handleChange(
-                            mailFormField.recipientCity.id
-                          )}
-                        />
-                      )}
-                    />
-                  </div>
+                <div className="sm:col-span-7 xs:col-span-7 sm:ml-9 xs:ml-9 sm:mr-2 xs:mr-2 sm:min-w-[300px] xs:min-w-[300px] sm:min-h-[60px] xs:min-h-[60px]">
+                  <TextField
+                    inputProps={{ style: { fontSize: 15 } }}
+                    InputLabelProps={{
+                      style: { fontSize: 13, width: "500px" },
+                    }}
+                    style={{ minWidth: 324 }}
+                    required
+                    type={mailFormField.senderName.type}
+                    id={mailFormField.senderName.id}
+                    label={mailFormField.senderName.label}
+                    onChange={handleChange(mailFormField.senderName.id)}
+                  ></TextField>
                 </div>
-                <AddressValidationModal
-                  formState={formState}
-                  onValidationResult={handleOnValidationResult}
-                />
-                <TextField
-                  inputProps={{ readOnly: true }}
-                  read
-                  InputLabelProps={{
-                    style: { fontSize: 13 },
-                  }}
-                  style={{ minWidth: 480 }}
-                  required
-                  type={mailFormField.recipientAddress.type}
-                  id={mailFormField.recipientAddress.id}
-                  label={mailFormField.recipientAddress.label}
-                  onChange={handleChange(mailFormField.recipientAddress.id)}
-                  value={formState.recipientAddress}
-                ></TextField>
-
-                <div
-                  className="bg-[#caced4] mt-[20px] mb-[10px] h-[1px]"
-                  style={{ width: "88%" }}
-                ></div>
-
+              </div>
+              <div>
                 <div>
-                  <div>
-                    <div className="grid sm:grid-cols-12 sm:ml-8 xs:ml-8 sm:mr-8 xs:mr-8">
-                      <div className="sm:col-span-3 sm:mr-5 min-w-[150px] min-h-[60px]">
-                        <TextField
-                          inputProps={{ style: { fontSize: 15 } }}
-                          InputLabelProps={{
-                            style: { fontSize: 13 },
-                          }}
-                          required
-                          type={mailFormField.senderHouseNumber.type}
-                          id={mailFormField.senderHouseNumber.id}
-                          label={mailFormField.senderHouseNumber.label}
-                          onChange={handleChange(
-                            mailFormField.senderHouseNumber.id
-                          )}
-                        ></TextField>
-                      </div>
-                      <div className="sm:col-span-7 sm:ml-9 sm:mr-2 sm:min-w-[300px] sm:min-h-[60px]">
-                        <TextField
-                          inputProps={{ style: { fontSize: 15 } }}
-                          InputLabelProps={{
-                            style: { fontSize: 13, width: "500px" },
-                          }}
-                          style={{ minWidth: 324 }}
-                          required
-                          type={mailFormField.senderName.type}
-                          id={mailFormField.senderName.id}
-                          label={mailFormField.senderName.label}
-                          onChange={handleChange(mailFormField.senderName.id)}
-                        ></TextField>
-                      </div>
+                  <div className="grid sm:grid-cols-12 sm:ml-8 xs:ml-8 sm:mr-8 xs:mr-8">
+                    <div className="sm:col-span-3 sm:mr-5 min-w-[150px] min-h-[60px]">
+                      <TextField
+                        inputProps={{ style: { fontSize: 15 } }}
+                        InputLabelProps={{
+                          style: { fontSize: 13 },
+                        }}
+                        required
+                        type={mailFormField.recipientNIC.type}
+                        id={mailFormField.recipientNIC.id}
+                        label={mailFormField.recipientNIC.label}
+                        onChange={handleChange(mailFormField.recipientNIC.id)}
+                      ></TextField>
                     </div>
-
-                    <div className="grid sm:ml-8 xs:ml-8 sm:mr-8 xs:mr-8 sm:grid-cols-12 xs:grid-cols-12">
-                      <div className="sm:col-span-6 xs:col-span-6 sm:mr-3 xs:mr-3 sm:ml-0 xs:ml-0 min-w-[235px] min-h-[60px] bg-white-500 ">
-                        <Autocomplete
-                          id={mailFormField.senderPostalZone.id}
-                          options={zoneList}
-                          freeSolo
-                          onChange={(event, newValue) => {
-                            setFormState((oldState) => ({
-                              ...oldState,
-                              [mailFormField.senderPostalZone.id]: newValue,
-                            }));
-                          }}
-                          sx={{
-                            "& .MuiAutocomplete-option": {
-                              color: "blue",
-                            },
-                            '& .MuiAutocomplete-option[data-focus="true"]': {
-                              backgroundColor: "lightgray",
-                            },
-                            '& .MuiAutocomplete-option[data-focus="true"][aria-selected="true"]':
-                              {
-                                backgroundColor: "lightblue",
-                              },
-                            "& .MuiAutocomplete-popupIndicator": {
-                              color: "green",
-                            },
-                            "& .MuiAutocomplete-clearIndicator": {
-                              color: "purple",
-                            },
-                          }}
-                          renderInput={(params) => (
-                            <TextField
-                              {...params}
-                              label={mailFormField.senderPostalZone.label}
-                              InputLabelProps={{
-                                style: { fontSize: 13 },
-                              }}
-                              style={{ minWidth: 160 }}
-                              required
-                              value={
-                                formState[mailFormField.senderPostalZone.id] ||
-                                ""
-                              }
-                              onChange={handleChange(
-                                mailFormField.senderPostalZone.id
-                              )}
-                            />
-                          )}
-                        />
-                      </div>
-                      <div className="sm:col-span-6 xs:col-span-4 sm:ml-0 xs:ml-0 min-h-[60px] min-w-[235px] bg-white-500 ">
-                        <Autocomplete
-                          id={mailFormField.senderCity.id}
-                          options={cityList}
-                          freeSolo
-                          onChange={(event, newValue) => {
-                            setFormState((oldState) => ({
-                              ...oldState,
-                              [mailFormField.senderCity.id]: newValue,
-                            }));
-                          }}
-                          sx={{
-                            "& .MuiAutocomplete-option": {
-                              color: "blue",
-                            },
-                            '& .MuiAutocomplete-option[data-focus="true"]': {
-                              backgroundColor: "lightgray",
-                            },
-                            '& .MuiAutocomplete-option[data-focus="true"][aria-selected="true"]':
-                              {
-                                backgroundColor: "lightblue",
-                              },
-                            "& .MuiAutocomplete-clearIndicator": {
-                              color: "red",
-                            },
-                          }}
-                          renderInput={(params) => (
-                            <TextField
-                              {...params}
-                              label={mailFormField.senderCity.label}
-                              InputLabelProps={{
-                                style: { fontSize: 13 },
-                              }}
-                              style={{ minWidth: 160 }}
-                              required
-                              value={
-                                formState[mailFormField.senderCity.id] || ""
-                              }
-                              onChange={handleChange(
-                                mailFormField.senderCity.id
-                              )}
-                            />
-                          )}
-                        />
-                      </div>
+                    <div className="sm:col-span-7 sm:ml-9 sm:mr-2 sm:min-w-[300px] sm:min-h-[60px]">
+                      <TextField
+                        inputProps={{ style: { fontSize: 15 } }}
+                        InputLabelProps={{
+                          style: { fontSize: 13, width: "500px" },
+                        }}
+                        style={{ minWidth: 324 }}
+                        required
+                        type={mailFormField.recipientName.type}
+                        id={mailFormField.recipientName.id}
+                        label={mailFormField.recipientName.label}
+                        onChange={handleChange(mailFormField.recipientName.id)}
+                      ></TextField>
                     </div>
                   </div>
+                </div>
+                <div>
                   <SenderAddressValidationModel
                     formState={formState}
                     onValidationSenderResult={handleSenderOnValidationResult}
                   />
+                </div>
+                <div>
                   <TextField
-                    inputProps={{ readOnly: true }}
-                    read
+                    inputProps={{ style: { fontSize: 15 } }}
                     InputLabelProps={{
                       style: { fontSize: 13 },
                     }}
-                    style={{ minWidth: 480, marginLeft: "32px" }}
+                    style={{ minWidth: 250, marginLeft: "32px" }}
                     required
-                    type={mailFormField.senderAddress.type}
-                    id={mailFormField.senderAddress.id}
-                    label={mailFormField.senderAddress.label}
-                    onChange={handleChange(mailFormField.senderAddress.id)}
+                    type={mailFormField.transferAmount.type}
+                    id={mailFormField.transferAmount.id}
+                    label={mailFormField.transferAmount.label}
+                    onChange={handleChange(mailFormField.transferAmount.id)}
+                    value={formState.senderAddress}
+                  ></TextField>
+                  <MuiButton
+                    variant="contained"
+                    sx={{
+                      my: "10px",
+                      mt: "20px",
+                      mb: "10px",
+                      mr: "0px",
+                      ml: "12px",
+                      backgroundColor: "#fde68a",
+                      color: "black",
+                      px: 2,
+                      fontSize: "10px",
+                      borderRadius: "6px",
+                      alignSelf: "flex-start",
+                      ":hover": {
+                        backgroundColor: "#fcd34d",
+                      },
+                    }}
+                    // onClick={validationResult}
+                  >
+                    Get charge
+                  </MuiButton>
+                </div>
+                <div>
+                  <TextField
+                    inputProps={{ readOnly: true }}
+                    InputLabelProps={{
+                      style: { fontSize: 13 },
+                    }}
+                    style={{ minWidth: 250, marginLeft: "32px" }}
+                    type={mailFormField.cost.type}
+                    id={mailFormField.cost.id}
+                    label={mailFormField.cost.label}
+                    onChange={handleChange(mailFormField.cost.id)}
                     value={formState.senderAddress}
                   ></TextField>
                 </div>
+                <div
+                  className="bg-[#caced4] ml-[32px] mt-[20px] mb-[10px] h-[1px]"
+                  style={{ width: "88%" }}
+                ></div>
 
-                <Button
-                  variant="contained"
-                  sx={{
-                    my: "40px",
-                    mb: "20px",
-                    backgroundColor: "#852318",
-                    color: "white",
-                    px: 5,
-                    fontSize: "14px",
-                    borderRadius: "6px",
-                  }}
-                  onClick={handleSubmit}
-                >
-                  Submit
-                </Button>
                 <div>
+                  <MuiButton
+                    variant="contained"
+                    sx={{
+                      my: "10px",
+                      mb: "10px",
+                      mr: "0px",
+                      mt: "25px",
+                      ml: "32px",
+                      backgroundColor: "#852318",
+                      color: "white",
+                      px: 2,
+                      fontSize: "10px",
+                      borderRadius: "6px",
+                      alignSelf: "flex-start",
+                    }}
+                    onClick={handlePayment}
+                  >
+                    Proceed To payment
+                  </MuiButton>
+                </div>
+              </div>
+              <div className="grid grid-cols-12 mt-[40px]">
+                <div className="col-span-9">
                   <Button
-                    className="mt-1"
+                    variant="contained"
+                    sx={{
+                      backgroundColor: "#852318",
+                      color: "white",
+                      px: 5,
+                      ml: "50px",
+                      fontSize: "14px",
+                      borderRadius: "6px",
+                    }}
+                    onClick={handleSubmit}
+                  >
+                    Submit
+                  </Button>
+                </div>
+                <div className="col-span-3 mt-[1px]">
+                  <Button
                     variant="primary"
                     style={{
-                      backgroundColor: "#0891b2",
-                      padding: "6px",
+                      backgroundColor: "#000",
+                      padding: "8px",
                       borderColor: "#0891b2",
+                      color: "#fff",
                       fontSize: "11px",
                       fontFamily: "arial",
-                      my: "40px",
-                      mb: "20px",
-                      mr: "60px",
+                      ml: "40px",
                     }}
                     onClick={handlePrint}
                   >
-                    PRINT INVOICE
+                    PRINT Receipt
                   </Button>
                 </div>
-              </Box>
+              </div>
+
+              <div></div>
             </Box>
           </Box>
-        </div>
-        <div className="rounded-lg sm:col-span-5 min-h-[100px] m-4 bg-white-500 items-center justify-center">
-          <CostForm
-            postType={"Personal Mail"}
-            description={"Maximum Weight: 2Kg"}
-          />
-        </div>
+        </Box>
       </div>
       <div
         // className="mt-30"
@@ -578,7 +439,7 @@ const MoneyOrders = () => {
         />
       </div>
       <div ref={componentRef}>
-        <NormalMailReceipt />
+        <MoneyOrderReceipt formState={formState} receiptId={"2418"} />
       </div>
       <div className="min-h-[70px]"></div>
     </>

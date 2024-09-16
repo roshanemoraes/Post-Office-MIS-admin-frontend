@@ -40,20 +40,22 @@ export default function AddressUpdate() {
       renderCell: (params) => (
         <div>
           <InfoReturnMailModal data={params.row} />
-          <Button
-            title="Return To Sender"
-            style={{
-              border: "none",
-              background: "#fcd34d",
-              minWidth: "35px",
-              marginRight: "10px",
-            }}
-            onClick={() => {
-              handleOneReturnToSender(params.row);
-            }}
-          >
-            <img src={checkIcon} alt="updateIcon" />
-          </Button>
+          {params.row.status === "Address-Update" && (
+            <Button
+              title="Return To Sender"
+              style={{
+                border: "none",
+                background: "#fcd34d",
+                minWidth: "35px",
+                marginRight: "10px",
+              }}
+              onClick={() => {
+                handleOneReturnToSender(params.row);
+              }}
+            >
+              <img src={checkIcon} alt="updateIcon" />
+            </Button>
+          )}
         </div>
       ),
     },
@@ -66,15 +68,16 @@ export default function AddressUpdate() {
         { withCredentials: true }
       );
       if (response.status === 200) {
-        fetchData();
         sendNotification(
           `Mail needs an address update due to ${row.reason}.`,
           row.customer_id,
-          row.mailId
+          row.mailId,
+          row.undeliverableId
         );
         setSnackbarMessage("Started Address-Update Process.");
         setSnackbarSeverity("success");
         setSnackbarOpen(true);
+        fetchData();
       }
     } catch (error) {
       console.error("Error adding to address-update list", error);
@@ -99,13 +102,15 @@ export default function AddressUpdate() {
 
   useEffect(() => {
     fetchData();
+
     const stompClient = new Client({
       brokerURL: "ws://localhost:8081/ws",
       connectHeaders: {},
       webSocketFactory: () => new SockJS("http://localhost:8081/ws"),
       onConnect: () => {
         console.log("Connected to WebSocket");
-        stompClient.subscribe(`/topic/notifications`, (message) => {
+        const customerId = 2;
+        stompClient.subscribe(`/topic/customer/${customerId}`, (message) => {
           console.log("Received message:", message);
           const notification = JSON.parse(message.body);
           setNotifications((prev) => [notification, ...prev]);
@@ -118,20 +123,28 @@ export default function AddressUpdate() {
     return () => stompClient.deactivate();
   }, []);
 
-  const sendNotification = (message, customerId, mailId) => {
+  const sendNotification = (message, customerId, mailId, undeliverableId) => {
     if (client) {
       const notification = {
         customerId: customerId,
         message: message,
         type: "Address-update",
         mailId: mailId,
+        undeliverableId: undeliverableId,
       };
       client.publish({
-        destination: "/app/notify",
+        destination: `/app/notify/${customerId}`,
         body: JSON.stringify(notification),
       });
     }
   };
+  const addressUpdateCount = rows.filter(
+    (row) => row.status === "Address-Update"
+  ).length;
+
+  const addressUpdatePendingCount = rows.filter(
+    (row) => row.status === "Address-Update-Pending"
+  ).length;
 
   return (
     <>
@@ -164,15 +177,15 @@ export default function AddressUpdate() {
           <div>
             <InfoCard
               backgroundColor={"#ffffff"}
-              title={"NEW ADDRESS UPDATE MAILS"}
-              value={"16"}
+              title={"NEW ADDRESS-UPDATE MAILS"}
+              value={addressUpdateCount}
             />
           </div>
           <div>
             <InfoCard
               backgroundColor={"#ffffff"}
-              title={"PENDING MAILS"}
-              value={"4"}
+              title={"UPDATE-PENDING MAILS"}
+              value={addressUpdatePendingCount}
             />
           </div>
           <div className="mt-[270px]">

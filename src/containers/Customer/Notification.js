@@ -1,22 +1,25 @@
 import React, { useEffect, useState } from "react";
 import { DataGrid } from "@mui/x-data-grid";
-import DownArrowIcon from "../../assets/Customer/arrow-down-square-fill.svg";
+import DownArrowIcon from "../../assets/arrow-down-square-fill.svg";
 import { Button, ButtonGroup } from "react-bootstrap";
 import axios from "axios";
+import ReturnToSenderNotification from "../../components/Notification/ReturnToSenderNotification";
 import { Client } from "@stomp/stompjs";
 import SockJS from "sockjs-client";
-//import UpdateIcon from "../../assets/Customer/pencil-fill.svg";
+import UpdateIcon from "../../assets/pencil-fill.svg";
+import AddressUpdateNotificationModal from "../DeliveryManager/Modals/AddressUpdateNotificationModal";
 
-const Notification = () => {
-  const [rows, setRows] = useState([]);
+const Notifications = () => {
+  const [rows, setRows] = React.useState([]);
   const [notifications, setNotifications] = useState([]);
   const [client, setClient] = useState(null);
-  const [isClicked, setIsClicked] = useState(false);
+  const [IsClicked, setIsClicked] = useState(false);
 
   const columns = [
     { field: "date", headerName: "Date", width: 150 },
     { field: "message", headerName: "Message", width: 500 },
     { field: "notificationId", headerName: "ID", width: 100 },
+    { field: "undeliverableId", headerName: "Undelivered ID", width: 100 },
     { field: "type", headerName: "Type", width: 180 },
     { field: "read", headerName: "Read", width: 120 },
     { field: "mailId", headerName: "Mail Id", width: 120 },
@@ -25,7 +28,19 @@ const Notification = () => {
       headerName: "Action",
       width: 70,
       headerAlign: "center",
-      // Your custom render logic if required for actions
+      renderCell: (params) => {
+        if (params.row.type === "Address-update") {
+          return (
+            <div>
+              <AddressUpdateNotificationModal data={params.row} />
+            </div>
+          );
+        } else if (params.row.type === "Return-to-sender") {
+          return <div>-</div>;
+        } else {
+          return null;
+        }
+      },
     },
   ];
 
@@ -33,46 +48,44 @@ const Notification = () => {
     setIsClicked(true);
     try {
       const response = await axios.get(
-        "https://128ad76e-7b61-452f-979c-5e07c6fc1823.mock.pstmn.io/notifi" // Replace with your actual Postman API URL
+        "http://localhost:8081/api/notifications/3"
       );
       setRows(response.data);
       console.log(response.data);
     } catch (error) {
-      console.error("Error fetching notifications", error);
+      console.error("Error fetching users", error);
     }
   };
-
   const fetchUnreadData = async () => {
     setIsClicked(false);
     try {
-      const response = await axios
-        .get
-        //"https://02aa9ecd-6eb7-4330-b935-fb845b5a5218.mock.pstmn.io/" // Replace with your actual Postman API URL
-        ();
+      const response = await axios.get(
+        "http://localhost:8081/api/notifications/unread/3"
+      );
       setRows(response.data);
       console.log(response.data);
     } catch (error) {
-      console.error("Error fetching unread notifications", error);
+      console.error("Error fetching users", error);
     }
   };
 
   useEffect(() => {
     fetchData();
-
     const stompClient = new Client({
-      brokerURL: "ws://your-postman-api-url.com/ws", // Replace with your actual WebSocket URL
+      brokerURL: "ws://localhost:8081/ws",
       connectHeaders: {},
-      webSocketFactory: () => new SockJS("https://your-postman-api-url.com/ws"), // Replace with your actual SockJS URL
+      webSocketFactory: () => new SockJS("http://localhost:8081/ws"),
       onConnect: () => {
         console.log("Connected to WebSocket");
-        stompClient.subscribe(`/topic/notifications`, (message) => {
+        const customerId = 3;
+        stompClient.subscribe(`/topic/customer/${customerId}`, (message) => {
+          fetchData();
+          console.log("Received message:", message);
           const notification = JSON.parse(message.body);
           setNotifications((prev) => [notification, ...prev]);
-          fetchData(); // Refresh data when a new notification arrives
         });
       },
     });
-
     stompClient.activate();
     setClient(stompClient);
 
@@ -81,6 +94,8 @@ const Notification = () => {
 
   return (
     <>
+      <ReturnToSenderNotification />
+      {/* <AddressUpdateNotificationModal /> */}
       <div>
         <div
           style={{
@@ -88,6 +103,7 @@ const Notification = () => {
             justifyContent: "center",
             alignItems: "center",
             padding: "10px",
+            // fontWeight: "bold",
             marginBottom: "10px",
             marginTop: "10px",
             backgroundColor: "#a3a3a3",
@@ -115,11 +131,13 @@ const Notification = () => {
           <ButtonGroup aria-label="Basic example">
             <Button
               variant="secondary"
-              onClick={fetchData}
+              onClick={() => {
+                fetchData();
+              }}
               style={{
-                backgroundColor: isClicked ? "#852318" : "#f0f0f0",
-                borderColor: isClicked ? "#d1d1d1" : "black",
-                color: isClicked ? "white" : "#333",
+                backgroundColor: IsClicked ? "#852318" : "#f0f0f0",
+                borderColor: IsClicked ? "#d1d1d1" : "black",
+                color: IsClicked ? "white" : "#333",
                 padding: "8px 16px",
                 margin: "2px",
                 borderRadius: "4px",
@@ -130,11 +148,11 @@ const Notification = () => {
             </Button>
             <Button
               variant="secondary"
-              onClick={fetchUnreadData}
+              onClick={() => fetchUnreadData()}
               style={{
-                backgroundColor: isClicked ? "#f0f0f0" : "#852318",
-                borderColor: isClicked ? "black" : "#d1d1d1",
-                color: isClicked ? "#333" : "white",
+                backgroundColor: IsClicked ? "#f0f0f0" : "#852318",
+                borderColor: IsClicked ? "black" : "#d1d1d1",
+                color: IsClicked ? "#333" : "white",
                 padding: "8px 16px",
                 margin: "2px",
                 borderRadius: "4px",
@@ -181,6 +199,12 @@ const Notification = () => {
               "& .MuiDataGrid-columnHeader[data-field='read']": {
                 display: "none",
               },
+              // "& .MuiDataGrid-cell[data-field='mailId']": {
+              //   display: "none",
+              // },
+              // "& .MuiDataGrid-columnHeader[data-field='mailId']": {
+              //   display: "none",
+              // },
             }}
             initialState={{
               pagination: {
@@ -194,4 +218,4 @@ const Notification = () => {
   );
 };
 
-export default Notification;
+export default Notifications;

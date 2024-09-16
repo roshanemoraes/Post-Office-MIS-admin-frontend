@@ -14,7 +14,12 @@ const Footer = () => {
   };
   return (
     <>
-      <div className="min-h-[300px] bg-gradient-to-r from-gray-600  to-gray-800">
+      <div
+        style={{
+          minHeight: "300px",
+          background: "linear-gradient(to bottom, #171622, #1E2F4E, #2D9F9C)",
+        }}
+      >
         <footer
           className=" text-white text-center py-5"
           style={{ fontSize: "20px" }}
@@ -75,8 +80,12 @@ const Footer = () => {
             </div>
           </div>
 
-          <div>POST OFFICE MIS SEP - 2024</div>
-          <div className="min-h-[120px]"></div>
+          <div
+            style={{ fontWeight: "bold", marginTop: "45px", fontSize: "23px" }}
+          >
+            POST OFFICE MIS SEP - 2024
+          </div>
+          <div className="min-h-[50px]"></div>
         </footer>
       </div>
     </>

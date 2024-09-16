@@ -47,10 +47,7 @@ const Login = () => {
       setError("");
       if (response.data.role) {
         localStorage.setItem("userRoles", JSON.stringify(response.data.role));
-        localStorage.setItem(
-          "userName",
-          JSON.stringify(response.data.username)
-        );
+        localStorage.setItem("userName", response.data.username);
 
         if (response.data.role.includes("ROLE_POSTMASTER")) {
           navigate("/admin/postmaster");

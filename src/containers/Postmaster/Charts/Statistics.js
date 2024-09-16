@@ -1,16 +1,37 @@
-import React from "react";
+import React, { useRef } from "react";
 import BarChart from "./BarChart";
-import { Box } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import StatisticCard from "./StatisticCard";
 import LineChart from "./PostageYearlyChart";
 import DeliveredUndeliveredMonthlyChart from "./DeliveredUndeliveredMonthlyChart";
 import UndeliveredTypesChart from "./UndeliveredTypesChart";
+import { useReactToPrint } from "react-to-print";
 
 const Statistics = () => {
+  const componentRef = useRef();
+  const handlePrint = useReactToPrint({
+    content: () => componentRef.current,
+  });
   return (
     <>
       <div className="grid grid-cols-12 h-screen">
         <div className="col-span-3 sticky top-0 h-screen pt-3 px-4">
+          <Button
+            variant="contained"
+            onClick={handlePrint}
+            sx={{
+              // my: "10px",
+              mb: "10px",
+              backgroundColor: "#852318",
+              color: "white",
+              px: 5,
+              fontSize: "14px",
+              borderRadius: "6px",
+            }}
+            type="submit"
+          >
+            Print
+          </Button>
           <div className="mb-2">
             <StatisticCard
               title="Mails Received Per Month"
@@ -36,7 +57,7 @@ const Statistics = () => {
             />
           </div>
         </div>
-        <div className="col-span-9 overflow-y-auto">
+        <div ref={componentRef} className="col-span-9 overflow-y-auto">
           <Box
             display="flex"
             flexDirection="row"

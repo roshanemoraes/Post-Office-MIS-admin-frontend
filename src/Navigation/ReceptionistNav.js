@@ -13,7 +13,9 @@ import BlurBackground from "../components/Custom/Background/BlurBackground";
 import NormalCourier from "../containers/Receptionist/NormalCourier";
 import NormalParcelPost from "../containers/Receptionist/NormalParcelPost";
 import GovParcelPost from "../containers/Receptionist/GovParcelPost";
+import MoneyOrderPost from "../containers/Receptionist/MoneyOrderPost";
 import MoneyOrders from "../containers/Receptionist/MoneyOrders";
+import ProfilePage from "../components/ProfilePage";
 
 function ReceptionistInterface() {
   const [isSideBarOpen, setSideBarOpen] = useState(window.innerWidth >= 1150);
@@ -32,7 +34,7 @@ function ReceptionistInterface() {
     >
       <SideBar onSidebarToggle={handleSidebarToggle} />
       <div style={{ gridColumn: "2", gridRow: "1" }}>
-        <NavBar />
+        <NavBar role={"receptionist"} />
       </div>
       <BlurBackground />
       <main
@@ -46,11 +48,12 @@ function ReceptionistInterface() {
       >
         <Routes>
           <Route path="/" element={<Dashboard />} />
+          <Route path="/profile" element={<ProfilePage />} />
           <Route path="/normal-post" element={<PersonalMail />} />
           <Route path="/normal-courier" element={<NormalCourier />} />
           <Route path="/normal-parcel" element={<NormalParcelPost />} />
           <Route path="/gov-parcel" element={<GovParcelPost />} />
-          <Route path="/money-orders" element={<MoneyOrders />} />
+          <Route path="/money-order" element={<MoneyOrders />} />
           <Route path="/registered-post" element={<RegisteredPost />} />
           <Route path="/logi-post" element={<LogiPost />} />
           <Route path="/fast-courier" element={<FastCourier />} />

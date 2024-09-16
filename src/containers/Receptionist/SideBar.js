@@ -81,10 +81,6 @@ const SideBar = ({ onSidebarToggle }) => {
                   Government Parcel Post
                 </Link>
               </li>
-
-              <li>
-                <Link to="/admin/receptionist/money-orders">Money Orders</Link>
-              </li>
             </ul>
           </li>
           <li>
@@ -101,8 +97,24 @@ const SideBar = ({ onSidebarToggle }) => {
             </ul>
           </li>
           <li>
+            <Link to="/admin/receptionist/money-order">
+              <i className="bx bx-dollar-circle"></i>
+              <span className="link_name">MONEY ORDER</span>
+            </Link>
+            <ul className="sub-menu blank">
+              <li>
+                <Link
+                  className="link_name"
+                  to="/admin/receptionist/money-order"
+                >
+                  MONEY ORDER
+                </Link>
+              </li>
+            </ul>
+          </li>
+          <li>
             <Link to="/admin/receptionist/customer-mgmt">
-              <i className="bx bx-package"></i>
+              <i className="bx bx-user"></i>
               <span className="link_name">CUSTOMER INFO</span>
             </Link>
             <ul className="sub-menu blank">

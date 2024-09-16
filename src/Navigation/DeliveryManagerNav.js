@@ -13,6 +13,7 @@ import InArea from "../containers/DeliveryManager/MailSortMgmt/InArea";
 import OutArea from "../containers/DeliveryManager/MailSortMgmt/OutArea";
 import BlurBackground from "../components/Custom/Background/BlurBackground";
 import Notifications from "../containers/DeliveryManager/Notifications";
+import ProfilePage from "../components/ProfilePage";
 
 const DeliveryManagerInterface = () => {
   const [isSideBarOpen, setSideBarOpen] = useState(window.innerWidth >= 1024);
@@ -30,7 +31,7 @@ const DeliveryManagerInterface = () => {
     >
       <SideBar onSidebarToggle={handleSidebarToggle} />
       <div style={{ gridColumn: "2", gridRow: "1" }}>
-        <NavBar />
+        <NavBar role={"delivery-manager"} />
       </div>
       <BlurBackground />
       <main
@@ -44,6 +45,7 @@ const DeliveryManagerInterface = () => {
       >
         <Routes>
           <Route path="/" element={<Dashboard />} />
+          <Route path="/profile" element={<ProfilePage />} />
           <Route path="/route-allocation" element={<RouteAllocation />} />
           <Route path="/return-mail" element={<ReturnMailMgmt />} />
           <Route

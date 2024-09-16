@@ -31,7 +31,7 @@ export const mailFormField = {
   },
   senderNIC: {
     label: "Sender NIC",
-    id: "senderNic",
+    id: "senderNIC",
     type: "text",
   },
   senderPhone: {
@@ -80,8 +80,8 @@ export const mailFormField = {
     type: "number",
   },
   cost: {
-    label: "Cost",
-    id: "cost",
+    label: "Charge",
+    id: "charge",
     type: "number",
   },
   transferAmount: {
