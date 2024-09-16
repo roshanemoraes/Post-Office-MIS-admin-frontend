@@ -107,6 +107,7 @@ export default function NavBar({ role }) {
                               "block px-4 py-2 text-sm text-gray-700 no-underline"
                             )}
                           >
+                            <i className="bx bxs-user mr-[8px]"></i>
                             Your Profile
                           </Link>
                         );
@@ -123,6 +124,7 @@ export default function NavBar({ role }) {
                             "block px-4 py-2 text-sm text-gray-700 no-underline"
                           )}
                         >
+                          <i className="bx bx-log-out mr-[8px]"></i>
                           Sign out
                         </Link>
                       )}
