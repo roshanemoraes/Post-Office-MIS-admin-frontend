@@ -126,7 +126,8 @@ export default function OutArea() {
   const fetchData = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:8081/api/delivery-manager/sort/all-pending-out-area"
+        "http://localhost:8081/api/delivery-manager/sort/all-pending-out-area",
+        { withCredentials: true }
       );
       setRows(response.data);
     } catch (error) {
@@ -137,7 +138,8 @@ export default function OutArea() {
   const fetchDistributions = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:8081/api/delivery-manager/sort/all-distribution-assignments"
+        "http://localhost:8081/api/delivery-manager/sort/all-distribution-assignments",
+        { withCredentials: true }
       );
       setRowsDistribution(response.data);
     } catch (e) {

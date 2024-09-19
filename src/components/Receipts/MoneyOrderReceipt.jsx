@@ -2,7 +2,17 @@ import { Box, Divider } from "@mui/material";
 import React from "react";
 import Barcode from "react-barcode";
 
-const NormalMailReceipt = () => {
+const MoneyOrderReceipt = ({
+  formState: {
+    recipientName,
+    recipientNIC,
+    senderName,
+    senderNIC,
+    transferAmount,
+    charge,
+  },
+  receiptId,
+}) => {
   const currentDate = new Date();
   const dateString = currentDate.toLocaleDateString("en-US", {
     year: "numeric",
@@ -69,8 +79,8 @@ const NormalMailReceipt = () => {
           </div>
           <p style={paragraph}>Negombo Post Office</p>
           <p style={paragraph}>Issued At: {dateString}</p>
-          <p style={paragraph}>Issued By: (Receptionist_Name)</p>
-          <p style={paragraph}>Receipt No: 821</p>
+          <p style={paragraph}>Issued By: {localStorage.getItem("userName")}</p>
+          <p style={paragraph}>Receipt No: {receiptId}</p>
 
           <div style={{ marginBottom: "3px", marginTop: "3px" }}>
             <Divider
@@ -82,14 +92,26 @@ const NormalMailReceipt = () => {
             />
           </div>
 
-          <p style={paragraph}>Mail ID: 341</p>
-          <p style={paragraph}>Mail Type: Registered Post</p>
-          <p style={{ marginBottom: "0px" }}>Recipient: A.B. Nipun Shehan</p>
-          <p style={{ marginBottom: "10px" }}>Sender: C.D. Kumara Perera</p>
-          <p style={{ maxWidth: "280px", wordWrap: "break-word" }}>
-            To: 53, Kandy Road, Kandy
+          <p style={{ marginBottom: "0px", marginLeft: "35px" }}>
+            ===Money Order Receipt===
           </p>
-          <p>Charge: Rs. 200</p>
+          <p style={{ marginBottom: "0px" }}>
+            Recipient: {recipientName ? recipientName : "N/A"}
+          </p>
+          <p style={{ marginBottom: "10px" }}>
+            NIC: {recipientNIC ? recipientNIC : "N/A"}
+          </p>
+          <p style={{ marginBottom: "0px" }}>
+            Sender: {senderName ? senderName : "N/A"}
+          </p>
+          <p style={{ marginBottom: "10px" }}>
+            NIC: {senderNIC ? senderNIC : "N/A"}
+          </p>
+
+          <p style={{ marginBottom: "0px" }}>
+            Transfer: {transferAmount ? `Rs. ${transferAmount}` : "N/A"}
+          </p>
+          <p>Charge: {charge ? `Rs. ${charge}` : "N/A"}</p>
           <div
             style={{
               display: "flex",
@@ -98,7 +120,7 @@ const NormalMailReceipt = () => {
             }}
           >
             <Barcode
-              value="341,821"
+              value={`${receiptId},${senderNIC},${recipientNIC}`}
               width={1.8}
               height={50}
               displayValue={false}
@@ -110,4 +132,4 @@ const NormalMailReceipt = () => {
   );
 };
 
-export default NormalMailReceipt;
+export default MoneyOrderReceipt;

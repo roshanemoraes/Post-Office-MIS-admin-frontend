@@ -48,7 +48,7 @@ const SideBar = ({ onSidebarToggle }) => {
           </li>
           <li>
             <Link to="/admin/postmaster/statistics">
-              <i className="bx bx-grid-alt"></i>
+              <i className="bx bx-stats"></i>
               <span className="link_name">STATISTICS</span>
             </Link>
             <ul className="sub-menu blank">
@@ -61,7 +61,7 @@ const SideBar = ({ onSidebarToggle }) => {
           </li>
           <li>
             <Link to="/admin/postmaster/financial-mgmt">
-              <i className="bx bx-grid-alt"></i>
+              <i className="bx bx-dollar-circle"></i>
               <span className="link_name">FINANCIAL MGMT</span>
             </Link>
             <ul className="sub-menu blank">
@@ -105,7 +105,7 @@ const SideBar = ({ onSidebarToggle }) => {
           </li> */}
           <li>
             <Link to="/admin/postmaster/live-map">
-              <i className="bx bx-pie-chart-alt-2"></i>
+              <i className="bx bxs-map"></i>
               <span className="link_name">LIVE MAP</span>
             </Link>
             <ul className="sub-menu blank">
@@ -119,7 +119,7 @@ const SideBar = ({ onSidebarToggle }) => {
 
           <li>
             <Link to="/admin/postmaster/add-employee">
-              <i className="bx bx-compass"></i>
+              <i className="bx bxs-user"></i>
               <span className="link_name">ADD EMPLOYEE</span>
             </Link>
             <ul className="sub-menu blank">
@@ -132,7 +132,7 @@ const SideBar = ({ onSidebarToggle }) => {
           </li>
           <li>
             <Link to="/admin/postmaster/list-employee">
-              <i className="bx bx-line-chart"></i>
+              <i className="bx bx-list-ul"></i>
               <span className="link_name">LIST EMPLOYEES</span>
             </Link>
             <ul className="sub-menu blank">

@@ -16,6 +16,7 @@ function App() {
     <Routes>
       <Route path="/" element={<Navigate to="/login" />} />
       <Route path="/login" element={<CustomerLogin />} />
+
       <Route path="/customer/*" element={<CustomerInterface />} />
 
       <Route path="/admin/" element={<Navigate to="/admin/login" />} />
@@ -33,7 +34,7 @@ function App() {
         element={
           <ProtectedRouteAdmin
             element={PostmasterInterface}
-            allowedRoles={["ROLE_ADMIN"]}
+            allowedRoles={["ROLE_POSTMASTER"]}
           />
         }
       />
@@ -43,7 +44,7 @@ function App() {
         element={
           <ProtectedRouteAdmin
             element={ReceptionistInterface}
-            allowedRoles={["ROLE_USER"]}
+            allowedRoles={["ROLE_RECEPTIONIST"]}
           />
         }
       />

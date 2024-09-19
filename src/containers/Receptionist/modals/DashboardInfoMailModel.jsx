@@ -34,7 +34,7 @@ const DashboardInfoMailModel = ({ data }) => {
         onHide={handleClose}
         backdrop={true} //initially was ="static"
         keyboard={false}
-        dialogClassName="modal-90w"
+        dialogClassName="modal-60w"
       >
         <Modal.Header closeButton>
           <Modal.Title style={{ color: "black" }}>Mail Details</Modal.Title>

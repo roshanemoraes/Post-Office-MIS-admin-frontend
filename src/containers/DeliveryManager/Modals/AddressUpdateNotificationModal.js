@@ -8,13 +8,30 @@ const AddressUpdateNotificationModal = ({ data }) => {
   const [show, setShow] = useState(false);
   const [mailInfo, setMailInfo] = useState(null);
   const [hasUpdated, setHasUpdated] = useState(false);
+  const [newAddress, setNewAddress] = useState("");
 
   const handleClose = () => {
     setShow(false);
   };
-  const handleUpdateClose = () => {
-    setHasUpdated(true);
-    setShow(false);
+  const handleUpdateClose = async () => {
+    try {
+      const response = await axios.post(
+        `http://localhost:8081/api/delivery-manager/return-mail/address-update/update`,
+        {
+          mailId: data.mailId,
+          customerId: data.customerId,
+          undeliverableId: data.undeliverableId,
+          newAddress: newAddress,
+        },
+        { withCredentials: true }
+      );
+      if (response.status === 200) {
+        setHasUpdated(true);
+        setShow(false);
+      }
+    } catch (error) {
+      console.error("Error updating address", error);
+    }
   };
 
   const handleShow = () => {
@@ -25,7 +42,8 @@ const AddressUpdateNotificationModal = ({ data }) => {
   const fetchData = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:8081/api/delivery-manager/return-mail/get-undeliverable-mail/${data.mailId}`
+        `http://localhost:8081/api/delivery-manager/return-mail/get-undeliverable-mail/${data.mailId}`,
+        { withCredentials: true }
       );
       setMailInfo(response.data);
       console.log("This is data", response.data);
@@ -86,7 +104,6 @@ const AddressUpdateNotificationModal = ({ data }) => {
                 Current Address:{" "}
                 <div className="flex flex-row" style={{ color: "black" }}>
                   <div style={{ color: "white" }}>d</div>
-                  {/* Render mailInfo data here */}
                   {mailInfo.destinationAddress}
                 </div>
               </div>
@@ -103,6 +120,8 @@ const AddressUpdateNotificationModal = ({ data }) => {
                 style: { fontSize: 13 },
               }}
               style={{ minWidth: 400 }}
+              value={newAddress}
+              onChange={(e) => setNewAddress(e.target.value)}
             ></TextField>
           </div>
         </Modal.Body>

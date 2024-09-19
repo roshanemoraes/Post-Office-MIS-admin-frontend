@@ -11,6 +11,7 @@ import NavBar from "../components/NavBar";
 import Statistics from "../containers/Postmaster/Charts/Statistics";
 import TestPortal from "../containers/Postmaster/TestPortal";
 import FinancialMgmt from "../containers/Postmaster/FinancialMgmt";
+import ProfilePage from "../components/ProfilePage";
 
 function PostmasterInterface() {
   const [isSideBarOpen, setSideBarOpen] = useState(window.innerWidth >= 1024);
@@ -29,7 +30,7 @@ function PostmasterInterface() {
     >
       <SideBar onSidebarToggle={handleSidebarToggle} />
       <div style={{ gridColumn: "2", gridRow: "1" }}>
-        <NavBar />
+        <NavBar role={"postmaster"} />
       </div>
       <BlurBackground />
       <main
@@ -43,6 +44,7 @@ function PostmasterInterface() {
       >
         <Routes>
           <Route path="/" element={<Dashboard />} />
+          <Route path="/profile" element={<ProfilePage />} />
           <Route path="/add-employee" element={<AddEmployee />} />
           <Route path="/list-employee" element={<ListEmployee />} />
           <Route path="/live-map" element={<LiveMap />} />

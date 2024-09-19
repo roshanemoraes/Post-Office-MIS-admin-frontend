@@ -52,7 +52,8 @@ export default function AssignRoute() {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:8081/api/delivery-manager/route/list-all"
+          "http://localhost:8081/api/delivery-manager/route/list-all",
+          { withCredentials: true }
         );
         setRows(response.data);
         console.log(response.data);

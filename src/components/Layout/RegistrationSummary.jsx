@@ -31,13 +31,13 @@ export default function RegistrationSummary() {
       mailType = "normal-post";
       option = "Normal Posts";
     } else if (eventKey === "#/2") {
-      mailType = "courier-normal";
+      mailType = "normal-courier";
       option = "Normal Courier";
     } else if (eventKey === "#/3") {
-      mailType = "parcel-gov";
+      mailType = "gov-parcel";
       option = "Gov Parcel";
     } else if (eventKey === "#/4") {
-      mailType = "parcel-normal";
+      mailType = "normal-parcel";
       option = "Normal Parcel";
     }
     setSelectedOption(option);
@@ -92,6 +92,8 @@ export default function RegistrationSummary() {
       const response = await axios.get(
         "http://localhost:8081/api/receptionist/summary/get-mails",
         {
+          withCredentials: true,
+
           params: {
             mailType: type,
             datePosted: "2024-06-10",
@@ -109,7 +111,7 @@ export default function RegistrationSummary() {
   };
 
   useEffect(() => {
-    fetchData("courier-normal");
+    fetchData("normal-post");
   }, []);
 
   return (

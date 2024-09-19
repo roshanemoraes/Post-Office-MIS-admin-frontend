@@ -28,7 +28,8 @@ const InfoCard = ({ backgroundColor, title, value }) => {
             color: "#6b7280",
             marginBottom: "10px",
             marginLeft: "6px",
-            fontSize: "12px",
+            fontSize: "13px",
+            fontWeight: "normal",
           }}
         >
           {title}
