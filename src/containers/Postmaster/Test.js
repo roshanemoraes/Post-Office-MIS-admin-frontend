@@ -52,10 +52,14 @@ class Test extends Component {
 
   postMatrix = (matrix, addresses) => {
     axios
-      .post("http://localhost:8081/matrix/post-matrix", {
-        matrix,
-        addresses,
-      })
+      .post(
+        "http://localhost:8081/matrix/post-matrix",
+        {
+          matrix,
+          addresses,
+        },
+        { withCredentials: true }
+      )
       .then((response) => {
         console.log(response.data);
       })

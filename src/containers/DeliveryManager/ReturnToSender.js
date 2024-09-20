@@ -22,7 +22,8 @@ export default function ReturnToSender() {
     console.log("Mail ID: ", row.undeliverableId);
     try {
       const response = await axios.post(
-        `http://localhost:8081/api/delivery-manager/return-mail/return-to-sender/add/${row.undeliverableId}`
+        `http://localhost:8081/api/delivery-manager/return-mail/return-to-sender/add/${row.undeliverableId}`,
+        { withCredentials: true }
       );
       if (response.status === 200) {
         fetchData();
@@ -91,7 +92,8 @@ export default function ReturnToSender() {
   const fetchData = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:8081/api/delivery-manager/return-mail/return-to-sender"
+        "http://localhost:8081/api/delivery-manager/return-mail/return-to-sender",
+        { withCredentials: true }
       );
       setRows(response.data);
       console.log(response.data);

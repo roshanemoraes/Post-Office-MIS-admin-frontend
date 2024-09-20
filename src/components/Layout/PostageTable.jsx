@@ -34,10 +34,10 @@ export default function PostageTable() {
   };
 
   const columns = [
-    { field: "id", headerName: "postageId", width: 105 },
+    { field: "id", headerName: "postageId", width: 110 },
     { field: "minWeight", headerName: "Min Weight", width: 120 },
     { field: "maxWeight", headerName: "Max Weight", width: 120 },
-    { field: "price", headerName: "Postage", width: 120 },
+    { field: "price", headerName: "Postage", width: 100 },
   ];
 
   //   const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
@@ -46,7 +46,8 @@ export default function PostageTable() {
     setLoading(true);
     try {
       const response = await axios.get(
-        `http://localhost:8081/postage/list/${type}`
+        `http://localhost:8081/postage/list/${type}`,
+        { withCredentials: true }
       );
       setRows(response.data);
       console.log(response.data);
@@ -105,53 +106,55 @@ export default function PostageTable() {
             <span className="sr-only">Loading...</span>
           </Spinner>
         ) : (
-          <DataGrid
-            rows={rows}
-            columns={columns}
-            rowHeight={40}
-            getRowId={(row) => row.id}
-            sx={{
-              ".MuiDataGrid-columnSeparator": {
-                display: "none",
-              },
-              "&.MuiDataGrid-root": {
-                border: "none",
-              },
-              "& .MuiDataGrid-columnHeaderTitle": {
-                whiteSpace: "normal",
-                lineHeight: "normal",
-                fontSize: "14px",
-              },
-              "& .MuiDataGrid-columnHeader": {
-                height: "unset !important",
-              },
-              "& .MuiDataGrid-columnHeaders": {
-                maxHeight: "168px !important",
-                fontSize: "12px",
-              },
-              "& .MuiDataGrid-cell": {
-                fontSize: "12px",
-              },
-              "& .MuiDataGrid-footerContainer": {
-                fontSize: "12px",
-              },
-            }}
-            initialState={{
-              pagination: {
-                paginationModel: { page: 0, pageSize: 10 },
-              },
-              sorting: {
-                sortModel: [{ field: "minWeight", sort: "asc" }],
-              },
-            }}
-            columnVisibilityModel={{
-              id: false,
-            }}
-            disableColumnMenu={{
-              minWeight: true,
-              maxWeight: false,
-            }}
-          />
+          <div style={{ height: 509 }}>
+            <DataGrid
+              rows={rows}
+              columns={columns}
+              rowHeight={40}
+              getRowId={(row) => row.id}
+              sx={{
+                ".MuiDataGrid-columnSeparator": {
+                  display: "none",
+                },
+                "&.MuiDataGrid-root": {
+                  border: "none",
+                },
+                "& .MuiDataGrid-columnHeaderTitle": {
+                  whiteSpace: "normal",
+                  lineHeight: "normal",
+                  fontSize: "14px",
+                },
+                "& .MuiDataGrid-columnHeader": {
+                  height: "unset !important",
+                },
+                "& .MuiDataGrid-columnHeaders": {
+                  maxHeight: "168px !important",
+                  fontSize: "12px",
+                },
+                "& .MuiDataGrid-cell": {
+                  fontSize: "12px",
+                },
+                "& .MuiDataGrid-footerContainer": {
+                  fontSize: "12px",
+                },
+              }}
+              initialState={{
+                pagination: {
+                  paginationModel: { page: 0, pageSize: 10 },
+                },
+                sorting: {
+                  sortModel: [{ field: "minWeight", sort: "asc" }],
+                },
+              }}
+              columnVisibilityModel={{
+                id: false,
+              }}
+              disableColumnMenu={{
+                minWeight: true,
+                maxWeight: false,
+              }}
+            />
+          </div>
         )}
       </div>
     </>

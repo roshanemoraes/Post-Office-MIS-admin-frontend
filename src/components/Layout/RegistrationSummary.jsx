@@ -31,13 +31,13 @@ export default function RegistrationSummary() {
       mailType = "normal-post";
       option = "Normal Posts";
     } else if (eventKey === "#/2") {
-      mailType = "courier-normal";
+      mailType = "normal-courier";
       option = "Normal Courier";
     } else if (eventKey === "#/3") {
-      mailType = "parcel-gov";
+      mailType = "gov-parcel";
       option = "Gov Parcel";
     } else if (eventKey === "#/4") {
-      mailType = "parcel-normal";
+      mailType = "normal-parcel";
       option = "Normal Parcel";
     }
     setSelectedOption(option);
@@ -92,6 +92,8 @@ export default function RegistrationSummary() {
       const response = await axios.get(
         "http://localhost:8081/api/receptionist/summary/get-mails",
         {
+          withCredentials: true,
+
           params: {
             mailType: type,
             datePosted: "2024-06-10",
@@ -109,7 +111,7 @@ export default function RegistrationSummary() {
   };
 
   useEffect(() => {
-    fetchData("courier-normal");
+    fetchData("normal-post");
   }, []);
 
   return (
@@ -132,21 +134,6 @@ export default function RegistrationSummary() {
             marginLeft: "10px",
           }}
         >
-          {/* <div className="mr-2">
-            <DropdownButton
-              id="dropdown-basic-button"
-              size="sm"
-              title={selectedOption}
-              onSelect={handleSelect}
-              variant="secondary"
-            >
-              <Dropdown.Item href="#/1">Normal Post</Dropdown.Item>
-              <Dropdown.Item href="#/2">Normal Courier</Dropdown.Item>
-              <Dropdown.Item href="#/3">Gov Parcel</Dropdown.Item>
-              <Dropdown.Item href="#/4">Normal Parcel</Dropdown.Item>
-            </DropdownButton>
-          </div> */}
-
           <DropdownButton
             id="dropdown-basic-button"
             size="sm"
@@ -182,57 +169,59 @@ export default function RegistrationSummary() {
             <span className="sr-only">Loading...</span>
           </Spinner>
         ) : (
-          <DataGrid
-            rows={rows}
-            columns={columns_normal_posts}
-            rowHeight={40}
-            getRowId={(row) => row.mailId}
-            sx={{
-              ".MuiDataGrid-columnSeparator": {
-                display: "none",
-              },
-              "&.MuiDataGrid-root": {
-                border: "none",
-              },
-              "& .MuiDataGrid-columnHeaderTitle": {
-                whiteSpace: "normal",
-                lineHeight: "normal",
-                fontSize: "14px", // Adjusts font size for header titles
-              },
-              "& .MuiDataGrid-columnHeader": {
-                height: "unset !important",
-              },
-              "& .MuiDataGrid-columnHeaders": {
-                maxHeight: "168px !important",
-                fontSize: "12px", // Adjusts font size for the column headers
-              },
-              "& .MuiDataGrid-cell": {
-                fontSize: "12px", // Adjusts font size for the cell content
-              },
-              "& .MuiDataGrid-footerContainer": {
-                fontSize: "12px", // Adjusts font size for the footer (if pagination is enabled)
-              },
-            }}
-            initialState={{
-              pagination: {
-                paginationModel: { page: 0, pageSize: 10 },
-              },
-            }}
-            columnVisibilityModel={{
-              destinationAddress: false,
-              // id: false,
-            }}
-            disableColumnMenu={
-              {
-                // minWeight: true,
-                // maxWeight: false,
-                // destinations: true,
-                // status: false,
-                // action: true,
+          <div style={{ height: 509 }}>
+            <DataGrid
+              rows={rows}
+              columns={columns_normal_posts}
+              rowHeight={40}
+              getRowId={(row) => row.mailId}
+              sx={{
+                ".MuiDataGrid-columnSeparator": {
+                  display: "none",
+                },
+                "&.MuiDataGrid-root": {
+                  border: "none",
+                },
+                "& .MuiDataGrid-columnHeaderTitle": {
+                  whiteSpace: "normal",
+                  lineHeight: "normal",
+                  fontSize: "14px", // Adjusts font size for header titles
+                },
+                "& .MuiDataGrid-columnHeader": {
+                  height: "unset !important",
+                },
+                "& .MuiDataGrid-columnHeaders": {
+                  maxHeight: "168px !important",
+                  fontSize: "12px", // Adjusts font size for the column headers
+                },
+                "& .MuiDataGrid-cell": {
+                  fontSize: "12px", // Adjusts font size for the cell content
+                },
+                "& .MuiDataGrid-footerContainer": {
+                  fontSize: "12px", // Adjusts font size for the footer (if pagination is enabled)
+                },
+              }}
+              initialState={{
+                pagination: {
+                  paginationModel: { page: 0, pageSize: 10 },
+                },
+              }}
+              columnVisibilityModel={{
+                destinationAddress: false,
+                // id: false,
+              }}
+              disableColumnMenu={
+                {
+                  // minWeight: true,
+                  // maxWeight: false,
+                  // destinations: true,
+                  // status: false,
+                  // action: true,
+                }
               }
-            }
-            // pageSizeOptions={[5, 5]}
-          />
+              // pageSizeOptions={[5, 5]}
+            />
+          </div>
         )}
       </div>
     </>

@@ -50,7 +50,7 @@ const SideBar = ({ onSidebarToggle }) => {
           <li className={isSubMenuOpen[1] ? "showMenu" : ""}>
             <div className="iocn-link">
               <Link to="#">
-                <i className="bx bx-envelope"></i>
+                <i className="bx bx-sort"></i>
                 <span className="link_name">SORT MAILS</span>
               </Link>
               <i
@@ -83,7 +83,7 @@ const SideBar = ({ onSidebarToggle }) => {
           </li>
           <li>
             <Link to="/admin/delivery-manager/route-allocation">
-              <i className="bx bx-pie-chart-alt-2"></i>
+              <i className="bx bxs-map"></i>
               <span className="link_name">ASSIGN ROUTE</span>
             </Link>
             <ul className="sub-menu blank">

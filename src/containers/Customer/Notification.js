@@ -7,7 +7,7 @@ import ReturnToSenderNotification from "../../components/Notification/ReturnToSe
 import { Client } from "@stomp/stompjs";
 import SockJS from "sockjs-client";
 import UpdateIcon from "../../assets/pencil-fill.svg";
-import AddressUpdateNotificationModal from "./Modals/AddressUpdateNotificationModal";
+import AddressUpdateNotificationModal from "../DeliveryManager/Modals/AddressUpdateNotificationModal";
 
 const Notifications = () => {
   const [rows, setRows] = React.useState([]);
@@ -19,6 +19,7 @@ const Notifications = () => {
     { field: "date", headerName: "Date", width: 150 },
     { field: "message", headerName: "Message", width: 500 },
     { field: "notificationId", headerName: "ID", width: 100 },
+    { field: "undeliverableId", headerName: "Undelivered ID", width: 100 },
     { field: "type", headerName: "Type", width: 180 },
     { field: "read", headerName: "Read", width: 120 },
     { field: "mailId", headerName: "Mail Id", width: 120 },
@@ -47,8 +48,7 @@ const Notifications = () => {
     setIsClicked(true);
     try {
       const response = await axios.get(
-        "http://localhost:8081/api/notifications/2",
-        { withCredentials: true }
+        "http://localhost:8081/api/notifications/3"
       );
       setRows(response.data);
       console.log(response.data);
@@ -60,8 +60,7 @@ const Notifications = () => {
     setIsClicked(false);
     try {
       const response = await axios.get(
-        "http://localhost:8081/api/notifications/unread/2",
-        { withCredentials: true }
+        "http://localhost:8081/api/notifications/unread/3"
       );
       setRows(response.data);
       console.log(response.data);
@@ -78,7 +77,8 @@ const Notifications = () => {
       webSocketFactory: () => new SockJS("http://localhost:8081/ws"),
       onConnect: () => {
         console.log("Connected to WebSocket");
-        stompClient.subscribe(`/topic/notifications`, (message) => {
+        const customerId = 3;
+        stompClient.subscribe(`/topic/customer/${customerId}`, (message) => {
           fetchData();
           console.log("Received message:", message);
           const notification = JSON.parse(message.body);

@@ -1,0 +1,44 @@
+/* Add this to your global CSS file */
+@media print {
+    body {
+        margin: 0;
+        padding: 0;
+        -webkit-print-color-adjust: exact;
+        /* Ensure colors print accurately */
+    }
+
+    /* Hide sidebar during print */
+    .col-span-3 {
+        display: none !important;
+    }
+
+    /* Main content full width on print */
+    .col-span-9 {
+        width: 100% !important;
+        padding: 0 !important;
+    }
+
+    /* Charts full width on print */
+    .box {
+        width: 100% !important;
+        min-width: 0 !important;
+        height: auto !important;
+        /* Let the content decide height */
+        margin: 0 !important;
+    }
+
+    /* Page breaks */
+    .page-break {
+        page-break-before: always;
+    }
+
+    /* Hide Print button */
+    button {
+        display: none !important;
+    }
+
+    /* Optionally set margins for print */
+    @page {
+        margin: 10mm;
+    }
+}

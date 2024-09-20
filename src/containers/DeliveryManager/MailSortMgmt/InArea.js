@@ -34,7 +34,8 @@ export default function InArea() {
         {
           zone: data.zone,
           postmanId: data.postmanId,
-        }
+        },
+        { withCredentials: true }
       );
       fetchAssignments();
     } catch (error) {
@@ -76,7 +77,8 @@ export default function InArea() {
   const fetchData = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:8081/api/delivery-manager/sort/all-pending-in-area"
+        "http://localhost:8081/api/delivery-manager/sort/all-pending-in-area",
+        { withCredentials: true }
       );
       setRows(response.data);
       console.log(response.data);
@@ -92,7 +94,8 @@ export default function InArea() {
   const fetchAssignments = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:8081/api/delivery-manager/sort/all-postman-assignments"
+        "http://localhost:8081/api/delivery-manager/sort/all-postman-assignments",
+        { withCredentials: true }
       );
       setRowsPostman(response.data);
       console.log(response.data);

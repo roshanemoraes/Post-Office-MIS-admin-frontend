@@ -1,10 +1,25 @@
 import React from "react";
-import { Link } from "react-router-dom";
-
+//import { Link } from "react-router-dom";
+import { FaWhatsapp, FaEnvelope } from "react-icons/fa"; // Importing icons
 const Footer = () => {
+  // WhatsApp and Email handler functions
+  const openWhatsApp = () => {
+    const whatsappNumber = "0765531092";
+    window.open(`https://wa.me/${whatsappNumber}`, "_blank");
+  };
+
+  const openEmail = () => {
+    const email = "kokilameddewitage@gmail.com";
+    window.open(`mailto:${email}`, "_blank");
+  };
   return (
     <>
-      <div className="min-h-[300px] bg-gradient-to-r from-gray-600  to-gray-800">
+      <div
+        style={{
+          minHeight: "300px",
+          background: "linear-gradient(to bottom, #171622, #1E2F4E, #2D9F9C)",
+        }}
+      >
         <footer
           className=" text-white text-center py-5"
           style={{ fontSize: "20px" }}
@@ -41,11 +56,36 @@ const Footer = () => {
               </div>
             </div>
             <div className="col-span-2">
-              <div>GET IN TOUCH</div>
+              <div className="flex flex-col items-center">
+                <div className="mb-2">GET IN TOUCH</div>
+                <div className="flex flex-col space-y-4 mt-2">
+                  {/* WhatsApp Icon */}
+                  <div
+                    className="flex items-center space-x-2 cursor-pointer"
+                    onClick={openWhatsApp}
+                  >
+                    <FaWhatsapp size={25} />
+                    <span className="text-[15px]">WhatsApp</span>
+                  </div>
+                  {/* Email Icon */}
+                  <div
+                    className="flex items-center space-x-2 cursor-pointer"
+                    onClick={openEmail}
+                  >
+                    <FaEnvelope size={25} />
+                    <span className="text-[15px]">Email</span>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
-          <div>POST OFFICE MIS SEP - 2024</div>
-          <div className="min-h-[120px]"></div>
+
+          <div
+            style={{ fontWeight: "bold", marginTop: "45px", fontSize: "23px" }}
+          >
+            POST OFFICE MIS SEP - 2024
+          </div>
+          <div className="min-h-[50px]"></div>
         </footer>
       </div>
     </>

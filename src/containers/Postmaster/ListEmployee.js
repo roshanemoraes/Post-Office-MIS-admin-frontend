@@ -1,6 +1,8 @@
 import React, { useEffect } from "react";
 import { DataGrid } from "@mui/x-data-grid";
 import axios from "axios";
+import DownArrowIcon from "./../../assets/arrow-down-square-fill.svg";
+import InfoCard from "../../components/Layout/InfoCard";
 
 export default function ListEmployee() {
   const [rows, setRows] = React.useState([]);
@@ -17,7 +19,8 @@ export default function ListEmployee() {
   const fetchData = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:8081/api/postmaster/employee/list-employee"
+        "http://localhost:8081/api/postmaster/employee/list-employee",
+        { withCredentials: true }
       );
       console.log("request came!");
       setRows(response.data);
@@ -31,27 +34,87 @@ export default function ListEmployee() {
   }, []);
   return (
     <>
-      <div className="h-[550px] pt-1 flex flex-col justify-center items-center">
-        <DataGrid
-          rows={rows}
-          columns={columns}
-          rowHeight={50}
-          sx={{
-            backgroundColor: "#f5f5f5",
-            boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.1)",
-            ".MuiDataGrid-columnSeparator": {
-              display: "none",
-            },
-            "&.MuiDataGrid-root": {
-              border: "none",
-            },
-          }}
-          initialState={{
-            pagination: {
-              paginationModel: { page: 0, pageSize: 10 },
-            },
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          padding: "10px",
+          // fontWeight: "bold",
+          marginBottom: "10px",
+          marginTop: "10px",
+          backgroundColor: "#a3a3a3",
+        }}
+      >
+        All Registered Employees
+        <img
+          src={DownArrowIcon}
+          alt="All In-Area Mails"
+          style={{
+            marginRight: "10px",
+            marginLeft: "20px",
+            width: "30px",
+            height: "30px",
           }}
         />
+      </div>
+
+      <div className="grid grid-cols-12">
+        <div className="col-span-2 flex flex-col pt-[4.5px] ">
+          <div>
+            <InfoCard
+              backgroundColor={"#ffffff"}
+              title={"RECEPTIONIST COUNT"}
+              value={"6"}
+            />
+          </div>
+          <div>
+            <InfoCard
+              backgroundColor={"#ffffff"}
+              title={"MANAGER COUNT"}
+              value={"4"}
+            />
+          </div>
+          <div>
+            <InfoCard
+              backgroundColor={"#ffffff"}
+              title={"POSTMAN COUNT"}
+              value={"15"}
+            />
+          </div>
+        </div>
+        <div
+          className="col-span-10"
+          style={{
+            height: 514,
+            paddingTop: "5px",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <DataGrid
+            rows={rows}
+            columns={columns}
+            rowHeight={50}
+            sx={{
+              backgroundColor: "#f5f5f5",
+              boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.1)",
+              ".MuiDataGrid-columnSeparator": {
+                display: "none",
+              },
+              "&.MuiDataGrid-root": {
+                border: "none",
+              },
+            }}
+            initialState={{
+              pagination: {
+                paginationModel: { page: 0, pageSize: 8 },
+              },
+            }}
+          />
+        </div>
       </div>
       <div className="ml-[50px]"></div>
     </>

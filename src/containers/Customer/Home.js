@@ -1,4 +1,3 @@
-import React from "react";
 import image from "../../assets/Customer/hero-logo.jpg";
 import addressupdatimg from "../../assets/Customer/address update.svg";
 import mailhistoryimg from "../../assets/Customer/mail history.svg";
@@ -6,8 +5,23 @@ import moneyorderimg from "../../assets/Customer/Money Orders.svg";
 import notificationimg from "../../assets/Customer/notification.svg";
 import { Box, Button } from "@mui/material";
 import Footer from "./../../components/Layout/Customer/Footer";
+import { useNavigate } from "react-router-dom";
 
 function Home() {
+  const navigate = useNavigate();
+
+  const handleGoToNotification = () => {
+    navigate("../notification");
+  };
+
+  const handleGoToPendingPost = () => {
+    navigate("../pendingpost");
+  };
+
+  const handleGoToDeliveredPost = () => {
+    navigate("../sentpost");
+  };
+
   return (
     <>
       <div className="flex flex-col min-h-screen">
@@ -74,6 +88,7 @@ function Home() {
                         fontSize: "14px",
                         borderRadius: "20px",
                       }}
+                      onClick={handleGoToNotification}
                     >
                       Go
                     </Button>
@@ -105,7 +120,7 @@ function Home() {
                   width: "100%",
                   minHeight: "500px",
                   minWidth: "550px",
-                  backgroundColor: "#e5e7eb",
+                  backgroundColor: "#fff",
                   padding: "30px 2px 30px 2px",
                   boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.1)",
                 }}
@@ -134,6 +149,7 @@ function Home() {
                         fontSize: "14px",
                         borderRadius: "20px",
                       }}
+                      onClick={handleGoToPendingPost}
                     >
                       Go
                     </Button>
@@ -165,7 +181,7 @@ function Home() {
                   width: "100%",
                   minHeight: "500px",
                   minWidth: "550px",
-                  backgroundColor: "#e5e7eb",
+                  backgroundColor: "#fff",
                   padding: "30px 2px 30px 2px",
                   boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.1)",
                 }}
@@ -254,6 +270,7 @@ function Home() {
                         fontSize: "14px",
                         borderRadius: "20px",
                       }}
+                      onClick={handleGoToDeliveredPost}
                     >
                       Go
                     </Button>

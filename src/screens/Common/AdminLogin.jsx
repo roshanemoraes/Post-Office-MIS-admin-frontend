@@ -32,12 +32,11 @@ const Login = () => {
     left: "50%",
     transform: "translate(-50%, -50%)",
   };
-
   const handleSignIn = async (e) => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "http://localhost:8080/products/authenticate",
+        "http://localhost:8081/admin/authenticate",
         {
           username: email,
           password: password,
@@ -48,16 +47,13 @@ const Login = () => {
       setError("");
       if (response.data.role) {
         localStorage.setItem("userRoles", JSON.stringify(response.data.role));
-        localStorage.setItem(
-          "userName",
-          JSON.stringify(response.data.username)
-        );
+        localStorage.setItem("userName", response.data.username);
 
-        if (response.data.role.includes("ROLE_ADMIN")) {
+        if (response.data.role.includes("ROLE_POSTMASTER")) {
           navigate("/admin/postmaster");
         } else if (response.data.role.includes("ROLE_MANAGER")) {
           navigate("/admin/delivery-manager");
-        } else if (response.data.role.includes("ROLE_USER")) {
+        } else if (response.data.role.includes("ROLE_RECEPTIONIST")) {
           navigate("/admin/receptionist");
         } else {
           navigate("/admin/login");
@@ -69,7 +65,6 @@ const Login = () => {
       setError("Login failed. Please check your credentials.");
     }
   };
-
   return (
     <div>
       <LoginNavBar />

@@ -35,3 +35,9 @@
     bottom: -4px;
     left: 20px;
 }
+.navbar a{
+    text-decoration: none !important;
+}
+.navbar a:hover{
+    text-decoration: none !important;
+}

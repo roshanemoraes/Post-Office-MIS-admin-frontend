@@ -22,6 +22,7 @@ export default function ReturnMailMgmt() {
         "http://localhost:8081/api/delivery-manager/return-mail/add/return-to-sender",
         undeliverableId,
         {
+          withCredentials: true,
           headers: {
             "Content-Type": "text/plain",
           },
@@ -47,6 +48,7 @@ export default function ReturnMailMgmt() {
         "http://localhost:8081/api/delivery-manager/return-mail/add/address-update",
         undeliverableId,
         {
+          withCredentials: true,
           headers: {
             "Content-Type": "text/plain",
           },
@@ -72,6 +74,7 @@ export default function ReturnMailMgmt() {
         "http://localhost:8081/api/delivery-manager/return-mail/add/discarded-mail",
         undeliverableId,
         {
+          withCredentials: true,
           headers: {
             "Content-Type": "text/plain",
           },
@@ -149,7 +152,8 @@ export default function ReturnMailMgmt() {
   const fetchData = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:8081/api/delivery-manager/return-mail/list-all"
+        "http://localhost:8081/api/delivery-manager/return-mail/list-all",
+        { withCredentials: true }
       );
       setRows(response.data);
       console.log(response.data);

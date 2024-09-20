@@ -22,7 +22,8 @@ const Map = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:8081/api/postmaster/employee/live-map"
+          "http://localhost:8081/api/postmaster/employee/live-map",
+          { withCredentials: true }
         );
         setLocations(response.data);
         console.log(response.data);
