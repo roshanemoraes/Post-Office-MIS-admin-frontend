@@ -14,15 +14,14 @@ const columns = [
 
 export default function ProfileDataTable() {
   const [rows, setRows] = React.useState([]);
-//profile data are not fetched to the frontend
+  //profile data are not fetched to the frontend
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-         "http://localhost:8081/api/customer/list/profile/2"   //- backend URL
-         //'https://ca4b8d9b-5e2d-419e-a788-e0665410011f.mock.pstmn.io/Mobile'
-         //"https://dd98e124-a193-432b-9b9b-af77479440a5.mock.pstmn.io/Profile"  - postman table url
-
+          "http://localhost:8081/api/customer/list/profile/2" //- backend URL
+          //'https://ca4b8d9b-5e2d-419e-a788-e0665410011f.mock.pstmn.io/Mobile'
+          //"https://dd98e124-a193-432b-9b9b-af77479440a5.mock.pstmn.io/Profile"  - postman table url
         );
         console.log("request came!");
         setRows(response.data);
@@ -32,7 +31,7 @@ export default function ProfileDataTable() {
     };
 
     fetchData();
-  }, []); 
+  }, []);
 
   return (
     <div style={{ height: 680, width: "100%" }}>

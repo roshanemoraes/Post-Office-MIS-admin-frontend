@@ -27,30 +27,58 @@ const Footer = () => {
           <div className="grid grid-cols-6 mx-[50px]">
             <div className="col-span-2">Badge</div>
             <div className="col-span-1">
-              <div className="flex flex-col items-start mb-[20px]">
+              <div className="flex flex-col items-start mb-[30px]">
                 SERVICES
               </div>
-              <div className="flex flex-col items-start text-[15px] space-y-2">
-                <div>Subscribe</div>
-                <div>Store</div>
-                <div>Contact</div>
-                <div>Advertise</div>
-                <div>Submit</div>
-                <div>Sample Issue</div>
-                <div>Cancel Subscription</div>
+              <div className="flex flex-col items-start text-[15px] space-y-6 cursor-pointer">
+                <a
+                  href="https://slpost.gov.lk/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="no-underline text-white"
+                >
+                  Information
+                </a>
+                <a
+                  href="https://slpost.gov.lk/services/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="no-underline text-white"
+                >
+                  Services
+                </a>
+                <a
+                  href="https://slpost.gov.lk/about-us/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="no-underline text-white"
+                >
+                  About Us
+                </a>
+                <a
+                  href="https://slpost.gov.lk/contact-us/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="no-underline text-white"
+                >
+                  Contact
+                </a>
               </div>
             </div>
             <div className="col-span-1">
-              <div className="flex flex-col items-start mb-[15px]">
+              <div className="flex flex-col items-start mb-[25px]">
                 PRODUCTS
               </div>
-              <div className="flex flex-col items-start text-[15px] space-y-2 mb-[20px]">
+              <div className="flex flex-col items-start text-[15px] space-y-6 mb-[20px]">
                 <div>Postal Admin Portal</div>
                 <div>Customer Portal</div>
                 <div>Postman Assistant App</div>
               </div>
-              <div className="flex flex-col items-start my-[15px]">SL POST</div>
-              <div className="flex flex-col items-start text-[15px] space-y-2 mb-[50px]">
+
+              <div className="flex flex-col items-start my-[15px] mt-[20px] mb-[25px]">
+                SL POST
+              </div>
+              <div className="flex flex-col items-start text-[15px] space-y-6 mb-[50px]">
                 <div>Terms & Conditions</div>
                 <div>Privacy Policy</div>
               </div>
@@ -81,7 +109,7 @@ const Footer = () => {
           </div>
 
           <div
-            style={{ fontWeight: "bold", marginTop: "45px", fontSize: "23px" }}
+            style={{ fontWeight: "bold", marginTop: "40px", fontSize: "23px" }}
           >
             POST OFFICE MIS SEP - 2024
           </div>
