@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+/*import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import personIcon from "./person-circle.svg";
 import axios from "axios";
@@ -78,26 +78,12 @@ const Profile = () => {
       >
         Profile Details
       </h4>
-      <div className="bg-[#9ca3af] h-[2px] mx-[500px] my-[50px]"></div>
-      {/* <ProfileDataTable /> */}
+      <div className="bg-[#9ca3af] h-[2px] mx-[500px] my-[50px]"></div>*/
+{
+  /* <ProfileDataTable /> */
+}
 
-      {/* <div className="flex justify-center w-full max-w-[700px] border border-black mx-auto">
-        <div
-          className="grid grid-cols-6  flex "
-          style={{ alignItems: "center" }}
-        >
-          <div className="col-span-2 text-[20px] md:font-bold">ID</div>
-          <div className="col-span-4">
-            <input
-              readOnly
-              value={rows.id}
-              className="mt-2.5 px-4 py-3 border-2 rounded-md text-[22px] w-full"
-            />
-          </div>
-        </div>
-      </div> */}
-
-      <div
+/*<div
         className="grid grid-cols-3 mx-[500px] flex "
         style={{ alignItems: "center" }}
       >
@@ -168,4 +154,142 @@ const Profile = () => {
   );
 };
 
+export default Profile;*/
+import React from "react";
+import { useNavigate } from "react-router-dom";
+const Profile = () => {
+  const navigateToUpdatePage = () => {
+    navigate("/customer/profile/updateprofile");
+  };
+  return (
+    <div className="container mx-auto p-6 mt-20">
+      <div className="flex flex-wrap -mx-4">
+        <div className="w-full lg:w-1/4 px-4 mb-6">
+          <div className="bg-white rounded-lg shadow-lg p-6">
+            <div className="account-settings text-center">
+              <div className="user-avatar mb-4">
+                <img
+                  className="w-24 h-24 rounded-full mx-auto"
+                  src="https://bootdey.com/img/Content/avatar/avatar7.png"
+                  alt="Customer Profile"
+                />
+              </div>
+              <h5 className="text-lg font-semibold">Sunil Fernando</h5>
+              <h6 className="text-gray-500 text-sm">sunil@gmail.com</h6>
+              <h6 className="text-gray-500 text-sm">0765557281</h6>
+            </div>
+          </div>
+        </div>
+        {/* customer info table */}
+        <div className="w-full lg:w-3/4 px-4">
+          <div className="bg-white rounded-lg shadow-lg p-6">
+            <div className="mb-6">
+              <h6 className="text-blue-500 mb-4">Personal Details</h6>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="form-group">
+                  <label
+                    htmlFor="id"
+                    className="block text-sm font-medium text-gray-700"
+                  >
+                    ID
+                  </label>
+                  <input
+                    type="text"
+                    id="id"
+                    className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3"
+                    placeholder="Enter ID"
+                  />
+                </div>
+                <div className="form-group">
+                  <label
+                    htmlFor="nic"
+                    className="block text-sm font-medium text-gray-700"
+                  >
+                    NIC
+                  </label>
+                  <input
+                    type="text"
+                    id="nic"
+                    className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3"
+                    placeholder="Enter NIC"
+                  />
+                </div>
+                <div className="form-group">
+                  <label
+                    htmlFor="fullName"
+                    className="block text-sm font-medium text-gray-700"
+                  >
+                    Full Name
+                  </label>
+                  <input
+                    type="text"
+                    id="fullName"
+                    className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3"
+                    placeholder="Enter full name"
+                  />
+                </div>
+                <div className="form-group">
+                  <label
+                    htmlFor="userName"
+                    className="block text-sm font-medium text-gray-700"
+                  >
+                    User Name
+                  </label>
+                  <input
+                    type="text"
+                    id="userName"
+                    className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3"
+                    placeholder="Enter User Name"
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label
+                    htmlFor="phone"
+                    className="block text-sm font-medium text-gray-700"
+                  >
+                    Contact Number
+                  </label>
+                  <input
+                    type="text"
+                    id="phone"
+                    className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3"
+                    placeholder="Enter phone number"
+                  />
+                </div>
+                <div className="form-group">
+                  <label
+                    htmlFor="eMail"
+                    className="block text-sm font-medium text-gray-700"
+                  >
+                    Email
+                  </label>
+                  <input
+                    readOnly
+                    type="email"
+                    id="eMail"
+                    className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3"
+                    placeholder="Enter email ID"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div className="text-right">
+              <button className="bg-gray-500 text-white py-2 px-4 rounded mr-2">
+                Cancel
+              </button>
+              <button
+                className="bg-blue-500 text-white py-2 px-4 rounded"
+                onClick={navigateToUpdatePage}
+              >
+                Update
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
 export default Profile;

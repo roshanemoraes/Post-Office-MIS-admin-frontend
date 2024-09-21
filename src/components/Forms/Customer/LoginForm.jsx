@@ -3,11 +3,40 @@ import { useFormik } from "formik";
 import { Link, useNavigate } from "react-router-dom";
 import { Box, Button } from "@mui/material";
 import { basicSchema } from "../../Layout/Validations/Customer/UserValidation";
+import axios from "axios";
 
 const onSubmit = async (values, actions) => {
   await new Promise((resolve) => setTimeout(resolve, 1000));
   actions.resetForm();
 };
+
+/*const handleSignIn = async (e) => {
+  e.preventDefault();
+  try {
+    const response = await axios.post(
+      "http://localhost:8081/authenticate",
+      {
+        username: email,
+        password: password,
+      },
+      { withCredentials: true }
+    );
+    console.log(response.data);
+    setError("");
+    if (response.data.role) {
+      localStorage.setItem("userRoles", JSON.stringify(response.data.role));
+      localStorage.setItem("userName", response.data.username);
+
+      if (response.data.role.includes("ROLE_CUSTOMER")) {
+        navigate("/customer/home");
+      } 
+    } else {
+      console.error("No roles found in response data");
+    }
+  } catch (error) {
+    setError("Login failed. Please check your credentials.");
+  }
+};*/
 
 function LoginForm() {
   const [errorMessage, setErrorMessage] = useState("");

@@ -47,11 +47,20 @@ export default function CompleteTable() {
         sx={{
           backgroundColor: "#f5f5f5",
           boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.1)",
+          "& .MuiDataGrid-columnHeaders": {
+            backgroundColor: "#f0f0f0",
+            fontWeight: "bold",
+            fontSize: "16px",
+          },
           ".MuiDataGrid-columnSeparator": {
             display: "none",
           },
           "&.MuiDataGrid-root": {
             border: "none",
+          },
+          "& .MuiDataGrid-cell": {
+            fontSize: "14px",
+            color: "black",
           },
         }}
         initialState={{
