@@ -79,9 +79,8 @@ const Profile = () => {
         Profile Details
       </h4>
       <div className="bg-[#9ca3af] h-[2px] mx-[500px] my-[50px]"></div>*/
-{
-  /* <ProfileDataTable /> */
-}
+
+/* <ProfileDataTable /> */
 
 /*<div
         className="grid grid-cols-3 mx-[500px] flex "
@@ -155,12 +154,31 @@ const Profile = () => {
 };
 
 export default Profile;*/
-import React from "react";
+
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+
 const Profile = () => {
+  const navigate = useNavigate();
+  const [rows, setRows] = useState([]);
   const navigateToUpdatePage = () => {
     navigate("/customer/profile/updateprofile");
   };
+  const fetchData = async () => {
+    try {
+      const response = await axios.get(
+        "http://localhost:8081/api/customer/list/profile/2"
+      );
+      setRows(response.data);
+    } catch (error) {
+      console.error("Error fetching users ", error);
+    }
+  };
+  useEffect(() => {
+    fetchData();
+  }, []);
+
   return (
     <div className="container mx-auto p-6 mt-20">
       <div className="flex flex-wrap -mx-4">
@@ -174,9 +192,9 @@ const Profile = () => {
                   alt="Customer Profile"
                 />
               </div>
-              <h5 className="text-lg font-semibold">Sunil Fernando</h5>
-              <h6 className="text-gray-500 text-sm">sunil@gmail.com</h6>
-              <h6 className="text-gray-500 text-sm">0765557281</h6>
+              <h5 className="text-lg font-semibold">{rows.fullName}</h5>
+              <h6 className="text-gray-500 text-sm">{rows.email}</h6>
+              <h6 className="text-gray-500 text-sm">{rows.contactNumber}</h6>
             </div>
           </div>
         </div>
@@ -194,10 +212,12 @@ const Profile = () => {
                     ID
                   </label>
                   <input
+                    readOnly
+                    value={rows.id}
                     type="text"
                     id="id"
                     className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3"
-                    placeholder="Enter ID"
+                    placeholder="ID"
                   />
                 </div>
                 <div className="form-group">
@@ -208,10 +228,12 @@ const Profile = () => {
                     NIC
                   </label>
                   <input
+                    readOnly
+                    value={rows.nic}
                     type="text"
                     id="nic"
                     className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3"
-                    placeholder="Enter NIC"
+                    placeholder="NIC"
                   />
                 </div>
                 <div className="form-group">
@@ -222,27 +244,14 @@ const Profile = () => {
                     Full Name
                   </label>
                   <input
+                    readOnly
+                    value={rows.fullName}
                     type="text"
                     id="fullName"
                     className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3"
-                    placeholder="Enter full name"
+                    placeholder="Full Name"
                   />
                 </div>
-                <div className="form-group">
-                  <label
-                    htmlFor="userName"
-                    className="block text-sm font-medium text-gray-700"
-                  >
-                    User Name
-                  </label>
-                  <input
-                    type="text"
-                    id="userName"
-                    className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3"
-                    placeholder="Enter User Name"
-                  />
-                </div>
-
                 <div className="form-group">
                   <label
                     htmlFor="phone"
@@ -251,6 +260,8 @@ const Profile = () => {
                     Contact Number
                   </label>
                   <input
+                    readOnly
+                    value={rows.contactNumber}
                     type="text"
                     id="phone"
                     className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3"
@@ -266,6 +277,7 @@ const Profile = () => {
                   </label>
                   <input
                     readOnly
+                    value={rows.email}
                     type="email"
                     id="eMail"
                     className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3"
@@ -276,11 +288,11 @@ const Profile = () => {
             </div>
 
             <div className="text-right">
-              <button className="bg-gray-500 text-white py-2 px-4 rounded mr-2">
+              {/*<button className="bg-gray-500 text-white py-2 px-4 rounded mr-2">
                 Cancel
-              </button>
+              </button>*/}
               <button
-                className="bg-blue-500 text-white py-2 px-4 rounded"
+                className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-900"
                 onClick={navigateToUpdatePage}
               >
                 Update
