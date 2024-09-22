@@ -148,7 +148,7 @@ const MoneyOrders = () => {
     //   .catch((error) => console.error("Payment creation failed", error));
 
     axios
-      .post("http://localhost:8080/api/create")
+      .post("http://localhost:8081/api/payment-gateway/create")
       .then((response) => {
         const data = response.data;
         if (data.paymentUrl) {

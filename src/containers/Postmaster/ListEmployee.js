@@ -86,7 +86,7 @@ export default function ListEmployee() {
         <div
           className="col-span-10"
           style={{
-            height: 550,
+            height: 514,
             paddingTop: "5px",
             display: "flex",
             flexDirection: "column",
@@ -110,34 +110,11 @@ export default function ListEmployee() {
             }}
             initialState={{
               pagination: {
-                paginationModel: { page: 0, pageSize: 10 },
+                paginationModel: { page: 0, pageSize: 8 },
               },
             }}
           />
         </div>
-      </div>
-
-      <div className="h-[550px] pt-1 flex flex-col justify-center items-center">
-        <DataGrid
-          rows={rows}
-          columns={columns}
-          rowHeight={50}
-          sx={{
-            backgroundColor: "#f5f5f5",
-            boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.1)",
-            ".MuiDataGrid-columnSeparator": {
-              display: "none",
-            },
-            "&.MuiDataGrid-root": {
-              border: "none",
-            },
-          }}
-          initialState={{
-            pagination: {
-              paginationModel: { page: 0, pageSize: 10 },
-            },
-          }}
-        />
       </div>
       <div className="ml-[50px]"></div>
     </>

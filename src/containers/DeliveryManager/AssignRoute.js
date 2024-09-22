@@ -88,54 +88,56 @@ export default function AssignRoute() {
           <span style={{ marginLeft: "10px" }}>Assigning...</span>
         </div>
       ) : (
-        <DataGrid
-          rows={rows}
-          columns={columns}
-          rowHeight={40}
-          getRowId={(row) => row.deliveryId}
-          sx={{
-            ".MuiDataGrid-columnSeparator": {
-              display: "none",
-            },
-            "&.MuiDataGrid-root": {
-              border: "none",
-            },
-            "& .MuiDataGrid-columnHeaderTitle": {
-              whiteSpace: "normal",
-              lineHeight: "normal",
-              fontSize: "14px", // Adjusts font size for header titles
-            },
-            "& .MuiDataGrid-columnHeader": {
-              height: "unset !important",
-            },
-            "& .MuiDataGrid-columnHeaders": {
-              maxHeight: "168px !important",
-              fontSize: "12px", // Adjusts font size for the column headers
-            },
-            "& .MuiDataGrid-cell": {
-              fontSize: "12px", // Adjusts font size for the cell content
-            },
-            "& .MuiDataGrid-footerContainer": {
-              fontSize: "12px", // Adjusts font size for the footer (if pagination is enabled)
-            },
-          }}
-          initialState={{
-            pagination: {
-              paginationModel: { page: 0, pageSize: 10 },
-            },
-          }}
-          columnVisibilityModel={{
-            destinations: false,
-          }}
-          disableColumnMenu={{
-            postman_id: true,
-            zone: false,
-            destinations: true,
-            status: false,
-            action: true,
-          }}
-          // pageSizeOptions={[5, 5]}
-        />
+        <div style={{ height: 389 }}>
+          <DataGrid
+            rows={rows}
+            columns={columns}
+            rowHeight={40}
+            getRowId={(row) => row.deliveryId}
+            sx={{
+              ".MuiDataGrid-columnSeparator": {
+                display: "none",
+              },
+              "&.MuiDataGrid-root": {
+                border: "none",
+              },
+              "& .MuiDataGrid-columnHeaderTitle": {
+                whiteSpace: "normal",
+                lineHeight: "normal",
+                fontSize: "14px", // Adjusts font size for header titles
+              },
+              "& .MuiDataGrid-columnHeader": {
+                height: "unset !important",
+              },
+              "& .MuiDataGrid-columnHeaders": {
+                maxHeight: "168px !important",
+                fontSize: "12px", // Adjusts font size for the column headers
+              },
+              "& .MuiDataGrid-cell": {
+                fontSize: "12px", // Adjusts font size for the cell content
+              },
+              "& .MuiDataGrid-footerContainer": {
+                fontSize: "12px", // Adjusts font size for the footer (if pagination is enabled)
+              },
+            }}
+            initialState={{
+              pagination: {
+                paginationModel: { page: 0, pageSize: 7 },
+              },
+            }}
+            columnVisibilityModel={{
+              destinations: false,
+            }}
+            disableColumnMenu={{
+              postman_id: true,
+              zone: false,
+              destinations: true,
+              status: false,
+              action: true,
+            }}
+            // pageSizeOptions={[5, 5]}
+          />
+        </div>
       )}
     </div>
   );

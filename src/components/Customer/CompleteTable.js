@@ -4,12 +4,12 @@ import { useEffect } from "react";
 import axios from "axios";
 
 const columns = [
-  { field: "mailId", headerName: " Sent Post ID", width: 200 },
-  { field: "mailType", headerName: "Post Type", width: 150 },
-  { field: "datePosted", headerName: "Posted Date", width: 150 },
-  { field: "dateDelivered", headerName: "Received Date", width: 150 },
-  { field: "recipientName", headerName: "Reciever Name", width: 200 },
-  { field: "destinationAddress", headerName: "Reciever Address", width: 230 },
+  { field: "mailId", headerName: " Mail ID", width: 120 },
+  { field: "mailType", headerName: "Post Type", width: 170 },
+  { field: "recipientName", headerName: "Reciever Name", width: 220 },
+  { field: "destinationAddress", headerName: "Reciever Address", width: 320 },
+  { field: "datePosted", headerName: "Posted Date", width: 170 },
+  { field: "dateDelivered", headerName: "Received Date", width: 170 },
 ];
 
 export default function CompleteTable() {
