@@ -4,11 +4,11 @@ import { useEffect } from "react";
 import axios from "axios";
 ////only 5 records are displayed in the table. handle that error
 const columns = [
-  { field: "mailId", headerName: "Mail ID", width: 200 },
-  { field: "mailType", headerName: "Mail Type", width: 150 },
-  { field: "destinationAddress", headerName: "Reciever Address", width: 230 },
-  { field: "recipientName", headerName: "Reciever Name", width: 200 },
-  { field: "datePosted", headerName: "Posted Date", width: 250 },
+  { field: "mailId", headerName: "Mail ID", width: 130 },
+  { field: "mailType", headerName: "Mail Type", width: 170 },
+  { field: "destinationAddress", headerName: "Reciever Address", width: 320 },
+  { field: "recipientName", headerName: "Reciever Name", width: 220 },
+  { field: "datePosted", headerName: "Posted Date", width: 200 },
 ];
 
 export default function PendingTable() {
@@ -35,7 +35,7 @@ export default function PendingTable() {
 
   return (
     <div
-      style={{ height: 680, alignItems: "center", justifyContent: "center" }}
+      style={{ height: 550, alignItems: "center", justifyContent: "center" }}
     >
       <DataGrid
         rows={rows}
