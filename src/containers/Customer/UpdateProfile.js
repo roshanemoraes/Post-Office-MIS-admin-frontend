@@ -25,13 +25,6 @@ const onSubmit = async (values, actions) => {
 export default function UpdateProfile() {
   const formik = useFormik({
     initialValues: {
-      /*firstName: "Pahan",
-      lastName: "Andararachchige",
-      email: "pahanan99@gmail.com",
-      address: "12/34, Jinna Road, Matara",
-      contact: "076 7777768",
-      city: "Weligama",
-      state: "Matara",*/
       firstName: "",
       lastName: "",
       email: "",
@@ -61,26 +54,26 @@ export default function UpdateProfile() {
               <div className="flex gap-4">
                 <div className="flex flex-col w-1/2">
                   <label className="font-semibold text-gray-700 text-sm">
-                    First Name
+                    Full Name
                   </label>
                   <input
-                    name="firstName"
-                    value={formik.values.firstName}
+                    name="fullName"
+                    value={formik.values.fullName}
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
-                    className={`mt-2 px-3 py-2 border-2 rounded-md text-lg ${
-                      formik.errors.firstName && formik.touched.firstName
+                    className={`mt-2 px-3 py-2 border-2 rounded-md text-lg w-full ${
+                      formik.errors.fullName && formik.touched.fullName
                         ? "border-red-500"
                         : "border-gray-300"
                     }`}
                   />
-                  {formik.errors.firstName && formik.touched.firstName ? (
+                  {formik.errors.fullName && formik.touched.fullName ? (
                     <div className="text-red-500 text-sm">
-                      {formik.errors.firstName}
+                      {formik.errors.fullName}
                     </div>
                   ) : null}
                 </div>
-                <div className="flex flex-col w-1/2">
+                {/*<div className="flex flex-col w-1/2">
                   <label className="font-semibold text-gray-700 text-sm">
                     Last Name
                   </label>
@@ -100,11 +93,11 @@ export default function UpdateProfile() {
                       {formik.errors.lastName}
                     </div>
                   ) : null}
-                </div>
+                //</div> */}
               </div>
             </div>
 
-            <div className="mb-6">
+            {/*<div className="mb-6">
               <label className="font-semibold text-gray-700 text-sm">
                 Email
               </label>
@@ -124,7 +117,7 @@ export default function UpdateProfile() {
                   {formik.errors.email}
                 </div>
               ) : null}
-            </div>
+            </div>*/}
 
             <div className="mb-6">
               <label className="font-semibold text-gray-700 text-sm">
@@ -170,7 +163,7 @@ export default function UpdateProfile() {
               ) : null}
             </div>
 
-            <div className="mb-6">
+            {/*<div className="mb-6">
               <div className="flex gap-4">
                 <div className="flex flex-col w-1/2">
                   <label className="font-semibold text-gray-700 text-sm">
@@ -215,7 +208,7 @@ export default function UpdateProfile() {
                   ) : null}
                 </div>
               </div>
-            </div>
+            </div>*/}
 
             <div className="flex justify-between mt-8 text-xl">
               <button
