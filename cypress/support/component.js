@@ -18,6 +18,8 @@ import './commands'
 
 // Alternatively you can use CommonJS syntax:
 // require('./commands')
+import "../../src/index.css";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 import { mount } from 'cypress/react18'
 
