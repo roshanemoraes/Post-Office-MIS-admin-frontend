@@ -96,7 +96,7 @@ export default function RegistrationSummary() {
 
           params: {
             mailType: type,
-            datePosted: "2024-06-10",
+            datePosted: "2024-06-30",
           },
         }
       );
