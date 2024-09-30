@@ -15,7 +15,7 @@ const Footer = () => {
               <div className="flex flex-col items-start mb-[20px]">
                 SERVICES
               </div>
-              <div className="flex flex-col items-start text-[15px] space-y-2">
+              <div className="flex flex-col items-start text-[15px] space-y-2 cursor-pointer">
                 <div>Subscribe</div>
                 <div>Store</div>
                 <div>Contact</div>

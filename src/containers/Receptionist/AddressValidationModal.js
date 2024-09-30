@@ -16,8 +16,7 @@ function AddressValidationModal({ formState, onValidationResult }) {
     setSelectedCheckboxData(null);
   };
   const handleAccept = () => {
-    console.log(selectedCheckboxData);
-    onValidationResult(validatedResponse);
+    onValidationResult(validatedResponse, selectedCheckboxData);
     handleClose();
     setSelectedCheckboxData(null);
   };
@@ -38,6 +37,7 @@ function AddressValidationModal({ formState, onValidationResult }) {
 
       .then((response) => {
         console.log("validation result came, success!");
+        console.log(response.data);
         setValidatedResponse(response.data);
         setIsValid(true);
         setShow(true);

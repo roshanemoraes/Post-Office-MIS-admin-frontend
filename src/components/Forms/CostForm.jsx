@@ -32,7 +32,7 @@ const CostForm = ({ postType, description, onCostUpdate }) => {
   const calculateCost = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:8081/postage/getPostage?weight=${weight}`,
+        `http://localhost:8081/postage/get/${postType}?weight=${weight}`,
         { withCredentials: true }
       );
       console.log("response came:", response.data.price);
@@ -112,7 +112,7 @@ const CostForm = ({ postType, description, onCostUpdate }) => {
           sx={{
             backgroundColor: "#852318",
             color: "white",
-            mt: 1,
+            mt: 3,
             px: 2,
             mb: 2,
             fontSize: "12px",
@@ -122,7 +122,7 @@ const CostForm = ({ postType, description, onCostUpdate }) => {
           Get Postage
         </Button>
         {cost && (
-          <div style={{ marginTop: "10px" }}>
+          <div style={{ marginTop: "10px", marginBottom: "20px" }}>
             Postage: {cost !== null ? `Rs.${cost}.00` : ""}
           </div>
         )}

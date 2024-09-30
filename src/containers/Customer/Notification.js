@@ -8,6 +8,7 @@ import { Client } from "@stomp/stompjs";
 import SockJS from "sockjs-client";
 import UpdateIcon from "../../assets/pencil-fill.svg";
 import AddressUpdateNotificationModal from "../DeliveryManager/Modals/AddressUpdateNotificationModal";
+import InfoNotificationModal from "./Modals/InfoNotificationModal";
 
 const Notifications = () => {
   const [rows, setRows] = React.useState([]);
@@ -19,27 +20,25 @@ const Notifications = () => {
     { field: "date", headerName: "Date", width: 150 },
     { field: "message", headerName: "Message", width: 500 },
     { field: "notificationId", headerName: "ID", width: 100 },
-    { field: "undeliverableId", headerName: "Undelivered ID", width: 100 },
+    // { field: "undeliverableId", headerName: "Undelivered ID", width: 100 },
     { field: "type", headerName: "Type", width: 180 },
     { field: "read", headerName: "Read", width: 120 },
     { field: "mailId", headerName: "Mail Id", width: 120 },
     {
       field: "action",
       headerName: "Action",
-      width: 70,
+      width: 120,
       headerAlign: "center",
       renderCell: (params) => {
-        if (params.row.type === "Address-update") {
-          return (
-            <div>
+        return (
+          <div>
+            <InfoNotificationModal data={params.row} />
+            {params.row.type === "Address-update" && (
               <AddressUpdateNotificationModal data={params.row} />
-            </div>
-          );
-        } else if (params.row.type === "Return-to-sender") {
-          return <div>-</div>;
-        } else {
-          return null;
-        }
+            )}
+            {params.row.type === "Return-to-sender" && <div>-</div>}
+          </div>
+        );
       },
     },
   ];
@@ -48,7 +47,7 @@ const Notifications = () => {
     setIsClicked(true);
     try {
       const response = await axios.get(
-        "http://localhost:8081/api/notifications/3"
+        "http://localhost:8081/api/notifications/2"
       );
       setRows(response.data);
       console.log(response.data);
@@ -165,7 +164,7 @@ const Notifications = () => {
         </div>
         <div
           style={{
-            height: 550,
+            height: 514,
             paddingTop: "5px",
             display: "flex",
             flexDirection: "column",
@@ -208,7 +207,7 @@ const Notifications = () => {
             }}
             initialState={{
               pagination: {
-                paginationModel: { page: 0, pageSize: 10 },
+                paginationModel: { page: 0, pageSize: 8 },
               },
             }}
           />

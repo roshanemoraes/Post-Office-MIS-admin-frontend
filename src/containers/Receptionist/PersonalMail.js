@@ -25,7 +25,9 @@ const PersonalMail = () => {
     recipientAddress: "",
     recipientPostalZone: "",
     recipientHouseNumber: "",
+    recipientId: "",
 
+    senderId: "",
     senderName: "",
     senderCity: "",
     senderAddress: "",
@@ -76,7 +78,8 @@ const PersonalMail = () => {
     }));
   };
 
-  const handleOnValidationResult = (data) => {
+  const handleOnValidationResult = (data, data1) => {
+    console.log("data: ", data1);
     setVerifiedAddressText(data.textForm);
     setVerifiedAddressId(data.addressId);
     setVerifiedAddressCoordinate_Lat(data.lat);
@@ -84,10 +87,11 @@ const PersonalMail = () => {
     setFormState((prevState) => ({
       ...prevState,
       recipientAddress: data.textForm,
+      recipientId: data1,
     }));
   };
 
-  const handleSenderOnValidationResult = (data) => {
+  const handleSenderOnValidationResult = (data, data1) => {
     setVerifiedAddressText(data.textForm);
     setVerifiedAddressId(data.addressId);
     setVerifiedAddressCoordinate_Lat(data.lat);
@@ -95,6 +99,7 @@ const PersonalMail = () => {
     setFormState((prevState) => ({
       ...prevState,
       senderAddress: data.textForm,
+      senderId: data1,
     }));
   };
 
@@ -163,7 +168,7 @@ const PersonalMail = () => {
   return (
     <>
       <div className="grid sm:grid-cols-12 grid-cols-1">
-        <div className="rounded-lg sm:col-span-7 min-h-[100px] bg-white-500  items-center justify-center">
+        <div className="rounded-lg sm:col-span-6 min-h-[100px] bg-white-500  items-center justify-center">
           <Box
             display="flex"
             paddingTop={2}
@@ -178,7 +183,7 @@ const PersonalMail = () => {
                 justifyContent: "center",
                 width: "45%",
                 minWidth: "550px",
-                backgroundColor: "#f5f5f5",
+                backgroundColor: "#fff",
                 borderRadius: "10px",
                 padding: "30px 2px 30px 2px",
                 boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.1)",
@@ -381,8 +386,8 @@ const PersonalMail = () => {
                 {checked && (
                   <div>
                     <div>
-                      <div className="grid sm:grid-cols-12 sm:ml-8 xs:ml-8 sm:mr-8 xs:mr-8">
-                        <div className="sm:col-span-3 sm:mr-5 min-w-[150px] min-h-[60px]">
+                      <div className="grid sm:grid-cols-12 xs:grid-cols-12 sm:ml-8 xs:ml-8 sm:mr-8 xs:mr-8">
+                        <div className="sm:col-span-3 xs:col-span-3 sm:mr-5 xs:mr-5 sm:min-w-[150px] xs:min-w-[150px] sm:min-h-[60px] xs:min-h-[60px]">
                           <TextField
                             inputProps={{ style: { fontSize: 15 } }}
                             InputLabelProps={{
@@ -397,7 +402,7 @@ const PersonalMail = () => {
                             )}
                           ></TextField>
                         </div>
-                        <div className="sm:col-span-7 sm:ml-9 sm:mr-2 sm:min-w-[300px] sm:min-h-[60px]">
+                        <div className="sm:col-span-7 xs:col-span-7 sm:ml-9 xs:ml-9 sm:mr-2 xs:mr-2 sm:min-w-[300px] xs:min-w-[300px] sm:min-h-[60px] xs:min-h-[60px]">
                           <TextField
                             inputProps={{ style: { fontSize: 15 } }}
                             InputLabelProps={{
@@ -547,37 +552,21 @@ const PersonalMail = () => {
                 >
                   Submit
                 </Button>
-                <div>
-                  <Button
-                    className="mt-1"
-                    variant="primary"
-                    style={{
-                      backgroundColor: "#0891b2",
-                      padding: "6px",
-                      borderColor: "#0891b2",
-                      fontSize: "11px",
-                      fontFamily: "arial",
-                      my: "40px",
-                      mb: "20px",
-                      mr: "60px",
-                    }}
-                    onClick={handlePrint}
-                  >
-                    PRINT RECEIPT
-                  </Button>
-                </div>
               </Box>
             </Box>
           </Box>
         </div>
-        <div className="rounded-lg sm:col-span-5 min-h-[100px] m-4 bg-white-500 items-center justify-center">
-          <CostForm
-            postType={"Personal Mail"}
-            description={"Maximum Weight: 2Kg"}
-            onCostUpdate={handleCostUpdate}
-          />
+        <div className="rounded-lg sm:col-span-6 min-h-[100px] sm:m-10 bg-white-500 items-center justify-center">
+          <div style={{ marginRight: "50px" }}>
+            <CostForm
+              postType={"normal-post"}
+              description={"Maximum Weight: 2Kg"}
+              onCostUpdate={handleCostUpdate}
+            />
+          </div>
         </div>
       </div>
+      <div className="h-[10px]"></div>
       <div
         // className="mt-30"
         style={{
@@ -585,8 +574,9 @@ const PersonalMail = () => {
           justifyContent: "center",
           alignItems: "center",
           padding: "10px",
-          marginTop: "70px",
+          marginTop: "80px",
           // fontWeight: "bold",
+          // marginTop: "0px",
           marginBottom: "10px",
           backgroundColor: "#a3a3a3",
         }}
@@ -603,17 +593,44 @@ const PersonalMail = () => {
           }}
         />
       </div>
-      <div ref={componentRef}>
-        <NormalMailReceipt
-          mailType={"Normal Post"}
-          postage={formState.postage}
-          recipientName={formState.recipientName}
-          SenderName={formState.senderName}
-          recipientAddress={formState.recipientAddress}
-          mailId={"300"}
-          receiptId={"450"}
-        />
+      <div className="grid grid-cols-12">
+        <div className="col-span-3">
+          <div ref={componentRef}>
+            <NormalMailReceipt
+              mailType={"Normal Post"}
+              postage={formState.postage}
+              recipientName={formState.recipientName}
+              SenderName={formState.senderName}
+              recipientAddress={formState.recipientAddress}
+              mailId={"300"}
+              receiptId={"450"}
+            />
+          </div>
+        </div>
+        <div className="col-span-2 mt-[12px] ml-[25px]">
+          <Button
+            className="mt-1"
+            variant="primary"
+            style={{
+              backgroundColor: "#fcd34d",
+              padding: "8px",
+              paddingLeft: "30px",
+              paddingRight: "30px",
+              borderColor: "#0891b2",
+              fontSize: "15px",
+              fontWeight: "bold",
+              fontFamily: "arial",
+              my: "40px",
+              mb: "20px",
+              mr: "60px",
+            }}
+            onClick={handlePrint}
+          >
+            PRINT
+          </Button>
+        </div>
       </div>
+
       <div className="min-h-[70px]"></div>
     </>
   );

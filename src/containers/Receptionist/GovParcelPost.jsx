@@ -3,8 +3,12 @@ import {
   Box,
   Button,
   Checkbox,
+  FormControl,
   FormControlLabel,
   FormGroup,
+  InputLabel,
+  MenuItem,
+  Select,
   TextField,
   Typography,
   useTheme,
@@ -19,6 +23,7 @@ import axios from "axios";
 import DownArrowIcon from "./../../assets/arrow-down-square-fill.svg";
 import NormalMailReceipt from "./../../components/Receipts/NormalMailReceipt";
 import { useReactToPrint } from "react-to-print";
+import GovParcelMailReceipt from "./../../components/Receipts/GovParcelMailReceipt";
 
 const GovParcelPost = () => {
   const initialFormState = {
@@ -27,12 +32,17 @@ const GovParcelPost = () => {
     recipientAddress: "",
     recipientPostalZone: "",
     recipientHouseNumber: "",
+    recipientId: "",
 
+    senderId: "",
     senderName: "",
     senderCity: "",
     senderAddress: "",
     senderPostalZone: "",
     senderHouseNumber: "",
+
+    ministry: "",
+    postage: "",
   };
 
   const theme = useTheme();
@@ -70,7 +80,7 @@ const GovParcelPost = () => {
     "Pallansena North",
   ];
 
-  const handleOnValidationResult = (data) => {
+  const handleOnValidationResult = (data, data1) => {
     setVerifiedAddressText(data.textForm);
     setVerifiedAddressId(data.addressId);
     setVerifiedAddressCoordinate_Lat(data.lat);
@@ -78,10 +88,11 @@ const GovParcelPost = () => {
     setFormState((prevState) => ({
       ...prevState,
       recipientAddress: data.textForm,
+      recipientId: data1,
     }));
   };
 
-  const handleSenderOnValidationResult = (data) => {
+  const handleSenderOnValidationResult = (data, data1) => {
     setVerifiedAddressText(data.textForm);
     setVerifiedAddressId(data.addressId);
     setVerifiedAddressCoordinate_Lat(data.lat);
@@ -89,6 +100,7 @@ const GovParcelPost = () => {
     setFormState((prevState) => ({
       ...prevState,
       senderAddress: data.textForm,
+      senderId: data1,
     }));
   };
 
@@ -138,7 +150,7 @@ const GovParcelPost = () => {
     console.log(formState);
     axios
       .post(
-        "http://localhost:8081/api/receptionist/post/add/normal-post",
+        "http://localhost:8081/api/receptionist/post/add/gov-parcel",
         formState,
         { withCredentials: true }
       )
@@ -153,11 +165,17 @@ const GovParcelPost = () => {
   const handlePrint = useReactToPrint({
     content: () => componentRef.current,
   });
+  const handleCostUpdate = (cost) => {
+    setFormState((prevState) => ({
+      ...prevState,
+      postage: cost,
+    }));
+  };
 
   return (
     <>
       <div className="grid sm:grid-cols-12 grid-cols-1">
-        <div className="rounded-lg sm:col-span-7 min-h-[100px] bg-white-500  items-center justify-center">
+        <div className="rounded-lg sm:col-span-6 min-h-[100px] bg-white-500  items-center justify-center">
           <Box
             display="flex"
             paddingTop={2}
@@ -172,7 +190,7 @@ const GovParcelPost = () => {
                 justifyContent: "center",
                 width: "45%",
                 minWidth: "550px",
-                backgroundColor: "#f5f5f5",
+                backgroundColor: "#fff",
                 borderRadius: "10px",
                 padding: "30px 2px 30px 2px",
                 boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.1)",
@@ -505,6 +523,54 @@ const GovParcelPost = () => {
                     onChange={handleChange(mailFormField.senderAddress.id)}
                     value={formState.senderAddress}
                   ></TextField>
+                  <div style={{ display: "flex" }} className="ml-8 mt-[15px]">
+                    <FormControl sx={{ minWidth: 200, maxWidth: 300 }}>
+                      <InputLabel
+                        id="courierProviderSelector"
+                        sx={{ fontSize: "14px" }}
+                      >
+                        Ministry
+                      </InputLabel>
+                      <Select
+                        sx={{ fontSize: "13px" }}
+                        labelId="ministrySelector"
+                        id="ministry"
+                        value={formState.packageType}
+                        onChange={handleChange("ministry")}
+                      >
+                        <MenuItem
+                          sx={{ fontSize: "14px" }}
+                          value={"Ministry of Education"}
+                        >
+                          Ministry of Education
+                        </MenuItem>
+                        <MenuItem
+                          sx={{ fontSize: "14px" }}
+                          value={"Ministry of Health"}
+                        >
+                          Ministry of Health
+                        </MenuItem>
+                        <MenuItem
+                          sx={{ fontSize: "14px" }}
+                          value={"Ministry of Power and Energy"}
+                        >
+                          Ministry of Power and Energy
+                        </MenuItem>
+                        <MenuItem
+                          sx={{ fontSize: "14px" }}
+                          value={"Ministry of Transport"}
+                        >
+                          Ministry of Transport
+                        </MenuItem>
+                        <MenuItem
+                          sx={{ fontSize: "14px" }}
+                          value={"Ministry of Labour"}
+                        >
+                          Ministry of Labour
+                        </MenuItem>
+                      </Select>
+                    </FormControl>
+                  </div>
                 </div>
 
                 <Button
@@ -522,34 +588,18 @@ const GovParcelPost = () => {
                 >
                   Submit
                 </Button>
-                <div>
-                  <Button
-                    className="mt-1"
-                    variant="primary"
-                    style={{
-                      backgroundColor: "#0891b2",
-                      padding: "6px",
-                      borderColor: "#0891b2",
-                      fontSize: "11px",
-                      fontFamily: "arial",
-                      my: "40px",
-                      mb: "20px",
-                      mr: "60px",
-                    }}
-                    onClick={handlePrint}
-                  >
-                    PRINT INVOICE
-                  </Button>
-                </div>
               </Box>
             </Box>
           </Box>
         </div>
-        <div className="rounded-lg sm:col-span-5 min-h-[100px] m-4 bg-white-500 items-center justify-center">
-          <CostForm
-            postType={"Personal Mail"}
-            description={"Maximum Weight: 2Kg"}
-          />
+        <div className="rounded-lg sm:col-span-6 min-h-[100px] m-10 bg-white-500 items-center justify-center">
+          <div style={{ marginRight: "50px" }}>
+            <CostForm
+              postType={"parcel-gov"}
+              description={"Maximum Weight: 20Kg"}
+              onCostUpdate={handleCostUpdate}
+            />
+          </div>
         </div>
       </div>
       <div
@@ -577,8 +627,43 @@ const GovParcelPost = () => {
           }}
         />
       </div>
-      <div ref={componentRef}>
-        <NormalMailReceipt />
+      <div className="grid grid-cols-12">
+        <div className="col-span-3">
+          <div ref={componentRef}>
+            <GovParcelMailReceipt
+              mailType={"Gov Parcel"}
+              postage={formState.postage}
+              recipientName={formState.recipientName}
+              SenderName={formState.senderName}
+              recipientAddress={formState.recipientAddress}
+              mailId={"300"}
+              receiptId={"450"}
+              packageType={formState.ministry}
+            />
+          </div>
+        </div>
+        <div className="col-span-2 mt-[12px] ml-[25px]">
+          <Button
+            className="mt-1"
+            variant="primary"
+            style={{
+              backgroundColor: "#fcd34d",
+              padding: "8px",
+              paddingLeft: "30px",
+              paddingRight: "30px",
+              borderColor: "#0891b2",
+              fontSize: "15px",
+              fontWeight: "bold",
+              fontFamily: "arial",
+              my: "40px",
+              mb: "20px",
+              mr: "60px",
+            }}
+            onClick={handlePrint}
+          >
+            PRINT
+          </Button>
+        </div>
       </div>
       <div className="min-h-[70px]"></div>
     </>

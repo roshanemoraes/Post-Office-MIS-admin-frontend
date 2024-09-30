@@ -25,11 +25,12 @@ const Login = () => {
 
   const paperStyle = {
     padding: 20,
-    height: 350,
-    width: 450,
+    height: 400,
+    width: 500,
     position: "fixed",
-    top: "40%",
+    top: "45%",
     left: "50%",
+    borderRadius: "20px",
     transform: "translate(-50%, -50%)",
   };
   const handleSignIn = async (e) => {
@@ -69,21 +70,21 @@ const Login = () => {
     <div>
       <LoginNavBar />
       <BlurBackground />
-      <div className="main-container">
+      <div className="main-container" style={{ borderRadius: "20px" }}>
         <Grid
           container
           justifyContent={"center"}
           alignItems={"center"}
-          style={{ minHeight: "120px" }}
+          style={{ minHeight: "120px", borderRadius: "10px" }}
         >
           <Paper elevation={10} style={paperStyle}>
             <div
-              className="mt-[10px] mb-[25px] text-center font-bold"
+              className="mt-[20px] mb-[25px] text-center font-bold"
               style={{ fontSize: "27px" }}
             >
               ADMIN PORTAL
             </div>
-            <div className="mx-[15px]">
+            <div className="mx-[15px] mt-[40px]">
               <TextField
                 label="Email"
                 value={email}
