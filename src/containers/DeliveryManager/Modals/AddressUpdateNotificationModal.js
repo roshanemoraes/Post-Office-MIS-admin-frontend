@@ -15,6 +15,8 @@ const AddressUpdateNotificationModal = ({ data }) => {
   };
   const handleUpdateClose = async () => {
     try {
+      console.log("data", data);
+      console.log("newAddress", newAddress);
       const response = await axios.post(
         `http://localhost:8081/api/delivery-manager/return-mail/address-update/update`,
         {
