@@ -10,6 +10,9 @@ import UpdateProfile from "../containers/Customer/UpdateProfile";
 import SignOut from "./../components/Customer/SignOut";
 import BlurBackground from "../components/Custom/Background/BlurBackground";
 import Notification from "../containers/Customer/Notification";
+import MoneyOrderCustomer from "../containers/Customer/MoneyOrderCustomer";
+import PaymentSuccessPage from "../containers/Customer/PaymentSuccessPage";
+import PaymentFailPage from "../containers/Customer/PaymentFailPage";
 
 function CustomerInterface() {
   return (
@@ -31,6 +34,9 @@ function CustomerInterface() {
           <Route path="/profile/updateprofile" element={<UpdateProfile />} />
           <Route path="/PendingPost/SignOut" element={<SignOut />} />
           <Route path="/notification" element={<Notification />} />
+          <Route path="/money-order" element={<MoneyOrderCustomer />} />
+          <Route path="/money-order/success" element={<PaymentSuccessPage />} />
+          <Route path="/money-order/fail" element={<PaymentFailPage />} />
         </Routes>
       </main>
     </div>
