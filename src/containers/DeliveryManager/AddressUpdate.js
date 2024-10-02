@@ -11,6 +11,8 @@ import checkIcon from "../../assets/bell-fill.svg";
 import { Client } from "@stomp/stompjs";
 import SockJS from "sockjs-client";
 import InfoCard from "./../../components/Layout/InfoCard";
+import InfoIconCardSmall from "../../components/Layout/InfoIconCardSmall";
+import MailIcon from "../../assets/icons8-mail-50.png";
 
 export default function AddressUpdate() {
   const [rows, setRows] = React.useState([]);
@@ -28,10 +30,10 @@ export default function AddressUpdate() {
     {
       field: "reason",
       headerName: "Return Reason",
-      width: 200,
+      width: 180,
     },
     { field: "status", headerName: "Status", width: 220 },
-    { field: "deliverDate", headerName: "Return Date", width: 180 },
+    { field: "deliverDate", headerName: "Return Date", width: 125 },
     {
       field: "action",
       headerName: "Action",
@@ -175,19 +177,32 @@ export default function AddressUpdate() {
       <div className="grid grid-cols-12">
         <div className="col-span-2 flex flex-col pt-[4.5px] ">
           <div>
-            <InfoCard
+            <InfoIconCardSmall
               backgroundColor={"#ffffff"}
               title={"NEW ADDRESS-UPDATE MAILS"}
               value={addressUpdateCount}
+              iconSrc={MailIcon}
             />
+            <div className="h-[12px]"></div>
+            <InfoIconCardSmall
+              backgroundColor={"#ffffff"}
+              title={"UPDATE-PENDING MAILS"}
+              value={addressUpdatePendingCount}
+              iconSrc={MailIcon}
+            />
+            {/* <InfoCard
+              backgroundColor={"#ffffff"}
+              title={"NEW ADDRESS-UPDATE MAILS"}
+              value={addressUpdateCount}
+            /> */}
           </div>
-          <div>
+          {/* <div>
             <InfoCard
               backgroundColor={"#ffffff"}
               title={"UPDATE-PENDING MAILS"}
               value={addressUpdatePendingCount}
             />
-          </div>
+          </div> */}
           <div className="mt-[270px]">
             <div className="flex flex-col">
               <Button
@@ -214,6 +229,7 @@ export default function AddressUpdate() {
           style={{
             height: 550,
             paddingTop: "5px",
+            marginHorizontal: "10px",
             display: "flex",
             flexDirection: "column",
             justifyContent: "center",

@@ -16,7 +16,7 @@ function SenderAddressValidationModel({ formState, onValidationSenderResult }) {
     setSelectedCheckboxData(null);
   };
   const handleAccept = () => {
-    onValidationSenderResult(validatedResponse);
+    onValidationSenderResult(validatedResponse, selectedCheckboxData);
     handleClose();
     setSelectedCheckboxData(null);
   };
@@ -37,6 +37,7 @@ function SenderAddressValidationModel({ formState, onValidationSenderResult }) {
 
       .then((response) => {
         console.log("validation result came, success!");
+        console.log(response);
         setValidatedResponse(response.data);
         setIsValid(true);
         setShow(true);

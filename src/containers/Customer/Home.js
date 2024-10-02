@@ -21,6 +21,9 @@ function Home() {
   const handleGoToDeliveredPost = () => {
     navigate("../sentpost");
   };
+  const handleGoToMoneyOrder = () => {
+    navigate("../money-order");
+  };
 
   return (
     <>
@@ -210,6 +213,7 @@ function Home() {
                         fontSize: "14px",
                         borderRadius: "20px",
                       }}
+                      onClick={handleGoToMoneyOrder}
                     >
                       Go
                     </Button>
