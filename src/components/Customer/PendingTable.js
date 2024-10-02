@@ -19,7 +19,7 @@ export default function PendingTable() {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          //"https://8a488748-6746-4504-8705-1ecb6053c14a.mock.pstmn.io/Demo"  //- postman url
+          //"https://8a488748-6746-4504-8705-1ecb6053c14a.mock.pstmn.io/Demo" //- postman url
           `http://localhost:8081/api/customer/list/pending/${customerId}`
         );
         console.log("request came!");

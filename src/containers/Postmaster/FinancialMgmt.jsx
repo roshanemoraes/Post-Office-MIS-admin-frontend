@@ -1,5 +1,7 @@
-import React from "react";
-import DownArrowIcon from "../../assets/arrow-down-square-fill.svg";
+import React, { useState } from "react";
+import { Table, Select } from "antd";
+import moment from "moment";
+import DownArrowIcon from "../../assets/Customer/arrow-down-square-fill.svg";
 import {
   LineChart,
   Line,
@@ -9,140 +11,150 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
+import { DataGrid } from "@mui/x-data-grid";
 
-// Example data for graphs (you can adjust or add more data as needed)
-const data = [
-  { name: "Jan", count: 400, total: 2400 },
-  { name: "Feb", count: 300, total: 2210 },
-  { name: "Mar", count: 200, total: 2290 },
-  { name: "Apr", count: 278, total: 2000 },
-  { name: "May", count: 189, total: 2181 },
-  { name: "Jun", count: 239, total: 2500 },
-];
+// Sample data for transactions
+const data = {
+  normalPost: [
+    { key: 1, date: "2024-01-12", amount: 150 },
+    { key: 2, date: "2024-02-15", amount: 200 },
+    { key: 3, date: "2024-03-20", amount: 250 },
+  ],
+  normalCourier: [
+    { key: 1, date: "2024-01-05", amount: 300 },
+    { key: 2, date: "2024-02-25", amount: 100 },
+    { key: 3, date: "2024-03-12", amount: 400 },
+  ],
+  govParcel: [
+    { key: 1, date: "2024-01-18", amount: 500 },
+    { key: 2, date: "2024-02-12", amount: 600 },
+    { key: 3, date: "2024-03-30", amount: 700 },
+  ],
+  normalParcel: [
+    { key: 1, date: "2024-01-08", amount: 100 },
+    { key: 2, date: "2024-02-10", amount: 250 },
+    { key: 3, date: "2024-03-22", amount: 300 },
+  ],
+  bulkMailOrders: [
+    { key: 1, date: "2024-01-22", amount: 900 },
+    { key: 2, date: "2024-02-27", amount: 1100 },
+    { key: 3, date: "2024-03-25", amount: 950 },
+  ],
+};
 
-// Example data for registered mail table
-const transactionData_Registered = [
-  { id: "RM001", date: "01/09/2024", amount: "$200.00" },
-  { id: "RM002", date: "02/09/2024", amount: "$150.00" },
-  { id: "RM003", date: "03/09/2024", amount: "$180.00" },
-  { id: "RM003", date: "03/09/2024", amount: "$180.00" },
-  { id: "RM003", date: "03/09/2024", amount: "$180.00" },
-  { id: "RM003", date: "03/09/2024", amount: "$180.00" },
-  { id: "RM003", date: "03/09/2024", amount: "$180.00" },
-  { id: "RM003", date: "03/09/2024", amount: "$180.00" },
-  { id: "RM003", date: "03/09/2024", amount: "$180.00" },
-  { id: "RM001", date: "01/09/2024", amount: "$200.00" },
-  { id: "RM002", date: "02/09/2024", amount: "$150.00" },
-  { id: "RM003", date: "03/09/2024", amount: "$180.00" },
-  { id: "RM003", date: "03/09/2024", amount: "$180.00" },
-  { id: "RM003", date: "03/09/2024", amount: "$180.00" },
-  { id: "RM003", date: "03/09/2024", amount: "$180.00" },
-  { id: "RM003", date: "03/09/2024", amount: "$180.00" },
-  { id: "RM003", date: "03/09/2024", amount: "$180.00" },
-  { id: "RM003", date: "03/09/2024", amount: "$180.00" },
-  { id: "RM001", date: "01/09/2024", amount: "$200.00" },
-  { id: "RM002", date: "02/09/2024", amount: "$150.00" },
-  { id: "RM003", date: "03/09/2024", amount: "$180.00" },
-  { id: "RM003", date: "03/09/2024", amount: "$180.00" },
-  { id: "RM003", date: "03/09/2024", amount: "$180.00" },
-  { id: "RM003", date: "03/09/2024", amount: "$180.00" },
-  { id: "RM003", date: "03/09/2024", amount: "$180.00" },
-  { id: "RM003", date: "03/09/2024", amount: "$180.00" },
-  { id: "RM003", date: "03/09/2024", amount: "$180.00" },{ id: "RM001", date: "01/09/2024", amount: "$200.00" },
-  { id: "RM002", date: "02/09/2024", amount: "$150.00" },
-  { id: "RM003", date: "03/09/2024", amount: "$180.00" },
-  { id: "RM003", date: "03/09/2024", amount: "$180.00" },
-  { id: "RM003", date: "03/09/2024", amount: "$180.00" },
-  { id: "RM003", date: "03/09/2024", amount: "$180.00" },
-  { id: "RM003", date: "03/09/2024", amount: "$180.00" },
-  { id: "RM003", date: "03/09/2024", amount: "$180.00" },
-  { id: "RM003", date: "03/09/2024", amount: "$180.00" },
-  { id: "RM001", date: "01/09/2024", amount: "$200.00" },
-  { id: "RM002", date: "02/09/2024", amount: "$150.00" },
-  { id: "RM003", date: "03/09/2024", amount: "$180.00" },
-  { id: "RM003", date: "03/09/2024", amount: "$180.00" },
-  { id: "RM003", date: "03/09/2024", amount: "$180.00" },
-  { id: "RM003", date: "03/09/2024", amount: "$180.00" },
-  { id: "RM003", date: "03/09/2024", amount: "$180.00" },
-  { id: "RM003", date: "03/09/2024", amount: "$180.00" },
-  { id: "RM003", date: "03/09/2024", amount: "$180.00" },
-  { id: "RM001", date: "01/09/2024", amount: "$200.00" },
-  { id: "RM002", date: "02/09/2024", amount: "$150.00" },
-  { id: "RM003", date: "03/09/2024", amount: "$180.00" },
-  { id: "RM003", date: "03/09/2024", amount: "$180.00" },
-  { id: "RM003", date: "03/09/2024", amount: "$180.00" },
-  { id: "RM003", date: "03/09/2024", amount: "$180.00" },
-  { id: "RM003", date: "03/09/2024", amount: "$180.00" },
-  { id: "RM003", date: "03/09/2024", amount: "$180.00" },
-  { id: "RM003", date: "03/09/2024", amount: "$180.00" },
-  { id: "RM001", date: "01/09/2024", amount: "$200.00" },
-  { id: "RM002", date: "02/09/2024", amount: "$150.00" },
-  { id: "RM003", date: "03/09/2024", amount: "$180.00" },
-  { id: "RM003", date: "03/09/2024", amount: "$180.00" },
-  { id: "RM003", date: "03/09/2024", amount: "$180.00" },
-  { id: "RM003", date: "03/09/2024", amount: "$180.00" },
-  { id: "RM003", date: "03/09/2024", amount: "$180.00" },
-  { id: "RM003", date: "03/09/2024", amount: "$180.00" },
-  { id: "RM003", date: "03/09/2024", amount: "$180.00" },
-
-];
-
-// Example data for money orders
-const transactionData_MoneyOrders = [
-  { id: "MO001", date: "01/09/2024", amount: "$200.00" },
-  { id: "MO002", date: "02/09/2024", amount: "$150.00" },
-  { id: "MO003", date: "03/09/2024", amount: "$180.00" },
-];
-// Example data for couriers
-const transactionData_Couriers = [
-  { id: "C001", date: "01/09/2024", amount: "$200.00" },
-  { id: "C002", date: "02/09/2024", amount: "$150.00" },
-  { id: "C003", date: "03/09/2024", amount: "$180.00" },
-];
-
-// Example data for Bulk Mail
-const transactionData_BulkMail = [
-  { id: "BM001", date: "01/09/2024", amount: "$200.00" },
-  { id: "BM002", date: "02/09/2024", amount: "$150.00" },
-  { id: "BM003", date: "03/09/2024", amount: "$180.00" },
+// Define columns for all tables
+const columns = [
+  {
+    title: "Mail_Id",
+    dataIndex: "mail_id",
+    key: "mail_id",
+  },
+  {
+    title: "Date",
+    dataIndex: "date",
+    key: "date",
+    render: (text) => moment(text).format("YYYY-MM-DD"),
+  },
+  {
+    title: "Postage",
+    dataIndex: "postage",
+    key: "postage",
+  },
 ];
 
 const FinancialMgmt = () => {
+  const [selectedMonth, setSelectedMonth] = useState({});
+
+  // Function to handle month selection for a table
+  const handleMonthChange = (value, tableType) => {
+    setSelectedMonth((prev) => ({
+      ...prev,
+      [tableType]: value,
+    }));
+  };
+
+  // Function to filter data by selected month
+  const filterByMonth = (transactions, month) => {
+    if (!selectedMonth) {
+      return transactions;
+    }
+    return transactions.filter((transaction) =>
+      moment(transaction.date).isSame(month, "month")
+    );
+  };
+
   return (
-    <div className="px-4 pb-4">
-      {/* Image and Heading 
-      <div className="relative">
-        <img
-          src={imageSrc}
-          alt="Financial Analysis"
-          className="w-full h-64 object-cover"
+    <div className="p-4 bg-[#fef9c3]">
+      <div className="text-center text-[#020617] text-5xl font-bold mt-8 mb-8">
+        Financial Analysis
+      </div>
+
+      {/* Table for Normal Post */}
+      <div className="mt-8 bg-white p-4 shadow rounded-lg">
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            padding: "10px",
+            marginBottom: "10px",
+            marginTop: "10px",
+            backgroundColor: "#a3a3a3",
+          }}
+        >
+          Normal Post
+          <img
+            src={DownArrowIcon}
+            alt="Pending Mails"
+            style={{
+              marginRight: "10px",
+              marginLeft: "20px",
+              width: "30px",
+              height: "30px",
+            }}
+          />
+        </div>
+        <Select
+          placeholder="Select Month"
+          onChange={(value) => handleMonthChange(value, "normalPost")}
+          style={{
+            width: 200,
+            marginBottom: 20,
+            color: "#696969",
+          }}
+        >
+          {moment.months().map((month, index) => (
+            <Select.Option key={index} value={index + 1}>
+              {month}
+            </Select.Option>
+          ))}
+        </Select>
+        <Table
+          columns={columns}
+          dataSource={filterByMonth(
+            data.normalPost,
+            selectedMonth.normalPost
+              ? moment().month(selectedMonth.normalPost - 1)
+              : data.normalPost
+          )}
+          pagination={false}
         />
-        <h1 className="absolute top-1/2 left-1/2 transform -translate-x-1/4 -translate-y-1/4 text-[#020617] text-7xl font-bold">
-          Financial Analysis
-        </h1>
-      </div>*/}
-
-      <div className="text-center text-[#020617] text-2xl font-bold mt-1 mb-1">
-        FINANCIAL ANALYSIS
       </div>
 
-      {/* Registered Mail Items Table */}
-      <div className="grid grid-cols-1 mt-8 bg-white p-4 shadow rounded-lg">
-        {/*<h2 className="text-xl font-semibold mb-4">Registered Mail Items</h2>*/}
-        {/*Heading on each table*/}
+      {/* Table for Normal Courier */}
+      <div className="mt-8 bg-white p-4 shadow rounded-lg">
         <div
           style={{
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
             padding: "10px",
-            // fontWeight: "bold",
             marginBottom: "10px",
             marginTop: "10px",
             backgroundColor: "#a3a3a3",
           }}
         >
-          Registered Mail Items
+          Normal Courier
           <img
             src={DownArrowIcon}
             alt="Pending Mails"
@@ -154,38 +166,47 @@ const FinancialMgmt = () => {
             }}
           />
         </div>
-        <div className="grid grid-cols-3 gap-4 font-bold bg-gray-100 p-2">
-          <div>Mail ID</div>
-          <div>Transaction Date</div>
-          <div>Paid Amount</div>
-        </div>
-        {transactionData_Registered.map((item) => (
-          <div key={item.id} className="grid grid-cols-3 gap-4 border-b p-2">
-            <div>{item.id}</div>
-            <div>{item.date}</div>
-            <div>{item.amount}</div>
-          </div>
-        ))}
+        <Select
+          placeholder="Select Month"
+          onChange={(value) => handleMonthChange(value, "normalCourier")}
+          style={{
+            width: 200,
+            marginBottom: 20,
+            color: "#696969",
+          }}
+        >
+          {moment.months().map((month, index) => (
+            <Select.Option key={index} value={index + 1}>
+              {month}
+            </Select.Option>
+          ))}
+        </Select>
+        <Table
+          columns={columns}
+          dataSource={filterByMonth(
+            data.normalCourier,
+            selectedMonth.normalCourier
+              ? moment().month(selectedMonth.normalCourier - 1)
+              : null
+          )}
+          pagination={false}
+        />
       </div>
 
-      {/* Money Orders Table */}
-      <div className="grid grid-cols-1 mt-8 bg-white p-4 shadow rounded-lg">
-        {/*<h2 className="text-xl font-semibold mb-4">Money Orders</h2>*/}
-
-        {/*Heading on each table*/}
+      {/* Table for Gov Parcel */}
+      <div className="mt-8 bg-white p-4 shadow rounded-lg">
         <div
           style={{
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
             padding: "10px",
-            // fontWeight: "bold",
             marginBottom: "10px",
             marginTop: "10px",
             backgroundColor: "#a3a3a3",
           }}
         >
-          Money Orders
+          Gov Parcel
           <img
             src={DownArrowIcon}
             alt="Pending Mails"
@@ -197,38 +218,47 @@ const FinancialMgmt = () => {
             }}
           />
         </div>
-        <div className="grid grid-cols-3 gap-4 font-bold bg-gray-100 p-2">
-          <div>Mail ID</div>
-          <div>Transaction Date</div>
-          <div>Paid Amount</div>
-        </div>
-        {transactionData_MoneyOrders.map((item) => (
-          <div key={item.id} className="grid grid-cols-3 gap-4 border-b p-2">
-            <div>{item.id}</div>
-            <div>{item.date}</div>
-            <div>{item.amount}</div>
-          </div>
-        ))}
+        <Select
+          placeholder="Select Month"
+          onChange={(value) => handleMonthChange(value, "govParcel")}
+          style={{
+            width: 200,
+            marginBottom: 20,
+            color: "#696969",
+          }}
+        >
+          {moment.months().map((month, index) => (
+            <Select.Option key={index} value={index + 1}>
+              {month}
+            </Select.Option>
+          ))}
+        </Select>
+        <Table
+          columns={columns}
+          dataSource={filterByMonth(
+            data.govParcel,
+            selectedMonth.govParcel
+              ? moment().month(selectedMonth.govParcel - 1)
+              : null
+          )}
+          pagination={false}
+        />
       </div>
 
-      {/* Couriers Table */}
-      <div className="grid grid-cols-1 mt-8 bg-white p-4 shadow rounded-lg">
-        {/*<h2 className="text-xl font-semibold mb-4">Couriers</h2>*/}
-
-        {/*Heading on each table*/}
+      {/* Table for Normal Parcel */}
+      <div className="mt-8 bg-white p-4 shadow rounded-lg">
         <div
           style={{
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
             padding: "10px",
-            // fontWeight: "bold",
             marginBottom: "10px",
             marginTop: "10px",
             backgroundColor: "#a3a3a3",
           }}
         >
-          Courier Items
+          Normal Parcel
           <img
             src={DownArrowIcon}
             alt="Pending Mails"
@@ -240,32 +270,41 @@ const FinancialMgmt = () => {
             }}
           />
         </div>
-        <div className="grid grid-cols-3 gap-4 font-bold bg-gray-100 p-2">
-          <div>Mail ID</div>
-          <div>Transaction Date</div>
-          <div>Paid Amount</div>
-        </div>
-        {transactionData_Couriers.map((item) => (
-          <div key={item.id} className="grid grid-cols-3 gap-4 border-b p-2">
-            <div>{item.id}</div>
-            <div>{item.date}</div>
-            <div>{item.amount}</div>
-          </div>
-        ))}
+        <Select
+          placeholder="Select Month"
+          onChange={(value) => handleMonthChange(value, "normalParcel")}
+          style={{
+            width: 200,
+            marginBottom: 20,
+            color: "#696969",
+          }}
+        >
+          {moment.months().map((month, index) => (
+            <Select.Option key={index} value={index + 1}>
+              {month}
+            </Select.Option>
+          ))}
+        </Select>
+        <Table
+          columns={columns}
+          dataSource={filterByMonth(
+            data.normalParcel,
+            selectedMonth.normalParcel
+              ? moment().month(selectedMonth.normalParcel - 1)
+              : null
+          )}
+          pagination={false}
+        />
       </div>
 
-      {/* Bulk Mail Orders Table */}
-      <div className="grid grid-cols-1 mt-8 bg-white p-4 shadow rounded-lg">
-        {/*<h2 className="text-xl font-semibold mb-4">Bulk Mail Orders</h2>*/}
-
-        {/*Heading on each table*/}
+      {/* Table for Bulk Mail Orders */}
+      <div className="mt-8 bg-white p-4 shadow rounded-lg">
         <div
           style={{
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
             padding: "10px",
-            // fontWeight: "bold",
             marginBottom: "10px",
             marginTop: "10px",
             backgroundColor: "#a3a3a3",
@@ -283,51 +322,32 @@ const FinancialMgmt = () => {
             }}
           />
         </div>
-        <div className="grid grid-cols-3 gap-4 font-bold bg-gray-100 p-2">
-          <div>Mail ID</div>
-          <div>Transaction Date</div>
-          <div>Paid Amount</div>
-        </div>
-        {transactionData_BulkMail.map((item) => (
-          <div key={item.id} className="grid grid-cols-3 gap-4 border-b p-2">
-            <div>{item.id}</div>
-            <div>{item.date}</div>
-            <div>{item.amount}</div>
-          </div>
-        ))}
+        <Select
+          placeholder="Select Month"
+          onChange={(value) => handleMonthChange(value, "bulkMailOrders")}
+          style={{
+            width: 200,
+            marginBottom: 20,
+            color: "#696969",
+          }}
+        >
+          {moment.months().map((month, index) => (
+            <Select.Option key={index} value={index + 1}>
+              {month}
+            </Select.Option>
+          ))}
+        </Select>
+        <Table
+          columns={columns}
+          dataSource={filterByMonth(
+            data.bulkMailOrders,
+            selectedMonth.bulkMailOrders
+              ? moment().month(selectedMonth.bulkMailOrders - 1)
+              : null
+          )}
+          pagination={false}
+        />
       </div>
-
-      {/* Graph Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-8">
-        {/* Card 1 */}
-        <div className="bg-white p-4 shadow rounded-lg">
-          <h3 className="text-lg font-semibold mb-4">Monthly Transactions</h3>
-          <ResponsiveContainer width="100%" height={200}>
-            <LineChart data={data}>
-              <Line type="monotone" dataKey="count" stroke="#8884d8" />
-              <CartesianGrid stroke="#ccc" />
-              <XAxis dataKey="name" />
-              <YAxis />
-              <Tooltip />
-            </LineChart>
-          </ResponsiveContainer>
-        </div>
-
-        {/* Card 2 */}
-        <div className="bg-white p-4 shadow rounded-lg">
-          <h3 className="text-lg font-semibold mb-4">Revenue Trend</h3>
-          <ResponsiveContainer width="100%" height={200}>
-            <LineChart data={data}>
-              <Line type="monotone" dataKey="total" stroke="#82ca9d" />
-              <CartesianGrid stroke="#ccc" />
-              <XAxis dataKey="name" />
-              <YAxis />
-              <Tooltip />
-            </LineChart>
-          </ResponsiveContainer>
-        </div>
-      </div>
-      <div style={{ minHeight: "100px" }}></div>
     </div>
   );
 };

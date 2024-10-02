@@ -100,6 +100,7 @@ function LoginForm() {
               <input
                 type="email"
                 id="email"
+                name="email"
                 placeholder="Enter Your Email"
                 value={formik.values.email}
                 onChange={formik.handleChange}
@@ -124,6 +125,7 @@ function LoginForm() {
               <input
                 type="password"
                 id="password"
+                name="password"
                 placeholder="Enter Your Password"
                 value={formik.values.password}
                 onChange={formik.handleChange}
@@ -141,14 +143,7 @@ function LoginForm() {
               ) : null}
             </label>
           </div>
-          <div>
-            <Link
-              to="#"
-              className="text-gray-900 hover:text-blue-600 transition-colors duration-200 mt-3 text-[12px] aligh-center"
-            >
-              Forgot Password?
-            </Link>
-          </div>
+          
 
           {/* Display error message */}
           {errorMessage && (
