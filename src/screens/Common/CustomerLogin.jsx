@@ -1,7 +1,6 @@
 import React from "react";
 import { Box } from "@mui/material";
 import ImageCarousel from "../../components/Customer/ImageCarousel";
-// import NewBackgnd from "../../assets/Customer/NewBackgnd.jpg";
 import NewBackgnd from "../../assets/Customer/back1.jpg";
 import LoginForm from "../../components/Forms/Customer/LoginForm";
 
