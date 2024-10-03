@@ -1,0 +1,43 @@
+.nav{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 40px 120px;
+    
+    background-color: lightseagreen;
+}
+.nav-logo{
+    font-size: 50px;
+    font-weight: 500;
+    font-family: 'Lobster', cursive;
+    align-items: left;
+    color: black;
+}
+.nav-menu{
+    display: flex;
+    align-items: center;
+    list-style: none;
+    font-size: 18px;
+    gap: 50px;
+    color: white;
+    font-weight: 500;
+
+}
+.nav-menu:hover{
+    color: red;
+}
+.nav-menu:hover::after{
+    content: "";
+    width: 30%;
+    height: 2px;
+    background-color: red;
+    position: absolute;
+    bottom: -4px;
+    left: 20px;
+}
+.navbar a{
+    text-decoration: none !important;
+}
+.navbar a:hover{
+    text-decoration: none !important;
+}

@@ -1,8 +1,17 @@
 import { Box, Divider } from "@mui/material";
 import React from "react";
-import reportWebVitals from "./../../reportWebVitals";
+import Barcode from "react-barcode";
 
-const NormalMailReceipt = () => {
+const NormalParcelMailReceipt = ({
+  mailType,
+  postage,
+  recipientName,
+  SenderName,
+  recipientAddress,
+  mailId,
+  receiptId,
+  packageType,
+}) => {
   const currentDate = new Date();
   const dateString = currentDate.toLocaleDateString("en-US", {
     year: "numeric",
@@ -21,7 +30,6 @@ const NormalMailReceipt = () => {
 
   return (
     <div>
-      <p>Receipt is under construction...</p>
       <Box
         p={2}
         sx={{
@@ -34,11 +42,11 @@ const NormalMailReceipt = () => {
           marginTop: "16px",
           marginLeft: "16px",
           width: "300px",
-          height: "400px",
+          minHeight: "400px",
           backgroundColor: "#ffffff",
           borderRadius: "10px",
           padding: "0 0 5px 0",
-          boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.1)",
+          // boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.1)",
         }}
         width={"300px"}
       >
@@ -70,7 +78,9 @@ const NormalMailReceipt = () => {
           </div>
           <p style={paragraph}>Negombo Post Office</p>
           <p style={paragraph}>Issued At: {dateString}</p>
-          <p style={paragraph}>Issued By: (Receptionist_Name)</p>
+          <p style={paragraph}>Issued By: {localStorage.getItem("userName")}</p>
+          <p style={paragraph}>Receipt No: {receiptId}</p>
+
           <div style={{ marginBottom: "3px", marginTop: "3px" }}>
             <Divider
               variant="middle"
@@ -81,12 +91,40 @@ const NormalMailReceipt = () => {
             />
           </div>
 
-          <p style={paragraph}>Mail Type: (Registered Post)</p>
-          <p style={paragraph}>Mail ID: (mail-id)</p>
+          <p style={paragraph}>Mail ID: {mailId ? mailId : "N/A"}</p>
+          <p style={paragraph}>Mail Type: {mailType}</p>
+          <p style={{ marginBottom: "0px" }}>
+            Recipient: {recipientName ? recipientName : "N/A"}
+          </p>
+          <p style={{ marginBottom: "0px" }}>
+            Sender: {SenderName ? SenderName : "N/A"}
+          </p>
+          <p style={{ marginBottom: "10px" }}>
+            Courier Provider: {packageType ? packageType : "N/A"}
+          </p>
+          <p style={{ maxWidth: "280px", wordWrap: "break-word" }}>
+            To: {recipientAddress ? recipientAddress : "N/A"}
+          </p>
+
+          <p>Charge: Rs. {postage ? postage : "N/A"}</p>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <Barcode
+              value={`${mailId},${receiptId}`}
+              width={1.8}
+              height={50}
+              displayValue={false}
+            />
+          </div>
         </div>
       </Box>
     </div>
   );
 };
 
-export default NormalMailReceipt;
+export default NormalParcelMailReceipt;

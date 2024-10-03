@@ -46,10 +46,14 @@ class DistanceMatrix extends Component {
 
   postMatrix = (matrix, addresses) => {
     axios
-      .post("http://localhost:8081/matrix/post-matrix", {
-        matrix,
-        addresses,
-      })
+      .post(
+        "http://localhost:8081/matrix/post-matrix",
+        {
+          matrix,
+          addresses,
+        },
+        { withCredentials: true }
+      )
       .then((response) => {
         console.log("Response data for optimum route, success!");
         this.props.onResponse(response.data); //NOTE: callback to parent

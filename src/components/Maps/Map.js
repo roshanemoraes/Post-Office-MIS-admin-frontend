@@ -6,7 +6,9 @@ import {
   MarkerF,
   InfoWindowF,
 } from "@react-google-maps/api";
-import axios from "axios";
+
+import { get, ref } from "firebase/database";
+import { db } from "../../firebase.js";
 
 const Map = () => {
   const center = {
@@ -18,20 +20,36 @@ const Map = () => {
   const [mapCenter, setMapCenter] = useState(center);
   const [map, setMap] = useState(null);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(
-          "http://localhost:8081/api/postmaster/employee/live-map"
-        );
-        setLocations(response.data);
-        console.log(response.data);
-      } catch (err) {
-        console.error("Error fetching postman locations!", err);
+  const fetchData = async () => {
+    try {
+      const dbRef = ref(db, "PostmanTracker");
+      const snapshot = await get(dbRef);
+      if (snapshot.exists()) {
+        const data = snapshot.val();
+        // Convert object to an array of entries and filter out any undefined/empty entries
+        const filteredData = Object.entries(data)
+          .filter(([ value]) => value) // Remove any empty entries
+          .map(([key, value]) => value); // Map to extract the values (locations)
+
+        setLocations(filteredData); // Now `locations` will contain only valid entries
+        console.log(filteredData); // Check the filtered data in the console
+      } else {
+        console.log("No data available");
       }
-    };
+    } catch (err) {
+      console.error("Error fetching postman locations!", err);
+    }
+  };
+
+  useEffect(() => {
+    
     fetchData();
+    const intervalId = setInterval(fetchData, 60000);
+
+    return () => clearInterval(intervalId);
   }, []);
+
+
 
   useEffect(() => {
     const observer = new MutationObserver((mutations) => {
@@ -102,7 +120,10 @@ const Map = () => {
           {locations.map((location, index) => (
             <MarkerF
               key={index}
-              position={{ lat: location.lat, lng: location.lng }}
+              position={{
+                lat: location.userLocation.latitude,
+                lng: location.userLocation.longitude,
+              }}
               onClick={() => handleActiveMarker(index)}
               onMouseOver={() => handleActiveMarker(index)}
               onMouseOut={() => setActiveMarker(null)}
@@ -130,7 +151,7 @@ const Map = () => {
                       backgroundColor: "rgba(255, 255, 255, 0.9)",
                     }}
                   >
-                    <div>Name: {location.name}</div>
+                    <div>Name: {location.userName}</div>
                     <div>Delivered: {location.deliveredCount}</div>
                     <div>Pending: {location.pendingCount}</div>
                     <div>

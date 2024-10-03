@@ -42,10 +42,11 @@ function ViewRouteModal({ destinations }) {
           my: "0px",
           mb: "0px",
           mr: "10px",
-          backgroundColor: "#000000",
+          ml: "13px",
+          backgroundColor: "#155e75",
           color: "white",
-          px: 5,
-          fontSize: "11px",
+          px: 3,
+          fontSize: "10px",
           borderRadius: "8px",
         }}
         onClick={handleShow}

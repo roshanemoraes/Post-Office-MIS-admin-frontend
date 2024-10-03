@@ -7,12 +7,18 @@ import ReturnToSenderIcon from "../../assets/arrow-up-square-fill.svg";
 import TrashIcon from "../../assets/trash3-fill.svg";
 import InfoReturnMailModal from "./Modals/InfoReturnMailModal";
 import CustomizedSnackbars from "../../components/Custom/CustomizedSnackbars";
+import DownArrowIcon from "../../assets/arrow-down-square-fill.svg";
+import InfoCard from "../../components/Layout/InfoCard";
+import DashboardCard1 from "../../components/Layout/DashboardCard1";
+import MailIcon from "../../assets/icons8-mail-50.png";
+import InfoIconCard from "../../components/Layout/InfoIconCard";
 
 export default function ReturnMailMgmt() {
   const [rows, setRows] = React.useState([]);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState("");
   const [snackbarSeverity, setSnackbarSeverity] = useState("success");
+  const [mailCount, setMailCount] = useState("0");
 
   const handleReturnToSender = async (undeliverableId) => {
     try {
@@ -20,6 +26,7 @@ export default function ReturnMailMgmt() {
         "http://localhost:8081/api/delivery-manager/return-mail/add/return-to-sender",
         undeliverableId,
         {
+          withCredentials: true,
           headers: {
             "Content-Type": "text/plain",
           },
@@ -45,6 +52,7 @@ export default function ReturnMailMgmt() {
         "http://localhost:8081/api/delivery-manager/return-mail/add/address-update",
         undeliverableId,
         {
+          withCredentials: true,
           headers: {
             "Content-Type": "text/plain",
           },
@@ -70,6 +78,7 @@ export default function ReturnMailMgmt() {
         "http://localhost:8081/api/delivery-manager/return-mail/add/discarded-mail",
         undeliverableId,
         {
+          withCredentials: true,
           headers: {
             "Content-Type": "text/plain",
           },
@@ -93,13 +102,13 @@ export default function ReturnMailMgmt() {
     { field: "undeliverableId", headerName: "Return ID", width: 80 },
     { field: "mailId", headerName: "Mail ID", width: 65 },
     { field: "customer_id", headerName: "Cus ID", width: 65 },
-    { field: "type", headerName: "Mail Type", width: 150 },
+    { field: "type", headerName: "Mail Type", width: 130 },
     {
       field: "reason",
       headerName: "Return Reason",
-      width: 170,
+      width: 235,
     },
-    { field: "deliverDate", headerName: "Return Date", width: 180 },
+    { field: "deliverDate", headerName: "Return Date", width: 115 },
     {
       field: "action",
       headerName: "Action",
@@ -112,7 +121,7 @@ export default function ReturnMailMgmt() {
             title="Add to Address-Update List"
             style={{
               border: "none",
-              background: "#f43f5e",
+              background: "#fde047",
               minWidth: "35px",
               marginRight: "10px",
             }}
@@ -134,7 +143,7 @@ export default function ReturnMailMgmt() {
           </Button>
           <Button
             title="Add to Discarded Mail List"
-            style={{ border: "none", background: "#fde047", minWidth: "35px" }}
+            style={{ border: "none", background: "#f43f5e", minWidth: "35px" }}
             onClick={() => handleDiscardMail(params.row.undeliverableId)}
           >
             <img src={TrashIcon} alt="trashIcon" />
@@ -147,10 +156,12 @@ export default function ReturnMailMgmt() {
   const fetchData = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:8081/api/delivery-manager/return-mail/list-all"
+        "http://localhost:8081/api/delivery-manager/return-mail/",
+        { withCredentials: true }
       );
       setRows(response.data);
       console.log(response.data);
+      setMailCount(response.data.length);
     } catch (error) {
       console.error("Error fetching users", error);
     }
@@ -161,56 +172,106 @@ export default function ReturnMailMgmt() {
   }, []);
 
   return (
-    <div>
-      <div
-        style={{
-          height: 550,
-          paddingTop: "5px",
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        <DataGrid
-          rows={rows}
-          columns={columns}
-          rowHeight={50}
-          getRowId={(row) => row.undeliverableId}
-          sx={{
-            ".MuiDataGrid-columnSeparator": {
-              display: "none",
-            },
-            "&.MuiDataGrid-root": {
-              border: "none",
-            },
-          }}
-          initialState={{
-            pagination: {
-              paginationModel: { page: 0, pageSize: 10 },
-            },
-          }}
-        />
-        <CustomizedSnackbars
-          open={snackbarOpen}
-          autoHideDuration={3000}
-          severity={snackbarSeverity}
-          message={snackbarMessage}
-          onClose={() => setSnackbarOpen(false)}
-        />
+    <>
+      <div>
+        <div className="flex justify-center items-center p-2 mb-2 mt-2 bg-gray-400">
+          All Undelivered Mails
+          <img
+            src={DownArrowIcon}
+            alt="All In-Area Mails"
+            className="mr-2 ml-5 w-7 h-7"
+          />
+        </div>
+        <div className="grid grid-cols-12">
+          <div className="col-span-3 flex flex-col pt-[4.5px] ml-6">
+            <InfoIconCard
+              backgroundColor={"#ffffff"}
+              title={"ALL UNDELIVERED MAILS TODAY"}
+              value={`${mailCount} `}
+              iconSrc={MailIcon}
+            />
+            <div className="h-[200px]"></div>
+            {/* <InfoIconCard
+              backgroundColor={"#ffffff"}
+              title={"ALL RETURN-TO-SENDER MAILS"}
+              value={"9756"}
+              iconSrc={MailIcon}
+            />
+            <div className="h-[12px]"></div>
+            <InfoIconCard
+              backgroundColor={"#ffffff"}
+              title={"ALL ADDRESS-CHANGE-REQUEST MAILS"}
+              value={"9756"}
+              iconSrc={MailIcon}
+            /> */}
+            <div className="flex justify-center mt-[200px] ">
+              <div className="mr-7">
+                <Button
+                  style={{
+                    backgroundColor: "#fcd34d",
+                    fontSize: "14px",
+                    color: "black",
+                    textTransform: "none",
+                    padding: "10px",
+                  }}
+                  variant="contained"
+                >
+                  Process All
+                  <br />
+                  Return-to-Sender
+                </Button>
+              </div>
+              <div>
+                <Button
+                  style={{
+                    backgroundColor: "#78350f",
+                    fontSize: "14px",
+                    textTransform: "none",
+                    padding: "10px",
+                  }}
+                  variant="contained"
+                >
+                  Process All
+                  <br />
+                  Address-Update
+                </Button>
+              </div>
+            </div>
+          </div>
+          <div className="col-span-9">
+            <div className="h-[550px] pt-1 flex flex-col justify-center items-center">
+              <DataGrid
+                rows={rows}
+                columns={columns}
+                rowHeight={50}
+                getRowId={(row) => row.undeliverableId}
+                sx={{
+                  backgroundColor: "#f5f5f5",
+                  boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.1)",
+                  ".MuiDataGrid-columnSeparator": {
+                    display: "none",
+                  },
+                  "&.MuiDataGrid-root": {
+                    border: "none",
+                  },
+                }}
+                initialState={{
+                  pagination: {
+                    paginationModel: { page: 0, pageSize: 10 },
+                  },
+                }}
+              />
+              <CustomizedSnackbars
+                open={snackbarOpen}
+                autoHideDuration={3000}
+                severity={snackbarSeverity}
+                message={snackbarMessage}
+                onClose={() => setSnackbarOpen(false)}
+              />
+            </div>
+          </div>
+        </div>
       </div>
-      <div style={{ marginLeft: "50px" }}>
-        <Button variant="contained" style={{ marginRight: "50px" }}>
-          Process All
-          <br />
-          Return To Sender
-        </Button>
-        <Button variant="contained">
-          Process All
-          <br />
-          Address Update
-        </Button>
-      </div>
-    </div>
+    </>
   );
 }

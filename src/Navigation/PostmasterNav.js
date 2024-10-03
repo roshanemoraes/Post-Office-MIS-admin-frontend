@@ -8,6 +8,10 @@ import { TestPrint } from "../containers/Postmaster/TestPrint";
 import LiveMap from "../containers/Postmaster/LiveMap";
 import BlurBackground from "../components/Custom/Background/BlurBackground";
 import NavBar from "../components/NavBar";
+import Statistics from "../containers/Postmaster/Charts/Statistics";
+import TestPortal from "../containers/Postmaster/TestPortal";
+import FinancialMgmt from "../containers/Postmaster/FinancialMgmt";
+import ProfilePage from "../components/ProfilePage";
 
 function PostmasterInterface() {
   const [isSideBarOpen, setSideBarOpen] = useState(window.innerWidth >= 1024);
@@ -20,15 +24,15 @@ function PostmasterInterface() {
     <div
       style={{
         display: "grid",
-        gridTemplateColumns: isSideBarOpen ? "260px auto" : "80px auto",
+        gridTemplateColumns: isSideBarOpen ? "220px auto" : "80px auto",
         gridTemplateRows: "auto 1fr",
       }}
     >
       <SideBar onSidebarToggle={handleSidebarToggle} />
       <div style={{ gridColumn: "2", gridRow: "1" }}>
-        <NavBar />
+        <NavBar role={"postmaster"} />
       </div>
-      {/* <BlurBackground /> */}
+      <BlurBackground />
       <main
         className="content"
         style={{
@@ -40,10 +44,13 @@ function PostmasterInterface() {
       >
         <Routes>
           <Route path="/" element={<Dashboard />} />
+          <Route path="/profile" element={<ProfilePage />} />
           <Route path="/add-employee" element={<AddEmployee />} />
           <Route path="/list-employee" element={<ListEmployee />} />
           <Route path="/live-map" element={<LiveMap />} />
-          <Route path="/test" element={<TestPrint />} />
+          <Route path="/test" element={<TestPortal />} />
+          <Route path="/statistics" element={<Statistics />} />
+          <Route path="/financial-mgmt" element={<FinancialMgmt />} />
         </Routes>
       </main>
     </div>

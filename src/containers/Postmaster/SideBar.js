@@ -30,23 +30,52 @@ const SideBar = ({ onSidebarToggle }) => {
       <div className={`sidebar ${isSideBarOpen ? "" : "close"}`}>
         <div className="logo-details">
           <i className="bx bx-menu" onClick={handleSidebarToggle}></i>
-          <span className="logo_name">Sri Lanka Post</span>
+          <span className="logo_name">SL POST</span>
         </div>
         <ul className="nav-links">
           <li>
-            <Link to="/postmaster/">
+            <Link to="/admin/postmaster/">
               <i className="bx bx-grid-alt"></i>
-              <span className="link_name">Dashboard</span>
+              <span className="link_name">DASHBOARD</span>
             </Link>
             <ul className="sub-menu blank">
               <li>
                 <Link className="link_name" to="#">
-                  Category
+                  Dashboard
                 </Link>
               </li>
             </ul>
           </li>
-          <li className={isSubMenuOpen[0] ? "showMenu" : ""}>
+          <li>
+            <Link to="/admin/postmaster/statistics">
+              <i className="bx bx-stats"></i>
+              <span className="link_name">STATISTICS</span>
+            </Link>
+            <ul className="sub-menu blank">
+              <li>
+                <Link className="link_name" to="/admin/postmaster/statistics">
+                  STATISTICS
+                </Link>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <Link to="/admin/postmaster/financial-mgmt">
+              <i className="bx bx-dollar-circle"></i>
+              <span className="link_name">FINANCIAL MGMT</span>
+            </Link>
+            <ul className="sub-menu blank">
+              <li>
+                <Link
+                  className="link_name"
+                  to="/admin/postmaster/financial-mgmt"
+                >
+                  FINANCIAL MGMT
+                </Link>
+              </li>
+            </ul>
+          </li>
+          {/* <li className={isSubMenuOpen[0] ? "showMenu" : ""}>
             <div className="iocn-link">
               <Link to="#">
                 <i className="bx bx-collection"></i>
@@ -73,77 +102,64 @@ const SideBar = ({ onSidebarToggle }) => {
                 <Link to="#">Chart 3</Link>
               </li>
             </ul>
-          </li>
+          </li> */}
           <li>
-            <Link to="/postmaster/live-map">
-              <i className="bx bx-pie-chart-alt-2"></i>
-              <span className="link_name">Live Map</span>
+            <Link to="/admin/postmaster/live-map">
+              <i className="bx bxs-map"></i>
+              <span className="link_name">LIVE MAP</span>
             </Link>
             <ul className="sub-menu blank">
               <li>
                 <Link className="link_name" to="#">
-                  Live Map
+                  LIVE MAP
+                </Link>
+              </li>
+            </ul>
+          </li>
+
+          <li>
+            <Link to="/admin/postmaster/add-employee">
+              <i className="bx bxs-user"></i>
+              <span className="link_name">ADD EMPLOYEE</span>
+            </Link>
+            <ul className="sub-menu blank">
+              <li>
+                <Link className="link_name" to="#">
+                  ADD EMPLOYEE
                 </Link>
               </li>
             </ul>
           </li>
           <li>
-            <Link to="/postmaster/list-employee">
-              <i className="bx bx-line-chart"></i>
-              <span className="link_name">List Employees</span>
+            <Link to="/admin/postmaster/list-employee">
+              <i className="bx bx-list-ul"></i>
+              <span className="link_name">LIST EMPLOYEES</span>
             </Link>
             <ul className="sub-menu blank">
               <li>
                 <Link className="link_name" to="#">
-                  List Employees
+                  LIST EMPLOYEES
                 </Link>
               </li>
             </ul>
           </li>
-          <li>
-            <Link to="/postmaster/add-employee">
+          {/* <li>
+            <Link to="/admin/postmaster/test">
               <i className="bx bx-compass"></i>
-              <span className="link_name">Add Employee</span>
+              <span className="link_name">TEST PORTAL</span>
             </Link>
             <ul className="sub-menu blank">
               <li>
                 <Link className="link_name" to="#">
-                  Add Employee
+                  TEST PORTAL
                 </Link>
               </li>
             </ul>
-          </li>
-          <li>
-            <Link to="/receptionist">
-              <i className="bx bx-cog"></i>
-              <span className="link_name">Receptionist</span>
-            </Link>
-            <ul className="sub-menu blank">
-              <li>
-                <Link className="link_name" to="#">
-                  Receptionist
-                </Link>
-              </li>
-            </ul>
-          </li>
-          <li>
-            <Link to="/delivery-manager">
-              <i className="bx bx-cog"></i>
-              <span className="link_name">Delivery Manager</span>
-            </Link>
-            <ul className="sub-menu blank">
-              <li>
-                <Link className="link_name" to="#">
-                  Delivery Manager
-                </Link>
-              </li>
-            </ul>
-          </li>
+          </li> */}
+
           <li>
             <div className="profile-details">
-              <div className="profile-content">
-                <img src="image/profile.jpg" alt="profileImg" />
-              </div>
+              <div className="profile-content"></div>
               <div className="name-job">
                 <div className="profile_name">SEP</div>
                 <div className="job">2024</div>

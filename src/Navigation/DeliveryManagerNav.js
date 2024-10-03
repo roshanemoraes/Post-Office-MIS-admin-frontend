@@ -8,6 +8,12 @@ import NavBar from "../components/NavBar";
 import ReturnToSender from "../containers/DeliveryManager/ReturnToSender";
 import AddressUpdate from "../containers/DeliveryManager/AddressUpdate";
 import DiscardedMails from "../containers/DeliveryManager/DiscardedMails";
+import MailsToSort from "../containers/DeliveryManager/MailSortMgmt/MailsToSort";
+import InArea from "../containers/DeliveryManager/MailSortMgmt/InArea";
+import OutArea from "../containers/DeliveryManager/MailSortMgmt/OutArea";
+import BlurBackground from "../components/Custom/Background/BlurBackground";
+import Notifications from "../containers/DeliveryManager/Notifications";
+import ProfilePage from "../components/ProfilePage";
 
 const DeliveryManagerInterface = () => {
   const [isSideBarOpen, setSideBarOpen] = useState(window.innerWidth >= 1024);
@@ -19,14 +25,15 @@ const DeliveryManagerInterface = () => {
     <div
       style={{
         display: "grid",
-        gridTemplateColumns: isSideBarOpen ? "260px auto" : "80px auto",
+        gridTemplateColumns: isSideBarOpen ? "220px auto" : "80px auto",
         gridTemplateRows: "auto 1fr",
       }}
     >
       <SideBar onSidebarToggle={handleSidebarToggle} />
       <div style={{ gridColumn: "2", gridRow: "1" }}>
-        <NavBar />
+        <NavBar role={"delivery-manager"} />
       </div>
+      <BlurBackground />
       <main
         className="content"
         style={{
@@ -38,6 +45,7 @@ const DeliveryManagerInterface = () => {
       >
         <Routes>
           <Route path="/" element={<Dashboard />} />
+          <Route path="/profile" element={<ProfilePage />} />
           <Route path="/route-allocation" element={<RouteAllocation />} />
           <Route path="/return-mail" element={<ReturnMailMgmt />} />
           <Route
@@ -52,6 +60,10 @@ const DeliveryManagerInterface = () => {
             path="/return-mail/discarded-mail"
             element={<DiscardedMails />}
           />
+          <Route path="/mail-sort" element={<MailsToSort />} />
+          <Route path="/mail-sort/in-area" element={<InArea />} />
+          <Route path="/mail-sort/out-area" element={<OutArea />} />
+          <Route path="/notifications" element={<Notifications />} />
         </Routes>
       </main>
     </div>

@@ -37,7 +37,7 @@ const LogiPost = () => {
           paddingTop={2}
         >
           <PostForm
-            formTitle={"Logi Post"}
+            formTitle="Government Parcel Mail"
             fieldsGroups={[
               { label: "Sender:", fields: senderFields },
               { label: "Recipient:", fields: recipientFields },

@@ -1,0 +1,220 @@
+import React, { useEffect, useState } from "react";
+import { DataGrid } from "@mui/x-data-grid";
+import DownArrowIcon from "../../assets/arrow-down-square-fill.svg";
+import { Button, ButtonGroup } from "react-bootstrap";
+import axios from "axios";
+import ReturnToSenderNotification from "../../components/Notification/ReturnToSenderNotification";
+import { Client } from "@stomp/stompjs";
+import SockJS from "sockjs-client";
+import UpdateIcon from "../../assets/pencil-fill.svg";
+import AddressUpdateNotificationModal from "../DeliveryManager/Modals/AddressUpdateNotificationModal";
+import InfoNotificationModal from "./Modals/InfoNotificationModal";
+
+const Notifications = () => {
+  const [rows, setRows] = React.useState([]);
+  const [notifications, setNotifications] = useState([]);
+  const [client, setClient] = useState(null);
+  const [IsClicked, setIsClicked] = useState(false);
+
+  const columns = [
+    { field: "date", headerName: "Date", width: 150 },
+    { field: "message", headerName: "Message", width: 500 },
+    { field: "notificationId", headerName: "ID", width: 100 },
+    // { field: "undeliverableId", headerName: "Undelivered ID", width: 100 },
+    { field: "type", headerName: "Type", width: 180 },
+    { field: "read", headerName: "Read", width: 120 },
+    { field: "mailId", headerName: "Mail Id", width: 120 },
+    {
+      field: "action",
+      headerName: "Action",
+      width: 120,
+      headerAlign: "center",
+      renderCell: (params) => {
+        return (
+          <div>
+            <InfoNotificationModal data={params.row} />
+            {params.row.type === "Address-update" && (
+              <AddressUpdateNotificationModal data={params.row} />
+            )}
+            {params.row.type === "Return-to-sender" && <div>-</div>}
+          </div>
+        );
+      },
+    },
+  ];
+
+  const fetchData = async () => {
+    setIsClicked(true);
+    try {
+      const response = await axios.get(
+        "http://localhost:8081/api/notifications/2"
+      );
+      setRows(response.data);
+      console.log(response.data);
+    } catch (error) {
+      console.error("Error fetching users", error);
+    }
+  };
+  const fetchUnreadData = async () => {
+    setIsClicked(false);
+    try {
+      const response = await axios.get(
+        "http://localhost:8081/api/notifications/unread/3"
+      );
+      setRows(response.data);
+      console.log(response.data);
+    } catch (error) {
+      console.error("Error fetching users", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+    const stompClient = new Client({
+      brokerURL: "ws://localhost:8081/ws",
+      connectHeaders: {},
+      webSocketFactory: () => new SockJS("http://localhost:8081/ws"),
+      onConnect: () => {
+        console.log("Connected to WebSocket");
+        const customerId = 3;
+        stompClient.subscribe(`/topic/customer/${customerId}`, (message) => {
+          fetchData();
+          console.log("Received message:", message);
+          const notification = JSON.parse(message.body);
+          setNotifications((prev) => [notification, ...prev]);
+        });
+      },
+    });
+    stompClient.activate();
+    setClient(stompClient);
+
+    return () => stompClient.deactivate();
+  }, []);
+
+  return (
+    <>
+      <ReturnToSenderNotification />
+      {/* <AddressUpdateNotificationModal /> */}
+      <div>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            padding: "10px",
+            // fontWeight: "bold",
+            marginBottom: "10px",
+            marginTop: "10px",
+            backgroundColor: "#a3a3a3",
+          }}
+        >
+          Notifications
+          <img
+            src={DownArrowIcon}
+            alt="All In-Area Mails"
+            style={{
+              marginRight: "10px",
+              marginLeft: "20px",
+              width: "30px",
+              height: "30px",
+            }}
+          />
+        </div>
+        <div
+          style={{
+            display: "flex",
+            alignSelf: "flex-start",
+            marginLeft: "10px",
+          }}
+        >
+          <ButtonGroup aria-label="Basic example">
+            <Button
+              variant="secondary"
+              onClick={() => {
+                fetchData();
+              }}
+              style={{
+                backgroundColor: IsClicked ? "#852318" : "#f0f0f0",
+                borderColor: IsClicked ? "#d1d1d1" : "black",
+                color: IsClicked ? "white" : "#333",
+                padding: "8px 16px",
+                margin: "2px",
+                borderRadius: "4px",
+                boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
+              }}
+            >
+              All
+            </Button>
+            <Button
+              variant="secondary"
+              onClick={() => fetchUnreadData()}
+              style={{
+                backgroundColor: IsClicked ? "#f0f0f0" : "#852318",
+                borderColor: IsClicked ? "black" : "#d1d1d1",
+                color: IsClicked ? "#333" : "white",
+                padding: "8px 16px",
+                margin: "2px",
+                borderRadius: "4px",
+                boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
+              }}
+            >
+              Unread
+            </Button>
+          </ButtonGroup>
+        </div>
+        <div
+          style={{
+            height: 514,
+            paddingTop: "5px",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <DataGrid
+            rows={rows}
+            columns={columns}
+            rowHeight={50}
+            getRowId={(row) => row.notificationId}
+            sx={{
+              backgroundColor: "#f5f5f5",
+              boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.1)",
+              ".MuiDataGrid-columnSeparator": {
+                display: "none",
+              },
+              "&.MuiDataGrid-root": {
+                border: "none",
+              },
+              "& .MuiDataGrid-cell[data-field='notificationId']": {
+                display: "none",
+              },
+              "& .MuiDataGrid-columnHeader[data-field='notificationId']": {
+                display: "none",
+              },
+              "& .MuiDataGrid-cell[data-field='read']": {
+                display: "none",
+              },
+              "& .MuiDataGrid-columnHeader[data-field='read']": {
+                display: "none",
+              },
+              // "& .MuiDataGrid-cell[data-field='mailId']": {
+              //   display: "none",
+              // },
+              // "& .MuiDataGrid-columnHeader[data-field='mailId']": {
+              //   display: "none",
+              // },
+            }}
+            initialState={{
+              pagination: {
+                paginationModel: { page: 0, pageSize: 8 },
+              },
+            }}
+          />
+        </div>
+      </div>
+    </>
+  );
+};
+
+export default Notifications;

@@ -37,10 +37,14 @@ const getDistanceMatrix = (destinations) => {
         }
 
         axios
-          .post("http://localhost:8081/matrix/post-matrix", {
-            matrix,
-            addresses,
-          })
+          .post(
+            "http://localhost:8081/matrix/post-matrix",
+            {
+              matrix,
+              addresses,
+            },
+            { withCredentials: true }
+          )
           .then((response) => resolve(response.data))
           .catch((error) => reject(error));
       }

@@ -30,18 +30,18 @@ const SideBar = ({ onSidebarToggle }) => {
       <div className={`sidebar ${isSideBarOpen ? "" : "close"}`}>
         <div className="logo-details">
           <i className="bx bx-menu" onClick={handleSidebarToggle}></i>
-          <span className="logo_name">Sri Lanka Post</span>
+          <span className="logo_name">SL POST</span>
         </div>
         <ul className="nav-links">
           <li>
-            <Link to="/receptionist">
+            <Link to="/admin/receptionist">
               <i className="bx bxs-dashboard"></i>
-              <span className="link_name">Dashboard</span>
+              <span className="link_name">DASHBOARD</span>
             </Link>
             <ul className="sub-menu blank">
               <li>
-                <Link className="link_name" to="#">
-                  Dashboard
+                <Link className="link_name" to="/admin/receptionist">
+                  DASHBOARD
                 </Link>
               </li>
             </ul>
@@ -50,7 +50,7 @@ const SideBar = ({ onSidebarToggle }) => {
             <div className="iocn-link">
               <Link to="#">
                 <i className="bx bx-envelope"></i>
-                <span className="link_name">New Post</span>
+                <span className="link_name">NEW MAIL</span>
               </Link>
               <i
                 className="bx bxs-chevron-down arrow"
@@ -60,62 +60,82 @@ const SideBar = ({ onSidebarToggle }) => {
             <ul className="sub-menu">
               <li>
                 <Link className="link_name" to="#">
-                  New Post
+                  NEW MAIL
                 </Link>
               </li>
               <li>
-                <Link to="/receptionist/normal-post">Personal Mail</Link>
+                <Link to="/admin/receptionist/normal-post">Normal Post</Link>
               </li>
               <li>
-                <Link to="/receptionist/normal-post">
-                  Personal Courier Mail
+                <Link to="/admin/receptionist/normal-courier">
+                  Normal Courier Post
                 </Link>
               </li>
               <li>
-                <Link to="/receptionist/normal-post">Personal Parcel Mail</Link>
+                <Link to="/admin/receptionist/normal-parcel">
+                  Normal Parcel Post
+                </Link>
               </li>
               <li>
-                <Link to="/receptionist/registered-post">Registered Post</Link>
-              </li>
-              <li>
-                <Link to="/receptionist/logi-post">Official Parcel Mail</Link>
-              </li>
-            </ul>
-          </li>
-          <li>
-            <Link to="/receptionist/fast-courier">
-              <i className="bx bx-package"></i>
-              <span className="link_name">Bulk Mailing</span>
-            </Link>
-            <ul className="sub-menu blank">
-              <li>
-                <Link className="link_name" to="#">
-                  Bulk Mailing
+                <Link to="/admin/receptionist/gov-parcel">
+                  Government Parcel Post
                 </Link>
               </li>
             </ul>
           </li>
           <li>
-            <Link to="/receptionist/fast-courier">
+            <Link to="/admin/receptionist/bulk-mail">
               <i className="bx bx-package"></i>
-              <span className="link_name">Customer Management</span>
+              <span className="link_name">BULK MAILS</span>
             </Link>
             <ul className="sub-menu blank">
               <li>
-                <Link className="link_name" to="#">
-                  Customer Management
+                <Link className="link_name" to="/admin/receptionist/bulk-mail">
+                  BULK MAILS
+                </Link>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <Link to="/admin/receptionist/money-order">
+              <i className="bx bx-dollar-circle"></i>
+              <span className="link_name">MONEY ORDER</span>
+            </Link>
+            <ul className="sub-menu blank">
+              <li>
+                <Link
+                  className="link_name"
+                  to="/admin/receptionist/money-order"
+                >
+                  MONEY ORDER
+                </Link>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <Link to="/admin/receptionist/customer-mgmt">
+              <i className="bx bx-user"></i>
+              <span className="link_name">CUSTOMER INFO</span>
+            </Link>
+            <ul className="sub-menu blank">
+              <li>
+                <Link
+                  className="link_name"
+                  to="/admin/receptionist/customer-mgmt"
+                >
+                  CUSTOMER INFO
                 </Link>
               </li>
             </ul>
           </li>
           {/* <li>
-            <Link to="/receptionist/return-mail">
+            <Link to="/admin/receptionist/return-mail">
               <i className="bx bx-credit-card"></i>
               <span className="link_name">Return Mail Management</span>
             </Link>
             <ul className="sub-menu blank">
               <li>
-                <Link className="link_name" to="/receptionist/return-mail">
+                <Link className="link_name" to="/admin/receptionist/return-mail">
                   Return Mail Management
                 </Link>
               </li>
@@ -149,23 +169,11 @@ const SideBar = ({ onSidebarToggle }) => {
               </li>
             </ul>
           </li> */}
-          <li>
-            <Link to="#">
-              <i className="bx bx-cog"></i>
-              <span className="link_name">Settings</span>
-            </Link>
-            <ul className="sub-menu blank">
-              <li>
-                <Link className="link_name" to="#">
-                  Settings
-                </Link>
-              </li>
-            </ul>
-          </li>
+
           <li>
             <div className="profile-details">
               <div className="profile-content">
-                <img src="" alt="" />
+                {/* <img src="" alt="" /> */}
               </div>
               <div className="name-job">
                 <div className="profile_name">S E P</div>
