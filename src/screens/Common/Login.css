@@ -1,0 +1,27 @@
+/* Zoom In and Out Animation for the Image with Constant Size */
+@keyframes zoom {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.1);
+        /* Zoom in by 10% */
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+.zoom-image {
+    animation: zoom 5s ease-in-out infinite;
+    object-fit: cover;
+    /* Ensures the image covers the container */
+    width: 100%;
+    /* Ensures the image width remains constant */
+    height: 100%;
+    /* Ensures the image height remains constant */
+    transform-origin: center;
+    /* Keeps the zoom effect centered */
+}
