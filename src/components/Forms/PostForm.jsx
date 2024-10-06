@@ -3,16 +3,12 @@ import React, { useState, useRef } from "react";
 import CustomFormControl from "../Custom/CustomFormControl";
 import CustomTextField from "../Custom/CustomTextField";
 import { useReactToPrint } from "react-to-print";
+import { useFormik } from "formik";
+import * as Yup from "yup";
 
-const PostForm = ({
-  formTitle,
-  fieldsGroups,
-  selectionGroups,
-  onFormSubmit,
-}) => {
+const PostForm = ({ formTitle, fieldsGroups, selectionGroups, onFormSubmit }) => {
   const theme = useTheme();
   const [formState, setFormState] = useState({});
-  const [formErrors, setFormErrors] = useState({});
   const [recipientCity, setRecipientCity] = useState("");
   const [senderCity, setSenderCity] = useState("");
   const [recipientAddressInput, setRecipientAddressInput] = useState("");
@@ -21,6 +17,7 @@ const PostForm = ({
   const [isSubmitted, setIsSubmitted] = useState(false);
 
   const contentToPrint = useRef(null);
+
   const handlePrint = useReactToPrint({
     documentTitle: "TestPrint",
     onBeforePrint: () => {
@@ -32,6 +29,29 @@ const PostForm = ({
     removeAfterPrint: true,
   });
 
+  const validationSchema = Yup.object().shape(
+    fieldsGroups.reduce((schema, group) => {
+      group.fields.forEach((field) => {
+        schema[field.id] = Yup.string().required(`${field.label} is required`);
+      });
+      return schema;
+    }, {})
+  );
+
+  const formik = useFormik({
+    initialValues: fieldsGroups.reduce((values, group) => {
+      group.fields.forEach((field) => {
+        values[field.id] = "";
+      });
+      return values;
+    }, {}),
+    validationSchema: validationSchema,
+    onSubmit: (values) => {
+      onFormSubmit(values);
+      setIsSubmitted(true);
+    },
+  });
+
   const handleChange = (id) => (event) => {
     const value = event.target.value;
     if (id === "recipient_city") {
@@ -41,16 +61,8 @@ const PostForm = ({
       setAddressType("sender");
       setSenderCity(value);
     } else {
-      setFormState({
-        ...formState,
-        [id]: event.target.value,
-      });
+      formik.setFieldValue(id, value);
     }
-  };
-
-  const handleSubmit = () => {
-    onFormSubmit(formState);
-    setIsSubmitted(true);
   };
 
   const handleAddressInput = (event) => {
@@ -91,7 +103,6 @@ const PostForm = ({
         <Typography
           variant="subtitle2"
           sx={{
-            // color: theme.palette.text.typography,
             fontWeight: "bold",
             fontSize: "22px",
             marginBottom: "10px",
@@ -113,6 +124,7 @@ const PostForm = ({
               marginTop: "10px",
             },
           }}
+          onSubmit={formik.handleSubmit}
         >
           <GlobalStyles
             styles={{
@@ -126,7 +138,6 @@ const PostForm = ({
               <Typography
                 variant="subtitle2"
                 sx={{
-                  // color: theme.palette.text.typography,
                   fontSize: "18px",
                   fontWeight: "bold",
                   marginBottom: "5px",
@@ -154,7 +165,7 @@ const PostForm = ({
                         ? recipientAddressInput
                         : field.id === "sender_address"
                         ? senderAddressInput
-                        : formState[field.id] || ""
+                        : formik.values[field.id]
                     }
                     onChange={
                       field.id === "recipient_city" ||
@@ -165,6 +176,9 @@ const PostForm = ({
                         ? handleAddressInput
                         : handleChange(field.id)
                     }
+                    onBlur={formik.handleBlur}
+                    error={formik.touched[field.id] && Boolean(formik.errors[field.id])}
+                    helperText={formik.touched[field.id] && formik.errors[field.id]}
                   />
                 </div>
               ))}
@@ -187,9 +201,12 @@ const PostForm = ({
                   label={field.label}
                   id={field.id}
                   options={field.options}
-                  value={formState[field.id] || ""}
+                  value={formik.values[field.id]}
                   onChange={handleChange(field.id)}
                   key={field.id}
+                  onBlur={formik.handleBlur}
+                  error={formik.touched[field.id] && Boolean(formik.errors[field.id])}
+                  helperText={formik.touched[field.id] && formik.errors[field.id]}
                 />
               ))}
             </React.Fragment>
@@ -207,7 +224,7 @@ const PostForm = ({
                 fontSize: "14px",
                 borderRadius: "6px",
               }}
-              onClick={handleSubmit}
+              type="submit"
             >
               Submit
             </Button>

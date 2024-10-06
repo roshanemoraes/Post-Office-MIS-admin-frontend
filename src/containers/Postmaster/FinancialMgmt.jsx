@@ -146,7 +146,6 @@ const FinancialMgmt = () => {
             />
           </div>
         </div>
-
         {/* Table for Normal Courier */}
         <div className="mt-8 bg-white p-4 shadow rounded-lg">
           <div
@@ -197,7 +196,6 @@ const FinancialMgmt = () => {
             />
           </div>
         </div>
-
         {/* Table for Gov Parcel */}
         <div className="mt-8 bg-white p-4 shadow rounded-lg">
           <div
@@ -248,7 +246,6 @@ const FinancialMgmt = () => {
             />
           </div>
         </div>
-
         {/* Table for Normal Parcel */}
         <div className="mt-8 bg-white p-4 shadow rounded-lg">
           <div
@@ -351,7 +348,6 @@ const FinancialMgmt = () => {
           </div>
         </div>
       </div>
-
       <div className="min-h-[90px]"></div>
     </>
   );
