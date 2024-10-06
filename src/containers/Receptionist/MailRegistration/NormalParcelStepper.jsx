@@ -775,7 +775,22 @@ export default function HorizontalLinearStepper() {
                 Skip
               </Button>
             )}
-            <Button onClick={handleNext}>
+            <Button
+              onClick={handleNext}
+              sx={{
+                backgroundColor:
+                  activeStep === steps.length - 1 ? "#852318" : "#1976d2", // Green for "Register Mail", Blue for "Next"
+                color: "#fff", // White text color
+                "&:hover": {
+                  backgroundColor:
+                    activeStep === steps.length - 1 ? "#591710" : "#1565c0", // Darker shades on hover
+                },
+                padding: "8px 16px", // Adjust the padding
+                fontWeight: "bold", // Bold text
+                borderRadius: "8px", // Rounded corners
+                boxShadow: "0px 3px 5px rgba(0, 0, 0, 0.2)", // Add a subtle shadow
+              }}
+            >
               {activeStep === steps.length - 1 ? "Register Mail" : "Next"}
             </Button>
           </Box>
