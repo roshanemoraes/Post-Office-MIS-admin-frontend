@@ -132,6 +132,13 @@ const MoneyOrders = () => {
     }
   };
 
+  const handleGetCharge = () => {
+    setFormState((prevState) => ({
+      ...prevState,
+      charge: "400",
+    }));
+  };
+
   const handlePayment = () => {
     // fetch("/api/payment", {
     //   // Your backend endpoint
@@ -288,12 +295,12 @@ const MoneyOrders = () => {
                     </div>
                   </div>
                 </div>
-                <div>
+                {/* <div>
                   <SenderAddressValidationModel
                     formState={formState}
                     onValidationSenderResult={handleSenderOnValidationResult}
                   />
-                </div>
+                </div> */}
                 <div>
                   <TextField
                     inputProps={{ style: { fontSize: 15 } }}
@@ -326,7 +333,7 @@ const MoneyOrders = () => {
                         backgroundColor: "#fcd34d",
                       },
                     }}
-                    // onClick={validationResult}
+                    onClick={handleGetCharge}
                   >
                     Get charge
                   </MuiButton>
@@ -340,9 +347,10 @@ const MoneyOrders = () => {
                     style={{ minWidth: 250, marginLeft: "32px" }}
                     type={mailFormField.cost.type}
                     id={mailFormField.cost.id}
-                    label={mailFormField.cost.label}
-                    onChange={handleChange(mailFormField.cost.id)}
-                    value={formState.senderAddress}
+                    // label={mailFormField.cost.label}
+                    // onChange={handleGetCharge()}
+                    // onChange={handleChange(mailFormField.cost.id)}
+                    value={formState.charge}
                   ></TextField>
                 </div>
                 <div

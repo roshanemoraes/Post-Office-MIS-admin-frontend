@@ -9,15 +9,13 @@ const CustomerMgmt = () => {
   const handleSearch = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:8081/api/receptionist/customer-detail`,
+        `http://localhost:8081/api/receptionist/customer-detail/?searchType=${searchType}&searchTerm=${searchTerm}`,
         {
-          params: {
-            searchTerm,
-            searchType,
-          },
+          withCredentials: true,
         }
       );
       setData(response.data);
+      console.log("Customer details:", response.data);
     } catch (error) {
       console.error("Error fetching customer details:", error);
       setData(null); // Handle no results found
@@ -26,20 +24,25 @@ const CustomerMgmt = () => {
 
   return (
     <>
-      <div className="p-6 bg-gray-50">
-        <div className="grid grid-cols-3 sm:grid-cols-2 lg:grid-cols-4 gap-4 items-center">
-          <input
-            type="text"
-            placeholder={`Search by ${searchType}`}
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="border p-2 rounded w-full"
-          />
+      <div
+        className="p-6 bg-gray-50 m-[25px] mr-[150px]"
+        style={{ borderRadius: "10px" }}
+      >
+        <div className="grid grid-cols-6 sm:grid-cols-2 lg:grid-cols-4 gap-4 ">
+          <div className="col-span-1">
+            <input
+              type="text"
+              placeholder={`Search by ${searchType}`}
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="border p-2 rounded "
+            />
+          </div>
 
-          <div className="flex space-x-2">
+          <div className="  col-span-2 ">
             <button
               onClick={() => setSearchType("id")}
-              className={`px-4 py-2 rounded ${
+              className={`px-4 mr-[10px] py-2 rounded ${
                 searchType === "id" ? "bg-blue-500 text-white" : "bg-gray-200"
               }`}
             >
@@ -47,7 +50,7 @@ const CustomerMgmt = () => {
             </button>
             <button
               onClick={() => setSearchType("nic")}
-              className={`px-4 py-2 rounded ${
+              className={`px-4 py-2 mr-[10px] rounded ${
                 searchType === "nic" ? "bg-blue-500 text-white" : "bg-gray-200"
               }`}
             >
@@ -64,7 +67,7 @@ const CustomerMgmt = () => {
               Contact Number
             </button>
           </div>
-          <div className="flex justify-end">
+          <div className=" col-span-2 ">
             <button
               onClick={handleSearch}
               className="bg-red-900 text-white px-4 py-2 rounded gap-4"
@@ -75,14 +78,14 @@ const CustomerMgmt = () => {
         </div>
       </div>
 
-      <div className="p-4">
+      <div className="p-4" style={{ borderRadius: "10px" }}>
         {data ? (
-          <div className="p-4 bg-white shadow rounded">
+          <div className="p-4 bg-white rounded">
             <p>
-              <strong>ID:</strong> {data.id}
+              <strong>ID:</strong> {data.customer.id}
             </p>
             <p>
-              <strong>Name:</strong> {data.name}
+              <strong>Name:</strong> {data.customer.fullName}
             </p>
             <p>
               <strong>Address:</strong> {data.address}
