@@ -50,7 +50,9 @@ const Map = () => {
   }, []);
 
 
-
+//
+//The useEffect hook you've written is setting up a MutationObserver 
+//that watches for changes in the DOM and applies styles to newly added nodes with the class gm-style-iw-ch
   useEffect(() => {
     const observer = new MutationObserver((mutations) => {
       mutations.forEach(({ addedNodes }) => {
