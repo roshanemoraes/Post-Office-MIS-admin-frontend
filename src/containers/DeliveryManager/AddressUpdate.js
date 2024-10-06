@@ -101,7 +101,7 @@ export default function AddressUpdate() {
       console.error("Error fetching users", error);
     }
   };
-
+//ideal one----------------------
   useEffect(() => {
     fetchData();
 

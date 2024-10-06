@@ -10,28 +10,28 @@ const columns = [
   {
     field: "id",
     headerName: "Mail ID",
-    width: 250,
+    width: 150,
   },
   {
     field: "datePosted",
     headerName: "Date Posted",
-    width: 450,
+    width: 250,
    // valueFormatter: (params) => moment(params.value).format("YYYY-MM-DD"),
   },
   {
     field: "dateDelivered",
     headerName: "Date Delivered",
-    width: 550,
+    width: 250,
   },
   {
     field: "postage",
     headerName: "Postage",
-    width: 550,
+    width: 250,
   },
   {
     field: "city",
     headerName: "City",
-    width: 550,
+    width: 250,
   },
 ];
 
