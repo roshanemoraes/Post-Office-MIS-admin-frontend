@@ -45,20 +45,20 @@ const data = {
 // Define columns for all tables
 const columns = [
   {
-    title: "Mail_Id",
-    dataIndex: "mail_id",
-    key: "mail_id",
+    field: "id",
+    headerName: "Mail ID",
+    width: 250,
   },
   {
-    title: "Date",
-    dataIndex: "date",
-    key: "date",
-    render: (text) => moment(text).format("YYYY-MM-DD"),
+    field: "date",
+    headerName: "Date",
+    width: 450,
+    valueFormatter: (params) => moment(params.value).format("YYYY-MM-DD"),
   },
   {
-    title: "Postage",
-    dataIndex: "postage",
-    key: "postage",
+    field: "amount",
+    headerName: "Postage",
+    width: 550,
   },
 ];
 
@@ -84,10 +84,8 @@ const FinancialMgmt = () => {
   };
 
   return (
-    <div className="p-4 bg-[#fef9c3]">
-      <div className="text-center text-[#020617] text-5xl font-bold mt-8 mb-8">
-        Financial Analysis
-      </div>
+    <>
+    <div className="p-4 bg-#a3a3a3">
 
       {/* Table for Normal Post */}
       <div className="mt-8 bg-white p-4 shadow rounded-lg">
@@ -129,7 +127,8 @@ const FinancialMgmt = () => {
             </Select.Option>
           ))}
         </Select>
-        <Table
+        <div style={{ height: 400, width: "100%" }}>
+        <DataGrid
           columns={columns}
           dataSource={filterByMonth(
             data.normalPost,
@@ -137,8 +136,11 @@ const FinancialMgmt = () => {
               ? moment().month(selectedMonth.normalPost - 1)
               : data.normalPost
           )}
-          pagination={false}
+          pageSize={5}
+            disableSelectionOnClick
+            disableColumnMenu
         />
+      </div>
       </div>
 
       {/* Table for Normal Courier */}
@@ -181,7 +183,8 @@ const FinancialMgmt = () => {
             </Select.Option>
           ))}
         </Select>
-        <Table
+        <div style={{ height: 400, width: "100%" }}>
+          <DataGrid
           columns={columns}
           dataSource={filterByMonth(
             data.normalCourier,
@@ -189,8 +192,11 @@ const FinancialMgmt = () => {
               ? moment().month(selectedMonth.normalCourier - 1)
               : null
           )}
-          pagination={false}
+          pageSize={5}
+            disableSelectionOnClick
+            disableColumnMenu
         />
+      </div>
       </div>
 
       {/* Table for Gov Parcel */}
@@ -233,7 +239,8 @@ const FinancialMgmt = () => {
             </Select.Option>
           ))}
         </Select>
-        <Table
+        <div style={{ height: 400, width: "100%" }}>
+          <DataGrid
           columns={columns}
           dataSource={filterByMonth(
             data.govParcel,
@@ -241,8 +248,11 @@ const FinancialMgmt = () => {
               ? moment().month(selectedMonth.govParcel - 1)
               : null
           )}
-          pagination={false}
+          pageSize={5}
+            disableSelectionOnClick
+            disableColumnMenu
         />
+      </div>
       </div>
 
       {/* Table for Normal Parcel */}
@@ -285,7 +295,8 @@ const FinancialMgmt = () => {
             </Select.Option>
           ))}
         </Select>
-        <Table
+        <div style={{ height: 400, width: "100%" }}>
+          <DataGrid
           columns={columns}
           dataSource={filterByMonth(
             data.normalParcel,
@@ -293,8 +304,11 @@ const FinancialMgmt = () => {
               ? moment().month(selectedMonth.normalParcel - 1)
               : null
           )}
-          pagination={false}
+          pageSize={5}
+            disableSelectionOnClick
+            disableColumnMenu
         />
+      </div>
       </div>
 
       {/* Table for Bulk Mail Orders */}
@@ -337,7 +351,8 @@ const FinancialMgmt = () => {
             </Select.Option>
           ))}
         </Select>
-        <Table
+        <div style={{ height: 200, width: "100%" }}>
+          <DataGrid 
           columns={columns}
           dataSource={filterByMonth(
             data.bulkMailOrders,
@@ -345,10 +360,16 @@ const FinancialMgmt = () => {
               ? moment().month(selectedMonth.bulkMailOrders - 1)
               : null
           )}
-          pagination={false}
+          pageSize={5}
+            disableSelectionOnClick
+            disableColumnMenu
         />
       </div>
+      </div>
     </div>
+    
+    <div className="min-h-[90px]"></div>
+    </>
   );
 };
 

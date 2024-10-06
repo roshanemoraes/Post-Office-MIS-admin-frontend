@@ -4,16 +4,11 @@ import {
   Typography,
   TextField,
   Button,
-  FormControl,
-  InputLabel,
-  MenuItem,
-  Menu,
-  Select,
 } from "@mui/material";
-
 import axios from "axios";
-import React, { useEffect, useState } from "react";
-import { ChevronDownIcon } from "@heroicons/react/20/solid";
+import React, { useState } from "react";
+import { useFormik } from "formik";
+import * as Yup from "yup";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -21,27 +16,37 @@ function classNames(...classes) {
 
 const CostForm = ({ postType, description, onCostUpdate }) => {
   const theme = useTheme();
-  const [weight, setWeight] = useState(null);
   const [cost, setCost] = useState(null);
-  const [selectedOption, setSelectedOption] = useState("");
-  const [type, setType] = React.useState("");
 
-  const handleChange = (event) => {
-    setWeight(event.target.value);
-  };
-  const calculateCost = async () => {
-    try {
-      const response = await axios.get(
-        `http://localhost:8081/postage/get/${postType}?weight=${weight}`,
-        { withCredentials: true }
-      );
-      console.log("response came:", response.data.price);
-      setCost(response.data.price);
-      onCostUpdate(response.data.price);
-    } catch (error) {
-      console.error("Error fetching postage", error);
-    }
-  };
+  const validationSchema = Yup.object({
+    weight: Yup.number()
+    .typeError("Weight must be a number")
+      .required("Weight is required")
+      .positive("Weight must be a positive number")
+      //.integer("Weight must be an integer")
+      .min(1, "Weight must be at least 1 gram")
+      .max(10000, "Weight must be less than or equal to 10000 grams"),
+  });
+
+  const formik = useFormik({
+    initialValues: {
+      weight: "",
+    },
+    validationSchema: validationSchema,
+    onSubmit: async (values) => {
+      try {
+        const response = await axios.get(
+          `http://localhost:8081/postage/get/${postType}?weight=${values.weight}`,
+          { withCredentials: true }
+        );
+        console.log("response came:", response.data.price);
+        setCost(response.data.price);
+        onCostUpdate(response.data.price);
+      } catch (error) {
+        console.error("Error fetching postage", error);
+      }
+    },
+  });
 
   return (
     <Box
@@ -52,9 +57,6 @@ const CostForm = ({ postType, description, onCostUpdate }) => {
         alignItems: "center",
         justifyContent: "space-around",
         marginTop: "16px",
-        // marginLeft: "16px",
-        // width: "260px",
-        // height: "230px",
         backgroundColor: "#fff",
         borderRadius: "10px",
         padding: "0 0 5px 0",
@@ -67,9 +69,7 @@ const CostForm = ({ postType, description, onCostUpdate }) => {
           marginTop: "20px",
           marginBottom: "10px",
           fontSize: "22px",
-          marginBottom: "10px",
           fontFamily: "Helvetica Neue",
-          //   color: theme.palette.text.typography,
           fontWeight: "bold",
         }}
       >
@@ -82,10 +82,10 @@ const CostForm = ({ postType, description, onCostUpdate }) => {
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
-          //   "& .MuiTextField-root": { m: 1, minWidth: 200 },
         }}
         noValidate
         autoComplete="off"
+        onSubmit={formik.handleSubmit}
       >
         <div>
           <div style={{ marginBottom: "10px", marginTop: "10px" }}>
@@ -99,8 +99,12 @@ const CostForm = ({ postType, description, onCostUpdate }) => {
               backgroundColor: theme.palette.background.inputField,
               minWidth: 150,
             }}
-            value={weight}
-            onChange={handleChange}
+            value={formik.values.weight}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            name="weight"
+            error={formik.touched.weight && Boolean(formik.errors.weight)}
+            helperText={formik.touched.weight && formik.errors.weight}
             inputProps={{ style: { fontSize: 15 } }}
             InputLabelProps={{
               style: { fontSize: 13, width: "500px" },
@@ -108,6 +112,7 @@ const CostForm = ({ postType, description, onCostUpdate }) => {
           />
         </div>
         <Button
+          type="submit"
           variant="contained"
           sx={{
             backgroundColor: "#852318",
@@ -117,7 +122,6 @@ const CostForm = ({ postType, description, onCostUpdate }) => {
             mb: 2,
             fontSize: "12px",
           }}
-          onClick={calculateCost}
         >
           Get Postage
         </Button>
