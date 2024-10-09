@@ -6,6 +6,7 @@ import StepLabel from "@mui/material/StepLabel";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { mailFormField } from "../../../data/formFields";
+import { Link, useNavigate } from "react-router-dom";
 import {
   Autocomplete,
   FormControl,
@@ -23,6 +24,7 @@ import CostForm from "../../../components/Forms/CostForm";
 import CostFormNew from "./CostFormNew";
 import NormalParcelMailReceipt from "../../../components/Receipts/NormalParcelMailReceipt";
 import { CheckCircleIcon, CircleStackIcon } from "@heroicons/react/20/solid";
+import { Navigate } from "react-router-dom";
 
 const steps = ["Recipient Details", "Sender Details", "Mail Information"];
 
@@ -74,6 +76,7 @@ export default function HorizontalLinearStepper() {
   const [checked, setChecked] = useState(false);
   const [cost, setCost] = useState(null);
   const [isRegisterCompleted, setIsRegisterCompleted] = useState(false);
+  const navigate = useNavigate();
   const [recipientName, setRecipientName] = useState("");
   const [recipientCity, setRecipientCity] = useState("");
   const [senderCity, setSenderCity] = useState("");
@@ -212,6 +215,12 @@ export default function HorizontalLinearStepper() {
   const isStepSkipped = (step) => {
     return skipped.has(step);
   };
+  const handleDone = () => {
+    setActiveStep(0); // Reset the stepper to the first step
+    setFormState(initialFormState);
+  navigate("/admin/receptionist/normal-parcel", { replace: true });
+  };
+  
 
   const handleNext = () => {
     let newSkipped = skipped;
@@ -221,7 +230,12 @@ export default function HorizontalLinearStepper() {
     }
 
     if (activeStep === steps.length - 1) {
-      handleSubmit(); // Call the special function
+      if(!isRegisterCompleted){
+        handleSubmit();
+      }else{
+        handleDone();
+      }
+       // Call the special function
     } else {
       setActiveStep((prevActiveStep) => prevActiveStep + 1);
       setSkipped(newSkipped);
@@ -672,6 +686,52 @@ export default function HorizontalLinearStepper() {
           {activeStep === 2 && (
             <>
               {isRegisterCompleted ? (
+                <><div
+                className="grid grid-cols-12"
+                style={{ display: "flex", alignContent: "center" }}
+              >
+                <div
+                  className="col-span-5"
+                  style={{ marginLeft: "30px", marginTop: "5px" }}
+                >
+                  <CostFormNew
+                    postType={"parcel-normal"}
+                    description={"Maximum Weight: 20Kg"}
+                    onCostUpdate={handleCostUpdate}
+                    cost={cost}
+                  />
+                </div>
+                <div
+                  style={{ display: "flex" }}
+                  className="col-span-5 ml-8 mt-[62px]"
+                >
+                  <FormControl sx={{ minWidth: 200, maxWidth: 300 }}>
+                    <InputLabel
+                      id="courierProviderSelector"
+                      sx={{ fontSize: "14px" }}
+                    >
+                      Package Type
+                    </InputLabel>
+                    <Select
+                      sx={{ fontSize: "13px" }}
+                      labelId="packageTypeSelector"
+                      id="packageType"
+                      value={formState.packageType}
+                      onChange={handleChange("packageType")}
+                    >
+                      <MenuItem sx={{ fontSize: "14px" }} value={"Fragile"}>
+                        Fragile
+                      </MenuItem>
+                      <MenuItem
+                        sx={{ fontSize: "14px" }}
+                        value={"Not Fragile"}
+                      >
+                        Not Fragile
+                      </MenuItem>
+                    </Select>
+                  </FormControl>
+                </div>
+              </div>
                 <div className="grid grid-cols-12">
                   <div className="col-span-2"></div>
                   <div className="col-span-6" ref={componentRef}>
@@ -708,7 +768,7 @@ export default function HorizontalLinearStepper() {
                       PRINT
                     </Button>
                   </div>
-                </div>
+                </div></>
               ) : (
                 <div
                   className="grid grid-cols-12"
@@ -791,7 +851,10 @@ export default function HorizontalLinearStepper() {
                 boxShadow: "0px 3px 5px rgba(0, 0, 0, 0.2)", // Add a subtle shadow
               }}
             >
-              {activeStep === steps.length - 1 ? "Register Mail" : "Next"}
+              {activeStep === steps.length - 1 
+    ? (isRegisterCompleted ? "Done" : "Register Mail")
+    : "Next"
+  }
             </Button>
           </Box>
         </React.Fragment>
