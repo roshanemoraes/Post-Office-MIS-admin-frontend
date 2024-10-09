@@ -25,6 +25,8 @@ import CostFormNew from "./CostFormNew";
 import NormalParcelMailReceipt from "../../../components/Receipts/NormalParcelMailReceipt";
 import { CheckCircleIcon, CircleStackIcon } from "@heroicons/react/20/solid";
 import { Navigate } from "react-router-dom";
+import { ErrorMessage, useFormik } from "formik";
+import * as Yup from "yup";
 
 const steps = ["Recipient Details", "Sender Details", "Mail Information"];
 
@@ -66,6 +68,7 @@ export default function HorizontalLinearStepper() {
     senderAddress: "",
     senderPostalZone: "",
     senderHouseNumber: "",
+    //checked: false,
 
     packageType: "",
     postage: "",
@@ -119,6 +122,8 @@ export default function HorizontalLinearStepper() {
       recipientAddress: data.textForm,
       recipientId: data1,
     }));
+    formik.setFieldValue("recipientAddress", data.textForm);
+    formik.setFieldValue("recipientId", data1);
   };
 
   const handleSenderOnValidationResult = (data, data1) => {
@@ -131,6 +136,8 @@ export default function HorizontalLinearStepper() {
       senderAddress: data.textForm,
       senderId: data1,
     }));
+    formik.setFieldValue("senderAddress", data.textForm);
+    formik.setFieldValue("senderId", data1);
   };
 
   useEffect(() => {
@@ -158,6 +165,27 @@ export default function HorizontalLinearStepper() {
     verifiedAddressText,
   ]);
 
+  const validationSchema = Yup.object().shape({
+    recipientName: Yup.string()
+      .required("Recipient Name is required")
+      .typeError("Recipient Name is a String"),
+    recipientCity: Yup.string().required("Recipient City is required"),
+    recipientAddress: Yup.string().required("Recipient Address is required"),
+    recipientPostalZone: Yup.string().required(
+      "Recipient Postal Zone is required"
+    ),
+    recipientHouseNumber: Yup.string().required(
+      "Recipient House Number is required"
+    ),
+    senderName: Yup.string().required("Sender Name is required"),
+    senderCity: Yup.string().required("Sender City is required"),
+    senderAddress: Yup.string().required("Sender Address is required"),
+    senderPostalZone: Yup.string().required("Sender Postal Zone is required"),
+    senderHouseNumber: Yup.string().required("Sender House Number is required"),
+    postage: Yup.number().required("Postage is required"),
+    packageType: Yup.string().required("Package Type is required"),
+  });
+
   const handleChange = (id) => (event) => {
     setFormState({
       ...formState,
@@ -166,32 +194,45 @@ export default function HorizontalLinearStepper() {
   };
   const handleSenderCheckBox = () => {
     setChecked(!checked);
+    /*if (checked) {
+      formik.senderName = "";
+      formik.senderCity = "";
+      formik.senderAddress = "";
+      formik.senderPostalZone = "";
+      formik.senderHouseNumber = "";
+    }*/
     if (checked) {
-      formState.senderName = "";
-      formState.senderCity = "";
-      formState.senderAddress = "";
-      formState.senderPostalZone = "";
-      formState.senderHouseNumber = "";
+      formik.setFieldValue("senderName", "");
+      formik.setFieldValue("senderCity", "");
+      formik.setFieldValue("senderAddress", "");
+      formik.setFieldValue("senderPostalZone", "");
+      formik.setFieldValue("senderHouseNumber", "");
     }
   };
 
-  const handleSubmit = () => {
-    console.log(formState);
-    setIsRegisterCompleted(true);
-    // axios
-    //   .post(
-    //     "http://localhost:8081/api/receptionist/post/add/normal-parcel",
-    //     formState,
-    //     { withCredentials: true }
-    //   )
-    //   .then((response) => {
-    //     setIsRegisterCompleted(true);
-    //     console.log(response);
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //   });
-  };
+  //const handleSubmit = () => {
+  const formik = useFormik({
+    initialValues: initialFormState,
+    validationSchema: validationSchema,
+    onSubmit: (value) => {
+      console.log(formik.values);
+      setIsRegisterCompleted(true);
+      // axios
+      //   .post(
+      //     "http://localhost:8081/api/receptionist/post/add/normal-parcel",
+      //     formState,
+      //     { withCredentials: true }
+      //   )
+      //   .then((response) => {
+      //     setIsRegisterCompleted(true);
+      //     console.log(response);
+      //   })
+      //   .catch((err) => {
+      //     console.log(err);
+      //   });
+    },
+  });
+
   const componentRef = useRef();
   const handlePrint = useReactToPrint({
     content: () => componentRef.current,
@@ -203,6 +244,7 @@ export default function HorizontalLinearStepper() {
       postage: cost,
     }));
     setCost(cost);
+    formik.setFieldValue("postage", cost);
   };
 
   const [activeStep, setActiveStep] = React.useState(0);
@@ -218,11 +260,11 @@ export default function HorizontalLinearStepper() {
   const handleDone = () => {
     setActiveStep(0); // Reset the stepper to the first step
     setFormState(initialFormState);
-  navigate("/admin/receptionist/normal-parcel", { replace: true });
+    navigate("/admin/receptionist/normal-parcel", { replace: true });
   };
-  
 
   const handleNext = () => {
+    // formik.handleSubmit();
     let newSkipped = skipped;
     if (isStepSkipped(activeStep)) {
       newSkipped = new Set(newSkipped.values());
@@ -230,12 +272,13 @@ export default function HorizontalLinearStepper() {
     }
 
     if (activeStep === steps.length - 1) {
-      if(!isRegisterCompleted){
-        handleSubmit();
-      }else{
+      if (!isRegisterCompleted) {
+        //handleSubmit();
+        formik.handleSubmit();
+      } else {
         handleDone();
       }
-       // Call the special function
+      // Call the special function
     } else {
       setActiveStep((prevActiveStep) => prevActiveStep + 1);
       setSkipped(newSkipped);
@@ -346,11 +389,19 @@ export default function HorizontalLinearStepper() {
                         required
                         type={mailFormField.recipientHouseNumber.type}
                         id={mailFormField.recipientHouseNumber.id}
-                        value={formState.recipientHouseNumber}
+                        value={formik.values.recipientHouseNumber}
                         label={mailFormField.recipientHouseNumber.label}
-                        onChange={handleChange(
-                          mailFormField.recipientHouseNumber.id
-                        )}
+                        onChange={formik.handleChange}
+                        //mailFormField.recipientHouseNumber.id
+                        //)}
+                        error={
+                          formik.touched.recipientHouseNumber &&
+                          Boolean(formik.errors.recipientHouseNumber)
+                        }
+                        helperText={
+                          formik.touched.recipientHouseNumber &&
+                          formik.errors.recipientHouseNumber
+                        }
                       ></TextField>
                     </div>
                     <div className="sm:col-span-7 xs:col-span-7 sm:ml-9 xs:ml-9 sm:mr-2 xs:mr-2 sm:min-w-[300px] xs:min-w-[300px] sm:min-h-[60px] xs:min-h-[60px]">
@@ -363,9 +414,19 @@ export default function HorizontalLinearStepper() {
                         required
                         type={mailFormField.recipientName.type}
                         id={mailFormField.recipientName.id}
-                        value={formState.recipientName}
+                        value={formik.values.recipientName}
                         label={mailFormField.recipientName.label}
-                        onChange={handleChange(mailFormField.recipientName.id)}
+                        onChange={formik.handleChange}
+                        //mailFormField.recipientName.id
+                        //)}
+                        error={
+                          formik.touched.recipientName &&
+                          Boolean(formik.errors.recipientName)
+                        }
+                        helperText={
+                          formik.touched.recipientName &&
+                          formik.errors.recipientName
+                        }
                       ></TextField>
                     </div>
                   </div>
@@ -377,12 +438,12 @@ export default function HorizontalLinearStepper() {
                         options={zoneList}
                         freeSolo
                         onChange={(event, newValue) => {
-                          setFormState((oldState) => ({
-                            ...oldState,
-                            [mailFormField.recipientPostalZone.id]: newValue,
-                          }));
+                          formik.setFieldValue(
+                            mailFormField.recipientPostalZone.id,
+                            newValue
+                          );
                         }}
-                        value={formState.recipientPostalZone}
+                        value={formik.values.recipientPostalZone}
                         sx={{
                           "& .MuiAutocomplete-option": {
                             color: "blue",
@@ -411,12 +472,21 @@ export default function HorizontalLinearStepper() {
                             style={{ minWidth: 160 }}
                             required
                             value={
-                              formState[mailFormField.recipientPostalZone.id] ||
-                              ""
+                              formik.values[
+                                mailFormField.recipientPostalZone.id
+                              ] || ""
                             }
-                            onChange={handleChange(
+                            onChange={formik.handleChange(
                               mailFormField.recipientPostalZone.id
                             )}
+                            error={
+                              formik.touched.recipientPostalZone &&
+                              Boolean(formik.errors.recipientPostalZone)
+                            }
+                            helperText={
+                              formik.touched.recipientPostalZone &&
+                              formik.errors.recipientPostalZone
+                            }
                           />
                         )}
                       />
@@ -426,13 +496,19 @@ export default function HorizontalLinearStepper() {
                         id={mailFormField.recipientCity.id}
                         options={cityList}
                         freeSolo
+                        // onChange={(event, newValue) => {
+                        //   formik.setFieldValue((oldState) => ({
+                        //     ...oldState,
+                        //     [mailFormField.recipientCity.id]: newValue,
+                        //   }));
+                        // }}
                         onChange={(event, newValue) => {
-                          setFormState((oldState) => ({
-                            ...oldState,
-                            [mailFormField.recipientCity.id]: newValue,
-                          }));
+                          formik.setFieldValue(
+                            mailFormField.recipientCity.id,
+                            newValue
+                          );
                         }}
-                        value={formState.recipientCity}
+                        value={formik.values.recipientCity}
                         sx={{
                           "& .MuiAutocomplete-option": {
                             color: "blue",
@@ -458,18 +534,27 @@ export default function HorizontalLinearStepper() {
                             style={{ minWidth: 160 }}
                             required
                             value={
-                              formState[mailFormField.recipientCity.id] || ""
+                              formik.values[mailFormField.recipientCity.id] ||
+                              ""
                             }
-                            onChange={handleChange(
+                            onChange={formik.handleChange(
                               mailFormField.recipientCity.id
                             )}
+                            error={
+                              formik.touched.recipientCity &&
+                              Boolean(formik.errors.recipientCity)
+                            }
+                            helperText={
+                              formik.touched.recipientCity &&
+                              formik.errors.recipientCity
+                            }
                           />
                         )}
                       />
                     </div>
                   </div>
                   <AddressValidationModal
-                    formState={formState}
+                    formState={formik.values}
                     onValidationResult={handleOnValidationResult}
                   />
                   <TextField
@@ -483,7 +568,7 @@ export default function HorizontalLinearStepper() {
                     id={mailFormField.recipientAddress.id}
                     label={mailFormField.recipientAddress.label}
                     onChange={handleChange(mailFormField.recipientAddress.id)}
-                    value={formState.recipientAddress}
+                    value={formik.values.recipientAddress}
                   ></TextField>
                 </Box>
               </Box>
@@ -537,11 +622,20 @@ export default function HorizontalLinearStepper() {
                           required
                           type={mailFormField.senderHouseNumber.type}
                           id={mailFormField.senderHouseNumber.id}
-                          value={formState.senderHouseNumber}
+                          //value={formState.senderHouseNumber}
+                          value={formik.values.senderHouseNumber}
                           label={mailFormField.senderHouseNumber.label}
-                          onChange={handleChange(
-                            mailFormField.senderHouseNumber.id
-                          )}
+                          onChange={formik.handleChange}
+                          // mailFormField.senderHouseNumber.id
+                          //)}
+                          error={
+                            formik.touched.senderHouseNumber &&
+                            Boolean(formik.errors.senderHouseNumber)
+                          }
+                          helperText={
+                            formik.touched.senderHouseNumber &&
+                            formik.errors.senderHouseNumber
+                          }
                         ></TextField>
                       </div>
                       <div className="sm:col-span-7 sm:ml-9 sm:mr-2 sm:min-w-[300px] sm:min-h-[60px]">
@@ -554,9 +648,17 @@ export default function HorizontalLinearStepper() {
                           required
                           type={mailFormField.senderName.type}
                           id={mailFormField.senderName.id}
-                          value={formState.senderName}
+                          value={formik.values.senderName}
                           label={mailFormField.senderName.label}
-                          onChange={handleChange(mailFormField.senderName.id)}
+                          onChange={formik.handleChange} //(mailFormField.senderName.id)}
+                          error={
+                            formik.touched.senderName &&
+                            Boolean(formik.errors.senderName)
+                          }
+                          helperText={
+                            formik.touched.senderName &&
+                            formik.errors.senderName
+                          }
                         ></TextField>
                       </div>
                     </div>
@@ -568,12 +670,16 @@ export default function HorizontalLinearStepper() {
                           options={zoneList}
                           freeSolo
                           onChange={(event, newValue) => {
-                            setFormState((oldState) => ({
-                              ...oldState,
-                              [mailFormField.senderPostalZone.id]: newValue,
-                            }));
+                            //setFormState((oldState) => ({
+                            // ...oldState,
+                            // [mailFormField.senderPostalZone.id]: newValue,
+                            //}));
+                            formik.setFieldValue(
+                              mailFormField.senderPostalZone.id,
+                              newValue
+                            );
                           }}
-                          value={formState.senderPostalZone}
+                          value={formik.values.senderPostalZone}
                           sx={{
                             "& .MuiAutocomplete-option": {
                               color: "blue",
@@ -602,12 +708,21 @@ export default function HorizontalLinearStepper() {
                               style={{ minWidth: 160 }}
                               required
                               value={
-                                formState[mailFormField.senderPostalZone.id] ||
-                                ""
+                                formik.values[
+                                  mailFormField.senderPostalZone.id
+                                ] || ""
                               }
-                              onChange={handleChange(
+                              onChange={formik.handleChange(
                                 mailFormField.senderPostalZone.id
                               )}
+                              error={
+                                formik.touched.senderPostalZone &&
+                                Boolean(formik.errors.senderPostalZone)
+                              }
+                              helperText={
+                                formik.touched.senderPostalZone &&
+                                formik.errors.senderPostalZone
+                              }
                             />
                           )}
                         />
@@ -617,12 +732,16 @@ export default function HorizontalLinearStepper() {
                           id={mailFormField.senderCity.id}
                           options={cityList}
                           freeSolo
-                          value={formState.senderCity}
+                          value={formik.values.senderCity}
                           onChange={(event, newValue) => {
-                            setFormState((oldState) => ({
-                              ...oldState,
-                              [mailFormField.senderCity.id]: newValue,
-                            }));
+                            //setFormState((oldState) => ({
+                            //...oldState,
+                            //[mailFormField.senderCity.id]: newValue,
+                            //}));
+                            formik.setFieldValue(
+                              mailFormField.senderCity.id,
+                              newValue
+                            );
                           }}
                           sx={{
                             "& .MuiAutocomplete-option": {
@@ -649,11 +768,19 @@ export default function HorizontalLinearStepper() {
                               style={{ minWidth: 160 }}
                               required
                               value={
-                                formState[mailFormField.senderCity.id] || ""
+                                formik.values[mailFormField.senderCity.id] || ""
                               }
-                              onChange={handleChange(
+                              onChange={formik.handleChange(
                                 mailFormField.senderCity.id
                               )}
+                              error={
+                                formik.touched.senderCity &&
+                                Boolean(formik.errors.senderCity)
+                              }
+                              helperText={
+                                formik.touched.senderCity &&
+                                formik.errors.senderCity
+                              }
                             />
                           )}
                         />
@@ -661,7 +788,8 @@ export default function HorizontalLinearStepper() {
                     </div>
                   </div>
                   <SenderAddressValidationModel
-                    formState={formState}
+                    formState={formik.values}
+                    //formState={formState}
                     onValidationSenderResult={handleSenderOnValidationResult}
                   />
                   <TextField
@@ -682,68 +810,28 @@ export default function HorizontalLinearStepper() {
               </Box>
             </Box>
           )}
-
           {activeStep === 2 && (
             <>
-              {isRegisterCompleted ? (
-                <><div
-                className="grid grid-cols-12"
-                style={{ display: "flex", alignContent: "center" }}
+              <button
+                onClick={() => {
+                  console.log(formik.values);
+                }}
               >
-                <div
-                  className="col-span-5"
-                  style={{ marginLeft: "30px", marginTop: "5px" }}
-                >
-                  <CostFormNew
-                    postType={"parcel-normal"}
-                    description={"Maximum Weight: 20Kg"}
-                    onCostUpdate={handleCostUpdate}
-                    cost={cost}
-                  />
-                </div>
-                <div
-                  style={{ display: "flex" }}
-                  className="col-span-5 ml-8 mt-[62px]"
-                >
-                  <FormControl sx={{ minWidth: 200, maxWidth: 300 }}>
-                    <InputLabel
-                      id="courierProviderSelector"
-                      sx={{ fontSize: "14px" }}
-                    >
-                      Package Type
-                    </InputLabel>
-                    <Select
-                      sx={{ fontSize: "13px" }}
-                      labelId="packageTypeSelector"
-                      id="packageType"
-                      value={formState.packageType}
-                      onChange={handleChange("packageType")}
-                    >
-                      <MenuItem sx={{ fontSize: "14px" }} value={"Fragile"}>
-                        Fragile
-                      </MenuItem>
-                      <MenuItem
-                        sx={{ fontSize: "14px" }}
-                        value={"Not Fragile"}
-                      >
-                        Not Fragile
-                      </MenuItem>
-                    </Select>
-                  </FormControl>
-                </div>
-              </div>
+                Submit
+              </button>
+              {isRegisterCompleted ? (
                 <div className="grid grid-cols-12">
                   <div className="col-span-2"></div>
                   <div className="col-span-6" ref={componentRef}>
                     <NormalParcelMailReceipt
                       mailType={"Normal Parcel"}
-                      postage={formState.postage}
-                      recipientName={formState.recipientName}
-                      SenderName={formState.senderName}
-                      recipientAddress={formState.recipientAddress}
+                      postage={formik.values.postage}
+                      recipientName={formik.values.recipientName}
+                      SenderName={formik.values.senderName}
+                      recipientAddress={formik.values.recipientAddress}
                       mailId={"300"}
                       receiptId={"450"}
-                      packageType={formState.packageType}
+                      packageType={formik.values.packageType}
                     />
                   </div>
                   <div className="col-span-2 mt-[20px]">
@@ -768,7 +856,195 @@ export default function HorizontalLinearStepper() {
                       PRINT
                     </Button>
                   </div>
-                </div></>
+                </div>
+              ) : (
+                <div
+                  className="grid grid-cols-12"
+                  style={{ display: "flex", alignContent: "center" }}
+                >
+                  <div
+                    className="col-span-5"
+                    style={{ marginLeft: "30px", marginTop: "5px" }}
+                  >
+                    <CostFormNew
+                      postType={"parcel-normal"}
+                      description={"Maximum Weight: 20Kg"}
+                      onCostUpdate={handleCostUpdate}
+                      cost={cost}
+                    />
+                  </div>
+                  <div
+                    style={{ display: "flex" }}
+                    className="col-span-5 ml-8 mt-[62px]"
+                  >
+                    <FormControl sx={{ minWidth: 200, maxWidth: 300 }}>
+                      <InputLabel
+                        id="courierProviderSelector"
+                        sx={{ fontSize: "14px" }}
+                      >
+                        Package Type
+                      </InputLabel>
+                      <Select
+                        sx={{ fontSize: "13px" }}
+                        labelId="packageTypeSelector"
+                        id="packageType"
+                        name="packageType"
+                        value={formik.values.packageType}
+                        onChange={formik.handleChange}
+                      >
+                        <MenuItem sx={{ fontSize: "14px" }} value={"Fragile"}>
+                          Fragile
+                        </MenuItem>
+                        <MenuItem
+                          sx={{ fontSize: "14px" }}
+                          value={"Not Fragile"}
+                        >
+                          Not Fragile
+                        </MenuItem>
+                      </Select>
+                      {/*<ErrorMessage
+                        name="packageType"
+                        component="div"
+                        style={{ color: "red" }}
+                      />*/}
+                    </FormControl>
+                  </div>
+                </div>
+              )}
+            </>
+          )}
+
+          <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
+            {!isRegisterCompleted && (
+              <Button
+                color="inherit"
+                disabled={activeStep === 0}
+                onClick={handleBack}
+                sx={{ mr: 1 }}
+              >
+                Back
+              </Button>
+            )}
+
+            <Box sx={{ flex: "1 1 auto" }} />
+            {isStepOptional(activeStep) && (
+              <Button color="inherit" onClick={handleSkip} sx={{ mr: 1 }}>
+                Skip
+              </Button>
+            )}
+            <Button
+              onClick={handleNext}
+              sx={{
+                backgroundColor:
+                  activeStep === steps.length - 1 ? "#852318" : "#1976d2", // Green for "Register Mail", Blue for "Next"
+                color: "#fff", // White text color
+                "&:hover": {
+                  backgroundColor:
+                    activeStep === steps.length - 1 ? "#591710" : "#1565c0", // Darker shades on hover
+                },
+                padding: "8px 16px", // Adjust the padding
+                fontWeight: "bold", // Bold text
+                borderRadius: "8px", // Rounded corners
+                boxShadow: "0px 3px 5px rgba(0, 0, 0, 0.2)", // Add a subtle shadow
+              }}
+            >
+              {activeStep === steps.length - 1 ? "Register Mail" : "Next"}
+            </Button>
+          </Box>
+        </React.Fragment>
+      )}
+    </Box>
+  );
+}
+{
+  /*{activeStep === 2 && (
+            <>
+              {isRegisterCompleted ? (
+                <>
+                  <div
+                    className="grid grid-cols-12"
+                    style={{ display: "flex", alignContent: "center" }}
+                  >
+                    <div
+                      className="col-span-5"
+                      style={{ marginLeft: "30px", marginTop: "5px" }}
+                    >
+                      <CostFormNew
+                        postType={"parcel-normal"}
+                        description={"Maximum Weight: 20Kg"}
+                        onCostUpdate={handleCostUpdate}
+                        cost={cost}
+                      />
+                    </div>
+                    <div
+                      style={{ display: "flex" }}
+                      className="col-span-5 ml-8 mt-[62px]"
+                    >
+                      <FormControl sx={{ minWidth: 200, maxWidth: 300 }}>
+                        <InputLabel
+                          id="courierProviderSelector"
+                          sx={{ fontSize: "14px" }}
+                        >
+                          Package Type
+                        </InputLabel>
+                        <Select
+                          sx={{ fontSize: "13px" }}
+                          labelId="packageTypeSelector"
+                          id="packageType"
+                          value={formState.packageType}
+                          onChange={handleChange("packageType")}
+                        >
+                          <MenuItem sx={{ fontSize: "14px" }} value={"Fragile"}>
+                            Fragile
+                          </MenuItem>
+                          <MenuItem
+                            sx={{ fontSize: "14px" }}
+                            value={"Not Fragile"}
+                          >
+                            Not Fragile
+                          </MenuItem>
+                        </Select>
+                      </FormControl>
+                    </div>
+                  </div>
+                  <div className="grid grid-cols-12">
+                    <div className="col-span-2"></div>
+                    <div className="col-span-6" ref={componentRef}>
+                      <NormalParcelMailReceipt
+                        mailType={"Normal Parcel"}
+                        postage={formState.postage}
+                        recipientName={formState.recipientName}
+                        SenderName={formState.senderName}
+                        recipientAddress={formState.recipientAddress}
+                        mailId={"300"}
+                        receiptId={"450"}
+                        packageType={formState.packageType}
+                      />
+                    </div>
+                    <div className="col-span-2 mt-[20px]">
+                      <Button
+                        className="mt-1"
+                        variant="primary"
+                        style={{
+                          backgroundColor: "#fcd34d",
+                          padding: "8px",
+                          paddingLeft: "30px",
+                          paddingRight: "30px",
+                          borderColor: "#0891b2",
+                          fontSize: "15px",
+                          fontWeight: "bold",
+                          fontFamily: "arial",
+                          my: "40px",
+                          mb: "20px",
+                          mr: "60px",
+                        }}
+                        onClick={handlePrint}
+                      >
+                        PRINT
+                      </Button>
+                    </div>
+                  </div>
+                </>
               ) : (
                 <div
                   className="grid grid-cols-12"
@@ -851,14 +1127,16 @@ export default function HorizontalLinearStepper() {
                 boxShadow: "0px 3px 5px rgba(0, 0, 0, 0.2)", // Add a subtle shadow
               }}
             >
-              {activeStep === steps.length - 1 
-    ? (isRegisterCompleted ? "Done" : "Register Mail")
-    : "Next"
-  }
+              {activeStep === steps.length - 1
+                ? isRegisterCompleted
+                  ? "Done"
+                  : "Register Mail"
+                : "Next"}
             </Button>
           </Box>
         </React.Fragment>
       )}
     </Box>
   );
+}*/
 }

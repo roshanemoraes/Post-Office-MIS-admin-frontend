@@ -100,7 +100,7 @@ const NormalParcelMailReceipt = ({
             Sender: {SenderName ? SenderName : "N/A"}
           </p>
           <p style={{ marginBottom: "10px" }}>
-            Courier Provider: {packageType ? packageType : "N/A"}
+            Package Type: {packageType ? packageType : "N/A"}
           </p>
           <p style={{ maxWidth: "280px", wordWrap: "break-word" }}>
             To: {recipientAddress ? recipientAddress : "N/A"}
