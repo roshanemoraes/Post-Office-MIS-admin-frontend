@@ -12,12 +12,12 @@ function LoginForm() {
   const handleSignIn = async (email, password) => {
     try {
       const response = await axios.post(
-        "http://localhost:8081/customer/authenticate",
+        "http://localhost:8081/authenticate",
         {
           username: email, // Use email from Formik values
           password: password, // Use password from Formik values
         },
-       { withCredentials: true }
+        { withCredentials: true }
       );
       console.log(response.data);
       setError("");

@@ -20,8 +20,8 @@ export default function CompleteTable() {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:8081/api/customer/list/delivered/${customerId}` //- backend link
-          //"https://cbf27527-2de2-48c0-9f43-040550208f84.mock.pstmn.io/Delivered" //postman link
+          // `http://localhost:8081/api/customer/list/delivered/${customerId}` //- backend link
+          "https://cbf27527-2de2-48c0-9f43-040550208f84.mock.pstmn.io/Delivered" //postman link
         );
         console.log("request came!");
         setRows(response.data);
