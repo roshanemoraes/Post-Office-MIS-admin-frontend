@@ -25,6 +25,7 @@ import { CheckCircleIcon, CircleStackIcon } from "@heroicons/react/20/solid";
 import { Navigate } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import GovParcelMailReceipt from "../../../components/Receipts/GovParcelMailReceipt";
 
 const steps = ["Recipient Details", "Sender Details", "Mail Information"];
 
@@ -51,7 +52,7 @@ const stepIconStyle = {
   },
 };
 
-export default function HorizontalLinearStepper() {
+export default function HorizontalLinearStepperGov() {
   const initialFormState = {
     recipientName: "",
     recipientCity: "",
@@ -68,7 +69,7 @@ export default function HorizontalLinearStepper() {
     senderHouseNumber: "",
     //checked: false,
 
-    packageType: "",
+    ministry: "",
     postage: "",
   };
 
@@ -181,7 +182,7 @@ export default function HorizontalLinearStepper() {
     senderPostalZone: Yup.string().required("Sender Postal Zone is required"),
     senderHouseNumber: Yup.string().required("Sender House Number is required"),
     postage: Yup.number().required("Postage is required"),
-    packageType: Yup.string().required("Package Type is required"),
+    ministry: Yup.string().required("Package Type is required"),
   });
 
   const handleChange = (id) => (event) => {
@@ -822,15 +823,15 @@ export default function HorizontalLinearStepper() {
                 <div className="grid grid-cols-12">
                   <div className="col-span-2"></div>
                   <div className="col-span-6" ref={componentRef}>
-                    <NormalParcelMailReceipt
-                      mailType={"Normal Parcel"}
+                    <GovParcelMailReceipt
+                      mailType={"Gov Parcel"}
                       postage={formik.values.postage}
                       recipientName={formik.values.recipientName}
                       SenderName={formik.values.senderName}
                       recipientAddress={formik.values.recipientAddress}
                       mailId={"300"}
                       receiptId={"450"}
-                      packageType={formik.values.packageType}
+                      ministry={formik.values.ministry}
                     />
                   </div>
                   <div className="col-span-2 mt-[20px]">
@@ -882,24 +883,45 @@ export default function HorizontalLinearStepper() {
                         id="courierProviderSelector"
                         sx={{ fontSize: "14px" }}
                       >
-                        Package Type
+                        Ministry
                       </InputLabel>
                       <Select
                         sx={{ fontSize: "13px" }}
-                        labelId="packageTypeSelector"
-                        id="packageType"
-                        name="packageType"
-                        value={formik.values.packageType}
+                        labelId="ministrySelector"
+                        id="ministry"
+                        name="ministry"
+                        value={formik.values.ministry}
                         onChange={formik.handleChange}
                       >
-                        <MenuItem sx={{ fontSize: "14px" }} value={"Fragile"}>
-                          Fragile
+                        <MenuItem
+                          sx={{ fontSize: "14px" }}
+                          value={"Ministry of Education"}
+                        >
+                          Ministry of Education
                         </MenuItem>
                         <MenuItem
                           sx={{ fontSize: "14px" }}
-                          value={"Not Fragile"}
+                          value={"Ministry of Education"}
                         >
-                          Not Fragile
+                          Ministry of Education
+                        </MenuItem>
+                        <MenuItem
+                          sx={{ fontSize: "14px" }}
+                          value={"Ministry of Power and Energy"}
+                        >
+                          Ministry of Power and Energy
+                        </MenuItem>
+                        <MenuItem
+                          sx={{ fontSize: "14px" }}
+                          value={"Ministry of Transport"}
+                        >
+                          Ministry of Transport
+                        </MenuItem>
+                        <MenuItem
+                          sx={{ fontSize: "14px" }}
+                          value={"Ministry of Labour"}
+                        >
+                          Ministry of Labour
                         </MenuItem>
                       </Select>
                       {/*<ErrorMessage

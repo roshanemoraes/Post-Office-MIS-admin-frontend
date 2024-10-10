@@ -100,7 +100,7 @@ const GovParcelMailReceipt = ({
             Sender: {SenderName ? SenderName : "N/A"}
           </p>
           <p style={{ marginBottom: "10px" }}>
-            Courier Provider: {ministry ? ministry : "N/A"}
+            Ministry: {ministry ? ministry : "N/A"}
           </p>
           <p style={{ maxWidth: "280px", wordWrap: "break-word" }}>
             To: {recipientAddress ? recipientAddress : "N/A"}
