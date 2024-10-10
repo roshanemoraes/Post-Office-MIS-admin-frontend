@@ -16,16 +16,14 @@ import {
   TextField,
   useTheme,
 } from "@mui/material";
-import axios from "axios";
 import { useReactToPrint } from "react-to-print";
 import AddressValidationModal from "../AddressValidationModal";
 import SenderAddressValidationModel from "../modals/SenderAddressValidationModel";
-import CostForm from "../../../components/Forms/CostForm";
 import CostFormNew from "./CostFormNew";
 import NormalParcelMailReceipt from "../../../components/Receipts/NormalParcelMailReceipt";
 import { CheckCircleIcon, CircleStackIcon } from "@heroicons/react/20/solid";
 import { Navigate } from "react-router-dom";
-import { ErrorMessage, useFormik } from "formik";
+import { useFormik } from "formik";
 import * as Yup from "yup";
 
 const steps = ["Recipient Details", "Sender Details", "Mail Information"];
@@ -274,6 +272,7 @@ export default function HorizontalLinearStepper() {
     if (activeStep === steps.length - 1) {
       if (!isRegisterCompleted) {
         //handleSubmit();
+
         formik.handleSubmit();
       } else {
         handleDone();
@@ -839,7 +838,8 @@ export default function HorizontalLinearStepper() {
                       className="mt-1"
                       variant="primary"
                       style={{
-                        backgroundColor: "#fcd34d",
+                        //backgroundColor: "#fcd34d",
+                        backgroundColor: "#cbd5e1",
                         padding: "8px",
                         paddingLeft: "30px",
                         paddingRight: "30px",
