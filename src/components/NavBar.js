@@ -64,7 +64,7 @@ export default function NavBar({ role }) {
                     className="hidden sm:block"
                     style={{ textAlign: "center" }}
                   >
-                    <span>NEGOMBO PO</span>
+                    <span>NEGOMBO POST</span>
                   </div>
                 </div>
                 <div className="flex-1">{/* Right aligned items if any */}</div>

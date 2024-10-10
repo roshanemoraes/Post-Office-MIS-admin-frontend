@@ -19,11 +19,13 @@ export default function CompleteTable() {
   useEffect(() => {
     const fetchData = async () => {
       try {
+        console.log("request came............started!");
         const response = await axios.get(
           // `http://localhost:8081/api/customer/list/delivered/${customerId}` //- backend link
           "https://cbf27527-2de2-48c0-9f43-040550208f84.mock.pstmn.io/Delivered" //postman link
         );
-        console.log("request came!");
+        console.log("request cameww!");
+        console.log("customer data", response.data);
         setRows(response.data);
       } catch (error) {
         console.error("Error fetching users", error);

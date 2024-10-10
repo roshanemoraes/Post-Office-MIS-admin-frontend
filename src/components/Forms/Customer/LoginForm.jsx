@@ -44,7 +44,7 @@ function LoginForm() {
       email: "",
       password: "",
     },
-    validationSchema: basicSchema, // Validation for email
+    validationSchema: basicSchema, // Validation for email 
     onSubmit: async (values, { setSubmitting }) => {
       await handleSignIn(values.email, values.password); // Pass Formik values to handleSignIn
       setSubmitting(false); // Mark submission as complete
