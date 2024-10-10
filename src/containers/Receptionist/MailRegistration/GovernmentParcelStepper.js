@@ -26,6 +26,7 @@ import { Navigate } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import GovParcelMailReceipt from "../../../components/Receipts/GovParcelMailReceipt";
+import CustomizedSnackbars from "../../../components/Custom/CustomizedSnackbars";
 
 const steps = ["Recipient Details", "Sender Details", "Mail Information"];
 
@@ -102,6 +103,9 @@ export default function HorizontalLinearStepperGov() {
     verifiedSenderAddressCoordinate_Lng,
     setVerifiedSenderAddressCoordinate_Lng,
   ] = useState();
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState("");
+  const [snackbarSeverity, setSnackbarSeverity] = useState("");
 
   const cityList = ["Negombo", "Colombo", "Kochchikade", "Katunayaka"];
   const zoneList = [
@@ -110,6 +114,17 @@ export default function HorizontalLinearStepperGov() {
     "Pallansena South",
     "Pallansena North",
   ];
+
+  const handleSuccessSnackbar = (message, severity = "success") => {
+    setSnackbarMessage(message);
+    setSnackbarSeverity(severity);
+    setSnackbarOpen(true);
+  };
+  const handleFailSnackbar = (message, severity = "error") => {
+    setSnackbarMessage(message);
+    setSnackbarSeverity(severity);
+    setSnackbarOpen(true);
+  };
 
   const handleOnValidationResult = (data, data1) => {
     setVerifiedAddressText(data.textForm);
@@ -216,6 +231,10 @@ export default function HorizontalLinearStepperGov() {
     onSubmit: (value) => {
       console.log(formik.values);
       setIsRegisterCompleted(true);
+      handleSuccessSnackbar(
+        "Registration is completed successfully",
+        "success"
+      );
       // axios
       //   .post(
       //     "http://localhost:8081/api/receptionist/post/add/normal-parcel",
@@ -259,6 +278,8 @@ export default function HorizontalLinearStepperGov() {
   const handleDone = () => {
     setActiveStep(0); // Reset the stepper to the first step
     setFormState(initialFormState);
+    formik.values = initialFormState;
+    formik.resetForm();
     navigate("/admin/receptionist/normal-parcel", { replace: true });
   };
 
@@ -275,6 +296,10 @@ export default function HorizontalLinearStepperGov() {
         //handleSubmit();
 
         formik.handleSubmit();
+        handleFailSnackbar(
+          "Registration is in progress. Fill all fields",
+          "error"
+        );
       } else {
         handleDone();
       }
@@ -309,336 +334,110 @@ export default function HorizontalLinearStepperGov() {
   };
 
   return (
-    <Box sx={{ width: "100%" }}>
-      <Stepper activeStep={activeStep} sx={stepIconStyle}>
-        {steps.map((label, index) => {
-          const stepProps = {};
-          const labelProps = {};
-          if (isStepOptional(index)) {
-            labelProps.optional = (
-              <Typography variant="caption">Optional</Typography>
+    <>
+      <CustomizedSnackbars
+        open={snackbarOpen}
+        autoHideDuration={3000}
+        severity={snackbarSeverity}
+        message={snackbarMessage}
+        onClose={() => setSnackbarOpen(false)}
+      />
+      <Box sx={{ width: "100%" }}>
+        <Stepper activeStep={activeStep} sx={stepIconStyle}>
+          {steps.map((label, index) => {
+            const stepProps = {};
+            const labelProps = {};
+            if (isStepOptional(index)) {
+              labelProps.optional = (
+                <Typography variant="caption">Optional</Typography>
+              );
+            }
+            if (isStepSkipped(index)) {
+              stepProps.completed = false;
+            }
+            return (
+              <Step key={label} {...stepProps}>
+                <StepLabel {...labelProps}>{label}</StepLabel>
+              </Step>
             );
-          }
-          if (isStepSkipped(index)) {
-            stepProps.completed = false;
-          }
-          return (
-            <Step key={label} {...stepProps}>
-              <StepLabel {...labelProps}>{label}</StepLabel>
-            </Step>
-          );
-        })}
-      </Stepper>
-      {activeStep === steps.length ? (
-        <React.Fragment>
-          <Typography sx={{ mt: 2, mb: 1 }}>
-            All steps completed - you&apos;re finished
-          </Typography>
-          <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
-            <Box sx={{ flex: "1 1 auto" }} />
-            <Button onClick={handleReset}>Reset</Button>
-          </Box>
-        </React.Fragment>
-      ) : (
-        <React.Fragment>
-          {/* <Typography sx={{ mt: 2, mb: 1 }}>Step {activeStep + 1}</Typography> */}
-
-          {activeStep === 0 && (
-            <Box
-              display="flex"
-              //   paddingTop={2}
-              flexDirection="row"
-              justifyContent="space-around"
-            >
-              <Box
-                sx={{
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  width: "60%",
-                  minWidth: "550px",
-                  backgroundColor: "#fff",
-                  borderRadius: "10px",
-                  padding: "8px 2px 30px 2px",
-                  //   boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.1)",
-                }}
-              >
-                <Box
-                  component="form"
-                  display="flex"
-                  alignItems="flex-start"
-                  sx={{
-                    marginTop: "10px",
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-                    "& .MuiTextField-root": {
-                      fontSize: "15px",
-                      marginTop: "10px",
-                    },
-                  }}
-                >
-                  <div className="grid sm:grid-cols-12 xs:grid-cols-12 sm:ml-8 xs:ml-8 sm:mr-8 xs:mr-8">
-                    <div className="sm:col-span-3 xs:col-span-3 sm:mr-5 xs:mr-5 sm:min-w-[150px] xs:min-w-[150px] sm:min-h-[60px] xs:min-h-[60px]">
-                      <TextField
-                        inputProps={{ style: { fontSize: 15 } }}
-                        InputLabelProps={{
-                          style: { fontSize: 13 },
-                        }}
-                        required
-                        type={mailFormField.recipientHouseNumber.type}
-                        id={mailFormField.recipientHouseNumber.id}
-                        value={formik.values.recipientHouseNumber}
-                        label={mailFormField.recipientHouseNumber.label}
-                        onChange={formik.handleChange}
-                        //mailFormField.recipientHouseNumber.id
-                        //)}
-                        error={
-                          formik.touched.recipientHouseNumber &&
-                          Boolean(formik.errors.recipientHouseNumber)
-                        }
-                        helperText={
-                          formik.touched.recipientHouseNumber &&
-                          formik.errors.recipientHouseNumber
-                        }
-                      ></TextField>
-                    </div>
-                    <div className="sm:col-span-7 xs:col-span-7 sm:ml-9 xs:ml-9 sm:mr-2 xs:mr-2 sm:min-w-[300px] xs:min-w-[300px] sm:min-h-[60px] xs:min-h-[60px]">
-                      <TextField
-                        inputProps={{ style: { fontSize: 15 } }}
-                        InputLabelProps={{
-                          style: { fontSize: 13, width: "500px" },
-                        }}
-                        style={{ minWidth: 324 }}
-                        required
-                        type={mailFormField.recipientName.type}
-                        id={mailFormField.recipientName.id}
-                        value={formik.values.recipientName}
-                        label={mailFormField.recipientName.label}
-                        onChange={formik.handleChange}
-                        //mailFormField.recipientName.id
-                        //)}
-                        error={
-                          formik.touched.recipientName &&
-                          Boolean(formik.errors.recipientName)
-                        }
-                        helperText={
-                          formik.touched.recipientName &&
-                          formik.errors.recipientName
-                        }
-                      ></TextField>
-                    </div>
-                  </div>
-
-                  <div className="grid sm:ml-8 xs:ml-8 sm:mr-8 xs:mr-8 sm:grid-cols-12 xs:grid-cols-12">
-                    <div className="sm:col-span-6 xs:col-span-6 sm:mr-3 xs:mr-3 sm:ml-0 xs:ml-0 min-w-[235px] min-h-[60px] bg-white-500 ">
-                      <Autocomplete
-                        id={mailFormField.recipientPostalZone.id}
-                        options={zoneList}
-                        freeSolo
-                        onChange={(event, newValue) => {
-                          formik.setFieldValue(
-                            mailFormField.recipientPostalZone.id,
-                            newValue
-                          );
-                        }}
-                        value={formik.values.recipientPostalZone}
-                        sx={{
-                          "& .MuiAutocomplete-option": {
-                            color: "blue",
-                          },
-                          '& .MuiAutocomplete-option[data-focus="true"]': {
-                            backgroundColor: "lightgray",
-                          },
-                          '& .MuiAutocomplete-option[data-focus="true"][aria-selected="true"]':
-                            {
-                              backgroundColor: "lightblue",
-                            },
-                          "& .MuiAutocomplete-popupIndicator": {
-                            color: "green",
-                          },
-                          "& .MuiAutocomplete-clearIndicator": {
-                            color: "purple",
-                          },
-                        }}
-                        renderInput={(params) => (
-                          <TextField
-                            {...params}
-                            label={mailFormField.recipientPostalZone.label}
-                            InputLabelProps={{
-                              style: { fontSize: 13 },
-                            }}
-                            style={{ minWidth: 160 }}
-                            required
-                            value={
-                              formik.values[
-                                mailFormField.recipientPostalZone.id
-                              ] || ""
-                            }
-                            onChange={formik.handleChange(
-                              mailFormField.recipientPostalZone.id
-                            )}
-                            error={
-                              formik.touched.recipientPostalZone &&
-                              Boolean(formik.errors.recipientPostalZone)
-                            }
-                            helperText={
-                              formik.touched.recipientPostalZone &&
-                              formik.errors.recipientPostalZone
-                            }
-                          />
-                        )}
-                      />
-                    </div>
-                    <div className="sm:col-span-6 xs:col-span-4 sm:ml-0 xs:ml-0 min-h-[60px] min-w-[235px] bg-white-500 ">
-                      <Autocomplete
-                        id={mailFormField.recipientCity.id}
-                        options={cityList}
-                        freeSolo
-                        // onChange={(event, newValue) => {
-                        //   formik.setFieldValue((oldState) => ({
-                        //     ...oldState,
-                        //     [mailFormField.recipientCity.id]: newValue,
-                        //   }));
-                        // }}
-                        onChange={(event, newValue) => {
-                          formik.setFieldValue(
-                            mailFormField.recipientCity.id,
-                            newValue
-                          );
-                        }}
-                        value={formik.values.recipientCity}
-                        sx={{
-                          "& .MuiAutocomplete-option": {
-                            color: "blue",
-                          },
-                          '& .MuiAutocomplete-option[data-focus="true"]': {
-                            backgroundColor: "lightgray",
-                          },
-                          '& .MuiAutocomplete-option[data-focus="true"][aria-selected="true"]':
-                            {
-                              backgroundColor: "lightblue",
-                            },
-                          "& .MuiAutocomplete-clearIndicator": {
-                            color: "red",
-                          },
-                        }}
-                        renderInput={(params) => (
-                          <TextField
-                            {...params}
-                            label={mailFormField.recipientCity.label}
-                            InputLabelProps={{
-                              style: { fontSize: 13 },
-                            }}
-                            style={{ minWidth: 160 }}
-                            required
-                            value={
-                              formik.values[mailFormField.recipientCity.id] ||
-                              ""
-                            }
-                            onChange={formik.handleChange(
-                              mailFormField.recipientCity.id
-                            )}
-                            error={
-                              formik.touched.recipientCity &&
-                              Boolean(formik.errors.recipientCity)
-                            }
-                            helperText={
-                              formik.touched.recipientCity &&
-                              formik.errors.recipientCity
-                            }
-                          />
-                        )}
-                      />
-                    </div>
-                  </div>
-                  <AddressValidationModal
-                    formState={formik.values}
-                    onValidationResult={handleOnValidationResult}
-                  />
-                  <TextField
-                    inputProps={{ readOnly: true }}
-                    InputLabelProps={{
-                      style: { fontSize: 13 },
-                    }}
-                    style={{ minWidth: 480 }}
-                    required
-                    type={mailFormField.recipientAddress.type}
-                    id={mailFormField.recipientAddress.id}
-                    label={mailFormField.recipientAddress.label}
-                    onChange={handleChange(mailFormField.recipientAddress.id)}
-                    value={formik.values.recipientAddress}
-                  ></TextField>
-                </Box>
-              </Box>
+          })}
+        </Stepper>
+        {activeStep === steps.length ? (
+          <React.Fragment>
+            <Typography sx={{ mt: 2, mb: 1 }}>
+              All steps completed - you&apos;re finished
+            </Typography>
+            <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
+              <Box sx={{ flex: "1 1 auto" }} />
+              <Button onClick={handleReset}>Reset</Button>
             </Box>
-          )}
+          </React.Fragment>
+        ) : (
+          <React.Fragment>
+            {/* <Typography sx={{ mt: 2, mb: 1 }}>Step {activeStep + 1}</Typography> */}
 
-          {activeStep === 1 && (
-            <Box
-              display="flex"
-              //   paddingTop={2}
-              flexDirection="row"
-              justifyContent="space-around"
-            >
+            {activeStep === 0 && (
               <Box
-                sx={{
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  width: "60%",
-                  minWidth: "550px",
-                  backgroundColor: "#fff",
-                  borderRadius: "10px",
-                  padding: "8px 2px 30px 2px",
-                  //   boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.1)",
-                }}
+                display="flex"
+                //   paddingTop={2}
+                flexDirection="row"
+                justifyContent="space-around"
               >
                 <Box
-                  component="form"
-                  display="flex"
-                  alignItems="flex-start"
                   sx={{
-                    marginTop: "10px",
                     display: "flex",
                     flexDirection: "column",
                     alignItems: "center",
-                    "& .MuiTextField-root": {
-                      fontSize: "15px",
-                      marginTop: "10px",
-                    },
+                    justifyContent: "center",
+                    width: "60%",
+                    minWidth: "550px",
+                    backgroundColor: "#fff",
+                    borderRadius: "10px",
+                    padding: "8px 2px 30px 2px",
+                    //   boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.1)",
                   }}
                 >
-                  <div>
-                    <div className="grid sm:grid-cols-12 sm:ml-8 xs:ml-8 sm:mr-8 xs:mr-8">
-                      <div className="sm:col-span-3 sm:mr-5 min-w-[150px] min-h-[60px]">
+                  <Box
+                    component="form"
+                    display="flex"
+                    alignItems="flex-start"
+                    sx={{
+                      marginTop: "10px",
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "center",
+                      "& .MuiTextField-root": {
+                        fontSize: "15px",
+                        marginTop: "10px",
+                      },
+                    }}
+                  >
+                    <div className="grid sm:grid-cols-12 xs:grid-cols-12 sm:ml-8 xs:ml-8 sm:mr-8 xs:mr-8">
+                      <div className="sm:col-span-3 xs:col-span-3 sm:mr-5 xs:mr-5 sm:min-w-[150px] xs:min-w-[150px] sm:min-h-[60px] xs:min-h-[60px]">
                         <TextField
                           inputProps={{ style: { fontSize: 15 } }}
                           InputLabelProps={{
                             style: { fontSize: 13 },
                           }}
                           required
-                          type={mailFormField.senderHouseNumber.type}
-                          id={mailFormField.senderHouseNumber.id}
-                          //value={formState.senderHouseNumber}
-                          value={formik.values.senderHouseNumber}
-                          label={mailFormField.senderHouseNumber.label}
+                          type={mailFormField.recipientHouseNumber.type}
+                          id={mailFormField.recipientHouseNumber.id}
+                          value={formik.values.recipientHouseNumber}
+                          label={mailFormField.recipientHouseNumber.label}
                           onChange={formik.handleChange}
-                          // mailFormField.senderHouseNumber.id
+                          //mailFormField.recipientHouseNumber.id
                           //)}
                           error={
-                            formik.touched.senderHouseNumber &&
-                            Boolean(formik.errors.senderHouseNumber)
+                            formik.touched.recipientHouseNumber &&
+                            Boolean(formik.errors.recipientHouseNumber)
                           }
                           helperText={
-                            formik.touched.senderHouseNumber &&
-                            formik.errors.senderHouseNumber
+                            formik.touched.recipientHouseNumber &&
+                            formik.errors.recipientHouseNumber
                           }
                         ></TextField>
                       </div>
-                      <div className="sm:col-span-7 sm:ml-9 sm:mr-2 sm:min-w-[300px] sm:min-h-[60px]">
+                      <div className="sm:col-span-7 xs:col-span-7 sm:ml-9 xs:ml-9 sm:mr-2 xs:mr-2 sm:min-w-[300px] xs:min-w-[300px] sm:min-h-[60px] xs:min-h-[60px]">
                         <TextField
                           inputProps={{ style: { fontSize: 15 } }}
                           InputLabelProps={{
@@ -646,18 +445,20 @@ export default function HorizontalLinearStepperGov() {
                           }}
                           style={{ minWidth: 324 }}
                           required
-                          type={mailFormField.senderName.type}
-                          id={mailFormField.senderName.id}
-                          value={formik.values.senderName}
-                          label={mailFormField.senderName.label}
-                          onChange={formik.handleChange} //(mailFormField.senderName.id)}
+                          type={mailFormField.recipientName.type}
+                          id={mailFormField.recipientName.id}
+                          value={formik.values.recipientName}
+                          label={mailFormField.recipientName.label}
+                          onChange={formik.handleChange}
+                          //mailFormField.recipientName.id
+                          //)}
                           error={
-                            formik.touched.senderName &&
-                            Boolean(formik.errors.senderName)
+                            formik.touched.recipientName &&
+                            Boolean(formik.errors.recipientName)
                           }
                           helperText={
-                            formik.touched.senderName &&
-                            formik.errors.senderName
+                            formik.touched.recipientName &&
+                            formik.errors.recipientName
                           }
                         ></TextField>
                       </div>
@@ -666,20 +467,16 @@ export default function HorizontalLinearStepperGov() {
                     <div className="grid sm:ml-8 xs:ml-8 sm:mr-8 xs:mr-8 sm:grid-cols-12 xs:grid-cols-12">
                       <div className="sm:col-span-6 xs:col-span-6 sm:mr-3 xs:mr-3 sm:ml-0 xs:ml-0 min-w-[235px] min-h-[60px] bg-white-500 ">
                         <Autocomplete
-                          id={mailFormField.senderPostalZone.id}
+                          id={mailFormField.recipientPostalZone.id}
                           options={zoneList}
                           freeSolo
                           onChange={(event, newValue) => {
-                            //setFormState((oldState) => ({
-                            // ...oldState,
-                            // [mailFormField.senderPostalZone.id]: newValue,
-                            //}));
                             formik.setFieldValue(
-                              mailFormField.senderPostalZone.id,
+                              mailFormField.recipientPostalZone.id,
                               newValue
                             );
                           }}
-                          value={formik.values.senderPostalZone}
+                          value={formik.values.recipientPostalZone}
                           sx={{
                             "& .MuiAutocomplete-option": {
                               color: "blue",
@@ -701,7 +498,7 @@ export default function HorizontalLinearStepperGov() {
                           renderInput={(params) => (
                             <TextField
                               {...params}
-                              label={mailFormField.senderPostalZone.label}
+                              label={mailFormField.recipientPostalZone.label}
                               InputLabelProps={{
                                 style: { fontSize: 13 },
                               }}
@@ -709,19 +506,19 @@ export default function HorizontalLinearStepperGov() {
                               required
                               value={
                                 formik.values[
-                                  mailFormField.senderPostalZone.id
+                                  mailFormField.recipientPostalZone.id
                                 ] || ""
                               }
                               onChange={formik.handleChange(
-                                mailFormField.senderPostalZone.id
+                                mailFormField.recipientPostalZone.id
                               )}
                               error={
-                                formik.touched.senderPostalZone &&
-                                Boolean(formik.errors.senderPostalZone)
+                                formik.touched.recipientPostalZone &&
+                                Boolean(formik.errors.recipientPostalZone)
                               }
                               helperText={
-                                formik.touched.senderPostalZone &&
-                                formik.errors.senderPostalZone
+                                formik.touched.recipientPostalZone &&
+                                formik.errors.recipientPostalZone
                               }
                             />
                           )}
@@ -729,20 +526,22 @@ export default function HorizontalLinearStepperGov() {
                       </div>
                       <div className="sm:col-span-6 xs:col-span-4 sm:ml-0 xs:ml-0 min-h-[60px] min-w-[235px] bg-white-500 ">
                         <Autocomplete
-                          id={mailFormField.senderCity.id}
+                          id={mailFormField.recipientCity.id}
                           options={cityList}
                           freeSolo
-                          value={formik.values.senderCity}
+                          // onChange={(event, newValue) => {
+                          //   formik.setFieldValue((oldState) => ({
+                          //     ...oldState,
+                          //     [mailFormField.recipientCity.id]: newValue,
+                          //   }));
+                          // }}
                           onChange={(event, newValue) => {
-                            //setFormState((oldState) => ({
-                            //...oldState,
-                            //[mailFormField.senderCity.id]: newValue,
-                            //}));
                             formik.setFieldValue(
-                              mailFormField.senderCity.id,
+                              mailFormField.recipientCity.id,
                               newValue
                             );
                           }}
+                          value={formik.values.recipientCity}
                           sx={{
                             "& .MuiAutocomplete-option": {
                               color: "blue",
@@ -761,220 +560,460 @@ export default function HorizontalLinearStepperGov() {
                           renderInput={(params) => (
                             <TextField
                               {...params}
-                              label={mailFormField.senderCity.label}
+                              label={mailFormField.recipientCity.label}
                               InputLabelProps={{
                                 style: { fontSize: 13 },
                               }}
                               style={{ minWidth: 160 }}
                               required
                               value={
-                                formik.values[mailFormField.senderCity.id] || ""
+                                formik.values[mailFormField.recipientCity.id] ||
+                                ""
                               }
                               onChange={formik.handleChange(
-                                mailFormField.senderCity.id
+                                mailFormField.recipientCity.id
                               )}
                               error={
-                                formik.touched.senderCity &&
-                                Boolean(formik.errors.senderCity)
+                                formik.touched.recipientCity &&
+                                Boolean(formik.errors.recipientCity)
                               }
                               helperText={
-                                formik.touched.senderCity &&
-                                formik.errors.senderCity
+                                formik.touched.recipientCity &&
+                                formik.errors.recipientCity
                               }
                             />
                           )}
                         />
                       </div>
                     </div>
-                  </div>
-                  <SenderAddressValidationModel
-                    formState={formik.values}
-                    //formState={formState}
-                    onValidationSenderResult={handleSenderOnValidationResult}
-                  />
-                  <TextField
-                    inputProps={{ readOnly: true }}
-                    read
-                    InputLabelProps={{
-                      style: { fontSize: 13 },
-                    }}
-                    style={{ minWidth: 480 }}
-                    required
-                    type={mailFormField.senderAddress.type}
-                    id={mailFormField.senderAddress.id}
-                    label={mailFormField.senderAddress.label}
-                    onChange={handleChange(mailFormField.senderAddress.id)}
-                    value={formState.senderAddress}
-                  ></TextField>
+                    <AddressValidationModal
+                      formState={formik.values}
+                      onValidationResult={handleOnValidationResult}
+                    />
+                    <TextField
+                      inputProps={{ readOnly: true }}
+                      InputLabelProps={{
+                        style: { fontSize: 13 },
+                      }}
+                      style={{ minWidth: 480 }}
+                      required
+                      type={mailFormField.recipientAddress.type}
+                      id={mailFormField.recipientAddress.id}
+                      label={mailFormField.recipientAddress.label}
+                      onChange={handleChange(mailFormField.recipientAddress.id)}
+                      value={formik.values.recipientAddress}
+                    ></TextField>
+                  </Box>
                 </Box>
               </Box>
-            </Box>
-          )}
-          {activeStep === 2 && (
-            <>
-              {/* <button
+            )}
+
+            {activeStep === 1 && (
+              <Box
+                display="flex"
+                //   paddingTop={2}
+                flexDirection="row"
+                justifyContent="space-around"
+              >
+                <Box
+                  sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    width: "60%",
+                    minWidth: "550px",
+                    backgroundColor: "#fff",
+                    borderRadius: "10px",
+                    padding: "8px 2px 30px 2px",
+                    //   boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.1)",
+                  }}
+                >
+                  <Box
+                    component="form"
+                    display="flex"
+                    alignItems="flex-start"
+                    sx={{
+                      marginTop: "10px",
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "center",
+                      "& .MuiTextField-root": {
+                        fontSize: "15px",
+                        marginTop: "10px",
+                      },
+                    }}
+                  >
+                    <div>
+                      <div className="grid sm:grid-cols-12 sm:ml-8 xs:ml-8 sm:mr-8 xs:mr-8">
+                        <div className="sm:col-span-3 sm:mr-5 min-w-[150px] min-h-[60px]">
+                          <TextField
+                            inputProps={{ style: { fontSize: 15 } }}
+                            InputLabelProps={{
+                              style: { fontSize: 13 },
+                            }}
+                            required
+                            type={mailFormField.senderHouseNumber.type}
+                            id={mailFormField.senderHouseNumber.id}
+                            //value={formState.senderHouseNumber}
+                            value={formik.values.senderHouseNumber}
+                            label={mailFormField.senderHouseNumber.label}
+                            onChange={formik.handleChange}
+                            // mailFormField.senderHouseNumber.id
+                            //)}
+                            error={
+                              formik.touched.senderHouseNumber &&
+                              Boolean(formik.errors.senderHouseNumber)
+                            }
+                            helperText={
+                              formik.touched.senderHouseNumber &&
+                              formik.errors.senderHouseNumber
+                            }
+                          ></TextField>
+                        </div>
+                        <div className="sm:col-span-7 sm:ml-9 sm:mr-2 sm:min-w-[300px] sm:min-h-[60px]">
+                          <TextField
+                            inputProps={{ style: { fontSize: 15 } }}
+                            InputLabelProps={{
+                              style: { fontSize: 13, width: "500px" },
+                            }}
+                            style={{ minWidth: 324 }}
+                            required
+                            type={mailFormField.senderName.type}
+                            id={mailFormField.senderName.id}
+                            value={formik.values.senderName}
+                            label={mailFormField.senderName.label}
+                            onChange={formik.handleChange} //(mailFormField.senderName.id)}
+                            error={
+                              formik.touched.senderName &&
+                              Boolean(formik.errors.senderName)
+                            }
+                            helperText={
+                              formik.touched.senderName &&
+                              formik.errors.senderName
+                            }
+                          ></TextField>
+                        </div>
+                      </div>
+
+                      <div className="grid sm:ml-8 xs:ml-8 sm:mr-8 xs:mr-8 sm:grid-cols-12 xs:grid-cols-12">
+                        <div className="sm:col-span-6 xs:col-span-6 sm:mr-3 xs:mr-3 sm:ml-0 xs:ml-0 min-w-[235px] min-h-[60px] bg-white-500 ">
+                          <Autocomplete
+                            id={mailFormField.senderPostalZone.id}
+                            options={zoneList}
+                            freeSolo
+                            onChange={(event, newValue) => {
+                              //setFormState((oldState) => ({
+                              // ...oldState,
+                              // [mailFormField.senderPostalZone.id]: newValue,
+                              //}));
+                              formik.setFieldValue(
+                                mailFormField.senderPostalZone.id,
+                                newValue
+                              );
+                            }}
+                            value={formik.values.senderPostalZone}
+                            sx={{
+                              "& .MuiAutocomplete-option": {
+                                color: "blue",
+                              },
+                              '& .MuiAutocomplete-option[data-focus="true"]': {
+                                backgroundColor: "lightgray",
+                              },
+                              '& .MuiAutocomplete-option[data-focus="true"][aria-selected="true"]':
+                                {
+                                  backgroundColor: "lightblue",
+                                },
+                              "& .MuiAutocomplete-popupIndicator": {
+                                color: "green",
+                              },
+                              "& .MuiAutocomplete-clearIndicator": {
+                                color: "purple",
+                              },
+                            }}
+                            renderInput={(params) => (
+                              <TextField
+                                {...params}
+                                label={mailFormField.senderPostalZone.label}
+                                InputLabelProps={{
+                                  style: { fontSize: 13 },
+                                }}
+                                style={{ minWidth: 160 }}
+                                required
+                                value={
+                                  formik.values[
+                                    mailFormField.senderPostalZone.id
+                                  ] || ""
+                                }
+                                onChange={formik.handleChange(
+                                  mailFormField.senderPostalZone.id
+                                )}
+                                error={
+                                  formik.touched.senderPostalZone &&
+                                  Boolean(formik.errors.senderPostalZone)
+                                }
+                                helperText={
+                                  formik.touched.senderPostalZone &&
+                                  formik.errors.senderPostalZone
+                                }
+                              />
+                            )}
+                          />
+                        </div>
+                        <div className="sm:col-span-6 xs:col-span-4 sm:ml-0 xs:ml-0 min-h-[60px] min-w-[235px] bg-white-500 ">
+                          <Autocomplete
+                            id={mailFormField.senderCity.id}
+                            options={cityList}
+                            freeSolo
+                            value={formik.values.senderCity}
+                            onChange={(event, newValue) => {
+                              //setFormState((oldState) => ({
+                              //...oldState,
+                              //[mailFormField.senderCity.id]: newValue,
+                              //}));
+                              formik.setFieldValue(
+                                mailFormField.senderCity.id,
+                                newValue
+                              );
+                            }}
+                            sx={{
+                              "& .MuiAutocomplete-option": {
+                                color: "blue",
+                              },
+                              '& .MuiAutocomplete-option[data-focus="true"]': {
+                                backgroundColor: "lightgray",
+                              },
+                              '& .MuiAutocomplete-option[data-focus="true"][aria-selected="true"]':
+                                {
+                                  backgroundColor: "lightblue",
+                                },
+                              "& .MuiAutocomplete-clearIndicator": {
+                                color: "red",
+                              },
+                            }}
+                            renderInput={(params) => (
+                              <TextField
+                                {...params}
+                                label={mailFormField.senderCity.label}
+                                InputLabelProps={{
+                                  style: { fontSize: 13 },
+                                }}
+                                style={{ minWidth: 160 }}
+                                required
+                                value={
+                                  formik.values[mailFormField.senderCity.id] ||
+                                  ""
+                                }
+                                onChange={formik.handleChange(
+                                  mailFormField.senderCity.id
+                                )}
+                                error={
+                                  formik.touched.senderCity &&
+                                  Boolean(formik.errors.senderCity)
+                                }
+                                helperText={
+                                  formik.touched.senderCity &&
+                                  formik.errors.senderCity
+                                }
+                              />
+                            )}
+                          />
+                        </div>
+                      </div>
+                    </div>
+                    <SenderAddressValidationModel
+                      formState={formik.values}
+                      //formState={formState}
+                      onValidationSenderResult={handleSenderOnValidationResult}
+                    />
+                    <TextField
+                      inputProps={{ readOnly: true }}
+                      read
+                      InputLabelProps={{
+                        style: { fontSize: 13 },
+                      }}
+                      style={{ minWidth: 480 }}
+                      required
+                      type={mailFormField.senderAddress.type}
+                      id={mailFormField.senderAddress.id}
+                      label={mailFormField.senderAddress.label}
+                      onChange={handleChange(mailFormField.senderAddress.id)}
+                      value={formState.senderAddress}
+                    ></TextField>
+                  </Box>
+                </Box>
+              </Box>
+            )}
+            {activeStep === 2 && (
+              <>
+                {/* <button
                 onClick={() => {
                   console.log(formik.values);
                 }}
               >
                 Submit
               </button> */}
-              {isRegisterCompleted ? (
-                <div className="grid grid-cols-12">
-                  <div className="col-span-2"></div>
-                  <div className="col-span-6" ref={componentRef}>
-                    <GovParcelMailReceipt
-                      mailType={"Gov Parcel"}
-                      postage={formik.values.postage}
-                      recipientName={formik.values.recipientName}
-                      SenderName={formik.values.senderName}
-                      recipientAddress={formik.values.recipientAddress}
-                      mailId={"300"}
-                      receiptId={"450"}
-                      ministry={formik.values.ministry}
-                    />
+                {isRegisterCompleted ? (
+                  <div className="grid grid-cols-12">
+                    <div className="col-span-2"></div>
+                    <div className="col-span-6" ref={componentRef}>
+                      <GovParcelMailReceipt
+                        mailType={"Gov Parcel"}
+                        postage={formik.values.postage}
+                        recipientName={formik.values.recipientName}
+                        SenderName={formik.values.senderName}
+                        recipientAddress={formik.values.recipientAddress}
+                        mailId={"300"}
+                        receiptId={"450"}
+                        ministry={formik.values.ministry}
+                      />
+                    </div>
+                    <div className="col-span-2 mt-[20px]">
+                      <Button
+                        className="mt-1"
+                        variant="primary"
+                        style={{
+                          //backgroundColor: "#fcd34d",
+                          backgroundColor: "#cbd5e1",
+                          padding: "8px",
+                          paddingLeft: "30px",
+                          paddingRight: "30px",
+                          borderColor: "#0891b2",
+                          fontSize: "15px",
+                          fontWeight: "bold",
+                          fontFamily: "arial",
+                          my: "40px",
+                          mb: "20px",
+                          mr: "60px",
+                        }}
+                        onClick={handlePrint}
+                      >
+                        PRINT
+                      </Button>
+                    </div>
                   </div>
-                  <div className="col-span-2 mt-[20px]">
-                    <Button
-                      className="mt-1"
-                      variant="primary"
-                      style={{
-                        //backgroundColor: "#fcd34d",
-                        backgroundColor: "#cbd5e1",
-                        padding: "8px",
-                        paddingLeft: "30px",
-                        paddingRight: "30px",
-                        borderColor: "#0891b2",
-                        fontSize: "15px",
-                        fontWeight: "bold",
-                        fontFamily: "arial",
-                        my: "40px",
-                        mb: "20px",
-                        mr: "60px",
-                      }}
-                      onClick={handlePrint}
+                ) : (
+                  <div
+                    className="grid grid-cols-12"
+                    style={{ display: "flex", alignContent: "center" }}
+                  >
+                    <div
+                      className="col-span-5"
+                      style={{ marginLeft: "30px", marginTop: "5px" }}
                     >
-                      PRINT
-                    </Button>
-                  </div>
-                </div>
-              ) : (
-                <div
-                  className="grid grid-cols-12"
-                  style={{ display: "flex", alignContent: "center" }}
-                >
-                  <div
-                    className="col-span-5"
-                    style={{ marginLeft: "30px", marginTop: "5px" }}
-                  >
-                    <CostFormNew
-                      postType={"parcel-normal"}
-                      description={"Maximum Weight: 20Kg"}
-                      onCostUpdate={handleCostUpdate}
-                      cost={cost}
-                    />
-                  </div>
-                  <div
-                    style={{ display: "flex" }}
-                    className="col-span-5 ml-8 mt-[62px]"
-                  >
-                    <FormControl sx={{ minWidth: 200, maxWidth: 300 }}>
-                      <InputLabel
-                        id="courierProviderSelector"
-                        sx={{ fontSize: "14px" }}
-                      >
-                        Ministry
-                      </InputLabel>
-                      <Select
-                        sx={{ fontSize: "13px" }}
-                        labelId="ministrySelector"
-                        id="ministry"
-                        name="ministry"
-                        value={formik.values.ministry}
-                        onChange={formik.handleChange}
-                      >
-                        <MenuItem
+                      <CostFormNew
+                        postType={"parcel-normal"}
+                        description={"Maximum Weight: 20Kg"}
+                        onCostUpdate={handleCostUpdate}
+                        cost={cost}
+                      />
+                    </div>
+                    <div
+                      style={{ display: "flex" }}
+                      className="col-span-5 ml-8 mt-[62px]"
+                    >
+                      <FormControl sx={{ minWidth: 200, maxWidth: 300 }}>
+                        <InputLabel
+                          id="courierProviderSelector"
                           sx={{ fontSize: "14px" }}
-                          value={"Ministry of Education"}
                         >
-                          Ministry of Education
-                        </MenuItem>
-                        <MenuItem
-                          sx={{ fontSize: "14px" }}
-                          value={"Ministry of Education"}
+                          Ministry
+                        </InputLabel>
+                        <Select
+                          sx={{ fontSize: "13px" }}
+                          labelId="ministrySelector"
+                          id="ministry"
+                          name="ministry"
+                          value={formik.values.ministry}
+                          onChange={formik.handleChange}
                         >
-                          Ministry of Education
-                        </MenuItem>
-                        <MenuItem
-                          sx={{ fontSize: "14px" }}
-                          value={"Ministry of Power and Energy"}
-                        >
-                          Ministry of Power and Energy
-                        </MenuItem>
-                        <MenuItem
-                          sx={{ fontSize: "14px" }}
-                          value={"Ministry of Transport"}
-                        >
-                          Ministry of Transport
-                        </MenuItem>
-                        <MenuItem
-                          sx={{ fontSize: "14px" }}
-                          value={"Ministry of Labour"}
-                        >
-                          Ministry of Labour
-                        </MenuItem>
-                      </Select>
-                      {/*<ErrorMessage
+                          <MenuItem
+                            sx={{ fontSize: "14px" }}
+                            value={"Ministry of Education"}
+                          >
+                            Ministry of Education
+                          </MenuItem>
+                          <MenuItem
+                            sx={{ fontSize: "14px" }}
+                            value={"Ministry of Education"}
+                          >
+                            Ministry of Education
+                          </MenuItem>
+                          <MenuItem
+                            sx={{ fontSize: "14px" }}
+                            value={"Ministry of Power and Energy"}
+                          >
+                            Ministry of Power and Energy
+                          </MenuItem>
+                          <MenuItem
+                            sx={{ fontSize: "14px" }}
+                            value={"Ministry of Transport"}
+                          >
+                            Ministry of Transport
+                          </MenuItem>
+                          <MenuItem
+                            sx={{ fontSize: "14px" }}
+                            value={"Ministry of Labour"}
+                          >
+                            Ministry of Labour
+                          </MenuItem>
+                        </Select>
+                        {/*<ErrorMessage
                         name="packageType"
                         component="div"
                         style={{ color: "red" }}
                       />*/}
-                    </FormControl>
+                      </FormControl>
+                    </div>
                   </div>
-                </div>
+                )}
+              </>
+            )}
+
+            <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
+              {!isRegisterCompleted && (
+                <Button
+                  color="inherit"
+                  disabled={activeStep === 0}
+                  onClick={handleBack}
+                  sx={{ mr: 1 }}
+                >
+                  Back
+                </Button>
               )}
-            </>
-          )}
 
-          <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
-            {!isRegisterCompleted && (
+              <Box sx={{ flex: "1 1 auto" }} />
+              {isStepOptional(activeStep) && (
+                <Button color="inherit" onClick={handleSkip} sx={{ mr: 1 }}>
+                  Skip
+                </Button>
+              )}
               <Button
-                color="inherit"
-                disabled={activeStep === 0}
-                onClick={handleBack}
-                sx={{ mr: 1 }}
-              >
-                Back
-              </Button>
-            )}
-
-            <Box sx={{ flex: "1 1 auto" }} />
-            {isStepOptional(activeStep) && (
-              <Button color="inherit" onClick={handleSkip} sx={{ mr: 1 }}>
-                Skip
-              </Button>
-            )}
-            <Button
-              onClick={handleNext}
-              sx={{
-                backgroundColor:
-                  activeStep === steps.length - 1 ? "#852318" : "#1976d2", // Green for "Register Mail", Blue for "Next"
-                color: "#fff", // White text color
-                "&:hover": {
+                onClick={handleNext}
+                sx={{
                   backgroundColor:
-                    activeStep === steps.length - 1 ? "#591710" : "#1565c0", // Darker shades on hover
-                },
-                padding: "8px 16px", // Adjust the padding
-                fontWeight: "bold", // Bold text
-                borderRadius: "8px", // Rounded corners
-                boxShadow: "0px 3px 5px rgba(0, 0, 0, 0.2)", // Add a subtle shadow
-              }}
-            >
-              {activeStep === steps.length - 1 ? "Register Mail" : "Next"}
-            </Button>
-          </Box>
-        </React.Fragment>
-      )}
-    </Box>
+                    activeStep === steps.length - 1 ? "#852318" : "#1976d2", // Green for "Register Mail", Blue for "Next"
+                  color: "#fff", // White text color
+                  "&:hover": {
+                    backgroundColor:
+                      activeStep === steps.length - 1 ? "#591710" : "#1565c0", // Darker shades on hover
+                  },
+                  padding: "8px 16px", // Adjust the padding
+                  fontWeight: "bold", // Bold text
+                  borderRadius: "8px", // Rounded corners
+                  boxShadow: "0px 3px 5px rgba(0, 0, 0, 0.2)", // Add a subtle shadow
+                }}
+              >
+                {activeStep === steps.length - 1
+                  ? isRegisterCompleted
+                    ? "Done"
+                    : "Register Mail"
+                  : "Next"}
+              </Button>
+            </Box>
+          </React.Fragment>
+        )}
+      </Box>
+    </>
   );
 }
