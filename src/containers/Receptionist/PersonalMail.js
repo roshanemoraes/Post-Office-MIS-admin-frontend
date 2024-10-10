@@ -262,7 +262,7 @@ const PersonalMail = () => {
                     marginTop: "10px",
                   },
                 }}
-                onSubmit={formik.handleSubmit}
+                // onSubmit={formik.handleSubmit}
               >
                 <div className="grid sm:grid-cols-12 xs:grid-cols-12 sm:ml-8 xs:ml-8 sm:mr-8 xs:mr-8">
                   <div className="sm:col-span-3 xs:col-span-3 sm:mr-5 xs:mr-5 sm:min-w-[150px] xs:min-w-[150px] sm:min-h-[60px] xs:min-h-[60px]">

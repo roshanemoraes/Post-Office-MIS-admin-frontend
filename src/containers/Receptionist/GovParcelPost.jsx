@@ -24,6 +24,7 @@ import DownArrowIcon from "./../../assets/arrow-down-square-fill.svg";
 import NormalMailReceipt from "./../../components/Receipts/NormalMailReceipt";
 import { useReactToPrint } from "react-to-print";
 import GovParcelMailReceipt from "./../../components/Receipts/GovParcelMailReceipt";
+import HorizontalLinearStepperGov from "./MailRegistration/GovernmentParcelStepper";
 
 const GovParcelPost = () => {
   const initialFormState = {
@@ -173,7 +174,7 @@ const GovParcelPost = () => {
   };
 
   return (
-    <>
+    /*<>
       <div className="grid sm:grid-cols-12 grid-cols-1">
         <div className="rounded-lg sm:col-span-6 min-h-[100px] bg-white-500  items-center justify-center">
           <Box
@@ -666,6 +667,44 @@ const GovParcelPost = () => {
         </div>
       </div>
       <div className="min-h-[70px]"></div>
+    </>*/
+    <>
+      <Box
+        display="flex"
+        paddingTop={2}
+        flexDirection="row"
+        justifyContent="space-around"
+      >
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+            width: "60%",
+            minWidth: "550px",
+            backgroundColor: "#fff",
+            borderRadius: "10px",
+            padding: "30px 2px 30px 2px",
+            boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.1)",
+          }}
+        >
+          <Typography
+            variant="subtitle2"
+            sx={{
+              fontWeight: "bold",
+              fontSize: "22px",
+              marginBottom: "35px",
+              fontFamily: "Helvetica Neue",
+            }}
+          >
+            Government Parcel Post
+          </Typography>
+          <div style={{ width: "90%" }}>
+            <HorizontalLinearStepperGov />
+          </div>
+        </Box>
+      </Box>
     </>
   );
 };
