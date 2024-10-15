@@ -56,7 +56,7 @@ const PaymentSuccessPage = () => {
           <div>Money Order has successfully placed.</div>
           <div className="py-10 text-center">
             <Link
-              to="#"
+              to="/admin/receptionist/money-order"
               className="px-12 bg-indigo-600 hover:bg-indigo-500 text-white font-semibold py-3"
             >
               GO BACK
