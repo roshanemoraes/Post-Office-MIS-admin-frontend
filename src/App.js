@@ -14,53 +14,57 @@ import TestLogin from "./screens/Common/TestLogin";
 
 function App() {
   return (
-    <Routes>
-      <Route path="/" element={<Navigate to="/login" />} />
-      <Route path="/testlogin" element={<TestLogin />} />
-      <Route path="/login" element={<CustomerLogin />} />
+    <>
+      <main className="content" style={{ overflowY: "auto", height: "100vh" }}>
+        <Routes>
+          <Route path="/" element={<Navigate to="/login" />} />
+          <Route path="/testlogin" element={<TestLogin />} />
+          <Route path="/login" element={<CustomerLogin />} />
 
-      <Route path="/customer/*" element={<CustomerInterface />} />
+          <Route path="/customer/*" element={<CustomerInterface />} />
 
-      <Route path="/admin/" element={<Navigate to="/admin/login" />} />
-      <Route path="/admin/login" element={<Login />} />
-      <Route path="/unauthorized" element={<UnauthorizedPage />} />
+          <Route path="/admin/" element={<Navigate to="/admin/login" />} />
+          <Route path="/admin/login" element={<Login />} />
+          <Route path="/unauthorized" element={<UnauthorizedPage />} />
 
-      {/* <Route path="/postmaster/*" element={<PostmasterInterface />} /> */}
-      {/* <Route path="/receptionist/*" element={<ReceptionistInterface />} />
+          {/* <Route path="/postmaster/*" element={<PostmasterInterface />} /> */}
+          {/* <Route path="/receptionist/*" element={<ReceptionistInterface />} />
       <Route
         path="/delivery-manager/*"
         element={<DeliveryManagerInterface />}
       /> */}
-      <Route
-        path="/admin/postmaster/*"
-        element={
-          <ProtectedRouteAdmin
-            element={PostmasterInterface}
-            allowedRoles={["ROLE_POSTMASTER"]}
+          <Route
+            path="/admin/postmaster/*"
+            element={
+              <ProtectedRouteAdmin
+                element={PostmasterInterface}
+                allowedRoles={["ROLE_POSTMASTER"]}
+              />
+            }
           />
-        }
-      />
 
-      <Route
-        path="/admin/receptionist/*"
-        element={
-          <ProtectedRouteAdmin
-            element={ReceptionistInterface}
-            allowedRoles={["ROLE_RECEPTIONIST"]}
+          <Route
+            path="/admin/receptionist/*"
+            element={
+              <ProtectedRouteAdmin
+                element={ReceptionistInterface}
+                allowedRoles={["ROLE_RECEPTIONIST"]}
+              />
+            }
           />
-        }
-      />
-      <Route
-        path="/admin/delivery-manager/*"
-        element={
-          <ProtectedRouteAdmin
-            element={DeliveryManagerInterface}
-            allowedRoles={["ROLE_MANAGER"]}
+          <Route
+            path="/admin/delivery-manager/*"
+            element={
+              <ProtectedRouteAdmin
+                element={DeliveryManagerInterface}
+                allowedRoles={["ROLE_MANAGER"]}
+              />
+            }
           />
-        }
-      />
-      <Route path="*" element={<Navigate to="/unauthorized" />} />
-    </Routes>
+          <Route path="*" element={<Navigate to="/unauthorized" />} />
+        </Routes>
+      </main>
+    </>
   );
 }
 
