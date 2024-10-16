@@ -10,11 +10,13 @@ import ProtectedRouteAdmin from "./Navigation/ProtectedRouteAdmin";
 import UnauthorizedPage from "./screens/Common/UnauthorizedPage";
 import CustomerLogin from "./screens/Common/CustomerLogin";
 import CustomerInterface from "./Navigation/CustomerNav";
+import TestLogin from "./screens/Common/TestLogin";
 
 function App() {
   return (
     <Routes>
       <Route path="/" element={<Navigate to="/login" />} />
+      <Route path="/testlogin" element={<TestLogin />} />
       <Route path="/login" element={<CustomerLogin />} />
 
       <Route path="/customer/*" element={<CustomerInterface />} />
