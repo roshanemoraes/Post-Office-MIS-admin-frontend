@@ -83,12 +83,14 @@ const About = () => {
           transition={{ duration: 0.5 }}
           className="w-full lg:w-1/2"
         >
+          <h5 className="mt-4	">WEB Application</h5>
           <div
             className="flex justify-center lg:justify-start text-justify"
             style={{ wordSpacing: "0.3em" }}
           >
             <p className="my-2 max-w-xl py-6">{ABOUT_TEXT}</p>
           </div>
+          <h5>MOBILE Application</h5>
           <div
             className="flex justify-center lg:justify-start text-justify"
             style={{ wordSpacing: "0.3em" }}

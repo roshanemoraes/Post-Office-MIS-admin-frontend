@@ -8,9 +8,9 @@ export const HERO_CONTENT = `We are in a constant effort to deliver a fast, reli
 export const HERO_MISSION = `To provide quality services to our customers.`;
 export const HERO_VISION = `To be the preferred choice for our customers.`;
 
-export const ABOUT_TEXT = `Post-Office MIS is a comprehensive system developed with the aim to modernize postal services. It integrates an admin panel and a Postman Assistant Mobile Application, allowing efficient address recording, route optimization, real-time tracking, and barcode generation. These features enhance delivery accuracy, reduce errors, and improve customer satisfaction.`;
+export const ABOUT_TEXT = `The Post-office MIS web application centralizes postal operations, automating tasks like mail sorting, barcode generation, address verification, and customer management. With real-time tracking, route optimization, and robust analytics, it enhances performance monitoring and integrates smoothly with other systems, making processes easier and more efficient for staff.`;
 
-export const ABOUT_TEXT_2 = `In addition to streamlining mail operations, the system offers financial management, postal rates calculation, and advanced reporting tools. It ensures data security and compliance with postal regulations, while also integrating with external systems like CRM and accounting software. Post-Office MIS provides a scalable, centralized platform that meets the evolving needs of today’s postal services.`;
+export const ABOUT_TEXT_2 = `The mobile app streamlines delivery for postmen by generating optimal routes, cutting down on travel time and resources. It enables real-time status updates, eliminating physical ledgers, and provides postal admins with instant tracking, ensuring accurate and timely information throughout the delivery process.`;
 export const EXPERIENCES = [
   {
     year: "2021  - Present",
