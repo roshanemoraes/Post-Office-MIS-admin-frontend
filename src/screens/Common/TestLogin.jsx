@@ -2,10 +2,10 @@ import React from "react";
 import Header from "../CustomerLandingPage/Header";
 import Hero from "../CustomerLandingPage/Hero";
 import About from "../CustomerLandingPage/About";
-import Technologies from "../CustomerLandingPage/Technologies";
-import Experience from "../CustomerLandingPage/Experience";
-import Projects from "../CustomerLandingPage/Projects";
 import Contact from "../CustomerLandingPage/Contact";
+import Services from "../CustomerLandingPage/Services";
+import Improvements from "../CustomerLandingPage/Improvements";
+import SignInSection from "../CustomerLandingPage/SignInSection";
 //import CustomerLogin from "./CustomerLogin";
 
 const TestLogin = () => {
@@ -21,8 +21,9 @@ const TestLogin = () => {
         <div className="container mx-auto px-8">
           <Hero />
           <About />
-          <Projects />
-          <Experience />
+          <Services />
+          <Improvements />
+          <SignInSection />
           <Contact />
         </div>
       </div>

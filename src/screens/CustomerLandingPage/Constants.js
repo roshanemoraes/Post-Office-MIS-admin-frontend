@@ -11,61 +11,77 @@ export const HERO_VISION = `To be the preferred choice for our customers.`;
 export const ABOUT_TEXT = `The Post-office MIS web application centralizes postal operations, automating tasks like mail sorting, barcode generation, address verification, and customer management. With real-time tracking, route optimization, and robust analytics, it enhances performance monitoring and integrates smoothly with other systems, making processes easier and more efficient for staff.`;
 
 export const ABOUT_TEXT_2 = `The mobile app streamlines delivery for postmen by generating optimal routes, cutting down on travel time and resources. It enables real-time status updates, eliminating physical ledgers, and provides postal admins with instant tracking, ensuring accurate and timely information throughout the delivery process.`;
-export const EXPERIENCES = [
-  {
-    year: "2021  - Present",
-    role: "3rd Year Undergraduate",
-    company: "Computer Science and Engineering, University of Moratuwa",
-    description: `I am a 3rd-year Computer Science and Engineering student at the University of Moratuwa, focusing on software engineering, algorithms, and databases. My coursework and hands-on projects have enhanced my technical skills and problem-solving abilities. I also actively participate in tech workshops and hackathons, gaining practical experience and collaboration skills.`,
-    technologies: [],
-  },
-  {
-    year: "2018 - 2020",
-    role: "GCE Advanced Level",
-    company: "Maris Stella Collge - Negombo",
-    description: `Obtained 3As for Combined Mathematics, chemistry and Physics in physical science stream, and got selected to University of Moratuwa for B.sc (Hons) Engineering.`,
-    technologies: [],
-  },
-];
 
 export const PROJECTS = [
+  //1
   {
-    title: "Mail Stus Update",
-    //image: project1,
-    description:
-      "Customer receives a notification when the mails are successfully delivered. Further it shows the status of the mail items whether they are still delivering.",
-    technologies: [
-      "React",
-      "Spring Boot",
-      "Java",
-      "HTML",
-      "CSS",
-      "MongoDB",
-      "Firebase",
-      "REST",
-    ],
-  },
-  {
-    title: "Address Update Notification",
+    title: "Address Verification",
     //image: project2,
     description:
-      "Earlier the undelivered mails are disregarded. But Now when a mail is not delivered due to an invalid address, a notification is generated to the sender to update the correct address. So that the undelivered mails are not get lost.",
-    technologies: [
-      "React JS",
-      "Node JS",
-      "MySQL",
-      "Arduino",
-      "Node Red",
-      "Git",
-      "VS Code",
-    ],
+      "Say goodbye to lost mail! Our system double-checks every address for accuracy, ensuring your mail reaches the right doorstep, every time.",
   },
+  //2
+  {
+    title: "Out with the stamps, in with the barcodes!",
+    //image: project1,
+    description:
+      "Getting tired of searching and pasting stamps? The system generates barcode instead. Anyone can scan the barcode anywhere and get the details. ",
+  },
+  //3
+  {
+    title: "Mail Sorting",
+    //image: project2,
+    description:
+      "Sorting has never been this easy. Our automated system categorizes mail by ZIP codes, addresses, weight, and size, guaranteeing smooth and efficient processing.",
+  },
+  //4
+  {
+    title: "Tracking and Tracing",
+    //image: project2,
+    description:
+      "Stay in the know. Track your mail in real time from dispatch to delivery, with updates at every step to keep you informed and in control.",
+  },
+  //5
+  {
+    title: "Delivery Route Optimization",
+    //image: project2,
+    description:
+      "Faster routes, happy customers. Our route optimization feature helps postmen deliver mail quicker, cutting costs and saving time.",
+  },
+  //6
+  {
+    title: "Customer Management",
+    //image: project2,
+    description:
+      "All your customer info, all in one place. Access addresses, contacts, preferences, and transaction history with ease, making customer service a breeze.",
+  },
+  //7
+  {
+    title: "Return Mail Management",
+    //image: project2,
+    description:
+      "No lost of mails further! Smooth handling for undeliverable mail. Manage returns efficiently with automated processes and address updates to keep your system organized.",
+  },
+  //8
+  {
+    title: "Financial Management",
+    //image: project2,
+    description:
+      "Stay on top of finances. Track revenue, process payments, and generate invoices effortlessly—all backed by robust financial reporting.",
+  },
+  //9
+  {
+    title: "Bulk Mail Availability",
+    //image: project2,
+    description:
+      "Large number of mails? We got you covered. Big mailings made easy. Import lists, print labels, and handle large volumes with bulk discounts and streamlined processing.",
+  },
+  //10
   {
     title: "Money Orders",
-    // image: project3,
+    //image: project2,
     description:
-      "Customers can transfer the money orders quickly by a handy interface. Not needed to go to the bank or a post office. So the things made easy by our system.",
-    technologies: ["React JS", "Flask", "REST", "JWT", "Git", "VS Code"],
+      "Fast, secure, and convenient—our Money Orders service transforms the way you send and receive money.",
   },
 ];
 

@@ -53,26 +53,32 @@ const Header = () => {
             } md:flex gap-12 transition-all duration-300 w-full md:w-auto`}
           >
             <a
-              className="text-lg font-medium text-gray-300 transition-colors hover:text-white underline-animation"
+              className="text-lg font-medium text-gray-300 transition-colors hover:text-white underline-animation no-underline"
               href="#about-mis"
             >
               ABOUT POST OFFICE MIS
             </a>
             <a
-              className="text-lg font-medium text-gray-300 transition-colors hover:text-white underline-animation"
+              className="text-lg font-medium text-gray-300 transition-colors hover:text-white underline-animation no-underline"
               href="/#services"
             >
               SERVICES
             </a>
             <a
-              className="text-lg font-medium text-gray-300 transition-colors hover:text-white underline-animation"
-              href="/#experience"
+              className="text-lg font-medium text-gray-300 transition-colors hover:text-white underline-animation no-underline"
+              href="/#improvements"
             >
-              EDUCATION
+              IMPROVEMENTS
+            </a>
+            <a
+              className="text-lg font-medium text-gray-300 transition-colors hover:text-white underline-animation no-underline"
+              href="/#signinsection"
+            >
+              SIGN IN
             </a>
 
             <a
-              className="text-lg font-medium text-gray-300 transition-colors hover:text-white underline-animation"
+              className="text-lg font-medium text-gray-300 transition-colors hover:text-white underline-animation no-underline"
               href="/#contact-us"
             >
               CONTACT US

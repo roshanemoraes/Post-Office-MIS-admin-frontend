@@ -1,7 +1,7 @@
 import React from "react";
-import { PROJECTS } from "../CustomerLandingPage/Constants";
+import { PROJECTS } from "./Constants";
 
-const Projects = () => {
+const Services = () => {
   return (
     <div id="services" className="border-b border-neutral-900 pb-4">
       <h1 className="my-20 text-center text-4xl">SERVICES</h1>
@@ -18,18 +18,20 @@ const Projects = () => {
               />
             </div>
             <div className="w-full max-w-xl lg:w-3/4">
-              <h6 className="mb-2 font-semibold">{project.title}</h6>
+              <h6 className="mb-2 font-semibold text-purple-600 text-3xl">
+                {project.title}
+              </h6>
               <p className="mb-4 text-neutral-400 text-justify">
                 {project.description}
               </p>
-              {project.technologies.map((tech, index) => (
+              {/*{project.technologies.map((tech, index) => (
                 <span
                   key={index}
                   className="mr-2 rounded bg-neutral-900 px-2 py-1 text-sm font-medium text-purple-900"
                 >
                   {tech}
                 </span>
-              ))}
+              ))}*/}
             </div>
           </div>
         ))}
@@ -38,4 +40,4 @@ const Projects = () => {
   );
 };
 
-export default Projects;
+export default Services;
