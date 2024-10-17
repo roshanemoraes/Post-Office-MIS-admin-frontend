@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Table, Select } from "antd";
 import moment from "moment";
-import axios from 'axios';
+import axios from "axios";
 import DownArrowIcon from "../../assets/Customer/arrow-down-square-fill.svg";
 import { DataGrid } from "@mui/x-data-grid";
 
@@ -16,7 +16,7 @@ const columns = [
     field: "datePosted",
     headerName: "Date Posted",
     width: 250,
-   // valueFormatter: (params) => moment(params.value).format("YYYY-MM-DD"),
+    // valueFormatter: (params) => moment(params.value).format("YYYY-MM-DD"),
   },
   {
     field: "dateDelivered",
@@ -35,62 +35,91 @@ const columns = [
   },
 ];
 
-
-
 const FinancialMgmt = () => {
-
-
   const [normalPostRows, setNormalPostRows] = useState("");
   const [normalCouriertRows, setCourierPostRows] = useState("");
   const [normalParcelRows, setNormalParcelRows] = useState("");
   const [govParcelRows, setGovParcelRows] = useState("");
   const [bulkMailOrdersRows, setbulkMailOrdersRows] = useState("");
+  const [isLoading, setLoading] = React.useState(true); // Set initial loading to true
+
+  const minimumLoadingDuration = (promise, duration) => {
+    return Promise.all([
+      promise,
+      new Promise((resolve) => setTimeout(resolve, duration)),
+    ]);
+  };
+
+  useEffect(() => {
+    const loadDashboard = async () => {
+      setLoading(true);
+      await minimumLoadingDuration(
+        Promise.resolve(),
+        process.env.REACT_APP_LOADING_DELAY
+      ); // Simulate loading with a minimum of 1.2 seconds
+      setLoading(false); // Set loading to false after the delay
+    };
+    loadDashboard();
+  }, []);
+
+  if (isLoading) {
+    return (
+      <div className="fixed top-0 left-[100px] w-full h-full bg-[#737373] bg-opacity-70 flex items-center justify-center ">
+        <div className="flex flex-col items-center">
+          <div className="w-[100px] h-[100px] border-8 border-gray-300 border-t-[#000] rounded-full animate-spin"></div>
+          <span className="mt-4 text-[25px] text-black font-sans tracking-wide">
+            Loading...
+          </span>
+        </div>
+      </div>
+    );
+  }
 
   //formatting to the format of the string
   // Function to format the date as 'year:month'
   const formatDate = (val) => {
     const date = new Date();
     const year = date.getFullYear();
-    
-    const month = ("0" + (val)).slice(-2); // Ensures two-digit month
+
+    const month = ("0" + val).slice(-2); // Ensures two-digit month
     return `${year}-${month}`;
   };
 
   // Function to handle month selection for a table
-  const handleMonthChange = async(monthNum, tableType) => {
-    
-    const datePrefix1 =formatDate(monthNum);
+  const handleMonthChange = async (monthNum, tableType) => {
+    const datePrefix1 = formatDate(monthNum);
     console.log(datePrefix1);
     console.log(monthNum);
     try {
-      
-      const response = await axios.get('http://localhost:8081/api/mails/customer/financial', {
-        params: {
-          datePrefix: datePrefix1,
-          mailType: tableType
+      const response = await axios.get(
+        "http://localhost:8081/api/mails/customer/financial",
+        {
+          params: {
+            datePrefix: datePrefix1,
+            mailType: tableType,
+          },
         }
-      });
-      
+      );
+
       console.log(response.data);
-       // Check the table type and update the corresponding state
-    if (tableType === "normal-post") {
-      setNormalPostRows(response.data);
-    } else if (tableType === "courier-post") {
-      setCourierPostRows(response.data);
-    } else if (tableType === "normal-parcel") {
-      setNormalParcelRows(response.data);
-    } else if (tableType === "gov-parcel") {
-      setGovParcelRows(response.data);
-    } else if (tableType === "bulk-mail-orders") {
-      setbulkMailOrdersRows(response.data);
-    } else {
-      console.error("Unknown tableType:", tableType);
-    }
+      // Check the table type and update the corresponding state
+      if (tableType === "normal-post") {
+        setNormalPostRows(response.data);
+      } else if (tableType === "courier-post") {
+        setCourierPostRows(response.data);
+      } else if (tableType === "normal-parcel") {
+        setNormalParcelRows(response.data);
+      } else if (tableType === "gov-parcel") {
+        setGovParcelRows(response.data);
+      } else if (tableType === "bulk-mail-orders") {
+        setbulkMailOrdersRows(response.data);
+      } else {
+        console.error("Unknown tableType:", tableType);
+      }
     } catch (error) {
-      console.error('Error fetching data:', error);
-    }  
+      console.error("Error fetching data:", error);
+    }
     console.log(normalPostRows);
-  
   };
 
   return (
