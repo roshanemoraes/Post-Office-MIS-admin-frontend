@@ -94,7 +94,7 @@ export default function InArea() {
     } catch (error) {
       console.error("Error fetching assignment status");
     } finally {
-      setLoading(false); // Set loading to false after fetching
+      // setLoading(false); // Set loading to false after fetching
     }
   };
 
@@ -148,9 +148,12 @@ export default function InArea() {
   return (
     <div>
       {isLoading ? (
-        <div style={{ textAlign: "center", marginTop: "20px" }}>
-          <div className="spinner-border" role="status">
-            <span className="sr-only">Loading...</span>
+        <div style={{ textAlign: "center", marginTop: "120px" }}>
+          <div className="flex flex-col items-center mt-32">
+            <div className="w-16 h-16 border-8 border-gray-300 border-t-[#852318] rounded-full animate-spin"></div>
+            <span className="mt-4 text-lg text-[#000000] font-sans">
+              Loading...
+            </span>
           </div>
         </div>
       ) : (
