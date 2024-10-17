@@ -151,7 +151,7 @@ export default function InArea() {
         <div style={{ textAlign: "center", marginTop: "120px" }}>
           <div className="flex flex-col items-center mt-32">
             <div className="w-16 h-16 border-8 border-gray-300 border-t-[#852318] rounded-full animate-spin"></div>
-            <span className="mt-4 text-lg text-[#000000] font-sans">
+            <span className="mt-4 text-[25px] text-[#000000] font-sans">
               Loading...
             </span>
           </div>
