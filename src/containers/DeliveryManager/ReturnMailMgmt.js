@@ -8,8 +8,6 @@ import TrashIcon from "../../assets/trash3-fill.svg";
 import InfoReturnMailModal from "./Modals/InfoReturnMailModal";
 import CustomizedSnackbars from "../../components/Custom/CustomizedSnackbars";
 import DownArrowIcon from "../../assets/arrow-down-square-fill.svg";
-import InfoCard from "../../components/Layout/InfoCard";
-import DashboardCard1 from "../../components/Layout/DashboardCard1";
 import MailIcon from "../../assets/icons8-mail-50.png";
 import InfoIconCard from "../../components/Layout/InfoIconCard";
 
