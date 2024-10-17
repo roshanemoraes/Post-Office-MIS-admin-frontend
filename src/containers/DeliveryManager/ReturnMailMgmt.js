@@ -19,6 +19,14 @@ export default function ReturnMailMgmt() {
   const [snackbarMessage, setSnackbarMessage] = useState("");
   const [snackbarSeverity, setSnackbarSeverity] = useState("success");
   const [mailCount, setMailCount] = useState("0");
+  const [isLoading, setLoading] = React.useState(false);
+
+  const minimumLoadingDuration = (promise, duration) => {
+    return Promise.all([
+      promise,
+      new Promise((resolve) => setTimeout(resolve, duration)),
+    ]);
+  };
 
   const handleReturnToSender = async (undeliverableId) => {
     try {
@@ -154,16 +162,24 @@ export default function ReturnMailMgmt() {
   ];
 
   const fetchData = async () => {
+    setLoading(true);
     try {
-      const response = await axios.get(
-        "http://localhost:8081/api/delivery-manager/return-mail/",
-        { withCredentials: true }
+      await minimumLoadingDuration(
+        axios
+          .get("http://localhost:8081/api/delivery-manager/return-mail/", {
+            withCredentials: true,
+          })
+          .then((response) => {
+            setRows(response.data);
+            // console.log(response.data);
+            setMailCount(response.data.length);
+          }),
+        process.env.REACT_APP_LOADING_DELAY
       );
-      setRows(response.data);
-      console.log(response.data);
-      setMailCount(response.data.length);
     } catch (error) {
       console.error("Error fetching users", error);
+    } finally {
+      setLoading(false); // Set loading to false after fetching
     }
   };
 
@@ -174,24 +190,35 @@ export default function ReturnMailMgmt() {
   return (
     <>
       <div>
-        <div className="flex justify-center items-center p-2 mb-2 mt-2 bg-gray-400">
-          All Undelivered Mails
-          <img
-            src={DownArrowIcon}
-            alt="All In-Area Mails"
-            className="mr-2 ml-5 w-7 h-7"
-          />
-        </div>
-        <div className="grid grid-cols-12">
-          <div className="col-span-3 flex flex-col pt-[4.5px] ml-6">
-            <InfoIconCard
-              backgroundColor={"#ffffff"}
-              title={"ALL UNDELIVERED MAILS TODAY"}
-              value={`${mailCount} `}
-              iconSrc={MailIcon}
-            />
-            <div className="h-[200px]"></div>
-            {/* <InfoIconCard
+        {isLoading ? (
+          <div className="fixed top-0 left-[100px] w-full h-full bg-[#737373] bg-opacity-70 flex items-center justify-center ">
+            <div className="flex flex-col items-center">
+              <div className="w-[100px] h-[100px] border-8 border-gray-300 border-t-[#000] rounded-full animate-spin"></div>
+              <span className="mt-4 text-[25px] text-black font-sans tracking-wide">
+                Loading...
+              </span>
+            </div>
+          </div>
+        ) : (
+          <div>
+            <div className="flex justify-center items-center p-2 mb-2 mt-2 bg-gray-400">
+              All Undelivered Mails
+              <img
+                src={DownArrowIcon}
+                alt="All In-Area Mails"
+                className="mr-2 ml-5 w-7 h-7"
+              />
+            </div>
+            <div className="grid grid-cols-12">
+              <div className="col-span-3 flex flex-col pt-[4.5px] ml-6">
+                <InfoIconCard
+                  backgroundColor={"#ffffff"}
+                  title={"ALL UNDELIVERED MAILS TODAY"}
+                  value={`${mailCount} `}
+                  iconSrc={MailIcon}
+                />
+                <div className="h-[200px]"></div>
+                {/* <InfoIconCard
               backgroundColor={"#ffffff"}
               title={"ALL RETURN-TO-SENDER MAILS"}
               value={"9756"}
@@ -204,73 +231,75 @@ export default function ReturnMailMgmt() {
               value={"9756"}
               iconSrc={MailIcon}
             /> */}
-            <div className="flex justify-center mt-[200px] ">
-              <div className="mr-7">
-                <Button
-                  style={{
-                    backgroundColor: "#fcd34d",
-                    fontSize: "14px",
-                    color: "black",
-                    textTransform: "none",
-                    padding: "10px",
-                  }}
-                  variant="contained"
-                >
-                  Process All
-                  <br />
-                  Return-to-Sender
-                </Button>
+                <div className="flex justify-center mt-[200px] ">
+                  <div className="mr-7">
+                    <Button
+                      style={{
+                        backgroundColor: "#fcd34d",
+                        fontSize: "14px",
+                        color: "black",
+                        textTransform: "none",
+                        padding: "10px",
+                      }}
+                      variant="contained"
+                    >
+                      Process All
+                      <br />
+                      Return-to-Sender
+                    </Button>
+                  </div>
+                  <div>
+                    <Button
+                      style={{
+                        backgroundColor: "#78350f",
+                        fontSize: "14px",
+                        textTransform: "none",
+                        padding: "10px",
+                      }}
+                      variant="contained"
+                    >
+                      Process All
+                      <br />
+                      Address-Update
+                    </Button>
+                  </div>
+                </div>
               </div>
-              <div>
-                <Button
-                  style={{
-                    backgroundColor: "#78350f",
-                    fontSize: "14px",
-                    textTransform: "none",
-                    padding: "10px",
-                  }}
-                  variant="contained"
-                >
-                  Process All
-                  <br />
-                  Address-Update
-                </Button>
+              <div className="col-span-9">
+                <div className="h-[550px] pt-1 flex flex-col justify-center items-center">
+                  <DataGrid
+                    rows={rows}
+                    columns={columns}
+                    rowHeight={50}
+                    getRowId={(row) => row.undeliverableId}
+                    sx={{
+                      backgroundColor: "#f5f5f5",
+                      boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.1)",
+                      ".MuiDataGrid-columnSeparator": {
+                        display: "none",
+                      },
+                      "&.MuiDataGrid-root": {
+                        border: "none",
+                      },
+                    }}
+                    initialState={{
+                      pagination: {
+                        paginationModel: { page: 0, pageSize: 10 },
+                      },
+                    }}
+                  />
+                  <CustomizedSnackbars
+                    open={snackbarOpen}
+                    autoHideDuration={3000}
+                    severity={snackbarSeverity}
+                    message={snackbarMessage}
+                    onClose={() => setSnackbarOpen(false)}
+                  />
+                </div>
               </div>
             </div>
           </div>
-          <div className="col-span-9">
-            <div className="h-[550px] pt-1 flex flex-col justify-center items-center">
-              <DataGrid
-                rows={rows}
-                columns={columns}
-                rowHeight={50}
-                getRowId={(row) => row.undeliverableId}
-                sx={{
-                  backgroundColor: "#f5f5f5",
-                  boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.1)",
-                  ".MuiDataGrid-columnSeparator": {
-                    display: "none",
-                  },
-                  "&.MuiDataGrid-root": {
-                    border: "none",
-                  },
-                }}
-                initialState={{
-                  pagination: {
-                    paginationModel: { page: 0, pageSize: 10 },
-                  },
-                }}
-              />
-              <CustomizedSnackbars
-                open={snackbarOpen}
-                autoHideDuration={3000}
-                severity={snackbarSeverity}
-                message={snackbarMessage}
-                onClose={() => setSnackbarOpen(false)}
-              />
-            </div>
-          </div>
-        </div>
+        )}
       </div>
     </>
   );

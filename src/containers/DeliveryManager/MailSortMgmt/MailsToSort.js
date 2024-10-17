@@ -40,7 +40,7 @@ export default function MailsToSort() {
           })
           .then((response) => {
             setRows(response.data);
-            console.log(response.data);
+            // console.log(response.data);
           }),
         process.env.REACT_APP_LOADING_DELAY
       );
