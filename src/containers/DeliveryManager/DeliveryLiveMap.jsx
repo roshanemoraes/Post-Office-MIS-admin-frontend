@@ -6,7 +6,7 @@ import NotStartedIcon from "../../assets/bx-body.svg";
 import CompletedDeliveryIcon from "../../assets/bx-check.svg";
 import StartedDistributionIcon from "../../assets/bxs-truck.svg";
 
-const LiveMap = () => {
+const DeliveryLiveMap = () => {
   return (
     <div className="grid grid-cols-12">
       <div className="col-span-2">
@@ -64,4 +64,4 @@ const LiveMap = () => {
   );
 };
 
-export default LiveMap;
+export default DeliveryLiveMap;

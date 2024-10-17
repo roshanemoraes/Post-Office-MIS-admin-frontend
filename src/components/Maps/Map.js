@@ -102,7 +102,12 @@ const Map = () => {
         <GoogleMap
           center={mapCenter}
           zoom={14}
-          mapContainerStyle={{ width: "90%", height: "90vh" }}
+          mapContainerStyle={{
+            width: "97%",
+            height: "90vh",
+            borderRadius: "10px",
+            borderColor: "rgba(0, 0, 0, 0.5)",
+          }}
           //   mapTypeId="ec1432108f3d8893"
           onClick={() => setActiveMarker(null)}
           onDragEnd={() => {

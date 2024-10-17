@@ -95,9 +95,9 @@ const FinancialMgmt = () => {
 
   return (
     <>
-      <div className="p-4 bg-#a3a3a3">
+      <div className="px-4 pt-2 bg-#a3a3a3">
         {/* Table for Normal Post */}
-        <div className="mt-8 bg-white p-4 shadow rounded-lg">
+        <div className="mt-0 bg-white p-4 shadow rounded-lg">
           <div
             style={{
               display: "flex",
@@ -147,7 +147,7 @@ const FinancialMgmt = () => {
           </div>
         </div>
         {/* Table for Normal Courier */}
-        <div className="mt-8 bg-white p-4 shadow rounded-lg">
+        <div className="mt-8 bg-[#e5e7eb] p-4 shadow rounded-lg">
           <div
             style={{
               display: "flex",

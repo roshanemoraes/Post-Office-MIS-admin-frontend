@@ -14,6 +14,7 @@ import OutArea from "../containers/DeliveryManager/MailSortMgmt/OutArea";
 import BlurBackground from "../components/Custom/Background/BlurBackground";
 import Notifications from "../containers/DeliveryManager/Notifications";
 import ProfilePage from "../components/ProfilePage";
+import DeliveryLiveMap from "../containers/DeliveryManager/DeliveryLiveMap";
 
 const DeliveryManagerInterface = () => {
   const [isSideBarOpen, setSideBarOpen] = useState(window.innerWidth >= 1024);
@@ -46,7 +47,7 @@ const DeliveryManagerInterface = () => {
         <Routes>
           <Route path="/" element={<Dashboard />} />
           <Route path="/profile" element={<ProfilePage />} />
-          <Route path="/route-allocation" element={<RouteAllocation />} />
+          <Route path="/route-allocation" element={<DeliveryLiveMap />} />
           <Route path="/return-mail" element={<ReturnMailMgmt />} />
           <Route
             path="/return-mail/return-to-sender"

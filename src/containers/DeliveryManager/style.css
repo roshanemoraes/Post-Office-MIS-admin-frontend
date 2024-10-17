@@ -19,6 +19,15 @@ body{
   z-index: 100;
   transition: all 0.5s ease;
 }
+.nav-links li.active {
+  background-color: #1d1b31;
+  /* Set your preferred active color */
+}
+
+.nav-links li.active a .link_name {
+  color: white;
+  /* Adjust the text color if needed */
+}
 .sidebar.close{
   width: 78px;
 }
@@ -36,6 +45,15 @@ body{
   text-align: center;
   line-height: 50px;
 }
+.sidebar.close .logo-details i {
+  margin-left: 10px;
+  font-size: 30px;
+  color: #ffffff;
+  height: 50px;
+  min-width: 55px;
+  text-align: center;
+  line-height: 50px;
+}
 .sidebar .logo-details .logo_name{
   font-size: 20px;
     color: #ffb8b8;
@@ -45,6 +63,7 @@ body{
   transition-delay: 0.1s;
 }
 .sidebar.close .logo-details .logo_name{
+  /* padding-left: 20px; */
   transition-delay: 0s;
   opacity: 0;
   pointer-events: none;
@@ -74,6 +93,7 @@ body{
   justify-content: space-between;
 }
 .sidebar.close .nav-links li .iocn-link{
+  
   display: block
 }
 .sidebar .nav-links li i{
@@ -83,6 +103,17 @@ body{
   line-height: 50px;
   color: #ffc15c;
     font-size: 30px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.sidebar.close .nav-links li i {
+  margin-left: 10px;
+  height: 50px;
+  min-width: 55px;
+  text-align: center;
+  line-height: 50px;
+  color: #ffc15c;
+  font-size: 30px;
   cursor: pointer;
   transition: all 0.3s ease;
 }
@@ -108,9 +139,9 @@ body{
   pointer-events: none;
 }
 .sidebar .nav-links li .sub-menu{
-  padding: 6px 6px 14px 25px;
+  padding: 6px 6px 14px 7px;
   margin-top: -10px;
-  background: #1d1b31;
+  background: #302f39;
   display: none;
 }
 .sidebar .nav-links li.showMenu .sub-menu{
