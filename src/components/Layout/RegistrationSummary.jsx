@@ -3,27 +3,15 @@ import React, { useEffect, useState } from "react";
 import Dropdown from "react-bootstrap/Dropdown";
 import DropdownButton from "react-bootstrap/DropdownButton";
 import { DataGrid } from "@mui/x-data-grid";
-import { Formik, Form, Field, ErrorMessage } from "formik";
 import { Spinner } from "react-bootstrap";
-import checkIcon from "./../../assets/pencil-fill.svg";
-import {
-  Box,
-  Button,
-  FormControl,
-  InputLabel,
-  MenuItem,
-  Select,
-  TextField,
-  Typography,
-} from "@mui/material";
+import { Button } from "@mui/material";
 import DashboardInfoMailModel from "../../containers/Receptionist/modals/DashboardInfoMailModel";
-import  TrashIcon  from "../../assets/trash3-fill.svg";
+import TrashIcon from "../../assets/trash3-fill.svg";
 
 export default function RegistrationSummary() {
   const [rows, setRows] = React.useState([]);
   const [loading, setLoading] = React.useState(false);
   const [selectedOption, setSelectedOption] = useState("Normal Posts");
-  const [selectedDate, setSelectedDate] = useState(null);
 
   const handleSelect = (eventKey) => {
     let mailType;
@@ -76,7 +64,6 @@ export default function RegistrationSummary() {
           >
             <img src={TrashIcon} alt="trashIcon" />
           </Button>
-          
 
           {/* <SubmitRoute
               rowData={params.row}
@@ -117,14 +104,15 @@ export default function RegistrationSummary() {
     fetchData("normal-post");
   }, []);
 
-  
   const deleteResource = async (id) => {
     try {
-     // http://localhost:8081/api/receptionist/post/add/delete/mail/1
-      const response = await axios.delete(`http://localhost:8081/api/receptionist/post/add/delete/mail/${id}`);
-      console.log('Resource deleted successfully:', response.data);
+      // http://localhost:8081/api/receptionist/post/add/delete/mail/1
+      const response = await axios.delete(
+        `http://localhost:8081/api/receptionist/post/add/delete/mail/${id}`
+      );
+      console.log("Resource deleted successfully:", response.data);
     } catch (error) {
-      console.error('Error deleting resource:', error);
+      console.error("Error deleting resource:", error);
     }
   };
 

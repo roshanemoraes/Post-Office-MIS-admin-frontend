@@ -42,12 +42,7 @@ const PersonalMail = () => {
   const theme = useTheme();
   const [formState, setFormState] = useState(initialFormState);
   const [checked, setChecked] = useState(false);
-  const [recipientName, setRecipientName] = useState("");
-  const [recipientCity, setRecipientCity] = useState("");
-  const [senderCity, setSenderCity] = useState("");
-  const [addressType, setAddressType] = useState(null);
   const [isSubmitted, setIsSubmitted] = useState(false);
-  const [isVerified, setIsVerified] = useState(false);
   const [verifiedAddressText, setVerifiedAddressText] = useState();
   const [verifiedAddressId, setVerifiedAddressId] = useState();
   const [verifiedAddressCoordinate_Lat, setVerifiedAddressCoordinate_Lat] =

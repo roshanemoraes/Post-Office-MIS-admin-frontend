@@ -187,23 +187,6 @@ export default function HorizontalLinearStepper() {
       [id]: event.target.value,
     });
   };
-  const handleSenderCheckBox = () => {
-    setChecked(!checked);
-    /*if (checked) {
-      formik.senderName = "";
-      formik.senderCity = "";
-      formik.senderAddress = "";
-      formik.senderPostalZone = "";
-      formik.senderHouseNumber = "";
-    }*/
-    if (checked) {
-      formik.setFieldValue("senderName", "");
-      formik.setFieldValue("senderCity", "");
-      formik.setFieldValue("senderAddress", "");
-      formik.setFieldValue("senderPostalZone", "");
-      formik.setFieldValue("senderHouseNumber", "");
-    }
-  };
 
   //const handleSubmit = () => {
   const formik = useFormik({

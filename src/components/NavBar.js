@@ -9,6 +9,8 @@ import {
 import { BellIcon } from "@heroicons/react/24/outline";
 import personIcon from "./person-circle.svg";
 import { Link, useNavigate } from "react-router-dom";
+import { Badge } from "@mui/material";
+import MailIcon from "@mui/icons-material/Mail";
 
 const navigation = [
   { name: "Dashboard", href: "#", current: true },
@@ -75,14 +77,17 @@ export default function NavBar({ role }) {
 
               <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
                 <Link to={`/admin/${role}/notifications`}>
-                  <div className="relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
-                    <BellIcon className="h-6 w-6" aria-hidden="true" />
+                  {/* <div className="relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"> */}
+                  <div className="relative rounded-2xl bg-gray-800 p-1 text-white hover:text-white focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2 focus:ring-offset-grey-800">
+                    <Badge color="secondary" badgeContent={6}>
+                      <MailIcon className="h-6 w-6" />
+                    </Badge>
                   </div>
                 </Link>
 
                 <Menu as="div" className="relative ml-3">
                   <div>
-                    <MenuButton className="relative flex rounded-full bg-slate-100 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-slate-100">
+                    <MenuButton className="relative flex rounded-2xl bg-white text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-slate-100">
                       <span className="absolute -inset-1.5" />
                       <span className="sr-only">Open user menu</span>
                       <img

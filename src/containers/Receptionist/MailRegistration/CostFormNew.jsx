@@ -1,19 +1,7 @@
-import {
-  Box,
-  useTheme,
-  Typography,
-  TextField,
-  Button,
-  FormControl,
-  InputLabel,
-  MenuItem,
-  Menu,
-  Select,
-} from "@mui/material";
+import { Box, useTheme, TextField, Button } from "@mui/material";
 
 import axios from "axios";
-import React, { useEffect, useState } from "react";
-import { ChevronDownIcon } from "@heroicons/react/20/solid";
+import React, { useState } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 
@@ -24,9 +12,6 @@ function classNames(...classes) {
 const CostFormNew = ({ postType, description, onCostUpdate }) => {
   const theme = useTheme();
   const [weight, setWeight] = useState(null);
-  const [cost, setCost] = useState(null);
-  const [selectedOption, setSelectedOption] = useState("");
-  const [type, setType] = React.useState("");
 
   /*const handleChange = (event) => {
     setWeight(event.target.value);

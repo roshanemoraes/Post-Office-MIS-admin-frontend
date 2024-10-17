@@ -1,64 +1,45 @@
-import { Box, Typography, useTheme } from "@mui/material";
-import React, { useEffect, useState, useRef } from "react";
+import { Box, Typography, useTheme, Breadcrumbs } from "@mui/material";
+import React from "react";
 import HorizontalLinearStepper from "./MailRegistration/NormalParcelStepper";
-
+import { styled } from "@mui/material/styles";
+import Chip from "@mui/material/Chip";
 const NormalParcelPost = () => {
-  const initialFormState = {
-    recipientName: "",
-    recipientCity: "",
-    recipientAddress: "",
-    recipientPostalZone: "",
-    recipientHouseNumber: "",
-    recipientId: "",
+  // const theme = useTheme();
 
-    senderId: "",
-    senderName: "",
-    senderCity: "",
-    senderAddress: "",
-    senderPostalZone: "",
-    senderHouseNumber: "",
-
-    packageType: "",
-    postage: "",
-  };
-
-  const theme = useTheme();
-  const [verifiedAddressText, setVerifiedAddressText] = useState();
-  const [verifiedAddressId, setVerifiedAddressId] = useState();
-  const [verifiedAddressCoordinate_Lat, setVerifiedAddressCoordinate_Lat] =
-    useState();
-  const [verifiedAddressCoordinate_Lng, setVerifiedAddressCoordinate_Lng] =
-    useState();
-
-  useEffect(() => {
-    if (
-      verifiedAddressText ||
-      verifiedAddressId ||
-      verifiedAddressCoordinate_Lat ||
-      verifiedAddressCoordinate_Lng
-    ) {
-      console.log(
-        "verifiedAddressCoordinate_Lat: ",
-        verifiedAddressCoordinate_Lat
-      );
-      console.log(
-        "verifiedAddressCoordinate_Lng: ",
-        verifiedAddressCoordinate_Lng
-      );
-      console.log("verifiedAddressId: ", verifiedAddressId);
-      console.log("verifiedAddressText: ", verifiedAddressText);
-    }
-  }, [
-    verifiedAddressCoordinate_Lat,
-    verifiedAddressCoordinate_Lng,
-    verifiedAddressId,
-    verifiedAddressText,
-  ]);
-
-  const componentRef = useRef();
+  const StyledBreadcrumb = styled(Chip)(({ theme }) => ({
+    backgroundColor: theme.palette.grey[100],
+    height: theme.spacing(3),
+    color: theme.palette.text.primary,
+    fontWeight: theme.typography.fontWeightRegular,
+    "&:hover, &:focus": {
+      backgroundColor: theme.palette.grey[300],
+      cursor: "pointer",
+    },
+    "&:active": {
+      boxShadow: theme.shadows[1],
+      backgroundColor: theme.palette.grey[300],
+    },
+    "& .MuiChip-icon": {
+      marginLeft: theme.spacing(1),
+    },
+  }));
 
   return (
     <>
+      <Breadcrumbs aria-label="breadcrumb">
+        <StyledBreadcrumb
+          component="a"
+          href="#"
+          label="Mail Registration"
+          // icon={<HomeIcon fontSize="small" />}
+        />
+        <StyledBreadcrumb component="a" href="#" label="Normal Parcel Post" />
+        {/* <StyledBreadcrumb
+      label="Accessories"
+      // deleteIcon={<ExpandMoreIcon />}
+      // onDelete={handleClick}
+    /> */}
+      </Breadcrumbs>
       <Box
         display="flex"
         paddingTop={2}
