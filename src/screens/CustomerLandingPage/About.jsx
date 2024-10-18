@@ -3,11 +3,13 @@ import aboutImg1 from "./../CustomerLandingPage/about1.jpg";
 import aboutImg2 from "./../CustomerLandingPage/about2.jpg";
 import aboutImg3 from "./../CustomerLandingPage/about3.jpg";
 import aboutImg4 from "./../CustomerLandingPage/about4.jpg";
+import webInterface from "./../CustomerLandingPage/webInterface.JPG";
+import webInterface2 from "./../CustomerLandingPage/webInterface2.JPG";
 import { ABOUT_TEXT, ABOUT_TEXT_2 } from "../CustomerLandingPage/Constants";
 import { motion } from "framer-motion";
 
-const images = [aboutImg1, aboutImg2, aboutImg3, aboutImg4];
-
+//const images = [aboutImg1, aboutImg2, aboutImg3, aboutImg4];
+const images = [webInterface, webInterface2];
 const About = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);

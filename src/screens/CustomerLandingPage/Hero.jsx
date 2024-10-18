@@ -163,7 +163,8 @@ const Hero = () => {
                 variants={container(0.6)}
                 initial="hidden"
                 animate="visible"
-                className="bg-gradient-to-r from-pink-300 via-slate-500 to-purple-500 bg-clip-text text-6xl pb-2 tracking-tight text-transparent "
+                //className="bg-gradient-to-r from-pink-300 via-slate-500 to-purple-500 bg-clip-text text-6xl pb-2 tracking-tight text-transparent "
+                className="bg-gradient-to-r from-[#852318] via-[#A63A3A] to-[#D15C5C] bg-clip-text text-6xl pb-2 tracking-tight text-transparent"
                 style={{
                   opacity: 1,
                   willChange: "auto",

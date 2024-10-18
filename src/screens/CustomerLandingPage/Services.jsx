@@ -18,7 +18,7 @@ const Services = () => {
               />
             </div>
             <div className="w-full max-w-xl lg:w-3/4">
-              <h6 className="mb-2 font-semibold text-purple-600 text-3xl">
+              <h6 className="mb-2 font-semibold text-[#852318] text-3xl">
                 {project.title}
               </h6>
               <p className="mb-4 text-neutral-400 text-justify">
