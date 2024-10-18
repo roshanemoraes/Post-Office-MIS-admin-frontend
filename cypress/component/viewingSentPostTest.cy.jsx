@@ -1,4 +1,4 @@
-import { MemoryRouter } from "react-router-dom"; 
+import { MemoryRouter } from "react-router-dom";
 import Home from "../../src/containers/Customer/Home";
 import CustomerLogin from "../../src/screens/Common/CustomerLogin";
 import NavBar from "../../src/containers/Customer/NavBar";
@@ -7,22 +7,21 @@ import SentPost from "../../src/containers/Customer/SentPost";
 let allTestsPassed = true; // Track if all tests passed
 
 describe("customer - Login, View Pending Mails, and Logout", () => {
-
-  afterEach(function() {
+  afterEach(function () {
     // Check if the current test failed
-    if (this.currentTest.state === 'failed') {
+    if (this.currentTest.state === "failed") {
       allTestsPassed = false;
     }
   });
 
   after(() => {
     if (allTestsPassed) {
-      cy.log('All tests passed successfully!').then(() => {
-        console.log('All tests passed successfully!');
+      cy.log("All tests passed successfully!").then(() => {
+        console.log("All tests passed successfully!");
       });
     } else {
-      cy.log('Testing failed for one or more test cases!').then(() => {
-        console.error('Testing failed for one or more test cases!');
+      cy.log("Testing failed for one or more test cases!").then(() => {
+        console.error("Testing failed for one or more test cases!");
       });
     }
   });
@@ -41,8 +40,8 @@ describe("customer - Login, View Pending Mails, and Logout", () => {
     cy.viewport(1440, 1000);
 
     // Mock login credentials
-    const mockEmail = "customer@example.com";
-    const mockPassword = "Password123";
+    const mockEmail = "customer2@gmail.com";
+    const mockPassword = "123";
 
     // Mount the login component wrapped in MemoryRouter
     cy.mount(
@@ -50,22 +49,22 @@ describe("customer - Login, View Pending Mails, and Logout", () => {
         <CustomerLogin />
       </MemoryRouter>
     );
-    
-    cy.get('body').then(($body) => {
+
+    cy.get("body").then(($body) => {
       if ($body.find('input[name="email"]').length === 0) {
-        throw new Error('Email input not found');
+        throw new Error("Email input not found");
       }
     });
 
     // Wait for the email input to appear before typing
     cy.get('input[name="email"]', { timeout: 150000 }) // wait up to 150 seconds
-      .should('be.visible') // Ensure the email input is visible
-      .type(mockEmail);     // Simulate typing the email
+      .should("be.visible") // Ensure the email input is visible
+      .type(mockEmail); // Simulate typing the email
 
     // Wait for the password input to appear before typing
     cy.get('input[name="password"]')
-      .should('be.visible') // Ensure the password input is visible
-      .type(mockPassword);  // Simulate typing the password
+      .should("be.visible") // Ensure the password input is visible
+      .type(mockPassword); // Simulate typing the password
 
     // Simulate clicking the login button
     cy.get('button[type="submit"]').click();
@@ -76,13 +75,17 @@ describe("customer - Login, View Pending Mails, and Logout", () => {
         <Home />
       </MemoryRouter>
     );
-    cy.contains("OUR THEME", { timeout: 10000 }).should("exist").and("be.visible");
+    cy.contains("OUR THEME", { timeout: 10000 })
+      .should("exist")
+      .and("be.visible");
   });
 
   it("should display delivered mails", () => {
     cy.viewport(1440, 1000);
 
-    cy.intercept('GET', '/api/customer/list/delivered/*').as('getDeliveredMails');
+    cy.intercept("GET", "/api/customer/list/delivered/*").as(
+      "getDeliveredMails"
+    );
     // After login, simulate navigating to the Pending Mails page wrapped in MemoryRouter
     cy.mount(
       <MemoryRouter>
@@ -90,9 +93,9 @@ describe("customer - Login, View Pending Mails, and Logout", () => {
       </MemoryRouter>
     );
 
-    cy.wait('@getDeliveredMails').then((interception) => {
+    cy.wait("@getDeliveredMails").then((interception) => {
       // Log the response data for debugging purposes
-      console.log('API Response:', interception.response.body);
+      console.log("API Response:", interception.response.body);
     });
 
     // Assert that pending mail items are visible
@@ -122,5 +125,4 @@ describe("customer - Login, View Pending Mails, and Logout", () => {
     );
     cy.contains("POST OFFICE MIS").should("be.visible");
   });
-
 });

@@ -18,7 +18,7 @@ const Improvements = () => {
               Postman delivering mails by his experience. It is hard to find
               delivery locations if he is appointed for a new region.
             </li>
-            <li className="row-span-1 mb-[8px] text-[#ffb039]">
+            <li className="row-span-1 mb-[8px] text-[#f87171]">
               Delivering mails according to the postmasters mindmap costing time
               and resources.
             </li>

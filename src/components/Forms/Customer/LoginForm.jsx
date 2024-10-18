@@ -6,7 +6,7 @@ import { basicSchema } from "../../Layout/Validations/Customer/UserValidation";
 import axios from "axios";
 
 function LoginForm() {
-  const [errorMessage, setError] = useState(""); 
+  const [errorMessage, setError] = useState("");
   const navigate = useNavigate();
 
   const handleSignIn = async (email, password) => {
@@ -27,7 +27,7 @@ function LoginForm() {
         console.log(response.data.role);
 
         if (response.data.role.includes("ROLE_CUSTOMER")) {
-          navigate("/customer");   
+          navigate("/customer");
         } else {
           alert("Wrong Credentials");
         }
@@ -44,7 +44,7 @@ function LoginForm() {
       email: "",
       password: "",
     },
-    validationSchema: basicSchema, // Validation for email 
+    validationSchema: basicSchema, // Validation for email
     onSubmit: async (values, { setSubmitting }) => {
       await handleSignIn(values.email, values.password); // Pass Formik values to handleSignIn
       setSubmitting(false); // Mark submission as complete
@@ -123,14 +123,14 @@ function LoginForm() {
           </div>
 
           {/* Forgot Password Link */}
-          <div>
+          {/*<div>
             <Link
               to="#"
               className="text-gray-900 hover:text-blue-600 transition-colors duration-200 mt-3 text-[12px] aligh-center"
             >
               Forgot Password?
             </Link>
-          </div>
+          </div>*/}
 
           {/* Display error message */}
           {errorMessage && (
