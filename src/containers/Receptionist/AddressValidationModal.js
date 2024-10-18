@@ -46,6 +46,7 @@ function AddressValidationModal({ formState, onValidationResult }) {
       city: formState.recipientCity,
       zone: formState.recipientPostalZone,
     };
+    console.log("nside modal", data);
     axios
       .post("http://localhost:8081/api/receptionist/address/validate", data, {
         withCredentials: true,

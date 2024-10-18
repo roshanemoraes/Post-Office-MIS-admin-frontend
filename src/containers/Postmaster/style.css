@@ -19,6 +19,15 @@ body{
   z-index: 100;
   transition: all 0.5s ease;
 }
+.nav-links li.active {
+  background-color: #1d1b31;
+  /* Set your preferred active color */
+}
+
+.nav-links li.active a .link_name {
+  color: white;
+  /* Adjust the text color if needed */
+}
 .sidebar.close{
   width: 78px;
 }

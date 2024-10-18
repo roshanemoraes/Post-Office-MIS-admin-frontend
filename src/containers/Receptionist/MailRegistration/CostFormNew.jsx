@@ -1,19 +1,9 @@
-import {
-  Box,
-  useTheme,
-  Typography,
-  TextField,
-  Button,
-  FormControl,
-  InputLabel,
-  MenuItem,
-  Menu,
-  Select,
-} from "@mui/material";
+import { Box, useTheme, TextField, Button } from "@mui/material";
 
 import axios from "axios";
-import React, { useEffect, useState } from "react";
-import { ChevronDownIcon } from "@heroicons/react/20/solid";
+import React, { useState } from "react";
+import { useFormik } from "formik";
+import * as Yup from "yup";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -22,11 +12,8 @@ function classNames(...classes) {
 const CostFormNew = ({ postType, description, onCostUpdate }) => {
   const theme = useTheme();
   const [weight, setWeight] = useState(null);
-  const [cost, setCost] = useState(null);
-  const [selectedOption, setSelectedOption] = useState("");
-  const [type, setType] = React.useState("");
 
-  const handleChange = (event) => {
+  /*const handleChange = (event) => {
     setWeight(event.target.value);
   };
   const calculateCost = async () => {
@@ -41,7 +28,36 @@ const CostFormNew = ({ postType, description, onCostUpdate }) => {
     } catch (error) {
       console.error("Error fetching postage", error);
     }
-  };
+  };*/
+  const formik = useFormik({
+    initialValues: {
+      weight: "",
+    },
+    validationSchema: Yup.object({
+      weight: Yup.number()
+        .typeError("Weight must be a number")
+        .required("Weight is required")
+        .positive("Weight must be a positive number"),
+      //.integer("Weight must be an integer")
+      //.min(1, "Weight must be at least 1 gram")
+      //.max(10000, "Weight must be less than or equal to 10000 grams"),
+    }),
+    onSubmit: async (values) => {
+      try {
+        const response = await axios.get(
+          `http://localhost:8081/postage/get/${postType}?weight=${values.weight}`,
+          { withCredentials: true }
+        );
+        console.log("response came:", response.data.price);
+        formik.setFieldValue("cost", response.data.price);
+
+        //setCost(response.data.price);
+        onCostUpdate(response.data.price);
+      } catch (error) {
+        console.error("Error fetching postage", error);
+      }
+    },
+  });
 
   return (
     <Box
@@ -86,6 +102,7 @@ const CostFormNew = ({ postType, description, onCostUpdate }) => {
         }}
         noValidate
         autoComplete="off"
+        onSubmit={formik.handleSubmit}
       >
         <div>
           <div
@@ -101,19 +118,23 @@ const CostFormNew = ({ postType, description, onCostUpdate }) => {
             required
             id="outlined-required"
             label="Weight (grams)"
+            name="weight"
             style={{
               backgroundColor: theme.palette.background.inputField,
               minWidth: 150,
             }}
             value={weight}
-            onChange={handleChange}
+            onChange={formik.handleChange}
             inputProps={{ style: { fontSize: 15 } }}
             InputLabelProps={{
               style: { fontSize: 13, width: "500px" },
             }}
+            error={formik.touched.weight && Boolean(formik.errors.weight)}
+            helperText={formik.touched.weight && formik.errors.weight}
           />
         </div>
         <Button
+          type="submit"
           //   variant="contained"
           sx={{
             backgroundColor: "#d1d5db",
@@ -127,13 +148,14 @@ const CostFormNew = ({ postType, description, onCostUpdate }) => {
               backgroundColor: "#b0b3b8",
             },
           }}
-          onClick={calculateCost}
+          //onClick={calculateCost}
         >
           Get Postage
         </Button>
-        {cost && (
+        {formik.values.cost && (
           <div style={{ marginTop: "10px", marginBottom: "20px" }}>
-            Postage: {cost !== null ? `Rs.${cost}.00` : ""}
+            Postage:{" "}
+            {formik.values.cost !== null ? `Rs.${formik.values.cost}.00` : ""}
           </div>
         )}
       </Box>

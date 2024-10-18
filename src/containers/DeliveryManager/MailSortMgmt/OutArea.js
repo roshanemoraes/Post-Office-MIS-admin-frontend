@@ -14,6 +14,7 @@ export default function OutArea() {
   const [rows, setRows] = React.useState([]);
   const [rowsDistribution, setRowsDistribution] = React.useState([]);
   const qrCodeRef = useRef();
+  const [isLoading, setLoading] = React.useState(false);
 
   const handlePrintQR = (city, date, distributionId, vehicleId) => {
     // const qrCodeValue = `ID:${distributionId}, VehicleId:${vehicleId}, City:${city}, Date:${date}`;
@@ -46,6 +47,13 @@ export default function OutArea() {
       newWindow.print();
       newWindow.close();
     }, 500);
+  };
+
+  const minimumLoadingDuration = (promise, duration) => {
+    return Promise.all([
+      promise,
+      new Promise((resolve) => setTimeout(resolve, duration)),
+    ]);
   };
 
   const columns = [
@@ -136,14 +144,23 @@ export default function OutArea() {
   };
 
   const fetchDistributions = async () => {
+    setLoading(true);
     try {
-      const response = await axios.get(
-        "http://localhost:8081/api/delivery-manager/sort/all-distribution-assignments",
-        { withCredentials: true }
+      await minimumLoadingDuration(
+        axios
+          .get(
+            "http://localhost:8081/api/delivery-manager/sort/all-distribution-assignments",
+            { withCredentials: true }
+          )
+          .then((response) => {
+            setRowsDistribution(response.data);
+          }),
+        process.env.REACT_APP_LOADING_DELAY
       );
-      setRowsDistribution(response.data);
     } catch (e) {
       console.error("Error fetching distributions", e);
+    } finally {
+      setLoading(false); // Set loading to false after fetching
     }
   };
 
@@ -161,110 +178,123 @@ export default function OutArea() {
 
   return (
     <div>
-      <div style={{ marginLeft: "50px", marginBottom: "10px" }}>
-        <div>
-          <Button
-            disabled
-            variant="primary"
-            style={{ backgroundColor: "black", padding: "15px" }}
-          >
-            Assign Distributions
-          </Button>
-          <PrintAllQRcodes rowsDistribution={rowsDistribution} />
+      {isLoading ? (
+        <div className="fixed top-0 left-[100px] w-full h-full bg-[#737373] bg-opacity-70 flex items-center justify-center ">
+          <div className="flex flex-col items-center">
+            <div className="w-[100px] h-[100px] border-8 border-gray-300 border-t-[#000] rounded-full animate-spin"></div>
+            <span className="mt-4 text-[25px] text-black font-sans tracking-wide">
+              Loading...
+            </span>
+          </div>
         </div>
-      </div>
-      <div
-        style={{
-          height: 550,
-          paddingTop: "5px",
-          display: "flex",
-          marginBottom: "10px",
-          flexDirection: "column",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        <DataGrid
-          rows={rowsDistribution}
-          columns={columnsDistribution}
-          rowHeight={50}
-          getRowId={(row) => row.distributionId}
-          sx={{
-            backgroundColor: "#f5f5f5",
-            boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.1)",
-            ".MuiDataGrid-columnSeparator": {
-              display: "none",
-            },
-            "&.MuiDataGrid-root": {
-              border: "none",
-            },
-          }}
-          initialState={{
-            pagination: {
-              paginationModel: { page: 0, pageSize: 10 },
-            },
-          }}
-        />
-      </div>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          padding: "10px",
-          // fontWeight: "bold",
-          marginBottom: "10px",
-          backgroundColor: "#a3a3a3",
-        }}
-      >
-        All Out-Area Mails
-        {/* <button onClick={scrollToElement}>
-        </button> */}
-        <img
-          src={DownArrowIcon}
-          alt="All Out-Area Mails"
-          style={{
-            marginRight: "10px",
-            marginLeft: "20px",
-            width: "30px",
-            height: "30px",
-          }}
-        />
-      </div>
-      <div
-        style={{
-          height: 550,
-          paddingTop: "5px",
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        <DataGrid
-          rows={rows}
-          columns={columns}
-          rowHeight={50}
-          getRowId={(row) => row.mailId}
-          sx={{
-            backgroundColor: "#f5f5f5",
-            boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.1)",
-            ".MuiDataGrid-columnSeparator": {
-              display: "none",
-            },
-            "&.MuiDataGrid-root": {
-              border: "none",
-            },
-          }}
-          initialState={{
-            pagination: {
-              paginationModel: { page: 0, pageSize: 10 },
-            },
-          }}
-        />
-      </div>
-      <div style={{ minHeight: "70px" }}></div>
-      {/* <div id="targetElement"></div> */}
+      ) : (
+        <div>
+          <div style={{ marginLeft: "50px", marginBottom: "10px" }}>
+            <div>
+              <Button
+                disabled
+                variant="primary"
+                style={{ backgroundColor: "black", padding: "15px" }}
+              >
+                Assign Distributions
+              </Button>
+              <PrintAllQRcodes rowsDistribution={rowsDistribution} />
+            </div>
+          </div>
+          <div
+            style={{
+              height: 550,
+              paddingTop: "5px",
+              display: "flex",
+              marginBottom: "10px",
+              flexDirection: "column",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <DataGrid
+              rows={rowsDistribution}
+              columns={columnsDistribution}
+              rowHeight={50}
+              getRowId={(row) => row.distributionId}
+              sx={{
+                backgroundColor: "#f5f5f5",
+                boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.1)",
+                ".MuiDataGrid-columnSeparator": {
+                  display: "none",
+                },
+                "&.MuiDataGrid-root": {
+                  border: "none",
+                },
+              }}
+              initialState={{
+                pagination: {
+                  paginationModel: { page: 0, pageSize: 10 },
+                },
+              }}
+            />
+          </div>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              padding: "10px",
+              // fontWeight: "bold",
+              marginBottom: "10px",
+              backgroundColor: "#a3a3a3",
+            }}
+          >
+            All Out-Area Mails
+            {/* <button onClick={scrollToElement}>
+          </button> */}
+            <img
+              src={DownArrowIcon}
+              alt="All Out-Area Mails"
+              style={{
+                marginRight: "10px",
+                marginLeft: "20px",
+                width: "30px",
+                height: "30px",
+              }}
+            />
+          </div>
+          <div
+            style={{
+              height: 550,
+              paddingTop: "5px",
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <DataGrid
+              rows={rows}
+              columns={columns}
+              rowHeight={50}
+              getRowId={(row) => row.mailId}
+              sx={{
+                backgroundColor: "#f5f5f5",
+                boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.1)",
+                ".MuiDataGrid-columnSeparator": {
+                  display: "none",
+                },
+                "&.MuiDataGrid-root": {
+                  border: "none",
+                },
+              }}
+              initialState={{
+                pagination: {
+                  paginationModel: { page: 0, pageSize: 10 },
+                },
+              }}
+            />
+          </div>
+          <div style={{ minHeight: "70px" }}></div>
+          {/* <div id="targetElement"></div> */}
+        </div>
+      )}
     </div>
   );
 }

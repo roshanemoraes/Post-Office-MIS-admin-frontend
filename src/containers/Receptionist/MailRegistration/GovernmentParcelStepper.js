@@ -6,9 +6,7 @@ import StepLabel from "@mui/material/StepLabel";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { mailFormField } from "../../../data/formFields";
-import { useNavigate } from "react-router-dom";
-import CustomizedSnackbars from "../../../components/Custom/CustomizedSnackbars";
-
+import { Link, useNavigate } from "react-router-dom";
 import {
   Autocomplete,
   FormControl,
@@ -23,8 +21,12 @@ import AddressValidationModal from "../AddressValidationModal";
 import SenderAddressValidationModel from "../modals/SenderAddressValidationModel";
 import CostFormNew from "./CostFormNew";
 import NormalParcelMailReceipt from "../../../components/Receipts/NormalParcelMailReceipt";
+import { CheckCircleIcon, CircleStackIcon } from "@heroicons/react/20/solid";
+import { Navigate } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import GovParcelMailReceipt from "../../../components/Receipts/GovParcelMailReceipt";
+import CustomizedSnackbars from "../../../components/Custom/CustomizedSnackbars";
 
 const steps = ["Recipient Details", "Sender Details", "Mail Information"];
 
@@ -51,7 +53,7 @@ const stepIconStyle = {
   },
 };
 
-export default function HorizontalLinearStepper() {
+export default function HorizontalLinearStepperGov() {
   const initialFormState = {
     recipientName: "",
     recipientCity: "",
@@ -68,7 +70,7 @@ export default function HorizontalLinearStepper() {
     senderHouseNumber: "",
     //checked: false,
 
-    packageType: "",
+    ministry: "",
     postage: "",
   };
 
@@ -78,6 +80,12 @@ export default function HorizontalLinearStepper() {
   const [cost, setCost] = useState(null);
   const [isRegisterCompleted, setIsRegisterCompleted] = useState(false);
   const navigate = useNavigate();
+  const [recipientName, setRecipientName] = useState("");
+  const [recipientCity, setRecipientCity] = useState("");
+  const [senderCity, setSenderCity] = useState("");
+  const [addressType, setAddressType] = useState(null);
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isVerified, setIsVerified] = useState(false);
   const [verifiedAddressText, setVerifiedAddressText] = useState();
   const [verifiedAddressId, setVerifiedAddressId] = useState();
   const [verifiedAddressCoordinate_Lat, setVerifiedAddressCoordinate_Lat] =
@@ -85,6 +93,16 @@ export default function HorizontalLinearStepper() {
   const [verifiedAddressCoordinate_Lng, setVerifiedAddressCoordinate_Lng] =
     useState();
 
+  const [verifiedSenderAddressText, setVerifiedSenderAddressText] = useState();
+  const [verifiedSenderAddressId, setVerifiedSenderAddressId] = useState();
+  const [
+    verifiedSenderAddressCoordinate_Lat,
+    setVerifiedSenderAddressCoordinate_Lat,
+  ] = useState();
+  const [
+    verifiedSenderAddressCoordinate_Lng,
+    setVerifiedSenderAddressCoordinate_Lng,
+  ] = useState();
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState("");
   const [snackbarSeverity, setSnackbarSeverity] = useState("");
@@ -96,6 +114,7 @@ export default function HorizontalLinearStepper() {
     "Pallansena South",
     "Pallansena North",
   ];
+
   const handleSuccessSnackbar = (message, severity = "success") => {
     setSnackbarMessage(message);
     setSnackbarSeverity(severity);
@@ -178,7 +197,7 @@ export default function HorizontalLinearStepper() {
     senderPostalZone: Yup.string().required("Sender Postal Zone is required"),
     senderHouseNumber: Yup.string().required("Sender House Number is required"),
     postage: Yup.number().required("Postage is required"),
-    packageType: Yup.string().required("Package Type is required"),
+    ministry: Yup.string().required("Package Type is required"),
   });
 
   const handleChange = (id) => (event) => {
@@ -187,12 +206,29 @@ export default function HorizontalLinearStepper() {
       [id]: event.target.value,
     });
   };
+  const handleSenderCheckBox = () => {
+    setChecked(!checked);
+    /*if (checked) {
+      formik.senderName = "";
+      formik.senderCity = "";
+      formik.senderAddress = "";
+      formik.senderPostalZone = "";
+      formik.senderHouseNumber = "";
+    }*/
+    if (checked) {
+      formik.setFieldValue("senderName", "");
+      formik.setFieldValue("senderCity", "");
+      formik.setFieldValue("senderAddress", "");
+      formik.setFieldValue("senderPostalZone", "");
+      formik.setFieldValue("senderHouseNumber", "");
+    }
+  };
 
   //const handleSubmit = () => {
   const formik = useFormik({
     initialValues: initialFormState,
     validationSchema: validationSchema,
-    onSubmit: async (values) => {
+    onSubmit: (value) => {
       console.log(formik.values);
       setIsRegisterCompleted(true);
       handleSuccessSnackbar(
@@ -240,7 +276,7 @@ export default function HorizontalLinearStepper() {
     return skipped.has(step);
   };
   const handleDone = () => {
-    setActiveStep(0);
+    setActiveStep(0); // Reset the stepper to the first step
     setFormState(initialFormState);
     formik.values = initialFormState;
     formik.resetForm();
@@ -257,21 +293,17 @@ export default function HorizontalLinearStepper() {
 
     if (activeStep === steps.length - 1) {
       if (!isRegisterCompleted) {
+        //handleSubmit();
+
         formik.handleSubmit();
-        //setSnackbarMessage("Registration is in progress. Fill all fields");
-        //setSnackbarSeverity("failure");
-        //handleFailSnackbar();
         handleFailSnackbar(
           "Registration is in progress. Fill all fields",
           "error"
         );
       } else {
-        //setSnackbarMessage("Registration is completed successfully");
-        //setSnackbarSeverity("success");
-        //handleSuccessSnackbar();
-
         handleDone();
       }
+      // Call the special function
     } else {
       setActiveStep((prevActiveStep) => prevActiveStep + 1);
       setSkipped(newSkipped);
@@ -825,15 +857,15 @@ export default function HorizontalLinearStepper() {
                   <div className="grid grid-cols-12">
                     <div className="col-span-2"></div>
                     <div className="col-span-6" ref={componentRef}>
-                      <NormalParcelMailReceipt
-                        mailType={"Normal Parcel"}
+                      <GovParcelMailReceipt
+                        mailType={"Gov Parcel"}
                         postage={formik.values.postage}
                         recipientName={formik.values.recipientName}
                         SenderName={formik.values.senderName}
                         recipientAddress={formik.values.recipientAddress}
                         mailId={"300"}
                         receiptId={"450"}
-                        packageType={formik.values.packageType}
+                        ministry={formik.values.ministry}
                       />
                     </div>
                     <div className="col-span-2 mt-[20px]">
@@ -885,24 +917,45 @@ export default function HorizontalLinearStepper() {
                           id="courierProviderSelector"
                           sx={{ fontSize: "14px" }}
                         >
-                          Package Type
+                          Ministry
                         </InputLabel>
                         <Select
                           sx={{ fontSize: "13px" }}
-                          labelId="packageTypeSelector"
-                          id="packageType"
-                          name="packageType"
-                          value={formik.values.packageType}
+                          labelId="ministrySelector"
+                          id="ministry"
+                          name="ministry"
+                          value={formik.values.ministry}
                           onChange={formik.handleChange}
                         >
-                          <MenuItem sx={{ fontSize: "14px" }} value={"Fragile"}>
-                            Fragile
+                          <MenuItem
+                            sx={{ fontSize: "14px" }}
+                            value={"Ministry of Education"}
+                          >
+                            Ministry of Education
                           </MenuItem>
                           <MenuItem
                             sx={{ fontSize: "14px" }}
-                            value={"Not Fragile"}
+                            value={"Ministry of Education"}
                           >
-                            Not Fragile
+                            Ministry of Education
+                          </MenuItem>
+                          <MenuItem
+                            sx={{ fontSize: "14px" }}
+                            value={"Ministry of Power and Energy"}
+                          >
+                            Ministry of Power and Energy
+                          </MenuItem>
+                          <MenuItem
+                            sx={{ fontSize: "14px" }}
+                            value={"Ministry of Transport"}
+                          >
+                            Ministry of Transport
+                          </MenuItem>
+                          <MenuItem
+                            sx={{ fontSize: "14px" }}
+                            value={"Ministry of Labour"}
+                          >
+                            Ministry of Labour
                           </MenuItem>
                         </Select>
                         {/*<ErrorMessage

@@ -38,6 +38,9 @@ const MoneyOrders = () => {
   const [checked, setChecked] = useState(false);
   const [recipientName, setRecipientName] = useState("");
   const [recipientCity, setRecipientCity] = useState("");
+
+  const [customerId, setCustomerId] = useState("2");
+
   const [senderCity, setSenderCity] = useState("");
   const [addressType, setAddressType] = useState(null);
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -153,9 +156,13 @@ const MoneyOrders = () => {
     //     }
     //   })
     //   .catch((error) => console.error("Payment creation failed", error));
-
+    console.log(
+      `http://localhost:8081/api/payment-gateway/create?id=${customerId}&amount=${formState.transferAmount}`
+    );
     axios
-      .post("http://localhost:8081/api/payment-gateway/create")
+      .post(
+        `http://localhost:8081/api/payment-gateway/create?id=${customerId}&amount=${formState.transferAmount}`
+      )
       .then((response) => {
         const data = response.data;
         if (data.paymentUrl) {

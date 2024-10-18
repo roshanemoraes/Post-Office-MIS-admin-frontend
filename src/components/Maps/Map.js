@@ -44,13 +44,15 @@ const Map = () => {
   useEffect(() => {
     
     fetchData();
-    const intervalId = setInterval(fetchData, 60000);
+    const intervalId = setInterval(fetchData, 5000);
 
     return () => clearInterval(intervalId);
   }, []);
 
 
-
+//
+//The useEffect hook you've written is setting up a MutationObserver 
+//that watches for changes in the DOM and applies styles to newly added nodes with the class gm-style-iw-ch
   useEffect(() => {
     const observer = new MutationObserver((mutations) => {
       mutations.forEach(({ addedNodes }) => {
@@ -100,7 +102,12 @@ const Map = () => {
         <GoogleMap
           center={mapCenter}
           zoom={14}
-          mapContainerStyle={{ width: "90%", height: "90vh" }}
+          mapContainerStyle={{
+            width: "97%",
+            height: "90vh",
+            borderRadius: "10px",
+            borderColor: "rgba(0, 0, 0, 0.5)",
+          }}
           //   mapTypeId="ec1432108f3d8893"
           onClick={() => setActiveMarker(null)}
           onDragEnd={() => {
