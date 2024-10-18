@@ -2,6 +2,13 @@
 //import project2 from "../assets/projects/project-2.png";
 //import project3 from "../assets/projects/project-3.png";
 //import project4 from "../assets/projects/project-4.png";
+import route from "./../CustomerLandingPage/DeliveryRouteOptimizationImg.jpg";
+import trackingImg from "./../CustomerLandingPage/Tracking.jpg";
+import mailSorting from "./../CustomerLandingPage/MailSorting.jpg";
+import barcode from "./../CustomerLandingPage/Barcode.jpg";
+import addressveri from "./../CustomerLandingPage/AddressVeri.jpg";
+import cusmgmt from "./../CustomerLandingPage/CusMgmt.jpg";
+import ReturnImg from "./../CustomerLandingPage/ReturnImg.jpg";
 
 export const HERO_CONTENT = `We are in a constant effort to deliver a fast, reliable, efficient delivery service to serve the nation.`;
 
@@ -16,49 +23,49 @@ export const PROJECTS = [
   //1
   {
     title: "Address Verification",
-    //image: project2,
+    image: addressveri,
     description:
       "Say goodbye to lost mail! Our system double-checks every address for accuracy, ensuring your mail reaches the right doorstep, every time.",
   },
   //2
   {
     title: "Out with the stamps, in with the barcodes!",
-    //image: project1,
+    image: barcode,
     description:
       "Getting tired of searching and pasting stamps? The system generates barcode instead. Anyone can scan the barcode anywhere and get the details. ",
   },
   //3
   {
     title: "Mail Sorting",
-    //image: project2,
+    image: mailSorting,
     description:
       "Sorting has never been this easy. Our automated system categorizes mail by ZIP codes, addresses, weight, and size, guaranteeing smooth and efficient processing.",
   },
   //4
   {
     title: "Tracking and Tracing",
-    //image: project2,
+    image: trackingImg,
     description:
       "Stay in the know. Track your mail in real time from dispatch to delivery, with updates at every step to keep you informed and in control.",
   },
   //5
   {
     title: "Delivery Route Optimization",
-    //image: project2,
+    image: route,
     description:
       "Faster routes, happy customers. Our route optimization feature helps postmen deliver mail quicker, cutting costs and saving time.",
   },
   //6
   {
     title: "Customer Management",
-    //image: project2,
+    image: cusmgmt,
     description:
       "All your customer info, all in one place. Access addresses, contacts, preferences, and transaction history with ease, making customer service a breeze.",
   },
   //7
   {
     title: "Return Mail Management",
-    //image: project2,
+    image: ReturnImg,
     description:
       "No lost of mails further! Smooth handling for undeliverable mail. Manage returns efficiently with automated processes and address updates to keep your system organized.",
   },
