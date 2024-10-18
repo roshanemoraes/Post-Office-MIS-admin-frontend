@@ -6,7 +6,7 @@ import StepLabel from "@mui/material/StepLabel";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { mailFormField } from "../../../data/formFields";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import {
   Autocomplete,
   FormControl,
@@ -20,9 +20,6 @@ import { useReactToPrint } from "react-to-print";
 import AddressValidationModal from "../AddressValidationModal";
 import SenderAddressValidationModel from "../modals/SenderAddressValidationModel";
 import CostFormNew from "./CostFormNew";
-import NormalParcelMailReceipt from "../../../components/Receipts/NormalParcelMailReceipt";
-import { CheckCircleIcon, CircleStackIcon } from "@heroicons/react/20/solid";
-import { Navigate } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import GovParcelMailReceipt from "../../../components/Receipts/GovParcelMailReceipt";
@@ -76,33 +73,15 @@ export default function HorizontalLinearStepperGov() {
 
   const theme = useTheme();
   const [formState, setFormState] = React.useState(initialFormState);
-  const [checked, setChecked] = useState(false);
   const [cost, setCost] = useState(null);
   const [isRegisterCompleted, setIsRegisterCompleted] = useState(false);
   const navigate = useNavigate();
-  const [recipientName, setRecipientName] = useState("");
-  const [recipientCity, setRecipientCity] = useState("");
-  const [senderCity, setSenderCity] = useState("");
-  const [addressType, setAddressType] = useState(null);
-  const [isSubmitted, setIsSubmitted] = useState(false);
-  const [isVerified, setIsVerified] = useState(false);
   const [verifiedAddressText, setVerifiedAddressText] = useState();
   const [verifiedAddressId, setVerifiedAddressId] = useState();
   const [verifiedAddressCoordinate_Lat, setVerifiedAddressCoordinate_Lat] =
     useState();
   const [verifiedAddressCoordinate_Lng, setVerifiedAddressCoordinate_Lng] =
     useState();
-
-  const [verifiedSenderAddressText, setVerifiedSenderAddressText] = useState();
-  const [verifiedSenderAddressId, setVerifiedSenderAddressId] = useState();
-  const [
-    verifiedSenderAddressCoordinate_Lat,
-    setVerifiedSenderAddressCoordinate_Lat,
-  ] = useState();
-  const [
-    verifiedSenderAddressCoordinate_Lng,
-    setVerifiedSenderAddressCoordinate_Lng,
-  ] = useState();
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState("");
   const [snackbarSeverity, setSnackbarSeverity] = useState("");
@@ -154,31 +133,6 @@ export default function HorizontalLinearStepperGov() {
     formik.setFieldValue("senderId", data1);
   };
 
-  useEffect(() => {
-    if (
-      verifiedAddressText ||
-      verifiedAddressId ||
-      verifiedAddressCoordinate_Lat ||
-      verifiedAddressCoordinate_Lng
-    ) {
-      console.log(
-        "verifiedAddressCoordinate_Lat: ",
-        verifiedAddressCoordinate_Lat
-      );
-      console.log(
-        "verifiedAddressCoordinate_Lng: ",
-        verifiedAddressCoordinate_Lng
-      );
-      console.log("verifiedAddressId: ", verifiedAddressId);
-      console.log("verifiedAddressText: ", verifiedAddressText);
-    }
-  }, [
-    verifiedAddressCoordinate_Lat,
-    verifiedAddressCoordinate_Lng,
-    verifiedAddressId,
-    verifiedAddressText,
-  ]);
-
   const validationSchema = Yup.object().shape({
     recipientName: Yup.string()
       .required("Recipient Name is required")
@@ -205,23 +159,6 @@ export default function HorizontalLinearStepperGov() {
       ...formState,
       [id]: event.target.value,
     });
-  };
-  const handleSenderCheckBox = () => {
-    setChecked(!checked);
-    /*if (checked) {
-      formik.senderName = "";
-      formik.senderCity = "";
-      formik.senderAddress = "";
-      formik.senderPostalZone = "";
-      formik.senderHouseNumber = "";
-    }*/
-    if (checked) {
-      formik.setFieldValue("senderName", "");
-      formik.setFieldValue("senderCity", "");
-      formik.setFieldValue("senderAddress", "");
-      formik.setFieldValue("senderPostalZone", "");
-      formik.setFieldValue("senderHouseNumber", "");
-    }
   };
 
   //const handleSubmit = () => {

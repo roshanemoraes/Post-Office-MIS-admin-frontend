@@ -37,6 +37,7 @@ function AddressValidationModal({ formState, onValidationResult }) {
   };
 
   const validationResult = () => {
+    console.log(formState);
     setShow(true);
     setValidatedResponse({});
     setIsValid(false);

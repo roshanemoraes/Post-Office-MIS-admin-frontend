@@ -2,7 +2,6 @@ import axios from "axios";
 import React, { useState, useRef } from "react";
 import { Button, Table } from "react-bootstrap";
 import { useReactToPrint } from "react-to-print";
-import { Button as MuiButton } from "@mui/material";
 import checkIcon from "../../../assets/check-circle-fill.svg";
 import crossIcon from "../../../assets/x-circle-fill.svg";
 import { Autocomplete, Box, TextField, Typography } from "@mui/material";
@@ -34,23 +33,18 @@ const BulkMailHome = () => {
   const [progress, setProgress] = useState({ started: false, pc: 0 });
   const [msg, setMsg] = useState(null);
   const [formState, setFormState] = useState(initialFormState);
-  const [verifiedAddressText, setVerifiedAddressText] = useState();
-  const [verifiedAddressId, setVerifiedAddressId] = useState();
-  const [verifiedAddressCoordinate_Lat, setVerifiedAddressCoordinate_Lat] =
-    useState();
-  const [verifiedAddressCoordinate_Lng, setVerifiedAddressCoordinate_Lng] =
-    useState();
+  // const [verifiedAddressText, setVerifiedAddressText] = useState();
+  // const [verifiedAddressId, setVerifiedAddressId] = useState();
+  // const [verifiedAddressCoordinate_Lat, setVerifiedAddressCoordinate_Lat] =
+  //   useState();
+  // const [verifiedAddressCoordinate_Lng, setVerifiedAddressCoordinate_Lng] =
+  //   useState();
   const [mailCount, setMailCount] = useState(0);
   const [isUploaded, setIsUploaded] = useState(false);
-  const [isUploadSuccess, setIsUploadSuccess] = useState(false);
+
   const [isRegistrationConfirm, setIsRegistrationConfirm] = useState(false);
-  const [postage, setPostage] = useState(0);
+
   const [discount, setDiscount] = useState(0);
-  const [customerFormInfo, setCustomerFormInfo] = useState({
-    name: "",
-    address: "",
-    contact: "",
-  });
 
   const fileInputRef = useRef();
 
@@ -61,14 +55,19 @@ const BulkMailHome = () => {
     });
   };
   const handleRegistrationConfirm = () => {
-    setIsRegistrationConfirm(true);
+    if (isUploaded) {
+      setIsRegistrationConfirm(true);
+    }
+    console.log(formState);
+    console.log("kk", isRegistrationConfirm);
+    console.log(isUploaded);
   };
 
   const handleSenderOnValidationResult = (data) => {
-    setVerifiedAddressText(data.textForm);
-    setVerifiedAddressId(data.addressId);
-    setVerifiedAddressCoordinate_Lat(data.lat);
-    setVerifiedAddressCoordinate_Lng(data.lng);
+    // setVerifiedAddressText(data.textForm);
+    // setVerifiedAddressId(data.addressId);
+    // setVerifiedAddressCoordinate_Lat(data.lat);
+    // setVerifiedAddressCoordinate_Lng(data.lng);
     setFormState((prevState) => ({
       ...prevState,
       senderAddress: data.textForm,
@@ -474,21 +473,23 @@ const BulkMailHome = () => {
                 </Button>
               </div>
               <div>
-                <Button
-                  className="mt-3"
-                  variant="primary"
-                  style={{
-                    backgroundColor: "#0891b2",
-                    padding: "8px",
-                    borderColor: "#0891b2",
-                    fontSize: "11px",
-                    fontFamily: "arial",
-                  }}
-                  onClick={handlePrint}
-                  // onClick={() => getPostage(mailCount)}
-                >
-                  PRINT INVOICE
-                </Button>
+                {isRegistrationConfirm && isUploaded && (
+                  <Button
+                    className="mt-3"
+                    variant="primary"
+                    style={{
+                      backgroundColor: "#0891b2",
+                      padding: "8px",
+                      borderColor: "#0891b2",
+                      fontSize: "11px",
+                      fontFamily: "arial",
+                    }}
+                    onClick={handlePrint}
+                    // onClick={() => getPostage(mailCount)}
+                  >
+                    PRINT INVOICE
+                  </Button>
+                )}
               </div>
             </Box>
           </Box>
@@ -653,7 +654,7 @@ const BulkMailHome = () => {
       </div>
       <div style={{ minHeight: "40px" }}></div>
 
-      {isRegistrationConfirm && (
+      {isRegistrationConfirm && isUploaded && (
         <div>
           <div
             // className="mt-30"

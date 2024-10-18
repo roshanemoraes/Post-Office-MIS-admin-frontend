@@ -6,9 +6,8 @@ import {
   FormControlLabel,
   TextField,
   Typography,
-  useTheme,
 } from "@mui/material";
-import React, { useEffect, useState, useRef } from "react";
+import React, { useState, useRef } from "react";
 import { mailFormField } from "../../data/formFields";
 import CostForm from "../../components/Forms/CostForm";
 import AddressValidationModal from "./AddressValidationModal";
@@ -39,7 +38,6 @@ const PersonalMail = () => {
     postage: "",
   };
 
-  const theme = useTheme();
   const [formState, setFormState] = useState(initialFormState);
   const [checked, setChecked] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -49,17 +47,6 @@ const PersonalMail = () => {
     useState();
   const [verifiedAddressCoordinate_Lng, setVerifiedAddressCoordinate_Lng] =
     useState();
-
-  const [verifiedSenderAddressText, setVerifiedSenderAddressText] = useState();
-  const [verifiedSenderAddressId, setVerifiedSenderAddressId] = useState();
-  const [
-    verifiedSenderAddressCoordinate_Lat,
-    setVerifiedSenderAddressCoordinate_Lat,
-  ] = useState();
-  const [
-    verifiedSenderAddressCoordinate_Lng,
-    setVerifiedSenderAddressCoordinate_Lng,
-  ] = useState();
 
   const cityList = ["Negombo", "Colombo", "Kochchikade", "Katunayaka"];
   const zoneList = [
@@ -105,31 +92,6 @@ const PersonalMail = () => {
     formik.setFieldValue("senderId", data1);
   };
 
-  useEffect(() => {
-    if (
-      verifiedAddressText ||
-      verifiedAddressId ||
-      verifiedAddressCoordinate_Lat ||
-      verifiedAddressCoordinate_Lng
-    ) {
-      console.log(
-        "verifiedAddressCoordinate_Lat: ",
-        verifiedAddressCoordinate_Lat
-      );
-      console.log(
-        "verifiedAddressCoordinate_Lng: ",
-        verifiedAddressCoordinate_Lng
-      );
-      console.log("verifiedAddressId: ", verifiedAddressId);
-      console.log("verifiedAddressText: ", verifiedAddressText);
-    }
-  }, [
-    verifiedAddressCoordinate_Lat,
-    verifiedAddressCoordinate_Lng,
-    verifiedAddressId,
-    verifiedAddressText,
-  ]);
-
   const validationSchema = Yup.object().shape({
     recipientName: Yup.string()
       .required("Recipient Name is required")
@@ -168,20 +130,20 @@ const PersonalMail = () => {
   const formik = useFormik({
     initialValues: initialFormState,
     validationSchema: validationSchema,
-    onSubmit: (values) => {
-      console.log(formState);
-      axios
-        .post(
-          "http://localhost:8081/api/receptionist/post/add/normal-post",
-          formState,
-          { withCredentials: true }
-        )
-        .then((response) => {
-          console.log(response);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+    onSubmit: async (values) => {
+      console.log(formik.values);
+      // axios
+      //   .post(
+      //     "http://localhost:8081/api/receptionist/post/add/normal-post",
+      //     formState,
+      //     { withCredentials: true }
+      //   )
+      //   .then((response) => {
+      //     setIsSubmitted(true);
+      //   })
+      //   .catch((err) => {
+      //     console.log(err);
+      //   });
       setIsSubmitted(true);
     },
   });
@@ -415,7 +377,7 @@ const PersonalMail = () => {
                   </div>
                 </div>
                 <AddressValidationModal
-                  formState={formState}
+                  formState={formik.values}
                   onValidationResult={handleOnValidationResult}
                 />
                 <TextField
@@ -664,69 +626,73 @@ const PersonalMail = () => {
         </div>
       </div>
       <div className="h-[10px]"></div>
-      <div
-        // className="mt-30"
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          padding: "10px",
-          marginTop: "80px",
-          // fontWeight: "bold",
-          // marginTop: "0px",
-          marginBottom: "10px",
-          backgroundColor: "#a3a3a3",
-        }}
-      >
-        RECEIPT
-        <img
-          src={DownArrowIcon}
-          alt="All Out-Area Mails"
+      {isSubmitted && (
+        <div
+          // className="mt-30"
           style={{
-            marginRight: "10px",
-            marginLeft: "20px",
-            width: "30px",
-            height: "30px",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            padding: "10px",
+            marginTop: "80px",
+            // fontWeight: "bold",
+            // marginTop: "0px",
+            marginBottom: "10px",
+            backgroundColor: "#a3a3a3",
           }}
-        />
-      </div>
-      <div className="grid grid-cols-12">
-        <div className="col-span-3">
-          <div ref={componentRef}>
-            <NormalMailReceipt
-              mailType={"Normal Post"}
-              postage={formState.postage}
-              recipientName={formState.recipientName}
-              SenderName={formState.senderName}
-              recipientAddress={formState.recipientAddress}
-              mailId={"300"}
-              receiptId={"450"}
-            />
+        >
+          RECEIPT
+          <img
+            src={DownArrowIcon}
+            alt="All Out-Area Mails"
+            style={{
+              marginRight: "10px",
+              marginLeft: "20px",
+              width: "30px",
+              height: "30px",
+            }}
+          />
+        </div>
+      )}
+      {isSubmitted && (
+        <div className="grid grid-cols-12">
+          <div className="col-span-3">
+            <div ref={componentRef}>
+              <NormalMailReceipt
+                mailType={"Normal Post"}
+                postage={formState.postage}
+                recipientName={formState.recipientName}
+                SenderName={formState.senderName}
+                recipientAddress={formState.recipientAddress}
+                mailId={"300"}
+                receiptId={"450"}
+              />
+            </div>
+          </div>
+          <div className="col-span-2 mt-[12px] ml-[25px]">
+            <Button
+              className="mt-1"
+              variant="primary"
+              style={{
+                backgroundColor: "#fcd34d",
+                padding: "8px",
+                paddingLeft: "30px",
+                paddingRight: "30px",
+                borderColor: "#0891b2",
+                fontSize: "15px",
+                fontWeight: "bold",
+                fontFamily: "arial",
+                my: "40px",
+                mb: "20px",
+                mr: "60px",
+              }}
+              onClick={handlePrint}
+            >
+              PRINT
+            </Button>
           </div>
         </div>
-        <div className="col-span-2 mt-[12px] ml-[25px]">
-          <Button
-            className="mt-1"
-            variant="primary"
-            style={{
-              backgroundColor: "#fcd34d",
-              padding: "8px",
-              paddingLeft: "30px",
-              paddingRight: "30px",
-              borderColor: "#0891b2",
-              fontSize: "15px",
-              fontWeight: "bold",
-              fontFamily: "arial",
-              my: "40px",
-              mb: "20px",
-              mr: "60px",
-            }}
-            onClick={handlePrint}
-          >
-            PRINT
-          </Button>
-        </div>
-      </div>
+      )}
 
       <div className="min-h-[70px]"></div>
     </>

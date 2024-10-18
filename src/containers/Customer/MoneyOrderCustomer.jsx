@@ -1,24 +1,10 @@
-import {
-  Autocomplete,
-  Box,
-  Button,
-  Checkbox,
-  FormControlLabel,
-  FormGroup,
-  TextField,
-  Typography,
-  useTheme,
-} from "@mui/material";
-import React, { useEffect, useState, useRef } from "react";
-import CustomTextField from "../../components/Custom/CustomTextField";
+import { Box, Button, TextField, Typography } from "@mui/material";
+import React, { useState, useRef } from "react";
 import { mailFormField } from "../../data/formFields";
-import CostForm from "../../components/Forms/CostForm";
 import axios from "axios";
 import DownArrowIcon from "./../../assets/arrow-down-square-fill.svg";
-import NormalMailReceipt from "./../../components/Receipts/NormalMailReceipt";
 import { useReactToPrint } from "react-to-print";
 import { Button as MuiButton } from "@mui/material";
-import MoneyOrderReceipt from "../../components/Receipts/MoneyOrderReceipt";
 import MoneyOrderCustomerReceipt from "../../components/Receipts/MoneyOrderCustomerReceipt";
 
 const MoneyOrderCustomer = () => {
@@ -34,101 +20,12 @@ const MoneyOrderCustomer = () => {
   };
 
   const [formState, setFormState] = useState(initialFormState);
-  const [checked, setChecked] = useState(false);
-  const [recipientName, setRecipientName] = useState("");
-  const [recipientCity, setRecipientCity] = useState("");
-  const [senderCity, setSenderCity] = useState("");
-  const [addressType, setAddressType] = useState(null);
-  const [isSubmitted, setIsSubmitted] = useState(false);
-  const [isVerified, setIsVerified] = useState(false);
-  const [verifiedAddressText, setVerifiedAddressText] = useState();
-  const [verifiedAddressId, setVerifiedAddressId] = useState();
-  const [verifiedAddressCoordinate_Lat, setVerifiedAddressCoordinate_Lat] =
-    useState();
-  const [verifiedAddressCoordinate_Lng, setVerifiedAddressCoordinate_Lng] =
-    useState();
-
-  const [verifiedSenderAddressText, setVerifiedSenderAddressText] = useState();
-  const [verifiedSenderAddressId, setVerifiedSenderAddressId] = useState();
-  const [
-    verifiedSenderAddressCoordinate_Lat,
-    setVerifiedSenderAddressCoordinate_Lat,
-  ] = useState();
-  const [
-    verifiedSenderAddressCoordinate_Lng,
-    setVerifiedSenderAddressCoordinate_Lng,
-  ] = useState();
-
-  const cityList = ["Negombo", "Colombo", "Kochchikade", "Katunayaka"];
-  const zoneList = [
-    "Daluwakotuwa",
-    "Walihena",
-    "Pallansena South",
-    "Pallansena North",
-  ];
-
-  const handleOnValidationResult = (data) => {
-    setVerifiedAddressText(data.textForm);
-    setVerifiedAddressId(data.addressId);
-    setVerifiedAddressCoordinate_Lat(data.lat);
-    setVerifiedAddressCoordinate_Lng(data.lng);
-    setFormState((prevState) => ({
-      ...prevState,
-      recipientAddress: data.textForm,
-    }));
-  };
-
-  const handleSenderOnValidationResult = (data) => {
-    setVerifiedAddressText(data.textForm);
-    setVerifiedAddressId(data.addressId);
-    setVerifiedAddressCoordinate_Lat(data.lat);
-    setVerifiedAddressCoordinate_Lng(data.lng);
-    setFormState((prevState) => ({
-      ...prevState,
-      senderAddress: data.textForm,
-    }));
-  };
-
-  useEffect(() => {
-    if (
-      verifiedAddressText ||
-      verifiedAddressId ||
-      verifiedAddressCoordinate_Lat ||
-      verifiedAddressCoordinate_Lng
-    ) {
-      console.log(
-        "verifiedAddressCoordinate_Lat: ",
-        verifiedAddressCoordinate_Lat
-      );
-      console.log(
-        "verifiedAddressCoordinate_Lng: ",
-        verifiedAddressCoordinate_Lng
-      );
-      console.log("verifiedAddressId: ", verifiedAddressId);
-      console.log("verifiedAddressText: ", verifiedAddressText);
-    }
-  }, [
-    verifiedAddressCoordinate_Lat,
-    verifiedAddressCoordinate_Lng,
-    verifiedAddressId,
-    verifiedAddressText,
-  ]);
 
   const handleChange = (id) => (event) => {
     setFormState({
       ...formState,
       [id]: event.target.value,
     });
-  };
-  const handleSenderCheckBox = () => {
-    setChecked(!checked);
-    if (checked) {
-      formState.senderName = "";
-      formState.senderCity = "";
-      formState.senderAddress = "";
-      formState.senderPostalZone = "";
-      formState.senderHouseNumber = "";
-    }
   };
 
   const handlePayment = () => {

@@ -1,7 +1,5 @@
-import { Box } from "@mui/material";
 import React, { useState } from "react";
 import ItemTable from "./ItemTable";
-import DiscardedMails from "./../../../containers/DeliveryManager/DiscardedMails";
 
 const Invoice = ({ discount, customerInfo, invoiceInfo }) => {
   const [Discount, setDiscount] = React.useState(discount);
