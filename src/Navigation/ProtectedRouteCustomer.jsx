@@ -1,11 +1,11 @@
 import React from "react";
 import { Navigate } from "react-router-dom";
 
-const ProtectedRouteAdmin = ({ element: Component, allowedRoles }) => {
+const ProtectedRouteCustomer = ({ element: Component, allowedRoles }) => {
   const userRoles = JSON.parse(localStorage.getItem("userRoles") || "[]"); // Parse roles as an array
 
   if (!userRoles.length) {
-    return <Navigate to="/admin/login" />;
+    return <Navigate to="/login" />;
   }
 
   const hasRequiredRole = allowedRoles.some((role) => userRoles.includes(role));
@@ -13,4 +13,4 @@ const ProtectedRouteAdmin = ({ element: Component, allowedRoles }) => {
   return hasRequiredRole ? <Component /> : <Navigate to="/unauthorized" />;
 };
 
-export default ProtectedRouteAdmin;
+export default ProtectedRouteCustomer;

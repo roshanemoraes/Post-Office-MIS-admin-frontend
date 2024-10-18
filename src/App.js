@@ -12,16 +12,17 @@ import CustomerLogin from "./screens/Common/CustomerLogin";
 import CustomerInterface from "./Navigation/CustomerNav";
 import TestLogin from "./screens/Common/TestLogin";
 import LandingInterface from "./Navigation/LandingPageNav";
+import ProtectedRouteCustomer from "./Navigation/ProtectedRouteCustomer";
 
 function App() {
   return (
     <>
       <Routes>
-        <Route path="/" element={<Navigate to="/login" />} />
-        <Route path="/testlogin" element={<LandingInterface />} />
+        {/* <Route path="/" element={<Navigate to="/login" />} /> */}
+        <Route path="/" element={<LandingInterface />} />
         <Route path="/login" element={<CustomerLogin />} />
 
-        <Route path="/customer/*" element={<CustomerInterface />} />
+        {/* <Route path="/customer/*" element={<CustomerInterface />} /> */}
 
         <Route path="/admin/" element={<Navigate to="/admin/login" />} />
         <Route path="/admin/login" element={<Login />} />
@@ -58,6 +59,15 @@ function App() {
             <ProtectedRouteAdmin
               element={DeliveryManagerInterface}
               allowedRoles={["ROLE_MANAGER"]}
+            />
+          }
+        />
+        <Route
+          path="/customer/*"
+          element={
+            <ProtectedRouteCustomer
+              element={CustomerInterface}
+              allowedRoles={["ROLE_CUSTOMER"]}
             />
           }
         />

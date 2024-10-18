@@ -12,8 +12,8 @@ import ReturnImg from "./../CustomerLandingPage/ReturnImg.jpg";
 
 export const HERO_CONTENT = `We are in a constant effort to deliver a fast, reliable, efficient delivery service to serve the nation.`;
 
-export const HERO_MISSION = `To provide quality services to our customers.`;
-export const HERO_VISION = `To be the preferred choice for our customers.`;
+export const HERO_MISSION = `To empower postal services through cutting-edge technology, ensuring seamless mail management, efficient delivery, and exceptional customer experience. Our system simplifies operations, optimizes routes, and fosters transparency, helping postal services adapt to the demands of the modern world with speed and precision.`;
+export const HERO_VISION = `To revolutionize postal services by becoming the global leader in innovative mail management solutions, driving efficiency, sustainability, and customer satisfaction. Our vision is to create a future where every mail is tracked with precision, delivered on time, and managed with unparalleled ease.`;
 
 export const ABOUT_TEXT = `The Post-office MIS web application centralizes postal operations, automating tasks like mail sorting, barcode generation, address verification, and customer management. With real-time tracking, route optimization, and robust analytics, it enhances performance monitoring and integrates smoothly with other systems, making processes easier and more efficient for staff.`;
 

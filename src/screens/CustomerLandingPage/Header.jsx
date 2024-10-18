@@ -25,7 +25,7 @@ const Header = () => {
 
   return (
     <header
-      className={`fixed top-0 left-0 w-full z-50 flex items-center justify-between px-8 py-8 transition-all duration-300 ${
+      className={`fixed top-0 left-0 w-full z-50 flex items-center justify-between px-8 py-[14px] transition-all duration-300 ${
         isScrolled ? "bg-gray-800 bg-opacity-80 backdrop-blur-md" : "bg-black"
       }`}
     >
@@ -50,13 +50,13 @@ const Header = () => {
           <nav
             className={`navbar-menu ${
               menuOpen ? "block" : "hidden"
-            } md:flex gap-12 transition-all duration-300 w-full md:w-auto`}
+            } md:flex gap-16 items-center transition-all duration-300 w-full md:w-auto`} // Added items-center here
           >
             <a
               className="text-lg font-medium text-gray-300 transition-colors hover:text-white underline-animation no-underline"
               href="#about-mis"
             >
-              ABOUT POST OFFICE MIS
+              ABOUT US
             </a>
             <a
               className="text-lg font-medium text-gray-300 transition-colors hover:text-white underline-animation no-underline"
@@ -71,12 +71,11 @@ const Header = () => {
               IMPROVEMENTS
             </a>
             <a
-              className="text-lg font-medium text-gray-300 transition-colors hover:text-white underline-animation no-underline"
+              className="text-lg font-medium text-gray-300 transition-colors hover:text-white underline-animation no-underline bg-red-600 rounded-md px-2 py-1"
               href="/#signinsection"
             >
-              SIGN IN
+              LIVE DEMO
             </a>
-
             <a
               className="text-lg font-medium text-gray-300 transition-colors hover:text-white underline-animation no-underline"
               href="/#contact-us"

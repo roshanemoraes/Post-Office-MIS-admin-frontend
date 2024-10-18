@@ -146,25 +146,25 @@ const Hero = () => {
               variants={container(0)}
               initial="hidden"
               animate="visible"
-              className="pb-16 text-6xl font-bold tracking-tight lg:mt-16 lg:text-8xl"
+              className="pb-16 text-6xl font-bold tracking-tight lg:mt-16 lg:text-8xl text-white"
             >
-              Negombo Post Office
+              Post Office MIS
             </motion.h1>
             <motion.div
               variants={container(0.5)}
               initial="hidden"
               animate="visible"
-              className="text-2xl font-light tracking-tight"
+              className="text-2xl font-light tracking-tight mt-[20px] text-white"
             >
               We are providing
             </motion.div>
-            <div className="sm:h-[300px] lg:min-h-[50px]  lg:h-auto">
+            <div className="sm:h-[300px] lg:min-h-[50px]  lg:h-auto mb-[5px]">
               <motion.span
                 variants={container(0.6)}
                 initial="hidden"
                 animate="visible"
                 //className="bg-gradient-to-r from-pink-300 via-slate-500 to-purple-500 bg-clip-text text-6xl pb-2 tracking-tight text-transparent "
-                className="bg-gradient-to-r from-[#852318] via-[#A63A3A] to-[#D15C5C] bg-clip-text text-6xl pb-2 tracking-tight text-transparent"
+                className="bg-gradient-to-r from-[#ff4343] via-[#ff0000] to-[#ff4343] bg-clip-text text-6xl pb-2 tracking-tight text-transparent"
                 style={{
                   opacity: 1,
                   willChange: "auto",
@@ -191,14 +191,14 @@ const Hero = () => {
               variants={container(1)}
               initial="hidden"
               animate="visible"
-              className="my-2 max-w-[890px] py-6 font-light tracking-tighter text-justify"
-              style={{ wordSpacing: "0.3em" }}
+              className="my-2 max-w-[890px] py-6 mt-[20px] font-light text-white text-[15px] tracking-tighter text-justify"
+              style={{ wordSpacing: "0.4em" }}
             >
               {HERO_CONTENT}
             </motion.p>
           </div>
         </div>
-        <div className="w-full sm:ml-[100px] lg:w-1/3 lg:p-8 lg:mt-[70px] mt-[130px]">
+        <div className="w-full sm:ml-[100px] lg:w-1/3 lg:p-8 lg:mt-[0px] mt-[130px]">
           <div className="flex flex-col items-center">
             {/*<motion.img
               initial={{ x: 100, opacity: 0 }}
@@ -209,7 +209,7 @@ const Hero = () => {
             ></motion.img>*/}
             {/*Mission */}
             <div className="w-full my-2">
-              <div className="text-3xl font-bold">MISSION: </div>
+              <div className="text-3xl font-bold text-white">MISSION: </div>
               <motion.p
                 variants={container(1)}
                 initial="hidden"
@@ -223,7 +223,7 @@ const Hero = () => {
 
             {/*Vision */}
             <div className="w-full my-2">
-              <div className="text-3xl font-bold">VISION: </div>
+              <div className="text-3xl font-bold text-white">VISION: </div>
 
               <motion.p
                 variants={container(1)}
@@ -238,6 +238,7 @@ const Hero = () => {
           </div>
         </div>
       </div>
+      <div id="about-mis"></div>
     </div>
   );
 };
