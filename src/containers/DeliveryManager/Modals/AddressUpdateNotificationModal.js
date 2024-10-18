@@ -24,6 +24,7 @@ const AddressUpdateNotificationModal = ({ data }) => {
           customerId: data.customerId,
           undeliverableId: data.undeliverableId,
           newAddress: newAddress,
+          notificationId: data.notificationId,
         },
         { withCredentials: true }
       );

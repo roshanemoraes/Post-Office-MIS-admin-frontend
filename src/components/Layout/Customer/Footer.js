@@ -15,6 +15,7 @@ const Footer = () => {
   return (
     <>
       <div
+        className="mx-[10px]"
         style={{
           minHeight: "300px",
           background: "linear-gradient(to bottom, #171622, #1E2F4E, #2D9F9C)",

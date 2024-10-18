@@ -59,7 +59,7 @@ const Notifications = () => {
     setIsClicked(false);
     try {
       const response = await axios.get(
-        "http://localhost:8081/api/notifications/unread/3"
+        "http://localhost:8081/api/notifications/unread/2"
       );
       setRows(response.data);
       console.log(response.data);
