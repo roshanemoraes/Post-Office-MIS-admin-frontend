@@ -13,6 +13,7 @@ import SockJS from "sockjs-client";
 import InfoCard from "./../../components/Layout/InfoCard";
 import InfoIconCardSmall from "../../components/Layout/InfoIconCardSmall";
 import MailIcon from "../../assets/icons8-mail-50.png";
+import { set } from "firebase/database";
 
 export default function AddressUpdate() {
   const [rows, setRows] = React.useState([]);
@@ -21,6 +22,14 @@ export default function AddressUpdate() {
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState("");
   const [snackbarSeverity, setSnackbarSeverity] = useState("success");
+  const [isLoading, setLoading] = React.useState(false);
+
+  const minimumLoadingDuration = (promise, duration) => {
+    return Promise.all([
+      promise,
+      new Promise((resolve) => setTimeout(resolve, duration)),
+    ]);
+  };
 
   const columns = [
     { field: "undeliverableId", headerName: "Return ID", width: 90 },
@@ -90,18 +99,29 @@ export default function AddressUpdate() {
   };
 
   const fetchData = async () => {
+    setLoading(true);
     try {
-      const response = await axios.get(
-        "http://localhost:8081/api/delivery-manager/return-mail/address-update",
-        { withCredentials: true }
+      await minimumLoadingDuration(
+        axios
+          .get(
+            "http://localhost:8081/api/delivery-manager/return-mail/address-update",
+            {
+              withCredentials: true,
+            }
+          )
+          .then((response) => {
+            setRows(response.data);
+            // console.log(response.data);
+          }),
+        process.env.REACT_APP_LOADING_DELAY
       );
-      setRows(response.data);
-      console.log(response.data);
     } catch (error) {
       console.error("Error fetching users", error);
+    } finally {
+      setLoading(false); // Set loading to false after fetching
     }
   };
-//ideal one----------------------
+  //ideal one----------------------
   useEffect(() => {
     fetchData();
 
@@ -150,114 +170,129 @@ export default function AddressUpdate() {
 
   return (
     <>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          padding: "10px",
-          // fontWeight: "bold",
-          marginBottom: "10px",
-          marginTop: "10px",
-          backgroundColor: "#a3a3a3",
-        }}
-      >
-        All Address-Update Mails
-        <img
-          src={DownArrowIcon}
-          alt="All In-Area Mails"
-          style={{
-            marginRight: "10px",
-            marginLeft: "20px",
-            width: "30px",
-            height: "30px",
-          }}
-        />
-      </div>
-      <div className="grid grid-cols-12">
-        <div className="col-span-2 flex flex-col pt-[4.5px] ">
-          <div>
-            <InfoIconCardSmall
-              backgroundColor={"#ffffff"}
-              title={"NEW ADDRESS-UPDATE MAILS"}
-              value={addressUpdateCount}
-              iconSrc={MailIcon}
-            />
-            <div className="h-[12px]"></div>
-            <InfoIconCardSmall
-              backgroundColor={"#ffffff"}
-              title={"UPDATE-PENDING MAILS"}
-              value={addressUpdatePendingCount}
-              iconSrc={MailIcon}
-            />
-            {/* <InfoCard
+      <div>
+        {isLoading ? (
+          <div className="fixed top-0 left-[100px] w-full h-full bg-[#737373] bg-opacity-70 flex items-center justify-center ">
+            <div className="flex flex-col items-center">
+              <div className="w-[100px] h-[100px] border-8 border-gray-300 border-t-[#000] rounded-full animate-spin"></div>
+              <span className="mt-4 text-[25px] text-black font-sans tracking-wide">
+                Loading...
+              </span>
+            </div>
+          </div>
+        ) : (
+          <>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                padding: "10px",
+                // fontWeight: "bold",
+                marginBottom: "10px",
+                marginTop: "10px",
+                backgroundColor: "#a3a3a3",
+              }}
+            >
+              All Address-Update Mails
+              <img
+                src={DownArrowIcon}
+                alt="All In-Area Mails"
+                style={{
+                  marginRight: "10px",
+                  marginLeft: "20px",
+                  width: "30px",
+                  height: "30px",
+                }}
+              />
+            </div>
+            <div className="grid grid-cols-12">
+              <div className="col-span-2 flex flex-col pt-[4.5px] ">
+                <div>
+                  <InfoIconCardSmall
+                    backgroundColor={"#ffffff"}
+                    title={"NEW ADDRESS-UPDATE MAILS"}
+                    value={addressUpdateCount}
+                    iconSrc={MailIcon}
+                  />
+                  <div className="h-[12px]"></div>
+                  <InfoIconCardSmall
+                    backgroundColor={"#ffffff"}
+                    title={"UPDATE-PENDING MAILS"}
+                    value={addressUpdatePendingCount}
+                    iconSrc={MailIcon}
+                  />
+                  {/* <InfoCard
               backgroundColor={"#ffffff"}
               title={"NEW ADDRESS-UPDATE MAILS"}
               value={addressUpdateCount}
             /> */}
-          </div>
-          {/* <div>
+                </div>
+                {/* <div>
             <InfoCard
               backgroundColor={"#ffffff"}
               title={"UPDATE-PENDING MAILS"}
               value={addressUpdatePendingCount}
             />
           </div> */}
-          <div className="mt-[270px]">
-            <div className="flex flex-col">
-              <Button
-                variant="contained"
-                style={{ backgroundColor: "#852318" }}
-              >
-                PROCESS ALL NEW
-                <br />
-                ADDRESS UPDATE MAILS
-              </Button>
-            </div>
-            {/* <div>
+                <div className="mt-[270px]">
+                  <div className="flex flex-col">
+                    <Button
+                      variant="contained"
+                      style={{ backgroundColor: "#852318" }}
+                    >
+                      PROCESS ALL NEW
+                      <br />
+                      ADDRESS UPDATE MAILS
+                    </Button>
+                  </div>
+                  {/* <div>
               <Button variant="contained">
                 Process All
                 <br />
                 Return To Sender
               </Button>
             </div> */}
-          </div>
-        </div>
+                </div>
+              </div>
 
-        <div
-          className="col-span-10"
-          style={{
-            height: 550,
-            paddingTop: "5px",
-            marginHorizontal: "10px",
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <DataGrid
-            rows={rows}
-            columns={columns}
-            rowHeight={50}
-            getRowId={(row) => row.mailId}
-            sx={{
-              backgroundColor: "#f5f5f5",
-              boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.1)",
-              ".MuiDataGrid-columnSeparator": {
-                display: "none",
-              },
-              "&.MuiDataGrid-root": {
-                border: "none",
-              },
-            }}
-            initialState={{
-              pagination: {
-                paginationModel: { page: 0, pageSize: 10 },
-              },
-            }}
-          />
-        </div>
+              <div
+                className="col-span-10"
+                style={{
+                  height: 550,
+                  paddingTop: "5px",
+                  marginHorizontal: "10px",
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <DataGrid
+                  rows={rows}
+                  columns={columns}
+                  rowHeight={50}
+                  getRowId={(row) => row.mailId}
+                  sx={{
+                    backgroundColor: "#f5f5f5",
+                    boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.1)",
+                    ".MuiDataGrid-columnSeparator": {
+                      display: "none",
+                    },
+                    "&.MuiDataGrid-root": {
+                      border: "none",
+                    },
+                  }}
+                  initialState={{
+                    pagination: {
+                      paginationModel: { page: 0, pageSize: 10 },
+                    },
+                  }}
+                />
+              </div>
+            </div>
+          </>
+        )}
       </div>
     </>
   );

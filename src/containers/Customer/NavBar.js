@@ -117,7 +117,7 @@ export default function Example() {
                     className="hidden sm:block"
                     style={{ textAlign: "center" }}
                   >
-                    <span>NEGOMBO PO</span>
+                    <span>NEGOMBO POST</span>
                   </div>
                 </div>
                 <div className="hidden sm:ml-6 sm:block">

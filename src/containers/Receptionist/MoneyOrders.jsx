@@ -38,6 +38,9 @@ const MoneyOrders = () => {
   const [checked, setChecked] = useState(false);
   const [recipientName, setRecipientName] = useState("");
   const [recipientCity, setRecipientCity] = useState("");
+
+  const [customerId, setCustomerId] = useState("2");
+
   const [senderCity, setSenderCity] = useState("");
   const [addressType, setAddressType] = useState(null);
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -140,9 +143,25 @@ const MoneyOrders = () => {
   };
 
   const handlePayment = () => {
+    // fetch("/api/payment", {
+    //   // Your backend endpoint
+    //   method: "POST",
+    //   body: JSON.stringify(orderDetails),
+    //   headers: { "Content-Type": "application/json" },
+    // })
+    //   .then((response) => response.json())
+    //   .then((data) => {
+    //     if (data.paymentUrl) {
+    //       window.location.href = data.paymentUrl; // Redirect the user to the Stripe Checkout page
+    //     }
+    //   })
+    //   .catch((error) => console.error("Payment creation failed", error));
+    console.log(
+      `http://localhost:8081/api/payment-gateway/create?id=${customerId}&amount=${formState.transferAmount}`
+    );
     axios
       .post(
-        `http://localhost:8081/api/payment-gateway/create?id=2&amount=${formState.transferAmount}`
+        `http://localhost:8081/api/payment-gateway/create?id=${customerId}&amount=${formState.transferAmount}`
       )
       .then((response) => {
         const data = response.data;

@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import BarChart from "./BarChart";
 import { Box, Breadcrumbs, Button } from "@mui/material";
 import StatisticCard from "./StatisticCard";
@@ -48,16 +48,50 @@ const StyledBreadcrumb1 = styled(Chip)(({ theme }) => ({
 }));
 
 const Statistics = () => {
+  const [isLoading, setLoading] = React.useState(true); // Set initial loading to true
   const componentRef = useRef();
   const handlePrint = useReactToPrint({
     content: () => componentRef.current,
   });
+
+  const minimumLoadingDuration = (promise, duration) => {
+    return Promise.all([
+      promise,
+      new Promise((resolve) => setTimeout(resolve, duration)),
+    ]);
+  };
+
+  useEffect(() => {
+    const loadStatistics = async () => {
+      setLoading(true);
+      await minimumLoadingDuration(
+        Promise.resolve(),
+        process.env.REACT_APP_LOADING_DELAY
+      ); // Simulate loading with a minimum of 1.2 seconds
+      setLoading(false); // Set loading to false after the delay
+    };
+    loadStatistics();
+  }, []);
+
+  if (isLoading) {
+    return (
+      <div className="fixed top-0 left-[100px] w-full h-full bg-[#737373] bg-opacity-70 flex items-center justify-center ">
+        <div className="flex flex-col items-center">
+          <div className="w-[100px] h-[100px] border-8 border-gray-300 border-t-[#000] rounded-full animate-spin"></div>
+          <span className="mt-4 text-[25px] text-black font-sans tracking-wide">
+            Loading...
+          </span>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <>
       <Breadcrumbs aria-label="breadcrumb">
         <StyledBreadcrumb
           component="a"
-          href="#"
+          href="/admin/postmaster/"
           label="Dashboard"
           // icon={<HomeIcon fontSize="small" />}
         />

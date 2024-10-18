@@ -6,7 +6,7 @@ import StepLabel from "@mui/material/StepLabel";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { mailFormField } from "../../../data/formFields";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import CustomizedSnackbars from "../../../components/Custom/CustomizedSnackbars";
 
 import {
@@ -23,8 +23,6 @@ import AddressValidationModal from "../AddressValidationModal";
 import SenderAddressValidationModel from "../modals/SenderAddressValidationModel";
 import CostFormNew from "./CostFormNew";
 import NormalParcelMailReceipt from "../../../components/Receipts/NormalParcelMailReceipt";
-import { CheckCircleIcon, CircleStackIcon } from "@heroicons/react/20/solid";
-import { Navigate } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 
@@ -80,12 +78,6 @@ export default function HorizontalLinearStepper() {
   const [cost, setCost] = useState(null);
   const [isRegisterCompleted, setIsRegisterCompleted] = useState(false);
   const navigate = useNavigate();
-  const [recipientName, setRecipientName] = useState("");
-  const [recipientCity, setRecipientCity] = useState("");
-  const [senderCity, setSenderCity] = useState("");
-  const [addressType, setAddressType] = useState(null);
-  const [isSubmitted, setIsSubmitted] = useState(false);
-  const [isVerified, setIsVerified] = useState(false);
   const [verifiedAddressText, setVerifiedAddressText] = useState();
   const [verifiedAddressId, setVerifiedAddressId] = useState();
   const [verifiedAddressCoordinate_Lat, setVerifiedAddressCoordinate_Lat] =
@@ -93,16 +85,6 @@ export default function HorizontalLinearStepper() {
   const [verifiedAddressCoordinate_Lng, setVerifiedAddressCoordinate_Lng] =
     useState();
 
-  const [verifiedSenderAddressText, setVerifiedSenderAddressText] = useState();
-  const [verifiedSenderAddressId, setVerifiedSenderAddressId] = useState();
-  const [
-    verifiedSenderAddressCoordinate_Lat,
-    setVerifiedSenderAddressCoordinate_Lat,
-  ] = useState();
-  const [
-    verifiedSenderAddressCoordinate_Lng,
-    setVerifiedSenderAddressCoordinate_Lng,
-  ] = useState();
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState("");
   const [snackbarSeverity, setSnackbarSeverity] = useState("");
@@ -204,23 +186,6 @@ export default function HorizontalLinearStepper() {
       ...formState,
       [id]: event.target.value,
     });
-  };
-  const handleSenderCheckBox = () => {
-    setChecked(!checked);
-    /*if (checked) {
-      formik.senderName = "";
-      formik.senderCity = "";
-      formik.senderAddress = "";
-      formik.senderPostalZone = "";
-      formik.senderHouseNumber = "";
-    }*/
-    if (checked) {
-      formik.setFieldValue("senderName", "");
-      formik.setFieldValue("senderCity", "");
-      formik.setFieldValue("senderAddress", "");
-      formik.setFieldValue("senderPostalZone", "");
-      formik.setFieldValue("senderHouseNumber", "");
-    }
   };
 
   //const handleSubmit = () => {

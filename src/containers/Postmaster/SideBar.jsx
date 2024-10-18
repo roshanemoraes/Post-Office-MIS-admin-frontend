@@ -1,14 +1,15 @@
 import React from "react";
 import { useState } from "react";
+import { Link, useLocation } from "react-router-dom";
 import "./style.css";
-import { Link } from "react-router-dom";
 
 const SideBar = ({ onSidebarToggle }) => {
-  const [isSideBarOpen, setSideBarOpen] = useState(window.innerWidth >= 1024);
-  const [isSubMenuOpen, setSubMenuOpen] = useState(Array(1).fill(true));
+  const [isSideBarOpen, setSideBarOpen] = useState(window.innerWidth >= 1150);
+  const [isSubMenuOpen, setSubMenuOpen] = useState(Array(2).fill(true));
+  const location = useLocation();
 
   const handleSidebarToggle = () => {
-    if (window.innerWidth < 1024) {
+    if (window.innerWidth < 1150) {
       setSideBarOpen(false);
       onSidebarToggle(false);
     } else {
@@ -18,35 +19,37 @@ const SideBar = ({ onSidebarToggle }) => {
   };
 
   const handleSubMenuToggle = (index) => {
-    console.log("handleSubMenuToggle called with index:", index);
     const newSubMenuOpen = [...isSubMenuOpen];
     newSubMenuOpen[index] = !newSubMenuOpen[index];
-    console.log("newSubMenuOpen:", newSubMenuOpen);
     setSubMenuOpen(newSubMenuOpen);
+  };
+
+  const isActiveLink = (path) => {
+    return location.pathname === path ? "active" : "";
   };
 
   return (
     <div>
       <div className={`sidebar ${isSideBarOpen ? "" : "close"}`}>
-        <div className="logo-details">
+        <div className={`logo-details ${isSideBarOpen ? "" : "close"}`}>
           <i className="bx bx-menu" onClick={handleSidebarToggle}></i>
           <span className="logo_name">SL POST</span>
         </div>
-        <ul className="nav-links">
-          <li>
+        <ul className={`nav-links ${isSideBarOpen ? "" : "close"}`}>
+          <li className={isActiveLink("/admin/postmaster/")}>
             <Link to="/admin/postmaster/">
               <i className="bx bx-grid-alt"></i>
               <span className="link_name">DASHBOARD</span>
             </Link>
             <ul className="sub-menu blank">
               <li>
-                <Link className="link_name" to="#">
-                  Dashboard
+                <Link className="link_name" to="/admin/postmaster/">
+                  DASHBOARD
                 </Link>
               </li>
             </ul>
           </li>
-          <li>
+          <li className={isActiveLink("/admin/postmaster/statistics")}>
             <Link to="/admin/postmaster/statistics">
               <i className="bx bx-stats"></i>
               <span className="link_name">STATISTICS</span>
@@ -59,7 +62,7 @@ const SideBar = ({ onSidebarToggle }) => {
               </li>
             </ul>
           </li>
-          <li>
+          <li className={isActiveLink("/admin/postmaster/financial-mgmt")}>
             <Link to="/admin/postmaster/financial-mgmt">
               <i className="bx bx-dollar-circle"></i>
               <span className="link_name">FINANCIAL MGMT</span>
@@ -75,88 +78,48 @@ const SideBar = ({ onSidebarToggle }) => {
               </li>
             </ul>
           </li>
-          {/* <li className={isSubMenuOpen[0] ? "showMenu" : ""}>
-            <div className="iocn-link">
-              <Link to="#">
-                <i className="bx bx-collection"></i>
-                <span className="link_name">Statistics</span>
-              </Link>
-              <i
-                className="bx bxs-chevron-down arrow"
-                onClick={() => handleSubMenuToggle(0)}
-              ></i>
-            </div>
-            <ul className="sub-menu">
-              <li>
-                <Link className="link_name" to="#">
-                  Statistics
-                </Link>
-              </li>
-              <li>
-                <Link to="#">Chart 1</Link>
-              </li>
-              <li>
-                <Link to="#">Chart 2</Link>
-              </li>
-              <li>
-                <Link to="#">Chart 3</Link>
-              </li>
-            </ul>
-          </li> */}
-          <li>
+          <li className={isActiveLink("/admin/postmaster/live-map")}>
             <Link to="/admin/postmaster/live-map">
               <i className="bx bxs-map"></i>
               <span className="link_name">LIVE MAP</span>
             </Link>
             <ul className="sub-menu blank">
               <li>
-                <Link className="link_name" to="#">
+                <Link className="link_name" to="/admin/postmaster/live-map">
                   LIVE MAP
                 </Link>
               </li>
             </ul>
           </li>
-
-          <li>
+          <li className={isActiveLink("/admin/postmaster/add-employee")}>
             <Link to="/admin/postmaster/add-employee">
               <i className="bx bxs-user"></i>
               <span className="link_name">ADD EMPLOYEE</span>
             </Link>
             <ul className="sub-menu blank">
               <li>
-                <Link className="link_name" to="#">
+                <Link className="link_name" to="/admin/postmaster/add-employee">
                   ADD EMPLOYEE
                 </Link>
               </li>
             </ul>
           </li>
-          <li>
+          <li className={isActiveLink("/admin/postmaster/list-employee")}>
             <Link to="/admin/postmaster/list-employee">
               <i className="bx bx-list-ul"></i>
               <span className="link_name">LIST EMPLOYEES</span>
             </Link>
             <ul className="sub-menu blank">
               <li>
-                <Link className="link_name" to="#">
+                <Link
+                  className="link_name"
+                  to="/admin/postmaster/list-employee"
+                >
                   LIST EMPLOYEES
                 </Link>
               </li>
             </ul>
           </li>
-          {/* <li>
-            <Link to="/admin/postmaster/test">
-              <i className="bx bx-compass"></i>
-              <span className="link_name">TEST PORTAL</span>
-            </Link>
-            <ul className="sub-menu blank">
-              <li>
-                <Link className="link_name" to="#">
-                  TEST PORTAL
-                </Link>
-              </li>
-            </ul>
-          </li> */}
-
           <li>
             <div className="profile-details">
               <div className="profile-content"></div>
