@@ -85,7 +85,7 @@ const Header = () => {
           </nav>
         )}
       </div>
-      <div className="hidden md:flex items-center gap-6">
+      {/*<div className="hidden md:flex items-center gap-6">
         <a
           href="https://github.com/roshanemoraes"
           target="_blank"
@@ -126,7 +126,7 @@ const Header = () => {
           </svg>
           <span className="sr-only">LinkedIn</span>
         </a>
-      </div>
+      </div>*/}
     </header>
   );
 };

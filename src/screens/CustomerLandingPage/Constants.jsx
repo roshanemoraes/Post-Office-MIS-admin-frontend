@@ -1,7 +1,3 @@
-//import project1 from "../assets/projects/project-1.png";
-//import project2 from "../assets/projects/project-2.png";
-//import project3 from "../assets/projects/project-3.png";
-//import project4 from "../assets/projects/project-4.png";
 import route from "./../CustomerLandingPage/DeliveryRouteOptimizationImg.jpg";
 import trackingImg from "./../CustomerLandingPage/Tracking.jpg";
 import mailSorting from "./../CustomerLandingPage/MailSorting.jpg";
@@ -9,6 +5,9 @@ import barcode from "./../CustomerLandingPage/Barcode.jpg";
 import addressveri from "./../CustomerLandingPage/AddressVeri.jpg";
 import cusmgmt from "./../CustomerLandingPage/CusMgmt.jpg";
 import ReturnImg from "./../CustomerLandingPage/ReturnImg.jpg";
+import financial from "./../CustomerLandingPage/financial.jpg";
+import bulkmail from "./../CustomerLandingPage/bulkmail.jpg";
+import moneyOrder from "./../CustomerLandingPage/moneyOrders.jpg";
 
 export const HERO_CONTENT = `We are in a constant effort to deliver a fast, reliable, efficient delivery service to serve the nation.`;
 
@@ -72,21 +71,21 @@ export const PROJECTS = [
   //8
   {
     title: "Financial Management",
-    //image: project2,
+    image: financial,
     description:
       "Stay on top of finances. Track revenue, process payments, and generate invoices effortlessly—all backed by robust financial reporting.",
   },
   //9
   {
     title: "Bulk Mail Availability",
-    //image: project2,
+    image: bulkmail,
     description:
       "Large number of mails? We got you covered. Big mailings made easy. Import lists, print labels, and handle large volumes with bulk discounts and streamlined processing.",
   },
   //10
   {
     title: "Money Orders",
-    //image: project2,
+    image: moneyOrder,
     description:
       "Fast, secure, and convenient—our Money Orders service transforms the way you send and receive money.",
   },
