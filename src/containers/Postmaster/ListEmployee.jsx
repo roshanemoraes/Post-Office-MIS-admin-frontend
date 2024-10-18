@@ -30,9 +30,12 @@ export default function ListEmployee() {
     try {
       await minimumLoadingDuration(
         axios
-          .get("http://localhost:8081/api/postmaster/employee/list-employee", {
-            withCredentials: true,
-          })
+          .get(
+            "https://sep12-backend-byd6esdhhkg8dffq.canadacentral-01.azurewebsites.net/api/postmaster/employee/list-employee",
+            {
+              withCredentials: true,
+            }
+          )
           .then((response) => {
             setRows(response.data);
           }),

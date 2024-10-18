@@ -12,7 +12,7 @@ const Profile = () => {
   const fetchData = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:8081/api/customer/list/profile/${customerId}`
+        `https://sep12-backend-byd6esdhhkg8dffq.canadacentral-01.azurewebsites.net/api/customer/list/profile/${customerId}`
       );
       setRows(response.data);
     } catch (error) {

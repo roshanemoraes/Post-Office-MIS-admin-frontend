@@ -75,7 +75,7 @@ export default function AddressUpdate() {
   const handleOneReturnToSender = async (row) => {
     try {
       const response = await axios.post(
-        `http://localhost:8081/api/delivery-manager/return-mail/address-update/add/${row.mailId}`,
+        `https://sep12-backend-byd6esdhhkg8dffq.canadacentral-01.azurewebsites.net/api/delivery-manager/return-mail/address-update/add/${row.mailId}`,
         { withCredentials: true }
       );
       if (response.status === 200) {
@@ -104,7 +104,7 @@ export default function AddressUpdate() {
       await minimumLoadingDuration(
         axios
           .get(
-            "http://localhost:8081/api/delivery-manager/return-mail/address-update",
+            "https://sep12-backend-byd6esdhhkg8dffq.canadacentral-01.azurewebsites.net/api/delivery-manager/return-mail/address-update",
             {
               withCredentials: true,
             }
@@ -128,7 +128,10 @@ export default function AddressUpdate() {
     const stompClient = new Client({
       brokerURL: "ws://localhost:8081/ws",
       connectHeaders: {},
-      webSocketFactory: () => new SockJS("http://localhost:8081/ws"),
+      webSocketFactory: () =>
+        new SockJS(
+          "https://sep12-backend-byd6esdhhkg8dffq.canadacentral-01.azurewebsites.net/ws"
+        ),
       onConnect: () => {
         console.log("Connected to WebSocket");
         const customerId = 2;

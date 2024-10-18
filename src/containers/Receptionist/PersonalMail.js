@@ -134,7 +134,7 @@ const PersonalMail = () => {
       console.log(formik.values);
       // axios
       //   .post(
-      //     "http://localhost:8081/api/receptionist/post/add/normal-post",
+      //     "https://sep12-backend-byd6esdhhkg8dffq.canadacentral-01.azurewebsites.net/api/receptionist/post/add/normal-post",
       //     formState,
       //     { withCredentials: true }
       //   )

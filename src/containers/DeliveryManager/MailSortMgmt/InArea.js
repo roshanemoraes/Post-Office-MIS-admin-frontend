@@ -29,7 +29,7 @@ export default function InArea() {
   const handleAssign = async (data) => {
     try {
       const response = await axios.post(
-        "http://localhost:8081/api/delivery-manager/sort/assign/add",
+        "https://sep12-backend-byd6esdhhkg8dffq.canadacentral-01.azurewebsites.net/api/delivery-manager/sort/assign/add",
         {
           zone: data.zone,
           postmanId: data.postmanId,
@@ -86,7 +86,7 @@ export default function InArea() {
       await minimumLoadingDuration(
         axios
           .get(
-            "http://localhost:8081/api/delivery-manager/sort/get-assignment-plan/status",
+            "https://sep12-backend-byd6esdhhkg8dffq.canadacentral-01.azurewebsites.net/api/delivery-manager/sort/get-assignment-plan/status",
             { withCredentials: true }
           )
           .then((response) => {
@@ -113,7 +113,7 @@ export default function InArea() {
   const fetchData = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:8081/api/delivery-manager/sort/all-pending-in-area",
+        "https://sep12-backend-byd6esdhhkg8dffq.canadacentral-01.azurewebsites.net/api/delivery-manager/sort/all-pending-in-area",
         { withCredentials: true }
       );
       setRows(response.data);
@@ -133,7 +133,7 @@ export default function InArea() {
       await minimumLoadingDuration(
         axios
           .get(
-            "http://localhost:8081/api/delivery-manager/sort/all-postman-assignments",
+            "https://sep12-backend-byd6esdhhkg8dffq.canadacentral-01.azurewebsites.net/api/delivery-manager/sort/all-postman-assignments",
             { withCredentials: true }
           )
           .then((response) => {

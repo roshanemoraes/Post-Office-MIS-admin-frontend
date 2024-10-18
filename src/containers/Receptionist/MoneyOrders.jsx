@@ -53,7 +53,7 @@ const MoneyOrders = () => {
 
     axios
       .post(
-        `http://localhost:8081/api/payment-gateway/create?id=${customerId}&amount=${totalAmount}`
+        `https://sep12-backend-byd6esdhhkg8dffq.canadacentral-01.azurewebsites.net/api/payment-gateway/create?id=${customerId}&amount=${totalAmount}`
       )
       .then((response) => {
         const data = response.data;
@@ -68,7 +68,7 @@ const MoneyOrders = () => {
     console.log(formState);
     axios
       .post(
-        "http://localhost:8081/api/receptionist/post/add/normal-post",
+        "https://sep12-backend-byd6esdhhkg8dffq.canadacentral-01.azurewebsites.net/api/receptionist/post/add/normal-post",
         formState,
         { withCredentials: true }
       )

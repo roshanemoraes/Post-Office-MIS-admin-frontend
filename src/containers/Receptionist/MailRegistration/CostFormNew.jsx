@@ -19,7 +19,7 @@ const CostFormNew = ({ postType, description, onCostUpdate }) => {
   const calculateCost = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:8081/postage/get/${postType}?weight=${weight}`,
+        `https://sep12-backend-byd6esdhhkg8dffq.canadacentral-01.azurewebsites.net/postage/get/${postType}?weight=${weight}`,
         { withCredentials: true }
       );
       console.log("response came:", response.data.price);
@@ -45,7 +45,7 @@ const CostFormNew = ({ postType, description, onCostUpdate }) => {
     onSubmit: async (values) => {
       try {
         const response = await axios.get(
-          `http://localhost:8081/postage/get/${postType}?weight=${values.weight}`,
+          `https://sep12-backend-byd6esdhhkg8dffq.canadacentral-01.azurewebsites.net/postage/get/${postType}?weight=${values.weight}`,
           { withCredentials: true }
         );
         console.log("response came:", response.data.price);

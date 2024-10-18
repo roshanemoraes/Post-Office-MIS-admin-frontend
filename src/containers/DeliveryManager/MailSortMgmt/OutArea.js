@@ -134,7 +134,7 @@ export default function OutArea() {
   const fetchData = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:8081/api/delivery-manager/sort/all-pending-out-area",
+        "https://sep12-backend-byd6esdhhkg8dffq.canadacentral-01.azurewebsites.net/api/delivery-manager/sort/all-pending-out-area",
         { withCredentials: true }
       );
       setRows(response.data);
@@ -149,7 +149,7 @@ export default function OutArea() {
       await minimumLoadingDuration(
         axios
           .get(
-            "http://localhost:8081/api/delivery-manager/sort/all-distribution-assignments",
+            "https://sep12-backend-byd6esdhhkg8dffq.canadacentral-01.azurewebsites.net/api/delivery-manager/sort/all-distribution-assignments",
             { withCredentials: true }
           )
           .then((response) => {

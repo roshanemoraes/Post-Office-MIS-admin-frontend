@@ -44,7 +44,9 @@ const MoneyOrderCustomer = () => {
     //   .catch((error) => console.error("Payment creation failed", error));
 
     axios
-      .post("http://localhost:8081/api/payment-gateway/customer/create")
+      .post(
+        "https://sep12-backend-byd6esdhhkg8dffq.canadacentral-01.azurewebsites.net/api/payment-gateway/customer/create"
+      )
       .then((response) => {
         const data = response.data;
         if (data.paymentUrl) {
@@ -58,7 +60,7 @@ const MoneyOrderCustomer = () => {
     console.log(formState);
     axios
       .post(
-        "http://localhost:8081/api/receptionist/post/add/normal-post",
+        "https://sep12-backend-byd6esdhhkg8dffq.canadacentral-01.azurewebsites.net/api/receptionist/post/add/normal-post",
         formState,
         { withCredentials: true }
       )

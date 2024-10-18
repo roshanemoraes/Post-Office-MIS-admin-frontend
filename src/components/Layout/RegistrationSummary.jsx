@@ -80,7 +80,7 @@ export default function RegistrationSummary() {
     setLoading(true);
     try {
       const response = await axios.get(
-        "http://localhost:8081/api/receptionist/summary/get-mails",
+        "https://sep12-backend-byd6esdhhkg8dffq.canadacentral-01.azurewebsites.net/api/receptionist/summary/get-mails",
         {
           withCredentials: true,
 
@@ -106,9 +106,9 @@ export default function RegistrationSummary() {
 
   const deleteResource = async (id) => {
     try {
-      // http://localhost:8081/api/receptionist/post/add/delete/mail/1
+      // https://sep12-backend-byd6esdhhkg8dffq.canadacentral-01.azurewebsites.net/api/receptionist/post/add/delete/mail/1
       const response = await axios.delete(
-        `http://localhost:8081/api/receptionist/post/add/delete/mail/${id}`
+        `https://sep12-backend-byd6esdhhkg8dffq.canadacentral-01.azurewebsites.net/api/receptionist/post/add/delete/mail/${id}`
       );
       console.log("Resource deleted successfully:", response.data);
     } catch (error) {

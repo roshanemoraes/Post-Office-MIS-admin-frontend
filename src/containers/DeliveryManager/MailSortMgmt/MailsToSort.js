@@ -35,9 +35,12 @@ export default function MailsToSort() {
     try {
       await minimumLoadingDuration(
         axios
-          .get("http://localhost:8081/api/delivery-manager/sort/all-pending", {
-            withCredentials: true,
-          })
+          .get(
+            "https://sep12-backend-byd6esdhhkg8dffq.canadacentral-01.azurewebsites.net/api/delivery-manager/sort/all-pending",
+            {
+              withCredentials: true,
+            }
+          )
           .then((response) => {
             setRows(response.data);
             // console.log(response.data);

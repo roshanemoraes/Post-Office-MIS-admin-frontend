@@ -19,7 +19,7 @@ export default function ProfileDataTable() {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:8081/api/customer/list/profile/2" //- backend URL
+          "https://sep12-backend-byd6esdhhkg8dffq.canadacentral-01.azurewebsites.net/api/customer/list/profile/2" //- backend URL
           //'https://ca4b8d9b-5e2d-419e-a788-e0665410011f.mock.pstmn.io/Mobile'
           //"https://dd98e124-a193-432b-9b9b-af77479440a5.mock.pstmn.io/Profile"  - postman table url
         );

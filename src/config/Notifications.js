@@ -10,7 +10,10 @@ const Notifications = () => {
     const stompClient = new Client({
       brokerURL: "ws://localhost:8081/ws",
       connectHeaders: {},
-      webSocketFactory: () => new SockJS("http://localhost:8081/ws"),
+      webSocketFactory: () =>
+        new SockJS(
+          "https://sep12-backend-byd6esdhhkg8dffq.canadacentral-01.azurewebsites.net/ws"
+        ),
       onConnect: () => {
         console.log("Connected to WebSocket");
         stompClient.subscribe(`/topic/notifications`, (message) => {

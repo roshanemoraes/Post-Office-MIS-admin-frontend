@@ -49,9 +49,13 @@ function AddressValidationModal({ formState, onValidationResult }) {
     };
     console.log("nside modal", data);
     axios
-      .post("http://localhost:8081/api/receptionist/address/validate", data, {
-        withCredentials: true,
-      })
+      .post(
+        "https://sep12-backend-byd6esdhhkg8dffq.canadacentral-01.azurewebsites.net/api/receptionist/address/validate",
+        data,
+        {
+          withCredentials: true,
+        }
+      )
 
       .then((response) => {
         console.log("validation result came, success!");

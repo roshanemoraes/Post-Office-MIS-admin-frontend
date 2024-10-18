@@ -52,7 +52,7 @@ export default function AssignRoute() {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:8081/api/delivery-manager/route/list-all",
+          "https://sep12-backend-byd6esdhhkg8dffq.canadacentral-01.azurewebsites.net/api/delivery-manager/route/list-all",
           { withCredentials: true }
         );
         setRows(response.data);
