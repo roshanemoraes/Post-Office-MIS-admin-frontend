@@ -9,6 +9,7 @@
 });*/
 describe("Login Functionality", () => {
   it("Login", () => {
+    cy.viewport(1440, 1000);
     cy.visit("http://localhost:3000/");
     //cy.wait(5000);
     cy.get(":nth-child(1) > .MuiButtonBase-root").click();
