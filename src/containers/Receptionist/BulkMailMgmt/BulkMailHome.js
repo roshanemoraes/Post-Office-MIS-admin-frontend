@@ -109,20 +109,24 @@ const BulkMailHome = () => {
     });
 
     axios
-      .post("http://localhost:8081/api/receptionist/bulk-mail/upload", fd, {
-        onUploadProgress: (progressEvent) => {
-          setProgress((prevState) => {
-            return {
-              ...prevState,
-              pc: progressEvent.progress * 100,
-            };
-          });
-        },
-        withCredentials: true,
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      })
+      .post(
+        "https://sep12-backend-byd6esdhhkg8dffq.canadacentral-01.azurewebsites.net/api/receptionist/bulk-mail/upload",
+        fd,
+        {
+          onUploadProgress: (progressEvent) => {
+            setProgress((prevState) => {
+              return {
+                ...prevState,
+                pc: progressEvent.progress * 100,
+              };
+            });
+          },
+          withCredentials: true,
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      )
       .then((res) => {
         if (res.status === 200) {
           console.log(res.data.mailCount);

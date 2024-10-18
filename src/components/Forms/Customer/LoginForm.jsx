@@ -12,7 +12,7 @@ function LoginForm() {
   const handleSignIn = async (email, password) => {
     try {
       const response = await axios.post(
-        "http://localhost:8081/authenticate",
+        "https://sep12-backend-byd6esdhhkg8dffq.canadacentral-01.azurewebsites.net/authenticate",
         {
           username: email, // Use email from Formik values
           password: password, // Use password from Formik values

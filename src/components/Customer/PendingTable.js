@@ -20,7 +20,7 @@ export default function PendingTable() {
       try {
         const response = await axios.get(
           //"https://8a488748-6746-4504-8705-1ecb6053c14a.mock.pstmn.io/Demo" //- postman url
-          `http://localhost:8081/api/customer/list/pending/${customerId}`
+          `https://sep12-backend-byd6esdhhkg8dffq.canadacentral-01.azurewebsites.net/api/customer/list/pending/${customerId}`
         );
         console.log("request came!");
         console.log(response.data);

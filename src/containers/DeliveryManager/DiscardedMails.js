@@ -46,7 +46,7 @@ export default function DiscardedMails() {
       await minimumLoadingDuration(
         axios
           .get(
-            "http://localhost:8081/api/delivery-manager/return-mail/discarded-mail",
+            "https://sep12-backend-byd6esdhhkg8dffq.canadacentral-01.azurewebsites.net/api/delivery-manager/return-mail/discarded-mail",
             {
               withCredentials: true,
             }

@@ -78,7 +78,7 @@ const AddEmployee = () => {
   const handleOnSubmit = async (values) => {
     try {
       const response = await axios.post(
-        `http://localhost:8081/api/postmaster/employee/add-employee`,
+        `https://sep12-backend-byd6esdhhkg8dffq.canadacentral-01.azurewebsites.net/api/postmaster/employee/add-employee`,
         values,
         { withCredentials: true }
       );

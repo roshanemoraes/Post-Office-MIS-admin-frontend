@@ -43,7 +43,7 @@ export default function DataTable() {
   const fetchData = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:8081/api/postmaster/employee/list-employee",
+        "https://sep12-backend-byd6esdhhkg8dffq.canadacentral-01.azurewebsites.net/api/postmaster/employee/list-employee",
         { withCredentials: true }
       );
       console.log("request came!");

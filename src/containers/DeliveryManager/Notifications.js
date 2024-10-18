@@ -67,7 +67,7 @@ const Notifications = () => {
     const managerId = "1";
     try {
       const response = await axios.get(
-        `http://localhost:8081/api/notifications/delivery-manager/today/${managerId}`,
+        `https://sep12-backend-byd6esdhhkg8dffq.canadacentral-01.azurewebsites.net/api/notifications/delivery-manager/today/${managerId}`,
         { withCredentials: true }
       );
       setRows(response.data);
@@ -84,7 +84,7 @@ const Notifications = () => {
     setIsClicked(false);
     try {
       const response = await axios.get(
-        "http://localhost:8081/api/notifications/unread/2",
+        "https://sep12-backend-byd6esdhhkg8dffq.canadacentral-01.azurewebsites.net/api/notifications/unread/2",
         { withCredentials: true }
       );
       setRows(response.data);
@@ -99,7 +99,10 @@ const Notifications = () => {
     const stompClient = new Client({
       brokerURL: "ws://localhost:8081/ws",
       connectHeaders: {},
-      webSocketFactory: () => new SockJS("http://localhost:8081/ws"),
+      webSocketFactory: () =>
+        new SockJS(
+          "https://sep12-backend-byd6esdhhkg8dffq.canadacentral-01.azurewebsites.net/ws"
+        ),
       onConnect: () => {
         console.log("Connected to WebSocket");
         stompClient.subscribe(`/topic/notifications`, (message) => {

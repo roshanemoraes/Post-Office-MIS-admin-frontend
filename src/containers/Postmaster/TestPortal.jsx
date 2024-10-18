@@ -9,7 +9,7 @@ const TestPortal = () => {
       try {
         const customerId = "2";
         const response = await axios.get(
-          `http://localhost:8081/api/notifications/${customerId}`,
+          `https://sep12-backend-byd6esdhhkg8dffq.canadacentral-01.azurewebsites.net/api/notifications/${customerId}`,
           { withCredentials: true }
         );
         setNotifications(response.data);

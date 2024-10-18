@@ -9,7 +9,7 @@ const CustomerMgmt = () => {
   const handleSearch = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:8081/api/receptionist/customer-detail/?searchType=${searchType}&searchTerm=${searchTerm}`,
+        `https://sep12-backend-byd6esdhhkg8dffq.canadacentral-01.azurewebsites.net/api/receptionist/customer-detail/?searchType=${searchType}&searchTerm=${searchTerm}`,
         {
           withCredentials: true,
         }

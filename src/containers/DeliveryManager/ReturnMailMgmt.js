@@ -29,7 +29,7 @@ export default function ReturnMailMgmt() {
   const handleReturnToSender = async (undeliverableId) => {
     try {
       const response = await axios.post(
-        "http://localhost:8081/api/delivery-manager/return-mail/add/return-to-sender",
+        "https://sep12-backend-byd6esdhhkg8dffq.canadacentral-01.azurewebsites.net/api/delivery-manager/return-mail/add/return-to-sender",
         undeliverableId,
         {
           withCredentials: true,
@@ -55,7 +55,7 @@ export default function ReturnMailMgmt() {
   const handleAddressUpdate = async (undeliverableId) => {
     try {
       const response = await axios.post(
-        "http://localhost:8081/api/delivery-manager/return-mail/add/address-update",
+        "https://sep12-backend-byd6esdhhkg8dffq.canadacentral-01.azurewebsites.net/api/delivery-manager/return-mail/add/address-update",
         undeliverableId,
         {
           withCredentials: true,
@@ -81,7 +81,7 @@ export default function ReturnMailMgmt() {
     console.log("Mail ID: ", undeliverableId);
     try {
       const response = await axios.post(
-        "http://localhost:8081/api/delivery-manager/return-mail/add/discarded-mail",
+        "https://sep12-backend-byd6esdhhkg8dffq.canadacentral-01.azurewebsites.net/api/delivery-manager/return-mail/add/discarded-mail",
         undeliverableId,
         {
           withCredentials: true,
@@ -164,9 +164,12 @@ export default function ReturnMailMgmt() {
     try {
       await minimumLoadingDuration(
         axios
-          .get("http://localhost:8081/api/delivery-manager/return-mail/", {
-            withCredentials: true,
-          })
+          .get(
+            "https://sep12-backend-byd6esdhhkg8dffq.canadacentral-01.azurewebsites.net/api/delivery-manager/return-mail/",
+            {
+              withCredentials: true,
+            }
+          )
           .then((response) => {
             setRows(response.data);
             // console.log(response.data);

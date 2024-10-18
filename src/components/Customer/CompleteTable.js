@@ -21,7 +21,7 @@ export default function CompleteTable() {
       try {
         console.log("request came............started!");
         const response = await axios.get(
-          // `http://localhost:8081/api/customer/list/delivered/${customerId}` //- backend link
+          // `https://sep12-backend-byd6esdhhkg8dffq.canadacentral-01.azurewebsites.net/api/customer/list/delivered/${customerId}` //- backend link
           "https://cbf27527-2de2-48c0-9f43-040550208f84.mock.pstmn.io/Delivered" //postman link
         );
         console.log("request cameww!");

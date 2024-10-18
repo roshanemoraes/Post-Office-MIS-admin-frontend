@@ -203,7 +203,7 @@ export default function HorizontalLinearStepperNormalCourier() {
       );
       // axios
       //   .post(
-      //     "http://localhost:8081/api/receptionist/post/add/normal-courier",
+      //     "https://sep12-backend-byd6esdhhkg8dffq.canadacentral-01.azurewebsites.net/api/receptionist/post/add/normal-courier",
       //     formState,
       //     { withCredentials: true }
       //   )
