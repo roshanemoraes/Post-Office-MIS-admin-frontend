@@ -43,7 +43,7 @@ const Login = () => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "http://localhost:8081/admin/authenticate",
+        "https://sep12-backend-byd6esdhhkg8dffq.canadacentral-01.azurewebsites.net/admin/authenticate",
         {
           username: email,
           password: password,

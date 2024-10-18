@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import {
@@ -41,11 +41,44 @@ const AddEmployee = () => {
     employeeDateJoined: "",
     role: "",
   };
+  const [isLoading, setLoading] = React.useState(true); // Set initial loading to true
+
+  const minimumLoadingDuration = (promise, duration) => {
+    return Promise.all([
+      promise,
+      new Promise((resolve) => setTimeout(resolve, duration)),
+    ]);
+  };
+
+  useEffect(() => {
+    const loadDashboard = async () => {
+      setLoading(true);
+      await minimumLoadingDuration(
+        Promise.resolve(),
+        process.env.REACT_APP_LOADING_DELAY
+      ); // Simulate loading with a minimum of 1.2 seconds
+      setLoading(false); // Set loading to false after the delay
+    };
+    loadDashboard();
+  }, []);
+
+  if (isLoading) {
+    return (
+      <div className="fixed top-0 left-[100px] w-full h-full bg-[#737373] bg-opacity-70 flex items-center justify-center ">
+        <div className="flex flex-col items-center">
+          <div className="w-[100px] h-[100px] border-8 border-gray-300 border-t-[#000] rounded-full animate-spin"></div>
+          <span className="mt-4 text-[25px] text-black font-sans tracking-wide">
+            Loading...
+          </span>
+        </div>
+      </div>
+    );
+  }
 
   const handleOnSubmit = async (values) => {
     try {
       const response = await axios.post(
-        `http://localhost:8081/api/postmaster/employee/add-employee`,
+        `https://sep12-backend-byd6esdhhkg8dffq.canadacentral-01.azurewebsites.net/api/postmaster/employee/add-employee`,
         values,
         { withCredentials: true }
       );

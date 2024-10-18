@@ -28,7 +28,7 @@ function Home() {
   return (
     <>
       <div className="flex flex-col min-h-screen">
-        <div className="mt-2">
+        <div className="mt-2 mx-[10px]">
           <header className="relative text-center text-white">
             <img
               src={image}

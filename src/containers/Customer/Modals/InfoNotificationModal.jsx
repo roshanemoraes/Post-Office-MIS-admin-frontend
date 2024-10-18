@@ -16,7 +16,7 @@ function InfoNotificationModal({ data }) {
     setShow(true);
     try {
       const response = await axios.get(
-        `http://localhost:8081/api/customer/mail-detail`,
+        `https://sep12-backend-byd6esdhhkg8dffq.canadacentral-01.azurewebsites.net/api/customer/mail-detail`,
         { params: { mailId: data.mailId } }
       );
       console.log(response.data);

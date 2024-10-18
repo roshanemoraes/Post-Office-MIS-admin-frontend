@@ -5,71 +5,49 @@ import { Box, Button } from "@mui/material";
 import { basicSchema } from "../../Layout/Validations/Customer/UserValidation";
 import axios from "axios";
 
-const onSubmit = async (values, actions) => {
-  await new Promise((resolve) => setTimeout(resolve, 1000));
-  actions.resetForm();
-};
-
-/*const handleSignIn = async (e) => {
-  e.preventDefault();
-  try {
-    const response = await axios.post(
-      "http://localhost:8081/authenticate",
-      {
-        username: email,
-        password: password,
-      },
-      { withCredentials: true }
-    );
-    console.log(response.data);
-    setError("");
-    if (response.data.role) {
-      localStorage.setItem("userRoles", JSON.stringify(response.data.role));
-      localStorage.setItem("userName", response.data.username);
-
-      if (response.data.role.includes("ROLE_CUSTOMER")) {
-        navigate("/customer/home");
-      } 
-    } else {
-      console.error("No roles found in response data");
-    }
-  } catch (error) {
-    setError("Login failed. Please check your credentials.");
-  }
-};*/
-
 function LoginForm() {
-  const [errorMessage, setErrorMessage] = useState("");
+  const [errorMessage, setError] = useState(""); 
   const navigate = useNavigate();
+
+  const handleSignIn = async (email, password) => {
+    try {
+      const response = await axios.post(
+        "https://sep12-backend-byd6esdhhkg8dffq.canadacentral-01.azurewebsites.net/authenticate",
+        {
+          username: email, // Use email from Formik values
+          password: password, // Use password from Formik values
+        },
+        { withCredentials: true }
+      );
+      console.log(response.data);
+      setError("");
+      if (response.data.role) {
+        localStorage.setItem("userRoles", JSON.stringify(response.data.role));
+        localStorage.setItem("userName", response.data.username);
+        console.log(response.data.role);
+
+        if (response.data.role.includes("ROLE_CUSTOMER")) {
+          navigate("/customer");   
+        } else {
+          alert("Wrong Credentials");
+        }
+      } else {
+        console.error("No roles found in response data");
+      }
+    } catch (error) {
+      setError("Login failed. Please check your credentials.");
+    }
+  };
 
   const formik = useFormik({
     initialValues: {
       email: "",
       password: "",
     },
-    validationSchema: basicSchema,
-    onSubmit: (values, { setSubmitting }) => {
-      // Hardcoded credentials
-      const hardcodedUsername = "test@example.com";
-      const hardcodedPassword = "Password123";
-
-      // Check if the entered credentials match the hardcoded ones
-      if (
-        values.email === hardcodedUsername &&
-        values.password === hardcodedPassword
-      ) {
-        // Clear error message
-        setErrorMessage("");
-        // Redirect to the home page (assuming the route is '/home')
-        navigate("/customer/");
-      } else {
-        // Set error message
-        setErrorMessage("Invalid username or password");
-        // Redirect to the login page (assuming the route is '/login')
-        navigate("/login");
-      }
-
-      setSubmitting(false);
+    validationSchema: basicSchema, // Validation for email 
+    onSubmit: async (values, { setSubmitting }) => {
+      await handleSignIn(values.email, values.password); // Pass Formik values to handleSignIn
+      setSubmitting(false); // Mark submission as complete
     },
   });
 
@@ -84,11 +62,11 @@ function LoginForm() {
           width: "100%",
           maxHeight: "400px",
           minWidth: "300px",
-          // backgroundColor: "#fff",
           padding: "2px 2px 20px 2px",
         }}
       >
         <form onSubmit={formik.handleSubmit}>
+          {/* Email Field */}
           <div>
             <label className="block text-[18px] font-[30px] text-gray-700 mb-3 mt-3">
               <div
@@ -100,11 +78,10 @@ function LoginForm() {
               <input
                 type="email"
                 id="email"
-                name="email"
                 placeholder="Enter Your Email"
-                value={formik.values.email}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
+                value={formik.values.email} // Formik-managed value
+                onChange={formik.handleChange} // Formik-managed handler
+                onBlur={formik.handleBlur} // Formik-managed blur event
                 className={`mb-1 block w-full px-3 py-2 border-2 rounded-md text-gray-900 focus:outline-none focus:border-blue-500 ${
                   formik.errors.email && formik.touched.email
                     ? "border-red-500"
@@ -118,6 +95,8 @@ function LoginForm() {
               ) : null}
             </label>
           </div>
+
+          {/* Password Field */}
           <div>
             <label className="block text-[18px] font-[30px] text-gray-700 mb-3">
               <div className="text-[15px]">Password*</div>
@@ -125,11 +104,10 @@ function LoginForm() {
               <input
                 type="password"
                 id="password"
-                name="password"
                 placeholder="Enter Your Password"
-                value={formik.values.password}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
+                value={formik.values.password} // Formik-managed value
+                onChange={formik.handleChange} // Formik-managed handler
+                onBlur={formik.handleBlur} // Formik-managed blur event
                 className={` block w-full px-3 py-2 border-2 rounded-md text-gray-900 focus:outline-none focus:border-blue-500 ${
                   formik.errors.password && formik.touched.password
                     ? "border-red-500"
@@ -143,7 +121,16 @@ function LoginForm() {
               ) : null}
             </label>
           </div>
-          
+
+          {/* Forgot Password Link */}
+          <div>
+            <Link
+              to="#"
+              className="text-gray-900 hover:text-blue-600 transition-colors duration-200 mt-3 text-[12px] aligh-center"
+            >
+              Forgot Password?
+            </Link>
+          </div>
 
           {/* Display error message */}
           {errorMessage && (
@@ -152,6 +139,7 @@ function LoginForm() {
             </div>
           )}
 
+          {/* Submit Button */}
           <div
             className="flex -mt-1 flex-center justify-center align-center"
             style={{

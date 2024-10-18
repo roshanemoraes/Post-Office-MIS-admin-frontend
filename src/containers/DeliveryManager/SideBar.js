@@ -1,12 +1,12 @@
 import React from "react";
 import { useState } from "react";
 import "./style.css";
-import { Link } from "react-router-dom";
-import Postmaster from "./../../Navigation/Postmaster";
+import { Link, useLocation } from "react-router-dom";
 
 const SideBar = ({ onSidebarToggle }) => {
   const [isSideBarOpen, setSideBarOpen] = useState(window.innerWidth >= 1024);
   const [isSubMenuOpen, setSubMenuOpen] = useState(Array(2).fill(true));
+  const location = useLocation();
 
   const handleSidebarToggle = () => {
     if (window.innerWidth < 1024) {
@@ -19,11 +19,13 @@ const SideBar = ({ onSidebarToggle }) => {
   };
 
   const handleSubMenuToggle = (index) => {
-    console.log("handleSubMenuToggle called with index:", index);
     const newSubMenuOpen = [...isSubMenuOpen];
     newSubMenuOpen[index] = !newSubMenuOpen[index];
-    console.log("newSubMenuOpen:", newSubMenuOpen);
     setSubMenuOpen(newSubMenuOpen);
+  };
+
+  const isActiveLink = (path) => {
+    return location.pathname === path ? "active" : "";
   };
 
   return (
@@ -34,7 +36,7 @@ const SideBar = ({ onSidebarToggle }) => {
           <span className="logo_name">SL POST</span>
         </div>
         <ul className="nav-links">
-          <li>
+          <li className={isActiveLink("/admin/delivery-manager")}>
             <Link to="/admin/delivery-manager">
               <i className="bx bx-grid-alt"></i>
               <span className="link_name">DASHBOARD</span>
@@ -64,37 +66,46 @@ const SideBar = ({ onSidebarToggle }) => {
                   SORT MAILS
                 </Link>
               </li>
-              <li>
+              <li className={isActiveLink("/admin/delivery-manager/mail-sort")}>
                 <Link to="/admin/delivery-manager/mail-sort">
                   All Mails To Deliver
                 </Link>
               </li>
-              <li>
+              <li
+                className={isActiveLink(
+                  "/admin/delivery-manager/mail-sort/in-area"
+                )}
+              >
                 <Link to="/admin/delivery-manager/mail-sort/in-area">
                   In-Area Mail Mgmt
                 </Link>
               </li>
-              <li>
+              <li
+                className={isActiveLink(
+                  "/admin/delivery-manager/mail-sort/out-area"
+                )}
+              >
                 <Link to="/admin/delivery-manager/mail-sort/out-area">
                   Out-Area Mail Mgmt
                 </Link>
               </li>
             </ul>
           </li>
-          {/* <li>
+          <li
+            className={isActiveLink("/admin/delivery-manager/route-allocation")}
+          >
             <Link to="/admin/delivery-manager/route-allocation">
               <i className="bx bxs-map"></i>
-              <span className="link_name">ASSIGN ROUTE</span>
+              <span className="link_name">LIVE MAP</span>
             </Link>
             <ul className="sub-menu blank">
               <li>
                 <Link className="link_name" to="#">
-                  ASSIGN ROUTE
+                  LIVE MAP
                 </Link>
               </li>
             </ul>
-          </li> */}
-
+          </li>
           <li className={isSubMenuOpen[0] ? "showMenu" : ""}>
             <div className="iocn-link">
               <Link to="#">
@@ -112,32 +123,47 @@ const SideBar = ({ onSidebarToggle }) => {
                   RETURN MAILS
                 </Link>
               </li>
-              <li>
+              <li
+                className={isActiveLink("/admin/delivery-manager/return-mail")}
+              >
                 <Link to="/admin/delivery-manager/return-mail">
                   All Undeliverable Mails
                 </Link>
               </li>
-              <li>
+              <li
+                className={isActiveLink(
+                  "/admin/delivery-manager/return-mail/return-to-sender"
+                )}
+              >
                 <Link to="/admin/delivery-manager/return-mail/return-to-sender">
                   Return-to-Sender List
                 </Link>
               </li>
-              <li>
+              <li
+                className={isActiveLink(
+                  "/admin/delivery-manager/return-mail/address-update"
+                )}
+              >
                 <Link to="/admin/delivery-manager/return-mail/address-update">
                   Address Update List
                 </Link>
               </li>
-              <li>
+              <li
+                className={isActiveLink(
+                  "/admin/delivery-manager/return-mail/discarded-mail"
+                )}
+              >
                 <Link to="/admin/delivery-manager/return-mail/discarded-mail">
                   Discarded Mail List
                 </Link>
               </li>
             </ul>
           </li>
+          {/* Uncomment this section if needed */}
           {/* <li>
             <Link to="/admin/delivery-manager/notifications">
               <i className="bx bx-credit-card"></i>
-              <span className="link_name">Nofitications</span>
+              <span className="link_name">Notifications</span>
             </Link>
             <ul className="sub-menu blank">
               <li>

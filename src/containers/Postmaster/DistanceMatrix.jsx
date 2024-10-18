@@ -33,7 +33,7 @@ class DistanceMatrix extends Component {
           }
           axios
             .post(
-              "http://localhost:8081/matrix/post-matrix",
+              "https://sep12-backend-byd6esdhhkg8dffq.canadacentral-01.azurewebsites.net/matrix/post-matrix",
               {
                 matrix,
                 addresses,

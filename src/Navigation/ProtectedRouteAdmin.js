@@ -5,7 +5,7 @@ const ProtectedRouteAdmin = ({ element: Component, allowedRoles }) => {
   const userRoles = JSON.parse(localStorage.getItem("userRoles") || "[]"); // Parse roles as an array
 
   if (!userRoles.length) {
-    return <Navigate to="/login" />;
+    return <Navigate to="/admin/login" />;
   }
 
   const hasRequiredRole = allowedRoles.some((role) => userRoles.includes(role));

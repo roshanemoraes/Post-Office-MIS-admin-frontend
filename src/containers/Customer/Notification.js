@@ -47,7 +47,7 @@ const Notifications = () => {
     setIsClicked(true);
     try {
       const response = await axios.get(
-        "http://localhost:8081/api/notifications/2"
+        "https://sep12-backend-byd6esdhhkg8dffq.canadacentral-01.azurewebsites.net/api/notifications/2"
       );
       setRows(response.data);
       console.log(response.data);
@@ -59,7 +59,7 @@ const Notifications = () => {
     setIsClicked(false);
     try {
       const response = await axios.get(
-        "http://localhost:8081/api/notifications/unread/3"
+        "https://sep12-backend-byd6esdhhkg8dffq.canadacentral-01.azurewebsites.net/api/notifications/unread/2"
       );
       setRows(response.data);
       console.log(response.data);
@@ -73,7 +73,10 @@ const Notifications = () => {
     const stompClient = new Client({
       brokerURL: "ws://localhost:8081/ws",
       connectHeaders: {},
-      webSocketFactory: () => new SockJS("http://localhost:8081/ws"),
+      webSocketFactory: () =>
+        new SockJS(
+          "https://sep12-backend-byd6esdhhkg8dffq.canadacentral-01.azurewebsites.net/ws"
+        ),
       onConnect: () => {
         console.log("Connected to WebSocket");
         const customerId = 3;

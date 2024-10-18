@@ -8,30 +8,49 @@ import { Client } from "@stomp/stompjs";
 import SockJS from "sockjs-client";
 import UpdateIcon from "../../assets/pencil-fill.svg";
 import AddressUpdateNotificationModal from "./Modals/AddressUpdateNotificationModal";
+import { Button as MuiButton } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 const Notifications = () => {
   const [rows, setRows] = React.useState([]);
   const [notifications, setNotifications] = useState([]);
   const [client, setClient] = useState(null);
   const [IsClicked, setIsClicked] = useState(false);
+  const navigate = useNavigate();
 
   const columns = [
     { field: "date", headerName: "Date", width: 150 },
     { field: "message", headerName: "Message", width: 500 },
     { field: "notificationId", headerName: "ID", width: 100 },
-    { field: "type", headerName: "Type", width: 180 },
-    { field: "read", headerName: "Read", width: 120 },
-    { field: "mailId", headerName: "Mail Id", width: 120 },
+    { field: "type", headerName: "Type", width: 130 },
     {
       field: "action",
       headerName: "Action",
-      width: 70,
+      width: 240,
       headerAlign: "center",
       renderCell: (params) => {
-        if (params.row.type === "Address-update") {
+        if (params.row.type === "Delivery") {
           return (
             <div>
-              <AddressUpdateNotificationModal data={params.row} />
+              {/* <AddressUpdateNotificationModal data={params.row} /> */}
+              <MuiButton
+                // disabled={row.status === "Assigned" ? true : false}
+                variant="contained"
+                sx={{
+                  // width: "40px",
+                  my: "0px",
+                  mb: "0px",
+                  mr: "0px",
+                  backgroundColor: "#000000",
+                  color: "white",
+                  // px: 5,
+                  fontSize: "11px",
+                  borderRadius: "8px",
+                }}
+                onClick={handleUndeliveredMails}
+              >
+                Process Undelivered Mails
+              </MuiButton>
             </div>
           );
         } else if (params.row.type === "Return-to-sender") {
@@ -45,9 +64,10 @@ const Notifications = () => {
 
   const fetchData = async () => {
     setIsClicked(true);
+    const managerId = "1";
     try {
       const response = await axios.get(
-        "http://localhost:8081/api/notifications/2",
+        `https://sep12-backend-byd6esdhhkg8dffq.canadacentral-01.azurewebsites.net/api/notifications/delivery-manager/today/${managerId}`,
         { withCredentials: true }
       );
       setRows(response.data);
@@ -56,11 +76,15 @@ const Notifications = () => {
       console.error("Error fetching users", error);
     }
   };
+  const handleUndeliveredMails = () => {
+    navigate("/admin/delivery-manager/return-mail");
+  };
+
   const fetchUnreadData = async () => {
     setIsClicked(false);
     try {
       const response = await axios.get(
-        "http://localhost:8081/api/notifications/unread/2",
+        "https://sep12-backend-byd6esdhhkg8dffq.canadacentral-01.azurewebsites.net/api/notifications/unread/2",
         { withCredentials: true }
       );
       setRows(response.data);
@@ -75,7 +99,10 @@ const Notifications = () => {
     const stompClient = new Client({
       brokerURL: "ws://localhost:8081/ws",
       connectHeaders: {},
-      webSocketFactory: () => new SockJS("http://localhost:8081/ws"),
+      webSocketFactory: () =>
+        new SockJS(
+          "https://sep12-backend-byd6esdhhkg8dffq.canadacentral-01.azurewebsites.net/ws"
+        ),
       onConnect: () => {
         console.log("Connected to WebSocket");
         stompClient.subscribe(`/topic/notifications`, (message) => {

@@ -5,13 +5,14 @@ import { useNavigate } from "react-router-dom";
 const Profile = () => {
   const navigate = useNavigate();
   const [rows, setRows] = useState([]);
+  const customerId = "2";
   const navigateToUpdatePage = () => {
     navigate("/customer/profile/updateprofile");
   };
   const fetchData = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:8081/api/customer/list/profile/2"
+        `https://sep12-backend-byd6esdhhkg8dffq.canadacentral-01.azurewebsites.net/api/customer/list/profile/${customerId}`
       );
       setRows(response.data);
     } catch (error) {

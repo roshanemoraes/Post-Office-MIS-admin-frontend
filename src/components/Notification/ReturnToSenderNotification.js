@@ -11,7 +11,7 @@ const ReturnToSenderNotification = () => {
 
     // setShow(true);
     // axios
-    //   .post("http://localhost:8081/api/receptionist/address/validate", data)
+    //   .post("https://sep12-backend-byd6esdhhkg8dffq.canadacentral-01.azurewebsites.net/api/receptionist/address/validate", data)
     //   .then((response) => {
     //     console.log("validation result came, success!");
     //     setValidatedResponse(response.data);

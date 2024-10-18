@@ -18,12 +18,13 @@ const AddressUpdateNotificationModal = ({ data }) => {
       console.log("data", data);
       console.log("newAddress", newAddress);
       const response = await axios.post(
-        `http://localhost:8081/api/delivery-manager/return-mail/address-update/update`,
+        `https://sep12-backend-byd6esdhhkg8dffq.canadacentral-01.azurewebsites.net/api/delivery-manager/return-mail/address-update/update`,
         {
           mailId: data.mailId,
           customerId: data.customerId,
           undeliverableId: data.undeliverableId,
           newAddress: newAddress,
+          notificationId: data.notificationId,
         },
         { withCredentials: true }
       );
@@ -44,7 +45,7 @@ const AddressUpdateNotificationModal = ({ data }) => {
   const fetchData = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:8081/api/delivery-manager/return-mail/get-undeliverable-mail/${data.mailId}`,
+        `https://sep12-backend-byd6esdhhkg8dffq.canadacentral-01.azurewebsites.net/api/delivery-manager/return-mail/get-undeliverable-mail/${data.mailId}`,
         { withCredentials: true }
       );
       setMailInfo(response.data);

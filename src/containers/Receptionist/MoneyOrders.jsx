@@ -1,26 +1,10 @@
-import {
-  Autocomplete,
-  Box,
-  Button,
-  Checkbox,
-  FormControlLabel,
-  FormGroup,
-  TextField,
-  Typography,
-  useTheme,
-} from "@mui/material";
-import React, { useEffect, useState, useRef } from "react";
-import CustomTextField from "../../components/Custom/CustomTextField";
+import { Box, TextField, Typography } from "@mui/material";
+import React, { useState, useRef } from "react";
 import { mailFormField } from "../../data/formFields";
-import CostForm from "../../components/Forms/CostForm";
-import AddressValidationModal from "./AddressValidationModal";
-import SenderAddressValidationModel from "./modals/SenderAddressValidationModel";
 import axios from "axios";
-import DownArrowIcon from "./../../assets/arrow-down-square-fill.svg";
-import NormalMailReceipt from "./../../components/Receipts/NormalMailReceipt";
 import { useReactToPrint } from "react-to-print";
 import { Button as MuiButton } from "@mui/material";
-import MoneyOrderReceipt from "../../components/Receipts/MoneyOrderReceipt";
+import { Table } from "react-bootstrap";
 
 const MoneyOrders = () => {
   const initialFormState = {
@@ -33,87 +17,8 @@ const MoneyOrders = () => {
     transferAmount: "",
     charge: "",
   };
-
   const [formState, setFormState] = useState(initialFormState);
-  const [checked, setChecked] = useState(false);
-  const [recipientName, setRecipientName] = useState("");
-  const [recipientCity, setRecipientCity] = useState("");
-  const [senderCity, setSenderCity] = useState("");
-  const [addressType, setAddressType] = useState(null);
-  const [isSubmitted, setIsSubmitted] = useState(false);
-  const [isVerified, setIsVerified] = useState(false);
-  const [verifiedAddressText, setVerifiedAddressText] = useState();
-  const [verifiedAddressId, setVerifiedAddressId] = useState();
-  const [verifiedAddressCoordinate_Lat, setVerifiedAddressCoordinate_Lat] =
-    useState();
-  const [verifiedAddressCoordinate_Lng, setVerifiedAddressCoordinate_Lng] =
-    useState();
-
-  const [verifiedSenderAddressText, setVerifiedSenderAddressText] = useState();
-  const [verifiedSenderAddressId, setVerifiedSenderAddressId] = useState();
-  const [
-    verifiedSenderAddressCoordinate_Lat,
-    setVerifiedSenderAddressCoordinate_Lat,
-  ] = useState();
-  const [
-    verifiedSenderAddressCoordinate_Lng,
-    setVerifiedSenderAddressCoordinate_Lng,
-  ] = useState();
-
-  const cityList = ["Negombo", "Colombo", "Kochchikade", "Katunayaka"];
-  const zoneList = [
-    "Daluwakotuwa",
-    "Walihena",
-    "Pallansena South",
-    "Pallansena North",
-  ];
-
-  const handleOnValidationResult = (data) => {
-    setVerifiedAddressText(data.textForm);
-    setVerifiedAddressId(data.addressId);
-    setVerifiedAddressCoordinate_Lat(data.lat);
-    setVerifiedAddressCoordinate_Lng(data.lng);
-    setFormState((prevState) => ({
-      ...prevState,
-      recipientAddress: data.textForm,
-    }));
-  };
-
-  const handleSenderOnValidationResult = (data) => {
-    setVerifiedAddressText(data.textForm);
-    setVerifiedAddressId(data.addressId);
-    setVerifiedAddressCoordinate_Lat(data.lat);
-    setVerifiedAddressCoordinate_Lng(data.lng);
-    setFormState((prevState) => ({
-      ...prevState,
-      senderAddress: data.textForm,
-    }));
-  };
-
-  useEffect(() => {
-    if (
-      verifiedAddressText ||
-      verifiedAddressId ||
-      verifiedAddressCoordinate_Lat ||
-      verifiedAddressCoordinate_Lng
-    ) {
-      console.log(
-        "verifiedAddressCoordinate_Lat: ",
-        verifiedAddressCoordinate_Lat
-      );
-      console.log(
-        "verifiedAddressCoordinate_Lng: ",
-        verifiedAddressCoordinate_Lng
-      );
-      console.log("verifiedAddressId: ", verifiedAddressId);
-      console.log("verifiedAddressText: ", verifiedAddressText);
-    }
-  }, [
-    verifiedAddressCoordinate_Lat,
-    verifiedAddressCoordinate_Lng,
-    verifiedAddressId,
-    verifiedAddressText,
-  ]);
+  const [customerId, setCustomerId] = useState("2");
 
   const handleChange = (id) => (event) => {
     setFormState({
@@ -121,15 +26,12 @@ const MoneyOrders = () => {
       [id]: event.target.value,
     });
   };
-  const handleSenderCheckBox = () => {
-    setChecked(!checked);
-    if (checked) {
-      formState.senderName = "";
-      formState.senderCity = "";
-      formState.senderAddress = "";
-      formState.senderPostalZone = "";
-      formState.senderHouseNumber = "";
-    }
+
+  const handleGetCharge = () => {
+    setFormState((prevState) => ({
+      ...prevState,
+      charge: "400",
+    }));
   };
 
   const handlePayment = () => {
@@ -146,9 +48,13 @@ const MoneyOrders = () => {
     //     }
     //   })
     //   .catch((error) => console.error("Payment creation failed", error));
+    const totalAmount =
+      Number(formState.transferAmount) + Number(formState.charge);
 
     axios
-      .post("http://localhost:8081/api/payment-gateway/create")
+      .post(
+        `https://sep12-backend-byd6esdhhkg8dffq.canadacentral-01.azurewebsites.net/api/payment-gateway/create?id=${customerId}&amount=${totalAmount}`
+      )
       .then((response) => {
         const data = response.data;
         if (data.paymentUrl) {
@@ -162,7 +68,7 @@ const MoneyOrders = () => {
     console.log(formState);
     axios
       .post(
-        "http://localhost:8081/api/receptionist/post/add/normal-post",
+        "https://sep12-backend-byd6esdhhkg8dffq.canadacentral-01.azurewebsites.net/api/receptionist/post/add/normal-post",
         formState,
         { withCredentials: true }
       )
@@ -177,102 +83,88 @@ const MoneyOrders = () => {
   const handlePrint = useReactToPrint({
     content: () => componentRef.current,
   });
+  const centerStyle = {
+    display: "flex",
+    justifyContent: "center",
+    alignContent: "center",
+  };
+
+  const leftStyle = {
+    display: "flex",
+    justifyContent: "center",
+    alignContent: "left",
+  };
+  const centeredHeaderStyle = {
+    textAlign: "center",
+    verticalAlign: "middle",
+  };
 
   return (
     <>
-      <div>
-        <Box
-          display="flex"
-          paddingTop={2}
-          flexDirection="row"
-          justifyContent="space-around"
-        >
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              justifyContent: "center",
-              width: "45%",
-              minWidth: "550px",
-              backgroundColor: "#f5f5f5",
-              borderRadius: "10px",
-              padding: "30px 2px 30px 2px",
-              boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.1)",
-            }}
-          >
-            <Typography
-              variant="subtitle2"
-              sx={{
-                fontWeight: "bold",
-                fontSize: "22px",
-                marginBottom: "10px",
-                fontFamily: "Helvetica Neue",
-              }}
-            >
-              Money Orders
-            </Typography>
+      <div className="grid sm:grid-cols-12 grid-cols-1">
+        <div className="col-span-6">
+          <div>
             <Box
-              component="form"
               display="flex"
-              alignItems="flex-start"
-              sx={{
-                marginTop: "10px",
-                display: "flex",
-                flexDirection: "column", //changed
-                alignItems: "center",
-                "& .MuiTextField-root": {
-                  fontSize: "15px",
-                  marginTop: "10px",
-                },
-              }}
+              paddingTop={2}
+              flexDirection="row"
+              justifyContent="space-around"
             >
-              <div className="grid sm:grid-cols-12 xs:grid-cols-12 sm:ml-8 xs:ml-8 sm:mr-8 xs:mr-8">
-                <div className="sm:col-span-3 xs:col-span-3 sm:mr-5 xs:mr-5 sm:min-w-[150px] xs:min-w-[150px] sm:min-h-[60px] xs:min-h-[60px]">
-                  <TextField
-                    inputProps={{ style: { fontSize: 15 } }}
-                    InputLabelProps={{
-                      style: { fontSize: 13 },
-                    }}
-                    required
-                    type={mailFormField.senderNIC.type}
-                    id={mailFormField.senderNIC.id}
-                    label={mailFormField.senderNIC.label}
-                    onChange={handleChange(mailFormField.senderNIC.id)}
-                  ></TextField>
-                </div>
-                <div className="sm:col-span-7 xs:col-span-7 sm:ml-9 xs:ml-9 sm:mr-2 xs:mr-2 sm:min-w-[300px] xs:min-w-[300px] sm:min-h-[60px] xs:min-h-[60px]">
-                  <TextField
-                    inputProps={{ style: { fontSize: 15 } }}
-                    InputLabelProps={{
-                      style: { fontSize: 13, width: "500px" },
-                    }}
-                    style={{ minWidth: 324 }}
-                    required
-                    type={mailFormField.senderName.type}
-                    id={mailFormField.senderName.id}
-                    label={mailFormField.senderName.label}
-                    onChange={handleChange(mailFormField.senderName.id)}
-                  ></TextField>
-                </div>
-              </div>
-              <div>
-                <div>
-                  <div className="grid sm:grid-cols-12 sm:ml-8 xs:ml-8 sm:mr-8 xs:mr-8">
-                    <div className="sm:col-span-3 sm:mr-5 min-w-[150px] min-h-[60px]">
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  width: "45%",
+                  minWidth: "550px",
+                  backgroundColor: "#f5f5f5",
+                  borderRadius: "10px",
+                  padding: "30px 2px 30px 2px",
+                  boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.1)",
+                }}
+              >
+                <Typography
+                  variant="subtitle2"
+                  sx={{
+                    fontWeight: "bold",
+                    fontSize: "22px",
+                    marginBottom: "10px",
+                    fontFamily: "Helvetica Neue",
+                  }}
+                >
+                  Money Orders
+                </Typography>
+                <Box
+                  component="form"
+                  display="flex"
+                  alignItems="flex-start"
+                  sx={{
+                    marginTop: "10px",
+                    display: "flex",
+                    flexDirection: "column", //changed
+                    alignItems: "center",
+                    "& .MuiTextField-root": {
+                      fontSize: "15px",
+                      marginTop: "10px",
+                    },
+                  }}
+                >
+                  <div className="grid sm:grid-cols-12 xs:grid-cols-12 sm:ml-8 xs:ml-8 sm:mr-8 xs:mr-8">
+                    <div className="sm:col-span-3 xs:col-span-3 sm:mr-5 xs:mr-5 sm:min-w-[150px] xs:min-w-[150px] sm:min-h-[60px] xs:min-h-[60px]">
                       <TextField
                         inputProps={{ style: { fontSize: 15 } }}
                         InputLabelProps={{
                           style: { fontSize: 13 },
                         }}
                         required
-                        type={mailFormField.recipientNIC.type}
-                        id={mailFormField.recipientNIC.id}
-                        label={mailFormField.recipientNIC.label}
-                        onChange={handleChange(mailFormField.recipientNIC.id)}
+                        type={mailFormField.senderNIC.type}
+                        id={mailFormField.senderNIC.id}
+                        label={mailFormField.senderNIC.label}
+                        onChange={handleChange("senderNIC")}
                       ></TextField>
                     </div>
-                    <div className="sm:col-span-7 sm:ml-9 sm:mr-2 sm:min-w-[300px] sm:min-h-[60px]">
+                    <div className="sm:col-span-7 xs:col-span-7 sm:ml-9 xs:ml-9 sm:mr-2 xs:mr-2 sm:min-w-[300px] xs:min-w-[300px] sm:min-h-[60px] xs:min-h-[60px]">
                       <TextField
                         inputProps={{ style: { fontSize: 15 } }}
                         InputLabelProps={{
@@ -280,100 +172,132 @@ const MoneyOrders = () => {
                         }}
                         style={{ minWidth: 324 }}
                         required
-                        type={mailFormField.recipientName.type}
-                        id={mailFormField.recipientName.id}
-                        label={mailFormField.recipientName.label}
-                        onChange={handleChange(mailFormField.recipientName.id)}
+                        type={mailFormField.senderName.type}
+                        id={mailFormField.senderName.id}
+                        label={mailFormField.senderName.label}
+                        onChange={handleChange("senderName")}
                       ></TextField>
                     </div>
                   </div>
-                </div>
-                <div>
+                  <div>
+                    <div>
+                      <div className="grid sm:grid-cols-12 sm:ml-8 xs:ml-8 sm:mr-8 xs:mr-8">
+                        <div className="sm:col-span-3 sm:mr-5 min-w-[150px] min-h-[60px]">
+                          <TextField
+                            inputProps={{ style: { fontSize: 15 } }}
+                            InputLabelProps={{
+                              style: { fontSize: 13 },
+                            }}
+                            required
+                            type={mailFormField.recipientNIC.type}
+                            id={mailFormField.recipientNIC.id}
+                            label={mailFormField.recipientNIC.label}
+                            onChange={handleChange("recipientNIC")}
+                          ></TextField>
+                        </div>
+                        <div className="sm:col-span-7 sm:ml-9 sm:mr-2 sm:min-w-[300px] sm:min-h-[60px]">
+                          <TextField
+                            inputProps={{ style: { fontSize: 15 } }}
+                            InputLabelProps={{
+                              style: { fontSize: 13, width: "500px" },
+                            }}
+                            style={{ minWidth: 324 }}
+                            required
+                            type={mailFormField.recipientName.type}
+                            id={mailFormField.recipientName.id}
+                            label={mailFormField.recipientName.label}
+                            onChange={handleChange("recipientName")}
+                          ></TextField>
+                        </div>
+                      </div>
+                    </div>
+                    {/* <div>
                   <SenderAddressValidationModel
                     formState={formState}
                     onValidationSenderResult={handleSenderOnValidationResult}
                   />
-                </div>
-                <div>
-                  <TextField
-                    inputProps={{ style: { fontSize: 15 } }}
-                    InputLabelProps={{
-                      style: { fontSize: 13 },
-                    }}
-                    style={{ minWidth: 250, marginLeft: "32px" }}
-                    required
-                    type={mailFormField.transferAmount.type}
-                    id={mailFormField.transferAmount.id}
-                    label={mailFormField.transferAmount.label}
-                    onChange={handleChange(mailFormField.transferAmount.id)}
-                    value={formState.senderAddress}
-                  ></TextField>
-                  <MuiButton
-                    variant="contained"
-                    sx={{
-                      my: "10px",
-                      mt: "20px",
-                      mb: "10px",
-                      mr: "0px",
-                      ml: "12px",
-                      backgroundColor: "#fde68a",
-                      color: "black",
-                      px: 2,
-                      fontSize: "10px",
-                      borderRadius: "6px",
-                      alignSelf: "flex-start",
-                      ":hover": {
-                        backgroundColor: "#fcd34d",
-                      },
-                    }}
-                    // onClick={validationResult}
-                  >
-                    Get charge
-                  </MuiButton>
-                </div>
-                <div>
-                  <TextField
-                    inputProps={{ readOnly: true }}
-                    InputLabelProps={{
-                      style: { fontSize: 13 },
-                    }}
-                    style={{ minWidth: 250, marginLeft: "32px" }}
-                    type={mailFormField.cost.type}
-                    id={mailFormField.cost.id}
-                    label={mailFormField.cost.label}
-                    onChange={handleChange(mailFormField.cost.id)}
-                    value={formState.senderAddress}
-                  ></TextField>
-                </div>
-                <div
-                  className="bg-[#caced4] ml-[32px] mt-[20px] mb-[10px] h-[1px]"
-                  style={{ width: "88%" }}
-                ></div>
+                </div> */}
+                    <div>
+                      <TextField
+                        inputProps={{ style: { fontSize: 15 } }}
+                        InputLabelProps={{
+                          style: { fontSize: 13 },
+                        }}
+                        style={{ minWidth: 250, marginLeft: "32px" }}
+                        required
+                        type={mailFormField.transferAmount.type}
+                        id={mailFormField.transferAmount.id}
+                        label={mailFormField.transferAmount.label + " (Rs.)"}
+                        onChange={handleChange("transferAmount")}
+                        value={formState.transferAmount}
+                      ></TextField>
+                      <MuiButton
+                        variant="contained"
+                        sx={{
+                          my: "10px",
+                          mt: "20px",
+                          mb: "10px",
+                          mr: "0px",
+                          ml: "12px",
+                          backgroundColor: "#fde68a",
+                          color: "black",
+                          px: 2,
+                          fontSize: "10px",
+                          borderRadius: "6px",
+                          alignSelf: "flex-start",
+                          ":hover": {
+                            backgroundColor: "#fcd34d",
+                          },
+                        }}
+                        onClick={handleGetCharge}
+                      >
+                        Get charge
+                      </MuiButton>
+                    </div>
+                    <div>
+                      <TextField
+                        inputProps={{ readOnly: true }}
+                        InputLabelProps={{
+                          style: { fontSize: 13 },
+                        }}
+                        style={{ minWidth: 250, marginLeft: "32px" }}
+                        type={mailFormField.cost.type}
+                        id={mailFormField.cost.id}
+                        label={"Postal Charge" + " (Rs.)"}
+                        // onChange={handleGetCharge()}
+                        // onChange={handleChange("charge")}
+                        value={formState.charge}
+                      ></TextField>
+                    </div>
+                    <div
+                      className="bg-[#caced4] ml-[32px] mt-[20px] mb-[10px] h-[1px]"
+                      style={{ width: "88%" }}
+                    ></div>
 
-                <div>
-                  <MuiButton
-                    variant="contained"
-                    sx={{
-                      my: "10px",
-                      mb: "10px",
-                      mr: "0px",
-                      mt: "25px",
-                      ml: "32px",
-                      backgroundColor: "#852318",
-                      color: "white",
-                      px: 2,
-                      fontSize: "10px",
-                      borderRadius: "6px",
-                      alignSelf: "flex-start",
-                    }}
-                    onClick={handlePayment}
-                  >
-                    Proceed To payment
-                  </MuiButton>
-                </div>
-              </div>
-              <div className="grid grid-cols-12 mt-[40px]">
-                <div className="col-span-9">
+                    <div>
+                      <MuiButton
+                        variant="contained"
+                        sx={{
+                          my: "10px",
+                          mb: "10px",
+                          mr: "0px",
+                          mt: "25px",
+                          ml: "32px",
+                          backgroundColor: "#852318",
+                          color: "white",
+                          px: 2,
+                          fontSize: "10px",
+                          borderRadius: "6px",
+                          alignSelf: "flex-start",
+                        }}
+                        onClick={handlePayment}
+                      >
+                        Proceed To payment
+                      </MuiButton>
+                    </div>
+                  </div>
+                  <div className="grid grid-cols-12 mt-[40px]">
+                    {/* <div className="col-span-9">
                   <Button
                     variant="contained"
                     sx={{
@@ -388,9 +312,9 @@ const MoneyOrders = () => {
                   >
                     Submit
                   </Button>
-                </div>
-                <div className="col-span-3 mt-[1px]">
-                  <Button
+                </div> */}
+                    <div className="col-span-3 mt-[1px]">
+                      {/* <Button
                     variant="primary"
                     style={{
                       backgroundColor: "#000",
@@ -404,16 +328,121 @@ const MoneyOrders = () => {
                     onClick={handlePrint}
                   >
                     PRINT Receipt
-                  </Button>
+                  </Button> */}
+                    </div>
+                  </div>
+
+                  <div></div>
+                </Box>
+              </Box>
+            </Box>
+          </div>
+        </div>
+        <div className="col-span-6">
+          <Box
+            display="flex"
+            paddingTop={2}
+            flexDirection="row"
+            justifyContent="space-around"
+          >
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                justifyContent: "center",
+                width: "45%",
+                minWidth: "550px",
+                backgroundColor: "#f5f5f5",
+                borderRadius: "10px",
+                padding: "30px 2px 30px 2px",
+                boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.1)",
+              }}
+            >
+              <Typography
+                variant="subtitle2"
+                sx={{
+                  fontWeight: "bold",
+                  fontSize: "22px",
+                  marginBottom: "10px",
+                  fontFamily: "Helvetica Neue",
+                }}
+              >
+                General Standard
+              </Typography>
+              <div className="grid sm:grid-cols-6 xs:grid-cols-6">
+                <div
+                  className="sm:col-span-3 xs:col-span-3"
+                  style={centerStyle}
+                >
+                  Sender Must Be A Customer
+                </div>
+                <div className="sm:col-span-3 xs:col-span-3" style={leftStyle}>
+                  Not required
+                </div>
+                <div className="sm:col-span-3 xs:col-span-3" style={leftStyle}>
+                  Receiver Must Be A Customer
+                </div>
+                <div className="sm:col-span-3 xs:col-span-3" style={leftStyle}>
+                  Not Required
                 </div>
               </div>
-
-              <div></div>
+              <div className="text-left mt-[30px]">
+                Postage Charge Will Depend On The Transfer Value.
+              </div>
+              <div className="text-left text-lg font-bold mt-[40px]">
+                Special Feature:
+              </div>
+              <div className="text-left ml-[20px] mt-[10px]">
+                If The Sender Is A Registered Customer, The Post Office Will
+                Itself Send The Secret Key Related To The Transfer.
+              </div>
+              {/* <div
+                style={{
+                  alignSelf: "flex-start",
+                  marginLeft: "20px",
+                  marginTop: "20px",
+                  marginBottom: "15px",
+                }}
+              >
+                {" "}
+                Accepted Excel File Format:
+              </div>
+              <div style={{ width: "80%" }}>
+                <Table
+                  bordered
+                  hover
+                  variant="light"
+                  className="white-border-table"
+                >
+                  <thead>
+                    <tr>
+                      <th style={centeredHeaderStyle}>Name</th>
+                      <th style={centeredHeaderStyle}>House No.</th>
+                      <th style={centeredHeaderStyle}>Zone</th>
+                      <th style={centeredHeaderStyle}>Town</th>
+                      <th style={centeredHeaderStyle}>
+                        Mail <br />
+                        Type
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td style={centeredHeaderStyle}>-</td>
+                      <td style={centeredHeaderStyle}>-</td>
+                      <td style={centeredHeaderStyle}>-</td>
+                      <td style={centeredHeaderStyle}>-</td>
+                      <td style={centeredHeaderStyle}>-</td>
+                    </tr>
+                  </tbody>
+                </Table>
+              </div> */}
             </Box>
           </Box>
-        </Box>
+        </div>
       </div>
-      <div
+      {/* <div
         // className="mt-30"
         style={{
           display: "flex",
@@ -440,7 +469,7 @@ const MoneyOrders = () => {
       </div>
       <div ref={componentRef}>
         <MoneyOrderReceipt formState={formState} receiptId={"2418"} />
-      </div>
+      </div> */}
       <div className="min-h-[70px]"></div>
     </>
   );
