@@ -46,8 +46,8 @@ const About = () => {
   };
 
   return (
-    <div id="about-mis" className="border-b border-neutral-900 pb-4">
-      <h2 className="my-20 text-center text-4xl">ABOUT POST OFFICE MIS</h2>
+    <div className="border-b border-neutral-900 pb-4">
+      <h2 className="mt-20 mb-10 text-center text-white text-4xl">ABOUT US</h2>
       <div className="flex flex-wrap">
         <motion.div
           whileInView={{ opacity: 1, x: 0 }}
@@ -83,24 +83,29 @@ const About = () => {
           whileInView={{ opacity: 1, x: 0 }}
           initial={{ opacity: 0, x: -100 }}
           transition={{ duration: 0.5 }}
-          className="w-full lg:w-1/2"
+          className="w-full  lg:w-1/2"
         >
-          <h5 className="mt-4	">WEB Application</h5>
+          <h5 className="mt-4	text-white ml-[30px]">
+            WEB Application For Postal Administration
+          </h5>
           <div
-            className="flex justify-center lg:justify-start text-justify"
+            className="flex ml-[30px] justify-center lg:justify-start text-justify"
             style={{ wordSpacing: "0.3em" }}
           >
             <p className="my-2 max-w-xl py-6">{ABOUT_TEXT}</p>
           </div>
-          <h5>MOBILE Application</h5>
+          <h5 className="text-white ml-[30px]">
+            MOBILE Application For Postman Assistance
+          </h5>
           <div
-            className="flex justify-center lg:justify-start text-justify"
+            className="flex ml-[30px] justify-center lg:justify-start text-justify"
             style={{ wordSpacing: "0.3em" }}
           >
             <p className="my-2 max-w-xl py-6">{ABOUT_TEXT_2}</p>
           </div>
         </motion.div>
       </div>
+      <div id="services"></div>
     </div>
   );
 };
