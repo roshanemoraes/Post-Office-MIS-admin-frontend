@@ -105,7 +105,8 @@ export default function ReturnToSender() {
   useEffect(() => {
     fetchData();
     const stompClient = new Client({
-      brokerURL: "ws://localhost:8081/ws",
+      brokerURL:
+        "wss://sep12-backend-byd6esdhhkg8dffq.canadacentral-01.azurewebsites.net/ws",
       connectHeaders: {},
       webSocketFactory: () =>
         new SockJS(
