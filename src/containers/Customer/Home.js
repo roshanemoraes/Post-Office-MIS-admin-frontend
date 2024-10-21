@@ -274,7 +274,7 @@ function Home() {
                         fontSize: "14px",
                         borderRadius: "20px",
                       }}
-                      onClick={handleGoToDeliveredPost}
+                      onClick={handleGoToNotification}
                     >
                       Go
                     </Button>

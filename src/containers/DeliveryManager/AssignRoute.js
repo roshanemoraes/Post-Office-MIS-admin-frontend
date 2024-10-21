@@ -6,25 +6,26 @@ import { Button, CircularProgress } from "@mui/material";
 import SubmitRoute from "./SubmitRoute";
 import ViewRouteModal from "./Modals/ViewRouteModal";
 
+// Functional component to manage and display routes assignment
 export default function AssignRoute() {
-  const [rows, setRows] = React.useState([]);
-  const [loading, setLoading] = React.useState(false);
+  const [rows, setRows] = React.useState([]); // State to hold rows of delivery data
+  const [loading, setLoading] = React.useState(false); // State to manage loading status
 
   const columns = [
-    { field: "deliveryId", headerName: "DID", width: 85 },
+    { field: "deliveryId", headerName: "DID", width: 85 }, // Column for Delivery ID
     {
       field: "postmanId",
       headerName: "PID",
       width: 85,
-      headerClassName: "multiline-header",
+      headerClassName: "multiline-header", // Custom class for header
     },
-    { field: "zone", headerName: "Zone", width: 160 },
+    { field: "zone", headerName: "Zone", width: 160 }, // Column for zone information
     {
       field: "destinations",
       headerName: "Destinations",
-      width: 200,
+      width: 200, // Column for destinations
     },
-    { field: "status", headerName: "Status", width: 120 },
+    { field: "status", headerName: "Status", width: 120 }, // Column for delivery status
     {
       field: "route",
       headerName: "Route",
@@ -32,6 +33,7 @@ export default function AssignRoute() {
       headerAlign: "center",
       renderCell: (params) => (
         <div>
+          {/* Render the ViewRouteModal for each row, passing destinations */}
           <ViewRouteModal destinations={params.row.destinations} />
 
           {/* <SubmitRoute
@@ -42,75 +44,82 @@ export default function AssignRoute() {
       ),
     },
   ];
-
+  // Function to handle button click
   function handleButtonClick(row) {
     console.log("Delivery Id: ", row.id);
   }
-  const handleAssign = async (row) => {};
-
+  // Async function to handle assigning a route
+  const handleAssign = async (row) => {
+    // Logic for assigning a route
+  };
+  // to fetch data from the API when the component mounts
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
           "https://sep12-backend-byd6esdhhkg8dffq.canadacentral-01.azurewebsites.net/api/delivery-manager/route/list-all",
-          { withCredentials: true }
+          { withCredentials: true } // Include credentials for cross-origin requests
         );
-        setRows(response.data);
-        console.log(response.data);
+        setRows(response.data); // Update state with the fetched data
+        console.log(response.data); // Log the fetched data for debugging
       } catch (error) {
-        console.error("Error fetching users", error);
+        console.error("Error fetching users", error); // Log any errors during fetch
       }
     };
 
-    fetchData();
+    fetchData(); // Call the fetchData function
   }, []);
 
   return (
     <div
       style={{
-        width: "100%",
+        width: "100%", // Set full width for the container
         // paddingTop: "25px",
-        display: "flex",
+        display: "flex", // Use flexbox for layout
         flexDirection: "column",
         justifyContent: "center",
         alignItems: "center",
       }}
     >
-      {loading ? (
+      {loading ? ( // Conditional rendering based on loading state
         <div
           style={{
-            display: "flex",
+            display: "flex", // Flexbox for aligning loading components
             alignItems: "center",
-            position: "fixed",
+            position: "fixed", // Fixed position for loading indicator
           }}
         >
-          <CircularProgress color="primary" size={40} />
-          <span style={{ marginLeft: "10px" }}>Assigning...</span>
+          <CircularProgress color="primary" size={40} /> {/* Loading spinner */}
+          <span style={{ marginLeft: "10px" }}>Assigning...</span>{" "}
+          {/* Loading text */}
         </div>
       ) : (
         <div style={{ height: 389 }}>
+          {" "}
+          {/* Container for DataGrid */}
           <DataGrid
             rows={rows}
             columns={columns}
             rowHeight={40}
-            getRowId={(row) => row.deliveryId}
+            getRowId={(row) => row.deliveryId} // Get unique row ID from deliveryId
             sx={{
+              // Custom styles for DataGrid
               ".MuiDataGrid-columnSeparator": {
-                display: "none",
+                display: "none", // Hide column separators
               },
               "&.MuiDataGrid-root": {
                 border: "none",
               },
               "& .MuiDataGrid-columnHeaderTitle": {
-                whiteSpace: "normal",
-                lineHeight: "normal",
+                whiteSpace: "normal", // Allow text to wrap
+                lineHeight: "normal", // Normal line height for headers
                 fontSize: "14px", // Adjusts font size for header titles
               },
               "& .MuiDataGrid-columnHeader": {
-                height: "unset !important",
+                height: "unset !important", // Remove fixed height for headers
               },
               "& .MuiDataGrid-columnHeaders": {
-                maxHeight: "168px !important",
+                maxHeight: "168px !important", // Set max height for column headers
                 fontSize: "12px", // Adjusts font size for the column headers
               },
               "& .MuiDataGrid-cell": {
@@ -122,18 +131,18 @@ export default function AssignRoute() {
             }}
             initialState={{
               pagination: {
-                paginationModel: { page: 0, pageSize: 7 },
+                paginationModel: { page: 0, pageSize: 7 }, // Set initial pagination state
               },
             }}
             columnVisibilityModel={{
-              destinations: false,
+              destinations: false, // Hide the destinations column
             }}
             disableColumnMenu={{
-              postman_id: true,
-              zone: false,
-              destinations: true,
-              status: false,
-              action: true,
+              postman_id: true, // Disable column menu for postman_id
+              zone: false, // Enable column menu for zone
+              destinations: true, // Disable column menu for destinations
+              status: false, // Enable column menu for statu
+              action: true, // Disable column menu for actions
             }}
             // pageSizeOptions={[5, 5]}
           />
