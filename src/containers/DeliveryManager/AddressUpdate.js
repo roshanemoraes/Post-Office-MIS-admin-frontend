@@ -7,6 +7,7 @@ import ReturnToSenderIcon from "../../assets/arrow-repeat.svg";
 import InfoIcon from "../../assets/info-circle.svg";
 import InfoReturnMailModal from "./Modals/InfoReturnMailModal";
 import DownArrowIcon from "../../assets/arrow-down-square-fill.svg";
+import CustomizedSnackbars from "../../components/Custom/CustomizedSnackbars";
 import checkIcon from "../../assets/bell-fill.svg";
 import { Client } from "@stomp/stompjs";
 import SockJS from "sockjs-client";
@@ -75,7 +76,7 @@ export default function AddressUpdate() {
   const handleOneReturnToSender = async (row) => {
     try {
       const response = await axios.post(
-        `https://sep12-backend-byd6esdhhkg8dffq.canadacentral-01.azurewebsites.net/api/delivery-manager/return-mail/address-update/add/${row.mailId}`,
+        `https://sep12-backend-byd6esdhhkg8dffq.canadacentral-01.azurewebsites.net/api/delivery-manager/return-mail/address-update/add/${row.undeliverableId}`,
         { withCredentials: true }
       );
       if (response.status === 200) {
@@ -291,6 +292,13 @@ export default function AddressUpdate() {
                       paginationModel: { page: 0, pageSize: 10 },
                     },
                   }}
+                />
+                <CustomizedSnackbars
+                  open={snackbarOpen}
+                  autoHideDuration={3000}
+                  severity={snackbarSeverity}
+                  message={snackbarMessage}
+                  onClose={() => setSnackbarOpen(false)}
                 />
               </div>
             </div>
