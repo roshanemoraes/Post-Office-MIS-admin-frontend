@@ -8,29 +8,33 @@ import StartedDistributionIcon from "../../assets/bxs-truck.svg";
 
 const DeliveryLiveMap = () => {
   const [isLoading, setLoading] = React.useState(true); // Set initial loading to true
-
+  // Function to ensure a minimum loading duration by combining a promise
   const minimumLoadingDuration = (promise, duration) => {
     return Promise.all([
       promise,
       new Promise((resolve) => setTimeout(resolve, duration)),
     ]);
   };
-
+  // useEffect hook to simulate loading when the component is mounted
   useEffect(() => {
     const loadLiveMap = async () => {
-      setLoading(true);
+      setLoading(true); // Start by setting loading to true
+      // Simulate loading delay using environment variable REACT_APP_LOADING_D
       await minimumLoadingDuration(
         Promise.resolve(),
         process.env.REACT_APP_LOADING_DELAY
       ); // Simulate loading with a minimum of 1.2 seconds
       setLoading(false); // Set loading to false after the delay
     };
-    loadLiveMap();
-  }, []);
+    loadLiveMap(); // Invoke the loading function
+  }, []); // Empty dependency array ensures the effect runs only once when th
+  //the component mounts
+  // Display a loading spinner while the live map is still loading
   if (isLoading) {
     return (
       <div className="fixed top-0 left-[100px] w-full h-full bg-[#737373] bg-opacity-70 flex items-center justify-center ">
         <div className="flex flex-col items-center">
+          {/* Loading spinner animation */}
           <div className="w-[100px] h-[100px] border-8 border-gray-300 border-t-[#000] rounded-full animate-spin"></div>
           <span className="mt-4 text-[25px] text-black font-sans tracking-wide">
             Loading...
@@ -39,13 +43,17 @@ const DeliveryLiveMap = () => {
       </div>
     );
   }
+  // Render the live map and delivery info after loading is complete
   return (
     <div className="grid grid-cols-12">
+      {/* Left column for displaying delivery statistics */}
       <div className="col-span-2">
+        {/* Section for In-Area statistics */}
         <div className="bg-black text-center text-white mb-[10px] mx-[40px] border-r-2 p-[3px]">
           In-Area
         </div>
         <div>
+          {/* Card for pending deliveries in In-Area */}
           <InfoIconCardSmall
             backgroundColor={"#ffffff"}
             title={"PENDING DELIVERIES"}
@@ -54,6 +62,7 @@ const DeliveryLiveMap = () => {
           />
         </div>
         <div className="my-[10px]">
+          {/* Card for started deliveries in In-Area */}
           <InfoIconCardSmall
             backgroundColor={"#ffffff"}
             title={"STARTED DELIVERIES"}
@@ -62,6 +71,7 @@ const DeliveryLiveMap = () => {
           />
         </div>
         <div>
+          {/* Card for completed deliveries in In-Area */}
           <InfoIconCardSmall
             backgroundColor={"#ffffff"}
             title={"COMPLETED DELIVERIES"}
@@ -69,10 +79,12 @@ const DeliveryLiveMap = () => {
             iconSrc={CompletedDeliveryIcon}
           />
         </div>
+        {/* Section for Out-Area statistics */}
         <div className="bg-black text-center text-white my-[10px] mx-[40px] border-r-2 p-[3px]">
           Out-Area
         </div>
         <div>
+          {/* Card for started distributions in Out-Area */}
           <InfoIconCardSmall
             backgroundColor={"#ffffff"}
             title={"STARTED DISTRIBUTIONS"}
@@ -81,6 +93,7 @@ const DeliveryLiveMap = () => {
           />
         </div>
         <div className="my-[10px]">
+          {/* Card for completed distributions in Out-Area */}
           <InfoIconCardSmall
             backgroundColor={"#ffffff"}
             title={"COMPLETED DISTRIBUTIONS"}
@@ -89,8 +102,9 @@ const DeliveryLiveMap = () => {
           />
         </div>
       </div>
+      {/* Right column for displaying the live map */}
       <div className="col-span-10">
-        <Map />
+        <Map /> {/* Map component to display live delivery status */}
       </div>
     </div>
   );

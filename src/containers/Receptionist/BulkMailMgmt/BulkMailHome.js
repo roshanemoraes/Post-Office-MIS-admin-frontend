@@ -192,10 +192,13 @@ const BulkMailHome = () => {
   const handlePrint = useReactToPrint({
     content: () => componentRef.current,
   });
-
+  {
+    /* Main container grid with a single column on small screens and 12 columns on larger screens */
+  }
   return (
     <>
       <div className="grid sm:grid-cols-12 grid-cols-1">
+        {/* Left section of the grid (spans 6 columns on small screens) with a white background */}
         <div className="rounded-lg sm:col-span-6 min-h-[100px] bg-white-500  items-center justify-center">
           <Box
             display="flex"
@@ -203,6 +206,7 @@ const BulkMailHome = () => {
             flexDirection="row"
             justifyContent="space-around"
           >
+            {/* Flexbox container for aligning the form inside the grid */}
             <Box
               sx={{
                 display: "flex",
@@ -217,6 +221,7 @@ const BulkMailHome = () => {
                 boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.1)",
               }}
             >
+              {/* Title of the form */}
               <Typography
                 variant="subtitle2"
                 sx={{
@@ -228,9 +233,11 @@ const BulkMailHome = () => {
               >
                 {"Bulk Mail Registration"}
               </Typography>
+              {/* Start of the form with two input fields for house number and name */}
               <div>
                 <div>
                   <div className="grid sm:grid-cols-12 sm:ml-8 xs:ml-8 sm:mr-8 xs:mr-8">
+                    {/* First input field: sender's house number */}
                     <div className="sm:col-span-3 sm:mr-5 min-w-[150px] min-h-[60px]">
                       <TextField
                         inputProps={{ style: { fontSize: 15 } }}
@@ -246,6 +253,7 @@ const BulkMailHome = () => {
                         )}
                       ></TextField>
                     </div>
+                    {/* Second input field: sender's name */}
                     <div className="sm:col-span-7 sm:ml-9 sm:mr-2 sm:min-w-[300px] sm:min-h-[60px]">
                       <TextField
                         inputProps={{ style: { fontSize: 15 } }}
@@ -261,9 +269,10 @@ const BulkMailHome = () => {
                       ></TextField>
                     </div>
                   </div>
-
+                  {/* Grid for the next two fields: sender's postal zone and city */}
                   <div className="grid sm:ml-8 xs:ml-8 sm:mr-8 xs:mr-8 sm:grid-cols-12 xs:grid-cols-12">
                     <div className="sm:col-span-6 xs:col-span-6 sm:mr-3 xs:mr-3 sm:ml-0 xs:ml-0 min-w-[235px] min-h-[60px] bg-white-500 ">
+                      {/* Autocomplete field for selecting postal zone */}
                       <Autocomplete
                         id={mailFormField.senderPostalZone.id}
                         options={zoneList}
@@ -312,6 +321,7 @@ const BulkMailHome = () => {
                       />
                     </div>
                     <div className="sm:col-span-6 xs:col-span-4 sm:ml-0 xs:ml-0 min-h-[60px] min-w-[235px] bg-white-500 ">
+                      {/* Autocomplete field for selecting city */}
                       <Autocomplete
                         id={mailFormField.senderCity.id}
                         options={cityList}
@@ -455,12 +465,10 @@ const BulkMailHome = () => {
                   )}
                 </div>
               </div>
-
               <div
                 className="min-h-[1px] mt-5 bg-black"
                 style={{ display: "flex", minWidth: "500px" }}
               ></div>
-
               <div className="justify-center align-items-center">
                 <Button
                   className="mt-10"
@@ -476,6 +484,9 @@ const BulkMailHome = () => {
                   CONFIRM REGISTRATION
                 </Button>
               </div>
+              {/*// This section creates a button for confirming registration.
+// Button style and event handler are defined using inline styles and the `onClick` event.
+// `handleRegistrationConfirm` is the function called when the button is click*/}
               <div>
                 {isRegistrationConfirm && isUploaded && (
                   <Button
@@ -495,6 +506,9 @@ const BulkMailHome = () => {
                   </Button>
                 )}
               </div>
+              {/*// This section checks if both `isRegistrationConfirm` and `isUploaded` are true.
+// If so, it displays a "Print Invoice" button with a custom style.
+// `handlePrint` is the function triggered when the button is clicked.*/}
             </Box>
           </Box>
         </div>
@@ -547,6 +561,9 @@ const BulkMailHome = () => {
                   5%
                 </div>
               </div>
+              {/*// A section displaying general information, such as the minimum mails required
+    // and the minimum discount rate, laid out in a grid.
+*/}
               <div
                 style={{
                   alignSelf: "flex-start",
@@ -558,6 +575,7 @@ const BulkMailHome = () => {
                 {" "}
                 Accepted Excel File Format:
               </div>
+              {/*} // A heading that indicates the accepted format for the Excel file.*/}
               <div style={{ width: "80%" }}>
                 <Table
                   bordered
@@ -588,6 +606,8 @@ const BulkMailHome = () => {
                   </tbody>
                 </Table>
               </div>
+              {/*// A table that outlines the accepted Excel file format for uploads.
+    // Headers for Name, House No., Zone, Town, and Mail Type are included.*/}
             </Box>
           </Box>
           {isUploaded && (
@@ -650,14 +670,18 @@ const BulkMailHome = () => {
                       {discount}%
                     </div>
                   </div>
+                  {/*// Displays the statistics related to the uploaded file:
+        // Mail Count and Discount Rate.*/}
                 </Box>
               </Box>
             </div>
           )}
         </div>
       </div>
+      {/*// This block renders the statistics (mail count and discount rate) 
+// if `isUploaded` is true (indicating that an upload has been completed).*/}
       <div style={{ minHeight: "40px" }}></div>
-
+      {/*// Adds a spacer div with a minimum height of 40px to provide some vertical space.*/}
       {isRegistrationConfirm && isUploaded && (
         <div>
           <div
@@ -703,6 +727,8 @@ const BulkMailHome = () => {
         </div>
       )}
     </>
+    // If `isRegistrationConfirm` and `isUploaded` are true, this section renders the invoice.
+    // The Invoice component is displayed within a bordered div, containing discount
   );
 };
 
