@@ -11,6 +11,7 @@ import personIcon from "./person-circle.svg";
 import { Link, useNavigate } from "react-router-dom";
 import { Badge } from "@mui/material";
 import MailIcon from "@mui/icons-material/Mail";
+import axios from "axios";
 
 const navigation = [
   { name: "Dashboard", href: "#", current: true },
@@ -26,18 +27,21 @@ function classNames(...classes) {
 export default function NavBar({ role }) {
   const navigate = useNavigate();
   const [currentTime, setCurrentTime] = useState(new Date());
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrentTime(new Date());
-    }, 1000);
-    return () => clearInterval(timer); // Cleanup on component unmount
-  }, []);
+  const [unreadNotificationCount, setUnreadNotificationCount] = useState(0);
 
   const handleSignOut = () => {
     localStorage.clear();
     navigate("/admin/login");
   };
+
+  useEffect(() => {
+    console.log("Role: ", role);
+    const timer = setInterval(() => {
+      setCurrentTime(new Date());
+    }, 1000);
+
+    return () => clearInterval(timer); // Cleanup on component unmount
+  }, []);
 
   return (
     <Disclosure
@@ -79,7 +83,10 @@ export default function NavBar({ role }) {
                 <Link to={`/admin/${role}/notifications`}>
                   {/* <div className="relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"> */}
                   <div className="relative rounded-2xl bg-gray-800 p-1 text-white hover:text-white focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2 focus:ring-offset-grey-800">
-                    <Badge color="secondary" badgeContent={6}>
+                    <Badge
+                      color="secondary"
+                      badgeContent={unreadNotificationCount}
+                    >
                       <MailIcon className="h-6 w-6" />
                     </Badge>
                   </div>
