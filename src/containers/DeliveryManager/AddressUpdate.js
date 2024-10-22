@@ -7,6 +7,7 @@ import ReturnToSenderIcon from "../../assets/arrow-repeat.svg"; // Importing ass
 import InfoIcon from "../../assets/info-circle.svg";
 import InfoReturnMailModal from "./Modals/InfoReturnMailModal"; // Importing modal component for displaying mail info
 import DownArrowIcon from "../../assets/arrow-down-square-fill.svg";
+import CustomizedSnackbars from "../../components/Custom/CustomizedSnackbars";
 import checkIcon from "../../assets/bell-fill.svg";
 import { Client } from "@stomp/stompjs"; // Importing STOMP client for WebSocket communication
 import SockJS from "sockjs-client"; // Importing SockJS for WebSocket connection
@@ -81,8 +82,8 @@ export default function AddressUpdate() {
     try {
       // Make API request to return mail to sender
       const response = await axios.post(
-        `https://sep12-backend-byd6esdhhkg8dffq.canadacentral-01.azurewebsites.net/api/delivery-manager/return-mail/address-update/add/${row.mailId}`,
-        { withCredentials: true } // Include credentials for authentication
+        `https://sep12-backend-byd6esdhhkg8dffq.canadacentral-01.azurewebsites.net/api/delivery-manager/return-mail/address-update/add/${row.undeliverableId}`,
+        { withCredentials: true }
       );
       if (response.status === 200) {
         sendNotification(
@@ -312,6 +313,13 @@ export default function AddressUpdate() {
                       paginationModel: { page: 0, pageSize: 10 },
                     },
                   }}
+                />
+                <CustomizedSnackbars
+                  open={snackbarOpen}
+                  autoHideDuration={3000}
+                  severity={snackbarSeverity}
+                  message={snackbarMessage}
+                  onClose={() => setSnackbarOpen(false)}
                 />
               </div>
             </div>
