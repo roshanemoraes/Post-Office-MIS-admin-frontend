@@ -16,8 +16,8 @@ describe("Login Functionality", () => {
     cy.wait(1000);
 
     //statistics page
-    cy.get(":nth-child(2) > :nth-child(1) > .bx").click();
-    cy.wait(1000);
+    //cy.get(":nth-child(2) > :nth-child(1) > .bx").click();
+    //cy.wait(1000);
 
     //mailrecieved per month[1st button of statistics page]
     cy.get(":nth-child(1) > :nth-child(1) > .card > .card-body").click();
