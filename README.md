@@ -1,70 +1,84 @@
-# Getting Started with Create React App
+# Post-office MIS with Postman Assistant Mobile Application
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Project ID: PID6
+![Screenshot 2024-08-28 104141](https://github.com/user-attachments/assets/326efc21-3b53-4dac-8f25-58beaf0c16e8)
+![Screenshot 2024-08-28 091637](https://github.com/user-attachments/assets/6791cc15-f5f7-4450-93b9-eb40fec06495)
 
-## Available Scripts
+![Screenshot 2024-08-28 104101](https://github.com/user-attachments/assets/f8cd226c-745b-44ea-90ce-1b9ed19046fc)
+![Screenshot 2024-08-28 104124](https://github.com/user-attachments/assets/f3f95a4f-671c-42c4-b9b1-e34e2aeec473)
+![Screenshot 2024-08-28 103838](https://github.com/user-attachments/assets/a37d606d-31de-477a-a3b6-b83d5441aa44)
 
-In the project directory, you can run:
+![Screenshot 2024-08-28 115200](https://github.com/user-attachments/assets/d928b8c8-56d4-461c-a788-01110a3c6219)
 
-### `npm start`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### Mentor: Prof. Dulani Meedeniya
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+---
 
-### `npm test`
+## Project Overview
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+The **Post-office MIS with Postman Assistant Mobile Application** is a comprehensive solution designed to modernize and streamline the operations of a post office. The system facilitates various postal services, including normal post, fast track courier, money orders, mail distribution, and more. The application includes an admin panel for post office staff and a mobile application for postmen to assist in their daily tasks.
 
-### `npm run build`
+### Key Features
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- **Address Verification**: Validates and verifies addresses to ensure accuracy, reducing delivery errors.
+- **Mail Sorting**: Assists in sorting mail items based on ZIP codes, addresses, weights, sizes, and delivery routes.
+- **Barcode Generation**: Generates and prints barcodes for mail items, ensuring efficient tracking and processing.
+- **Tracking and Tracing**: Provides real-time tracking of mail items for both customers and postal staff.
+- **Delivery Route Optimization**: Optimizes delivery routes to enhance efficiency, reduce costs, and minimize delivery time.
+- **Electronic Data Interchange (EDI)**: Facilitates electronic communication and data exchange with vendors, customers, and partner postal services.
+- **Customer Management**: Manages customer information, including addresses, contact details, and transaction history.
+- **Postal Rates Calculation**: Calculates postage rates based on item weight, dimensions, destination, and delivery speed.
+- **Return Mail Management**: Manages undeliverable mail, including return-to-sender processes and address updates.
+- **Financial Management**: Tracks financial activities, including invoicing, payment processing, and revenue management.
+- **Reporting and Analytics**: Provides comprehensive reporting and analytics for operational performance monitoring.
+- **Integration with External Systems**: Integrates with CRM, inventory management, and accounting software.
+- **Bulk Mailing**: Supports bulk mail handling, including importing mailing lists, printing labels, and applying bulk discounts.
+- **Postage Printing**: Facilitates the printing of postage labels and receipts.
+- **Security and Compliance**: Ensures data security and compliance with industry standards and postal regulations.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Technologies Used
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- **Backend**: Spring Boot
+- **Frontend**: React.js
+- **Database**: MongoDB
+- **Real-time Location Tracking**: Firebase Realtime Database
 
-### `npm run eject`
+## Project Structure
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+```plaintext
+post-office-mis/
+├── backend/
+│   ├── src/
+│   ├── pom.xml
+│   └── ...
+├── frontend/
+│   ├── src/
+│   ├── public/
+│   ├── package.json
+│   └── ...
+├── README.md
+└── ...
+Backend
+The backend is built using Spring Boot and handles the core business logic, database interactions, and REST API endpoints.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Spring Boot: Used for creating RESTful services and managing application logic.
+MongoDB: Acts as the primary database, storing all necessary data for the application.
+Frontend
+The frontend is developed using React.js and provides a user-friendly interface for both the admin panel and postmen mobile application.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+React.js: Powers the user interface, making it dynamic and responsive.
+Realtime Location Tracking
+For real-time tracking of postmen, Firebase Realtime Database is utilized. This allows the admin to monitor the current locations of postmen during their delivery routes.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+Frontend Setup
+1.Navigate to the frontend directory:
+  cd frontend
+2.Install dependencies:
+  npm install
+3.Start the React development server:
+  npm start
 
-## Learn More
+These are partialy completed User Interfaces...
+![Description of image](https://firebasestorage.googleapis.com/v0/b/postofficemis.appspot.com/o/Screenshot%202024-08-28%20103838.png?alt=media&token=45c4ab91-1d42-456f-add4-de90e0cc5ce7)
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)

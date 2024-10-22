@@ -135,8 +135,8 @@ export default function AddressUpdate() {
     fetchData(); // Fetch initial data
 
     const stompClient = new Client({
-      // Create STOMP client
-      brokerURL: "ws://localhost:8081/ws", // WebSocket broker URL
+      brokerURL:
+        "wss://sep12-backend-byd6esdhhkg8dffq.canadacentral-01.azurewebsites.net/ws",
       connectHeaders: {},
       webSocketFactory: () =>
         new SockJS( // Create WebSocket connection
