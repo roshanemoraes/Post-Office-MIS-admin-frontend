@@ -1,16 +1,17 @@
-import axios from "axios";
-import React, { useState, useRef } from "react";
-import { Button, Table } from "react-bootstrap";
-import { useReactToPrint } from "react-to-print";
-import checkIcon from "../../../assets/check-circle-fill.svg";
-import crossIcon from "../../../assets/x-circle-fill.svg";
-import { Autocomplete, Box, TextField, Typography } from "@mui/material";
-import SenderAddressValidationModel from "../modals/SenderAddressValidationModel";
+import axios from "axios"; // For making API requests
+import React, { useState, useRef } from "react"; // React hooks for component state and refs
+import { Button, Table } from "react-bootstrap"; // UI components from react-bootstrap
+import { useReactToPrint } from "react-to-print"; // React hook for printing components
+import checkIcon from "../../../assets/check-circle-fill.svg"; // Check icon image
+import crossIcon from "../../../assets/x-circle-fill.svg"; // Cross icon image
+import { Autocomplete, Box, TextField, Typography } from "@mui/material"; // Material UI components
+import SenderAddressValidationModel from "../modals/SenderAddressValidationModel"; // Modal for sender address validation
 import { mailFormField } from "../../../data/formFields";
 import DownArrowIcon from "../../../assets/arrow-down-square-fill.svg";
 import Invoice from "./../../../components/Forms/Invoice/Invoice";
 
 const BulkMailHome = () => {
+  // Initial state for form fields
   const initialFormState = {
     senderName: "",
     senderCity: "",
@@ -20,19 +21,20 @@ const BulkMailHome = () => {
     discount: 0,
     mailCount: 0,
   };
-
+  // List of cities for autocomplete
   const cityList = ["Negombo", "Colombo", "Kochchikade", "Katunayaka"];
+  // List of postal zones for autocomplete
   const zoneList = [
     "Daluwakotuwa",
     "Walihena",
     "Pallansena South",
     "Pallansena North",
   ];
-
-  const [file, setFile] = useState(null);
-  const [progress, setProgress] = useState({ started: false, pc: 0 });
-  const [msg, setMsg] = useState(null);
-  const [formState, setFormState] = useState(initialFormState);
+  // State variables
+  const [file, setFile] = useState(null); // Selected file for upload
+  const [progress, setProgress] = useState({ started: false, pc: 0 }); // File upload progress
+  const [msg, setMsg] = useState(null); // Message to display status
+  const [formState, setFormState] = useState(initialFormState); // Form field values
   // const [verifiedAddressText, setVerifiedAddressText] = useState();
   // const [verifiedAddressId, setVerifiedAddressId] = useState();
   // const [verifiedAddressCoordinate_Lat, setVerifiedAddressCoordinate_Lat] =
@@ -45,71 +47,74 @@ const BulkMailHome = () => {
   const [isRegistrationConfirm, setIsRegistrationConfirm] = useState(false);
 
   const [discount, setDiscount] = useState(0);
-
+  // Ref to access file input directly
   const fileInputRef = useRef();
-
+  // Function to handle form input changes
   const handleChange = (id) => (event) => {
     setFormState({
       ...formState,
-      [id]: event.target.value,
+      [id]: event.target.value, // Update form state with new input value
     });
   };
+  // Function to confirm registration if file has been uploaded
   const handleRegistrationConfirm = () => {
     if (isUploaded) {
-      setIsRegistrationConfirm(true);
+      setIsRegistrationConfirm(true); // Set registration confirmation to true
     }
     console.log(formState);
     console.log("kk", isRegistrationConfirm);
     console.log(isUploaded);
   };
-
+  // Callback function when sender address validation result is received
   const handleSenderOnValidationResult = (data) => {
     // setVerifiedAddressText(data.textForm);
     // setVerifiedAddressId(data.addressId);
     // setVerifiedAddressCoordinate_Lat(data.lat);
     // setVerifiedAddressCoordinate_Lng(data.lng);
+    // Update form state with the validated address data
     setFormState((prevState) => ({
       ...prevState,
       senderAddress: data.textForm,
     }));
   };
-
+  // Function to handle file selection
   const handleFileChange = (e) => {
-    const selectedFile = e.target.files[0];
+    const selectedFile = e.target.files[0]; // Get the selected file
     if (selectedFile) {
-      setFile(selectedFile);
-      console.log("File selected:", selectedFile.name);
+      setFile(selectedFile); // Set the file in the state
+      console.log("File selected:", selectedFile.name); // Log selected file name
     } else {
-      console.log("No file selected");
+      console.log("No file selected"); // Log if no file is selected
     }
   };
-
+  // Function to remove selected file and reset states
   function handleFileRemove() {
-    setFile(null);
-    setMsg(null);
-    setProgress({ started: false, pc: 0 });
-    setIsUploaded(false);
-    setMailCount(0);
+    setFile(null); // Clear file
+    setMsg(null); // Clear message
+    setProgress({ started: false, pc: 0 }); // Reset progress state
+    setIsUploaded(false); // Reset upload state
+    setMailCount(0); // Reset mail count
     if (fileInputRef.current) {
-      fileInputRef.current.value = null;
+      fileInputRef.current.value = null; // Reset file input ref
     }
   }
-
+  // Function to handle file upload process
   function handleUpload() {
     if (!file) {
       console.log("No file selected");
-      return;
+      return; // Exit if no file is selected
     }
-    const fd = new FormData();
-    fd.append("file", file);
+    const fd = new FormData(); // Create FormData object for file upload
+    fd.append("file", file); // Append file to FormData
 
-    setMsg("Uploading...");
+    setMsg("Uploading..."); // Set upload status message
     setProgress((prevState) => {
-      return { ...prevState, started: true };
+      return { ...prevState, started: true }; // Mark upload as started
     });
 
     axios
       .post(
+        // Send POST request to the server to upload file
         "https://sep12-backend-byd6esdhhkg8dffq.canadacentral-01.azurewebsites.net/api/receptionist/bulk-mail/upload",
         fd,
         {
@@ -117,33 +122,35 @@ const BulkMailHome = () => {
             setProgress((prevState) => {
               return {
                 ...prevState,
-                pc: progressEvent.progress * 100,
+                pc: progressEvent.progress * 100, // Update progress percentage
               };
             });
           },
-          withCredentials: true,
+          withCredentials: true, // Send request with credentials
           headers: {
-            "Content-Type": "multipart/form-data",
+            "Content-Type": "multipart/form-data", // Set content type
           },
         }
       )
       .then((res) => {
         if (res.status === 200) {
+          // If upload is successful
           console.log(res.data.mailCount);
-          setIsUploaded(true);
-          setMailCount(res.data.mailCount);
+          setIsUploaded(true); // Mark as uploaded
+          setMailCount(res.data.mailCount); // Set mail count
 
           setFormState((prevState) => ({
             ...prevState,
-            discount: res.data.discount,
-            mailCount: res.data.mailCount,
+            discount: res.data.discount, // Update discount from response
+            mailCount: res.data.mailCount, // Update mail count from response
           }));
 
-          setDiscount(res.data.discount);
-          setMsg("Upload Successful");
+          setDiscount(res.data.discount); // Set discount in state
+          setMsg("Upload Successful"); // Set success message
         }
       })
       .catch((err) => {
+        // Handle errors based on status code
         if (err.response?.status === 417) {
           setIsUploaded(false);
           setMsg(
@@ -163,23 +170,24 @@ const BulkMailHome = () => {
         }
       });
   }
-
+  // Styles for centering elements
   const centerStyle = {
     display: "flex",
     justifyContent: "center",
     alignContent: "center",
   };
-
+  // Styles for aligning elements to the left
   const leftStyle = {
     display: "flex",
     justifyContent: "center",
     alignContent: "left",
   };
+  // Styles for centering header text
   const centeredHeaderStyle = {
     textAlign: "center",
     verticalAlign: "middle",
   };
-
+  // Dummy invoice info for testing purposes
   const invoiceInfo = {
     invoiceNumber: 1882,
     date: "14/7/2024",
@@ -196,6 +204,7 @@ const BulkMailHome = () => {
     /* Main container grid with a single column on small screens and 12 columns on larger screens */
   }
   return (
+    // Component JSX goes here
     <>
       <div className="grid sm:grid-cols-12 grid-cols-1">
         {/* Left section of the grid (spans 6 columns on small screens) with a white background */}
@@ -302,19 +311,20 @@ const BulkMailHome = () => {
                           },
                         }}
                         renderInput={(params) => (
+                          // Renders a TextField within the Autocomplete component for the sender's postal zone input
                           <TextField
-                            {...params}
-                            label={mailFormField.senderPostalZone.label}
+                            {...params} // Passes all the autocomplete-related props to the TextField
+                            label={mailFormField.senderPostalZone.label} // Sets the label for the TextField using the mailFormField object
                             InputLabelProps={{
-                              style: { fontSize: 13 },
+                              style: { fontSize: 13 }, // Sets the font size for the label
                             }}
-                            style={{ minWidth: 160 }}
+                            style={{ minWidth: 160 }} // Ensures a minimum width for the TextField
                             required
                             value={
-                              formState[mailFormField.senderPostalZone.id] || ""
+                              formState[mailFormField.senderPostalZone.id] || "" // Sets the value of the input field based on formState, or defaults to an empty string if undefined
                             }
                             onChange={handleChange(
-                              mailFormField.senderPostalZone.id
+                              mailFormField.senderPostalZone.id // Calls the handleChange function when the input changes, updating formState for the senderPostalZone field
                             )}
                           />
                         )}

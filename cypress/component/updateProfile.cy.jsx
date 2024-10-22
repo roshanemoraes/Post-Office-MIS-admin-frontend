@@ -1,6 +1,7 @@
 import { MemoryRouter } from "react-router-dom";
 import Home from "../../src/containers/Customer/Home";
 import CustomerLogin from "../../src/screens/Common/CustomerLogin";
+import TestLogin from "../../src/screens/Common/TestLogin";
 import NavBar from "../../src/containers/Customer/NavBar";
 import Profile from "../../src/containers/Customer/Profile";
 import UpdateProfile from "../../src/containers/Customer/UpdateProfile";
@@ -28,6 +29,16 @@ describe("customer - Login, View Pending Mails, and Logout", () => {
   });
   it("should display login form", () => {
     cy.viewport(1024, 800);
+
+    cy.mount(
+      <MemoryRouter>
+        <TestLogin />
+      </MemoryRouter>
+    );
+    //clicking customer login section
+    cy.contains("Customer Portal").click();
+
+    // Mount the login component wrapped in MemoryRouter
     // Wrap the login component in MemoryRouter to provide routing context
     cy.mount(
       <MemoryRouter>
@@ -55,9 +66,17 @@ describe("customer - Login, View Pending Mails, and Logout", () => {
       }
     });
     // Wait for the email input to appear before typing
-    cy.get('input[name="email"]', { timeout: 150000 }) // wait up to 150 seconds
+    /*cy.get('input[name="email"]', { timeout: 150000 }) // wait up to 150 seconds
       .should("be.visible") // Ensure the email input is visible
-      .type(mockEmail); // Simulate typing the email
+      .type(mockEmail);*/ // Simulate typing the email
+    cy.get('input[name="email"]', { timeout: 150000 }) // wait up to 150 seconds for the email input
+      .should("be.visible") // Ensure the email input is visible
+      .type(mockEmail) // Type the mock email
+      .then(() => {
+        cy.get(".flex > .MuiButtonBase-root", { timeout: 150000 }) // wait up to 150 seconds for the button
+          .should("be.visible") // Ensure the button is visible
+          .click(); // Click the button
+      });
 
     // Wait for the password input to appear before typing
     cy.get('input[name="password"]')
